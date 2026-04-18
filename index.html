@@ -32,6 +32,19 @@
             overflow-x: hidden;
         }
 
+        /* Arabic text support */
+        body.arabic {
+            font-family: 'Orbitron', 'Tahoma', 'Arial', monospace;
+        }
+        
+        body.arabic .nav-btn,
+        body.arabic .metric-label,
+        body.arabic .metric-value,
+        body.arabic .transaction-amount,
+        body.arabic .footer-links a {
+            letter-spacing: normal;
+        }
+
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -590,7 +603,10 @@
         <!-- Language Selector -->
         <div class="language-selector">
             <select class="language-select" id="languageSelect">
-                <option value="en" selected>English</option>
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+                <option value="es">Español</option>
+                <option value="ar">العربية</option>
             </select>
         </div>
 
@@ -888,6 +904,456 @@
         // ==================== API INTEGRATION ====================
         const API_URL = 'https://bradicoin-api.onrender.com';
 
+        // ==================== TRANSLATIONS ====================
+        const translations = {
+            en: {
+                pageTitle: "Bradicoin Blockchain",
+                searchPlaceholder: "Paste Bradicoin wallet address here",
+                searchButton: "Search",
+                sectionCoreTitle: "🔗 CORE BLOCKCHAIN",
+                sectionMilitaryTitle: "🛡️ MILITARY & SECURITY",
+                sectionExplorationTitle: "🔍 BLOCKCHAIN EXPLORATION",
+                sectionEmergingTitle: "💡 SMART CONTRACTS & EMERGING TECH",
+                sectionIndustriesTitle: "🏭 INDUSTRIES",
+                sectionWeb3Title: "🌐 WEB3 & INVESTMENTS",
+                sectionGovernanceTitle: "⚙️ GOVERNANCE & UPDATES",
+                networkStatusTitle: "Network Status",
+                blockchainValid: "Blockchain Valid",
+                networkMetricsTitle: "Network Metrics",
+                transactionsTitle: "Transactions",
+                walletsTitle: "Wallets",
+                supplyTitle: "Supply",
+                priceEconomicsTitle: "Price Economics",
+                stabilityTitle: "Stability Mechanisms",
+                transactionHistoryTitle: "Transaction History",
+                refreshButton: "⟳ Refresh",
+                totalTransactionsText: "Total transactions: ",
+                footerCopyright: "© 2025 Bradicoin Blockchain. All rights reserved.",
+                footerAbout: "About",
+                footerContact: "Contact",
+                footerTerms: "Terms of Use",
+                footerPrivacy: "Privacy",
+                footerSupport: "Support",
+                labelBlockHeight: "Block Height",
+                labelBlocksPerMin: "Blocks/min",
+                labelAvgBlockTime: "Avg Block Time",
+                labelNodesOnline: "Nodes Online",
+                labelValidators: "Validators",
+                labelNetworkHealth: "Network Health",
+                labelDecentralization: "Decentralization",
+                labelTPS: "TPS",
+                labelAvgConfirmation: "Avg Confirmation",
+                labelAvgFee: "Avg Fee",
+                labelVolume24h: "Volume 24h",
+                labelFeesToday: "Fees Today",
+                labelPending: "Pending",
+                labelActiveWallets: "Active Wallets",
+                labelNewToday: "New Today",
+                labelInStaking: "In Staking",
+                labelTopHolders: "Top Holders",
+                labelTotal: "Total",
+                labelCirculating: "Circulating",
+                labelLocked: "Locked",
+                labelStaked: "Staked",
+                labelBurned: "Burned",
+                labelDeflation: "Deflation",
+                labelBasePrice: "Base Price",
+                labelCurrentPrice: "Current Price",
+                priceSupportText: "Price Support $10",
+                activeStatus: "Active",
+                labelRealMarketCap: "Real Market Cap",
+                labelDilutedMC: "Diluted MC",
+                labelTargetMC: "Target MC",
+                labelStabilityFund: "Stability Fund",
+                labelBoughtToday: "Bought Today",
+                labelBurnedToday: "Burned Today",
+                buybackActiveText: "Buyback Active",
+                yesStatus: "Yes",
+                navTransactionHistory: "📜 Transaction History",
+                navSecurityDashboard: "🛡️ Security Dashboard",
+                navBlockExplorer: "📦 Block Explorer",
+                navNetworkStatus: "🌐 Network Status",
+                navStaking: "💰 Staking & Rewards",
+                navGovernance: "🏛️ DAO Governance",
+                navAuditLogs: "📊 Audit Logs",
+                navGasTracker: "⛽ Gas Fee Tracker",
+                navAnalytics: "📈 Analytics Dashboard",
+                navFraudDetection: "🚨 Fraud Detection",
+                navMilitaryC2: "🎖️ Military C2",
+                navAuditVault: "🔒 Audit Vault",
+                navCyberThreat: "💀 Cyber Threat Intel",
+                navMissionCritical: "⚡ Mission Critical",
+                navSecurity: "🛡️ Security",
+                navExploreBlocks: "🔍 Explore Blocks",
+                navTransactions: "📜 Transactions",
+                navNetworkStatus2: "🌐 Network Status",
+                navStaking2: "💰 staking",
+                navDaoGovernance2: "🏛️ DAO and Governance",
+                navAuditLogs2: "📊 auditLogs",
+                navGasFees: "⛽ gasFees",
+                navAnalytics2: "📈 analytics",
+                navFraudDetection2: "🚨 Fraud Detection",
+                navSmartContracts: "📝 Smart Contracts",
+                navDesci: "🔬 Desci",
+                navHologram: "🌀 Hologram",
+                navSpaceSector: "🚀 Space Sector",
+                navAgriculture: "🌾 Agriculture and Food",
+                navEntertainment: "🎬 Entertainment",
+                navSports: "⚽ Sports",
+                navInfrastructure: "🏗️ Infrastructure",
+                navHealth: "🏥 Health",
+                navBiotechnology: "🧬 Biotechnology",
+                navEnergy: "⚡ Energy",
+                navFinancialMarket: "📈 Financial Market",
+                navNftExploration: "🎨 NFT Exploration",
+                navCloudMining: "⛏️ Cloud Mining",
+                navRoboticsInvestments: "🤖 Robotics Investments",
+                navDeFiProjects: "💎 DeFi Projects",
+                navMetaverseIntegration: "🌌 Metaverse Integration",
+                navDecentralizedPhilanthropy: "❤️ Decentralized Philanthropy",
+                navBlockchainUpdate: "🔄 Blockchain Update",
+                navDigitalGovernance: "⚖️ Digital Governance",
+                navCryptoMarketplace: "🏪 Cryptocurrency Marketplace",
+                navAITech: "🤖 Artificial Intelligence News",
+                navBlockchainSecurity: "🔐 Blockchain Security"
+            },
+            pt: {
+                pageTitle: "Bradicoin Blockchain",
+                searchPlaceholder: "Cole o endereço da carteira Bradicoin aqui",
+                searchButton: "Buscar",
+                sectionCoreTitle: "🔗 CORE BLOCKCHAIN",
+                sectionMilitaryTitle: "🛡️ MILITAR & SEGURANÇA",
+                sectionExplorationTitle: "🔍 EXPLORAÇÃO BLOCKCHAIN",
+                sectionEmergingTitle: "💡 SMART CONTRACTS & TECNOLOGIAS EMERGENTES",
+                sectionIndustriesTitle: "🏭 INDÚSTRIAS",
+                sectionWeb3Title: "🌐 WEB3 & INVESTIMENTOS",
+                sectionGovernanceTitle: "⚙️ GOVERNANÇA & ATUALIZAÇÕES",
+                networkStatusTitle: "Status da Rede",
+                blockchainValid: "Blockchain Válida",
+                networkMetricsTitle: "Métricas da Rede",
+                transactionsTitle: "Transações",
+                walletsTitle: "Carteiras",
+                supplyTitle: "Oferta",
+                priceEconomicsTitle: "Economia de Preço",
+                stabilityTitle: "Mecanismos de Estabilidade",
+                transactionHistoryTitle: "Histórico de Transações",
+                refreshButton: "⟳ Atualizar",
+                totalTransactionsText: "Total de transações: ",
+                footerCopyright: "© 2025 Bradicoin Blockchain. Todos os direitos reservados.",
+                footerAbout: "Sobre",
+                footerContact: "Contato",
+                footerTerms: "Termos de Uso",
+                footerPrivacy: "Privacidade",
+                footerSupport: "Suporte",
+                labelBlockHeight: "Altura do Bloco",
+                labelBlocksPerMin: "Blocos/min",
+                labelAvgBlockTime: "Tempo Médio por Bloco",
+                labelNodesOnline: "Nós Online",
+                labelValidators: "Validadores",
+                labelNetworkHealth: "Saúde da Rede",
+                labelDecentralization: "Descentralização",
+                labelTPS: "TPS",
+                labelAvgConfirmation: "Confirmação Média",
+                labelAvgFee: "Taxa Média",
+                labelVolume24h: "Volume 24h",
+                labelFeesToday: "Taxas Hoje",
+                labelPending: "Pendentes",
+                labelActiveWallets: "Carteiras Ativas",
+                labelNewToday: "Novas Hoje",
+                labelInStaking: "Em Staking",
+                labelTopHolders: "Maiores Detentores",
+                labelTotal: "Total",
+                labelCirculating: "Em Circulação",
+                labelLocked: "Bloqueadas",
+                labelStaked: "Em Staking",
+                labelBurned: "Queimadas",
+                labelDeflation: "Deflação",
+                labelBasePrice: "Preço Base",
+                labelCurrentPrice: "Preço Atual",
+                priceSupportText: "Suporte de Preço $10",
+                activeStatus: "Ativo",
+                labelRealMarketCap: "Market Cap Real",
+                labelDilutedMC: "MC Diluído",
+                labelTargetMC: "MC Alvo",
+                labelStabilityFund: "Fundo de Estabilidade",
+                labelBoughtToday: "Comprado Hoje",
+                labelBurnedToday: "Queimado Hoje",
+                buybackActiveText: "Recompra Ativa",
+                yesStatus: "Sim",
+                navTransactionHistory: "📜 Histórico de Transações",
+                navSecurityDashboard: "🛡️ Painel de Segurança",
+                navBlockExplorer: "📦 Explorador de Blocos",
+                navNetworkStatus: "🌐 Status da Rede",
+                navStaking: "💰 Staking & Recompensas",
+                navGovernance: "🏛️ Governança DAO",
+                navAuditLogs: "📊 Registros de Auditoria",
+                navGasTracker: "⛽ Rastreador de Taxas",
+                navAnalytics: "📈 Painel Analítico",
+                navFraudDetection: "🚨 Detecção de Fraudes",
+                navMilitaryC2: "🎖️ Comando Militar C2",
+                navAuditVault: "🔒 Cofre de Auditoria",
+                navCyberThreat: "💀 Inteligência de Ameaças Cibernéticas",
+                navMissionCritical: "⚡ Missão Crítica",
+                navSecurity: "🛡️ Segurança",
+                navExploreBlocks: "🔍 Explorar Blocos",
+                navTransactions: "📜 Transações",
+                navNetworkStatus2: "🌐 Status da Rede",
+                navStaking2: "💰 staking",
+                navDaoGovernance2: "🏛️ Governança DAO",
+                navAuditLogs2: "📊 Registros de Auditoria",
+                navGasFees: "⛽ Taxas de Gás",
+                navAnalytics2: "📈 análises",
+                navFraudDetection2: "🚨 Detecção de Fraudes",
+                navSmartContracts: "📝 Contratos Inteligentes",
+                navDesci: "🔬 Desci",
+                navHologram: "🌀 Holograma",
+                navSpaceSector: "🚀 Setor Espacial",
+                navAgriculture: "🌾 Agricultura e Alimentação",
+                navEntertainment: "🎬 Entretenimento",
+                navSports: "⚽ Esportes",
+                navInfrastructure: "🏗️ Infraestrutura",
+                navHealth: "🏥 Saúde",
+                navBiotechnology: "🧬 Biotecnologia",
+                navEnergy: "⚡ Energia",
+                navFinancialMarket: "📈 Mercado Financeiro",
+                navNftExploration: "🎨 Exploração NFT",
+                navCloudMining: "⛏️ Mineração em Nuvem",
+                navRoboticsInvestments: "🤖 Investimentos em Robótica",
+                navDeFiProjects: "💎 Projetos DeFi",
+                navMetaverseIntegration: "🌌 Integração com Metaverso",
+                navDecentralizedPhilanthropy: "❤️ Filantropia Descentralizada",
+                navBlockchainUpdate: "🔄 Atualização Blockchain",
+                navDigitalGovernance: "⚖️ Governança Digital",
+                navCryptoMarketplace: "🏪 Marketplace de Criptomoedas",
+                navAITech: "🤖 Notícias de Inteligência Artificial",
+                navBlockchainSecurity: "🔐 Segurança Blockchain"
+            },
+            es: {
+                pageTitle: "Bradicoin Blockchain",
+                searchPlaceholder: "Pegue la dirección de la billetera Bradicoin aquí",
+                searchButton: "Buscar",
+                sectionCoreTitle: "🔗 CORE BLOCKCHAIN",
+                sectionMilitaryTitle: "🛡️ MILITAR & SEGURIDAD",
+                sectionExplorationTitle: "🔍 EXPLORACIÓN BLOCKCHAIN",
+                sectionEmergingTitle: "💡 SMART CONTRACTS & TECNOLOGÍAS EMERGENTES",
+                sectionIndustriesTitle: "🏭 INDUSTRIAS",
+                sectionWeb3Title: "🌐 WEB3 & INVERSIONES",
+                sectionGovernanceTitle: "⚙️ GOBERNANZA & ACTUALIZACIONES",
+                networkStatusTitle: "Estado de la Red",
+                blockchainValid: "Blockchain Válida",
+                networkMetricsTitle: "Métricas de Red",
+                transactionsTitle: "Transacciones",
+                walletsTitle: "Billeteras",
+                supplyTitle: "Suministro",
+                priceEconomicsTitle: "Economía de Precio",
+                stabilityTitle: "Mecanismos de Estabilidad",
+                transactionHistoryTitle: "Historial de Transacciones",
+                refreshButton: "⟳ Actualizar",
+                totalTransactionsText: "Total de transacciones: ",
+                footerCopyright: "© 2025 Bradicoin Blockchain. Todos los derechos reservados.",
+                footerAbout: "Acerca de",
+                footerContact: "Contacto",
+                footerTerms: "Términos de Uso",
+                footerPrivacy: "Privacidad",
+                footerSupport: "Soporte",
+                labelBlockHeight: "Altura del Bloque",
+                labelBlocksPerMin: "Bloques/min",
+                labelAvgBlockTime: "Tiempo Promedio por Bloque",
+                labelNodesOnline: "Nodos Online",
+                labelValidators: "Validadores",
+                labelNetworkHealth: "Salud de la Red",
+                labelDecentralization: "Descentralización",
+                labelTPS: "TPS",
+                labelAvgConfirmation: "Confirmación Promedio",
+                labelAvgFee: "Tarifa Promedio",
+                labelVolume24h: "Volumen 24h",
+                labelFeesToday: "Tarifas Hoy",
+                labelPending: "Pendientes",
+                labelActiveWallets: "Billeteras Activas",
+                labelNewToday: "Nuevas Hoy",
+                labelInStaking: "En Staking",
+                labelTopHolders: "Principales Titulares",
+                labelTotal: "Total",
+                labelCirculating: "En Circulación",
+                labelLocked: "Bloqueadas",
+                labelStaked: "En Staking",
+                labelBurned: "Quemadas",
+                labelDeflation: "Deflación",
+                labelBasePrice: "Precio Base",
+                labelCurrentPrice: "Precio Actual",
+                priceSupportText: "Soporte de Precio $10",
+                activeStatus: "Activo",
+                labelRealMarketCap: "Capitalización Real",
+                labelDilutedMC: "Capitalización Diluida",
+                labelTargetMC: "Capitalización Objetivo",
+                labelStabilityFund: "Fondo de Estabilidad",
+                labelBoughtToday: "Comprado Hoy",
+                labelBurnedToday: "Quemado Hoy",
+                buybackActiveText: "Recompra Activa",
+                yesStatus: "Sí",
+                navTransactionHistory: "📜 Historial de Transacciones",
+                navSecurityDashboard: "🛡️ Panel de Seguridad",
+                navBlockExplorer: "📦 Explorador de Bloques",
+                navNetworkStatus: "🌐 Estado de la Red",
+                navStaking: "💰 Staking & Recompensas",
+                navGovernance: "🏛️ Gobernanza DAO",
+                navAuditLogs: "📊 Registros de Auditoría",
+                navGasTracker: "⛽ Rastreador de Tarifas",
+                navAnalytics: "📈 Panel Analítico",
+                navFraudDetection: "🚨 Detección de Fraudes",
+                navMilitaryC2: "🎖️ Comando Militar C2",
+                navAuditVault: "🔒 Bóveda de Auditoría",
+                navCyberThreat: "💀 Inteligencia de Amenazas Cibernéticas",
+                navMissionCritical: "⚡ Misión Crítica",
+                navSecurity: "🛡️ Seguridad",
+                navExploreBlocks: "🔍 Explorar Bloques",
+                navTransactions: "📜 Transacciones",
+                navNetworkStatus2: "🌐 Estado de la Red",
+                navStaking2: "💰 staking",
+                navDaoGovernance2: "🏛️ Gobernanza DAO",
+                navAuditLogs2: "📊 Registros de Auditoría",
+                navGasFees: "⛽ Tarifas de Gas",
+                navAnalytics2: "📈 análisis",
+                navFraudDetection2: "🚨 Detección de Fraudes",
+                navSmartContracts: "📝 Contratos Inteligentes",
+                navDesci: "🔬 Desci",
+                navHologram: "🌀 Holograma",
+                navSpaceSector: "🚀 Sector Espacial",
+                navAgriculture: "🌾 Agricultura y Alimentación",
+                navEntertainment: "🎬 Entretenimiento",
+                navSports: "⚽ Deportes",
+                navInfrastructure: "🏗️ Infraestructura",
+                navHealth: "🏥 Salud",
+                navBiotechnology: "🧬 Biotecnología",
+                navEnergy: "⚡ Energía",
+                navFinancialMarket: "📈 Mercado Financiero",
+                navNftExploration: "🎨 Exploración NFT",
+                navCloudMining: "⛏️ Minería en la Nube",
+                navRoboticsInvestments: "🤖 Inversiones en Robótica",
+                navDeFiProjects: "💎 Proyectos DeFi",
+                navMetaverseIntegration: "🌌 Integración con Metaverso",
+                navDecentralizedPhilanthropy: "❤️ Filantropía Descentralizada",
+                navBlockchainUpdate: "🔄 Actualización Blockchain",
+                navDigitalGovernance: "⚖️ Gobernanza Digital",
+                navCryptoMarketplace: "🏪 Mercado de Criptomonedas",
+                navAITech: "🤖 Noticias de Inteligencia Artificial",
+                navBlockchainSecurity: "🔐 Seguridad Blockchain"
+            },
+            ar: {
+                pageTitle: "بلوكشين براديكوين",
+                searchPlaceholder: "الصق عنوان محفظة Bradicoin هنا",
+                searchButton: "بحث",
+                sectionCoreTitle: "🔗 البلوكشين الأساسي",
+                sectionMilitaryTitle: "🛡️ العسكرية والأمن",
+                sectionExplorationTitle: "🔍 استكشاف البلوكشين",
+                sectionEmergingTitle: "💡 العقود الذكية والتقنيات الناشئة",
+                sectionIndustriesTitle: "🏭 الصناعات",
+                sectionWeb3Title: "🌐 ويب 3 والاستثمارات",
+                sectionGovernanceTitle: "⚙️ الحوكمة والتحديثات",
+                networkStatusTitle: "حالة الشبكة",
+                blockchainValid: "البلوكشين صالح",
+                networkMetricsTitle: "مقاييس الشبكة",
+                transactionsTitle: "المعاملات",
+                walletsTitle: "المحافظ",
+                supplyTitle: "العرض",
+                priceEconomicsTitle: "اقتصاديات السعر",
+                stabilityTitle: "آليات الاستقرار",
+                transactionHistoryTitle: "سجل المعاملات",
+                refreshButton: "⟳ تحديث",
+                totalTransactionsText: "إجمالي المعاملات: ",
+                footerCopyright: "© 2025 بلوكشين براديكوين. جميع الحقوق محفوظة.",
+                footerAbout: "حول",
+                footerContact: "اتصل بنا",
+                footerTerms: "شروط الاستخدام",
+                footerPrivacy: "الخصوصية",
+                footerSupport: "الدعم",
+                labelBlockHeight: "ارتفاع البلوك",
+                labelBlocksPerMin: "بلوك/دقيقة",
+                labelAvgBlockTime: "متوسط وقت البلوك",
+                labelNodesOnline: "العقد المتصلة",
+                labelValidators: "المصادقون",
+                labelNetworkHealth: "صحة الشبكة",
+                labelDecentralization: "اللامركزية",
+                labelTPS: "معاملة/ثانية",
+                labelAvgConfirmation: "متوسط التأكيد",
+                labelAvgFee: "متوسط الرسوم",
+                labelVolume24h: "حجم 24 ساعة",
+                labelFeesToday: "رسوم اليوم",
+                labelPending: "معلقة",
+                labelActiveWallets: "المحافظ النشطة",
+                labelNewToday: "جديدة اليوم",
+                labelInStaking: "في التوقيف",
+                labelTopHolders: "كبار المالكين",
+                labelTotal: "الإجمالي",
+                labelCirculating: "المتداول",
+                labelLocked: "المجمدة",
+                labelStaked: "الموقوفة",
+                labelBurned: "المحرقة",
+                labelDeflation: "الانكماش",
+                labelBasePrice: "السعر الأساسي",
+                labelCurrentPrice: "السعر الحالي",
+                priceSupportText: "دعم السعر $10",
+                activeStatus: "نشط",
+                labelRealMarketCap: "القيمة السوقية الحقيقية",
+                labelDilutedMC: "القيمة السوقية المخففة",
+                labelTargetMC: "القيمة السوقية المستهدفة",
+                labelStabilityFund: "صندوق الاستقرار",
+                labelBoughtToday: "تم شراؤه اليوم",
+                labelBurnedToday: "تم حرقه اليوم",
+                buybackActiveText: "إعادة الشراء نشطة",
+                yesStatus: "نعم",
+                navTransactionHistory: "📜 سجل المعاملات",
+                navSecurityDashboard: "🛡️ لوحة الأمان",
+                navBlockExplorer: "📦 مستكشف البلوكات",
+                navNetworkStatus: "🌐 حالة الشبكة",
+                navStaking: "💰 التوقيف والمكافآت",
+                navGovernance: "🏛️ حوكمة DAO",
+                navAuditLogs: "📊 سجلات التدقيق",
+                navGasTracker: "⛽ متتبع رسوم الغاز",
+                navAnalytics: "📈 لوحة التحليلات",
+                navFraudDetection: "🚨 كشف الاحتيال",
+                navMilitaryC2: "🎖️ القيادة العسكرية C2",
+                navAuditVault: "🔒 خزنة التدقيق",
+                navCyberThreat: "💀 استخبارات التهديدات السيبرانية",
+                navMissionCritical: "⚡ المهام الحرجة",
+                navSecurity: "🛡️ الأمن",
+                navExploreBlocks: "🔍 استكشاف البلوكات",
+                navTransactions: "📜 المعاملات",
+                navNetworkStatus2: "🌐 حالة الشبكة",
+                navStaking2: "💰 التوقيف",
+                navDaoGovernance2: "🏛️ حوكمة DAO",
+                navAuditLogs2: "📊 سجلات التدقيق",
+                navGasFees: "⛽ رسوم الغاز",
+                navAnalytics2: "📈 التحليلات",
+                navFraudDetection2: "🚨 كشف الاحتيال",
+                navSmartContracts: "📝 العقود الذكية",
+                navDesci: "🔬 ديسي",
+                navHologram: "🌀 الهولوغرام",
+                navSpaceSector: "🚀 قطاع الفضاء",
+                navAgriculture: "🌾 الزراعة والغذاء",
+                navEntertainment: "🎬 الترفيه",
+                navSports: "⚽ الرياضة",
+                navInfrastructure: "🏗️ البنية التحتية",
+                navHealth: "🏥 الصحة",
+                navBiotechnology: "🧬 التكنولوجيا الحيوية",
+                navEnergy: "⚡ الطاقة",
+                navFinancialMarket: "📈 الأسواق المالية",
+                navNftExploration: "🎨 استكشاف NFT",
+                navCloudMining: "⛏️ التعدين السحابي",
+                navRoboticsInvestments: "🤖 استثمارات الروبوتات",
+                navDeFiProjects: "💎 مشاريع التمويل اللامركزي",
+                navMetaverseIntegration: "🌌 تكامل الميتافيرس",
+                navDecentralizedPhilanthropy: "❤️ العمل الخيري اللامركزي",
+                navBlockchainUpdate: "🔄 تحديث البلوكشين",
+                navDigitalGovernance: "⚖️ الحوكمة الرقمية",
+                navCryptoMarketplace: "🏪 سوق العملات المشفرة",
+                navAITech: "🤖 أخبار الذكاء الاصطناعي",
+                navBlockchainSecurity: "🔐 أمن البلوكشين"
+            }
+        };
+
+        let currentLang = 'en';
+
         // ==================== FUNCTIONS ====================
         async function fetchAPI(endpoint) {
             try {
@@ -902,49 +1368,42 @@
 
         async function loadBlockchainData() {
             try {
-                // Load blockchain
                 const blockchain = await fetchAPI('/api/blockchain');
                 if (blockchain) {
                     const blockCount = Array.isArray(blockchain) ? blockchain.length : (blockchain.chain?.length || 1);
                     document.getElementById('blockHeightValue').textContent = blockCount;
                 }
 
-                // Load latest block
                 const latestBlock = await fetchAPI('/api/block/latest');
                 if (latestBlock && latestBlock.timestamp) {
                     const blockTime = Math.round((Date.now() - latestBlock.timestamp) / 1000);
                     document.getElementById('avgBlockTimeValue').textContent = `${blockTime}s`;
                 }
 
-                // Load difficulty
                 const difficulty = await fetchAPI('/api/difficulty');
                 if (difficulty !== null) {
                     const diffValue = typeof difficulty === 'object' ? difficulty.difficulty : difficulty;
                     document.getElementById('blocksPerMinValue').textContent = diffValue || '2.5';
                 }
 
-                // Load pending transactions
                 const pending = await fetchAPI('/api/pending');
                 if (pending) {
                     const pendingCount = Array.isArray(pending) ? pending.length : 0;
                     document.getElementById('pendingValue').textContent = pendingCount;
                 }
 
-                // Load info
                 const info = await fetchAPI('/api/info');
                 if (info) {
                     document.getElementById('nodesOnlineValue').textContent = info.nodes || '47';
                     document.getElementById('validatorsValue').textContent = info.validators || '12';
                 }
 
-                // Load reward
                 const reward = await fetchAPI('/api/reward');
                 if (reward) {
                     const rewardValue = typeof reward === 'object' ? reward.reward : reward;
                     document.getElementById('inStakingValue').textContent = `${rewardValue || '50'} BRD`;
                 }
 
-                // Set static values
                 document.getElementById('networkHealthValue').textContent = '98.7%';
                 document.getElementById('decentralizationValue').textContent = '85%';
                 document.getElementById('tpsValue').textContent = '0.5';
@@ -1012,6 +1471,7 @@
 
         function showNoTransactionsMessage() {
             const container = document.getElementById('transactionList');
+            const t = translations[currentLang];
             container.innerHTML = `
                 <div class="transaction-card" style="text-align: center; padding: 40px;">
                     <div class="transaction-icon" style="margin: 0 auto 16px auto;">
@@ -1021,38 +1481,40 @@
                             <line x1="12" y1="16" x2="12.01" y2="16"></line>
                         </svg>
                     </div>
-                    <h3 style="color: #ffc800; margin-bottom: 8px;">⚠️ No Transactions Found</h3>
-                    <p class="text-gray">Waiting for transactions on the blockchain. Make a transfer to see history.</p>
-                    <p class="text-sm text-gray mt-2">Tip: Use /api/transaction endpoint to create transactions</p>
+                    <h3 style="color: #ffc800; margin-bottom: 8px;">⚠️ ${t === translations.ar ? 'لا توجد معاملات' : 'No Transactions Found'}</h3>
+                    <p class="text-gray">${t === translations.ar ? 'في انتظار المعاملات على البلوكشين' : 'Waiting for transactions on the blockchain. Make a transfer to see history.'}</p>
+                    <p class="text-sm text-gray mt-2">${t === translations.ar ? 'نصيحة: استخدم نقطة النهاية /api/transaction لإنشاء معاملات' : 'Tip: Use /api/transaction endpoint to create transactions'}</p>
                 </div>
             `;
         }
 
         function renderTransactions(transactions) {
             const container = document.getElementById('transactionList');
+            const t = translations[currentLang];
             
             container.innerHTML = transactions.map(tx => `
                 <div class="transaction-card">
                     <div class="transaction-row">
                         <div class="transaction-info">
                             <div class="transaction-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></div>
-                            <div><div class="flex items-center gap-2 mb-1"><span class="font-bold" style="color: #00ff66;">Transfer</span><span style="background: rgba(0, 255, 100, 0.2); color: #00ff66; border: 1px solid #00ff66; padding: 2px 8px; border-radius: 20px; font-size: 10px;">Confirmed</span></div><div class="text-sm text-gray">${tx.date}</div></div>
+                            <div><div class="flex items-center gap-2 mb-1"><span class="font-bold" style="color: #00ff66;">${t === translations.ar ? 'تحويل' : 'Transfer'}</span><span style="background: rgba(0, 255, 100, 0.2); color: #00ff66; border: 1px solid #00ff66; padding: 2px 8px; border-radius: 20px; font-size: 10px;">${t === translations.ar ? 'مؤكدة' : 'Confirmed'}</span></div><div class="text-sm text-gray">${tx.date}</div></div>
                         </div>
                         <div class="transaction-amount">${tx.amount} BRD</div>
                     </div>
                     <div class="transaction-details">
-                        <div><div class="text-gray text-sm mb-1">From:</div><div class="address-wrapper"><span style="color: cyan; font-family: monospace; font-size: 12px;">${tx.from}</span><button class="copy-btn" onclick="copyToClipboard('${tx.from}', this)" title="Copy address"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
-                        <div><div class="text-gray text-sm mb-1">To:</div><div class="address-wrapper"><span style="color: cyan; font-family: monospace; font-size: 12px;">${tx.to}</span><button class="copy-btn" onclick="copyToClipboard('${tx.to}', this)" title="Copy address"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
+                        <div><div class="text-gray text-sm mb-1">${t === translations.ar ? 'من:' : 'From:'}</div><div class="address-wrapper"><span style="color: cyan; font-family: monospace; font-size: 12px;">${tx.from}</span><button class="copy-btn" onclick="copyToClipboard('${tx.from}', this)" title="${t === translations.ar ? 'نسخ العنوان' : 'Copy address'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
+                        <div><div class="text-gray text-sm mb-1">${t === translations.ar ? 'إلى:' : 'To:'}</div><div class="address-wrapper"><span style="color: cyan; font-family: monospace; font-size: 12px;">${tx.to}</span><button class="copy-btn" onclick="copyToClipboard('${tx.to}', this)" title="${t === translations.ar ? 'نسخ العنوان' : 'Copy address'}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
                     </div>
-                    <div class="transaction-footer"><span>Block: <span style="color: cyan;">${tx.block}</span></span><div class="flex items-center gap-1"><span>Hash: </span><span style="color: cyan; font-family: monospace;">${tx.hash}</span><button class="copy-btn" onclick="copyToClipboard('${tx.hash}', this)" title="Copy hash"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
+                    <div class="transaction-footer"><span>${t === translations.ar ? 'البلوك:' : 'Block:'} <span style="color: cyan;">${tx.block}</span></span><div class="flex items-center gap-1"><span>${t === translations.ar ? 'الهاش:' : 'Hash:'} </span><span style="color: cyan; font-family: monospace;">${tx.hash}</span><button class="copy-btn" onclick="copyToClipboard('${tx.hash}', this)" title="${t === translations.ar ? 'نسخ الهاش' : 'Copy hash'}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div></div>
                 </div>
             `).join('');
         }
 
         async function searchAddress() {
             const address = document.getElementById('searchInput').value.trim();
+            const t = translations[currentLang];
             if (!address) {
-                alert('Please enter a Bradicoin wallet address');
+                alert(t === translations.ar ? 'الرجاء إدخال عنوان محفظة Bradicoin' : 'Please enter a Bradicoin wallet address');
                 return;
             }
             
@@ -1060,20 +1522,21 @@
                 const balance = await fetchAPI(`/api/balance/${address}`);
                 if (balance !== null) {
                     const saldo = typeof balance === 'object' ? balance.balance : balance;
-                    alert(`💰 Address: ${address}\n📊 Balance: ${saldo || 0} BRD\n✅ Blockchain Valid`);
+                    alert(`${t === translations.ar ? '💰 العنوان:' : '💰 Address:'} ${address}\n${t === translations.ar ? '📊 الرصيد:' : '📊 Balance:'} ${saldo || 0} BRD\n✅ ${t.blockchainValid}`);
                 } else {
-                    alert(`🔍 Address: ${address}\n⚠️ No balance found\n💡 Use /api/balance endpoint to check`);
+                    alert(`🔍 ${t === translations.ar ? 'العنوان:' : 'Address:'} ${address}\n⚠️ ${t === translations.ar ? 'لا يوجد رصيد' : 'No balance found'}`);
                 }
             } catch (error) {
-                alert(`❌ Error checking address: ${error.message}`);
+                alert(`❌ ${t === translations.ar ? 'خطأ في التحقق من العنوان:' : 'Error checking address:'} ${error.message}`);
             }
         }
 
         async function mineBlock() {
             const badge = document.getElementById('statusBadge');
+            const t = translations[currentLang];
             if (badge) {
                 badge.style.background = 'rgba(255, 193, 7, 0.3)';
-                badge.innerHTML = '<span>⛏️ Mining...</span>';
+                badge.innerHTML = `<span>${t === translations.ar ? '⛏️ جاري التعدين...' : '⛏️ Mining...'}</span>`;
             }
             
             try {
@@ -1083,7 +1546,7 @@
                 if (response.ok) {
                     if (badge) {
                         badge.style.background = 'rgba(0, 255, 100, 0.2)';
-                        badge.innerHTML = '<span>✅ Block Mined!</span>';
+                        badge.innerHTML = `<span>✅ ${t === translations.ar ? 'تم تعدين البلوك!' : 'Block Mined!'}</span>`;
                         setTimeout(() => {
                             badge.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg><span id="blockchainValid" style="color: #00ff66;">Blockchain Valid</span>';
                         }, 3000);
@@ -1097,7 +1560,7 @@
                 console.error('Mining error:', error);
                 if (badge) {
                     badge.style.background = 'rgba(244, 67, 54, 0.2)';
-                    badge.innerHTML = '<span>❌ Mining Failed</span>';
+                    badge.innerHTML = `<span>❌ ${t === translations.ar ? 'فشل التعدين' : 'Mining Failed'}</span>`;
                 }
             }
         }
@@ -1108,6 +1571,118 @@
                 element.innerHTML = '✓';
                 setTimeout(() => { element.innerHTML = originalHTML; }, 1000);
             });
+        }
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            if (!t) return;
+
+            // Update text content for all translatable elements
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('searchBtnText').textContent = t.searchButton;
+            
+            document.getElementById('sectionCoreTitle').textContent = t.sectionCoreTitle;
+            document.getElementById('sectionMilitaryTitle').textContent = t.sectionMilitaryTitle;
+            document.getElementById('sectionExplorationTitle').textContent = t.sectionExplorationTitle;
+            document.getElementById('sectionEmergingTitle').textContent = t.sectionEmergingTitle;
+            document.getElementById('sectionIndustriesTitle').textContent = t.sectionIndustriesTitle;
+            document.getElementById('sectionWeb3Title').textContent = t.sectionWeb3Title;
+            document.getElementById('sectionGovernanceTitle').textContent = t.sectionGovernanceTitle;
+            
+            document.getElementById('networkStatusTitle').textContent = t.networkStatusTitle;
+            document.getElementById('blockchainValid').textContent = t.blockchainValid;
+            document.getElementById('networkMetricsTitle').textContent = t.networkMetricsTitle;
+            document.getElementById('transactionsTitle').textContent = t.transactionsTitle;
+            document.getElementById('walletsTitle').textContent = t.walletsTitle;
+            document.getElementById('supplyTitle').textContent = t.supplyTitle;
+            document.getElementById('priceEconomicsTitle').textContent = t.priceEconomicsTitle;
+            document.getElementById('stabilityTitle').textContent = t.stabilityTitle;
+            document.getElementById('transactionHistoryTitle').textContent = t.transactionHistoryTitle;
+            document.getElementById('refreshHistory').innerHTML = t.refreshButton;
+            document.getElementById('totalTransactionsText').textContent = t.totalTransactionsText;
+            document.getElementById('footerCopyright').textContent = t.footerCopyright;
+            
+            // Update metric labels
+            const metricLabels = [
+                'labelBlockHeight', 'labelBlocksPerMin', 'labelAvgBlockTime', 'labelNodesOnline',
+                'labelValidators', 'labelNetworkHealth', 'labelDecentralization', 'labelTPS',
+                'labelAvgConfirmation', 'labelAvgFee', 'labelVolume24h', 'labelFeesToday',
+                'labelPending', 'labelActiveWallets', 'labelNewToday', 'labelInStaking',
+                'labelTopHolders', 'labelTotal', 'labelCirculating', 'labelLocked', 'labelStaked',
+                'labelBurned', 'labelDeflation', 'labelBasePrice', 'labelCurrentPrice',
+                'labelRealMarketCap', 'labelDilutedMC', 'labelTargetMC', 'labelStabilityFund',
+                'labelBoughtToday', 'labelBurnedToday'
+            ];
+            
+            metricLabels.forEach(label => {
+                const element = document.getElementById(label);
+                if (element && t[label]) element.textContent = t[label];
+            });
+            
+            document.getElementById('priceSupportText').innerHTML = t.priceSupportText;
+            document.getElementById('activeStatus').textContent = t.activeStatus;
+            document.getElementById('buybackActiveText').innerHTML = t.buybackActiveText;
+            document.getElementById('yesStatus').textContent = t.yesStatus;
+            
+            // Update footer links
+            document.getElementById('footerAbout').textContent = t.footerAbout;
+            document.getElementById('footerContact').textContent = t.footerContact;
+            document.getElementById('footerTerms').textContent = t.footerTerms;
+            document.getElementById('footerPrivacy').textContent = t.footerPrivacy;
+            document.getElementById('footerSupport').textContent = t.footerSupport;
+            
+            // Update navigation buttons
+            const navIds = [
+                'navTransactionHistory', 'navSecurityDashboard', 'navBlockExplorer', 'navNetworkStatus',
+                'navStaking', 'navGovernance', 'navAuditLogs', 'navGasTracker', 'navAnalytics',
+                'navFraudDetection', 'navMilitaryC2', 'navAuditVault', 'navCyberThreat', 'navMissionCritical',
+                'navSecurity', 'navExploreBlocks', 'navTransactions', 'navNetworkStatus2', 'navStaking2',
+                'navDaoGovernance2', 'navAuditLogs2', 'navGasFees', 'navAnalytics2', 'navFraudDetection2',
+                'navSmartContracts', 'navDesci', 'navHologram', 'navSpaceSector', 'navAgriculture',
+                'navEntertainment', 'navSports', 'navInfrastructure', 'navHealth', 'navBiotechnology',
+                'navEnergy', 'navFinancialMarket', 'navNftExploration', 'navCloudMining', 'navRoboticsInvestments',
+                'navDeFiProjects', 'navMetaverseIntegration', 'navDecentralizedPhilanthropy', 'navBlockchainUpdate',
+                'navDigitalGovernance', 'navCryptoMarketplace', 'navAITech', 'navBlockchainSecurity'
+            ];
+            
+            navIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element && t[id]) {
+                    if (element.tagName === 'A') {
+                        element.innerHTML = t[id];
+                    } else if (element.tagName === 'BUTTON') {
+                        const svg = element.querySelector('svg');
+                        if (svg) {
+                            element.innerHTML = '';
+                            element.appendChild(svg);
+                            element.appendChild(document.createTextNode(' ' + t[id]));
+                        } else {
+                            element.textContent = t[id];
+                        }
+                    }
+                }
+            });
+
+            // Handle Arabic text direction
+            if (currentLang === 'ar') {
+                document.body.classList.add('arabic');
+                document.body.style.direction = 'rtl';
+                document.querySelector('.language-selector').style.right = 'auto';
+                document.querySelector('.language-selector').style.left = '20px';
+                document.querySelector('.header').style.left = 'auto';
+                document.querySelector('.header').style.right = '20px';
+            } else {
+                document.body.classList.remove('arabic');
+                document.body.style.direction = 'ltr';
+                document.querySelector('.language-selector').style.right = '20px';
+                document.querySelector('.language-selector').style.left = 'auto';
+                document.querySelector('.header').style.left = '20px';
+                document.querySelector('.header').style.right = 'auto';
+            }
+            
+            // Refresh transactions to show translated messages
+            loadRealTransactions();
         }
 
         // ==================== INITIALIZATION ====================
@@ -1125,6 +1700,12 @@
                 const btn = document.getElementById('refreshHistory');
                 btn.style.transform = 'rotate(360deg)';
                 setTimeout(() => { btn.style.transform = ''; }, 500);
+            });
+            
+            // Language selector
+            document.getElementById('languageSelect').addEventListener('change', (e) => {
+                currentLang = e.target.value;
+                updateLanguage();
             });
             
             // Add mining button

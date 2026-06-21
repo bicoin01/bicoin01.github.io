@@ -763,6 +763,56 @@
                 </div>
             </div>
 
+                        <!-- VALIDATORS SECTION -->
+<div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c864ff" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v4M12 16h.01"/>
+            </svg>
+            <h2 style="color: #c864ff;">🛡️ Validators</h2>
+        </div>
+        <div class="status-badge" style="border-color: #c864ff;">
+            <span style="color: #c864ff;" id="validatorCount">0 Active</span>
+        </div>
+    </div>
+    <div id="validatorsContainer" style="max-height:300px;overflow-y:auto;">
+        <div style="text-align:center;padding:20px;color:#888;">
+            <p>Loading validators...</p>
+        </div>
+    </div>
+    <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="becomeValidator()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">
+            ⚡ Become Validator
+        </button>
+        <button onclick="viewValidatorStats()" style="background:transparent;border:1px solid #555;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">
+            📊 View Stats
+        </button>
+    </div>
+</div>
+
+eu adiciono aonde <!-- STAKING STATS SECTION -->
+<div class="network-panel" style="border-color: #ffc800; margin-top: 20px;">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffc800" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+            </svg>
+            <h2 style="color: #ffc800;">💰 Staking Stats</h2>
+        </div>
+        <div class="status-badge" style="border-color: #ffc800;">
+            <span style="color: #ffc800;">Live</span>
+        </div>
+    </div>
+    <div id="stakingStats">
+        <div style="text-align:center;padding:20px;color:#888;">
+            <p>Loading staking stats...</p>
+        </div>
+    </div>
+</div>
+
             <!-- TRANSACTION HISTORY -->
             <div class="transaction-history">
                 <div class="transaction-header">
@@ -2005,6 +2055,116 @@ const payment = await client.createPayment({
                 showNotification('❌ ' + (result.error || 'Transfer failed'), '#ff6464');
             }
         }
+
+       // ==================== VALIDATOR FUNCTIONS ====================
+function becomeValidator() {
+    const address = document.getElementById('searchInput').value.trim();
+    if (!address) {
+        showNotification('⚠️ Please enter a wallet address first!', '#ffc800');
+        return;
+    }
+    
+    const stakeAmount = prompt('Enter amount to stake as validator (minimum 1000 BRD):');
+    if (!stakeAmount || isNaN(stakeAmount) || parseFloat(stakeAmount) < 1000) {
+        showNotification('❌ Minimum stake is 1000 BRD', '#ff6464');
+        return;
+    }
+    
+    const amount = parseFloat(stakeAmount);
+    const chain = getLocalChain();
+    
+    if (!chain.balances[address] || chain.balances[address] < amount) {
+        showNotification(`❌ Insufficient balance. You have ${chain.balances[address] || 0} BRD`, '#ff6464');
+        return;
+    }
+    
+    // Deduct the value and add as validator
+    chain.balances[address] -= amount;
+    addValidator(address, amount);
+    updateTotalSupplyDisplay();
+    showNotification(`✅ ${address.substring(0, 12)}... is now a validator with ${amount} BRD staked!`, '#00ff66');
+}
+
+function viewValidatorStats() {
+    const chain = getLocalChain();
+    const validators = chain.validators || [];
+    
+    if (validators.length === 0) {
+        showNotification('📊 No validators active yet', '#ffc800');
+        return;
+    }
+    
+    let stats = '📊 VALIDATOR STATS\n\n';
+    validators.forEach((v, i) => {
+        stats += `${i+1}. ${v.address.substring(0, 16)}...\n`;
+        stats += `   Stake: ${v.stake.toFixed(0)} BRD\n`;
+        stats += `   Blocks: ${v.blocksProposed || 0}\n`;
+        stats += `   Rewards: ${(v.rewards || 0).toFixed(2)} BRD\n`;
+        stats += `   Joined: ${new Date(v.joined).toLocaleDateString()}\n\n`;
+    });
+    
+    alert(stats);
+}
+
+         // ==================== VALIDATORS UI ====================
+function updateValidatorsDisplay() {
+    const chain = getLocalChain();
+    const validators = chain.validators || [];
+    const container = document.getElementById('validatorsContainer');
+    if (!container) return;
+    
+    if (validators.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px;color:#888;">
+                <p>No validators active</p>
+                <p style="font-size:11px;">Become a validator by staking 1000+ BRD</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Update validator count
+    const countElement = document.getElementById('validatorCount');
+    if (countElement) {
+        countElement.textContent = `${validators.length} Active`;
+    }
+    
+    const html = validators.slice(0, 10).map(v => `
+        <div style="display:flex;justify-content:space-between;padding:8px 12px;border-bottom:1px solid rgba(0,200,255,0.05);">
+            <span style="color:#00ccff;font-size:11px;">${v.address.substring(0, 16)}...</span>
+            <span style="color:#ffc800;font-size:11px;">${v.stake.toFixed(0)} BRD</span>
+            <span style="color:#00ff66;font-size:10px;">${v.blocksProposed || 0} blocks</span>
+        </div>
+    `).join('');
+    
+    container.innerHTML = html;
+}
+
+// Function to update block display
+function updateBlockDisplay(block) {
+    const container = document.getElementById('latestBlocks');
+    if (!container) return;
+    
+    const blockHtml = `
+        <div style="display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid rgba(0,200,255,0.05);">
+            <span style="color:#00ccff;font-size:11px;">Block #${block.index}</span>
+            <span style="color:#888;font-size:10px;">${new Date(block.timestamp).toLocaleTimeString()}</span>
+            <span style="color:#c864ff;font-size:10px;">${block.validator.substring(0, 10)}...</span>
+            <span style="color:#00ff66;font-size:10px;">${block.transactions.length} txns</span>
+        </div>
+    `;
+    
+    // Add to top of list
+    container.innerHTML = blockHtml + container.innerHTML;
+    
+    // Keep only last 20 blocks
+    const items = container.children;
+    if (items.length > 20) {
+        for (let i = 20; i < items.length; i++) {
+            items[i].remove();
+        }
+    }
+}
 
         // ==================== MINE BLOCK ====================
         async function mineBlock() {

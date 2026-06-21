@@ -1622,20 +1622,6 @@ document.addEventListener('DOMContentLoaded', function() {
             border-radius: 8px;
             border: 1px solid rgba(0,200,255,0.2);
         `;
-        recentSection.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <span style="color: #888; font-size: 12px;">📋 Recently Consulted Wallets</span>
-                <button onclick="localStorage.removeItem('bradicoin_wallet_history'); updateRecentWalletsList();" 
-                        style="background: transparent; border: none; color: #ff6464; cursor: pointer; font-size: 11px;">
-                    Clear
-                </button>
-            </div>
-            <div id="recentWalletsList"></div>
-        `;
-        searchContainer.appendChild(recentSection);
-        updateRecentWalletsList();
-    }
-});
 
 // ==================== EXPORT GLOBAL FUNCTIONS ====================
 window.getRealBalance = getRealBalance;

@@ -1044,7 +1044,7 @@ async function isAddressValid(address) {
     }
 }
 
-// ==================== FIXED FUNCTION - SEARCH WITH REAL-TIME UPDATES ====================
+// ==================== SEARCH WALLET WITH REAL BALANCE ====================
 async function searchWallet() {
     const address = document.getElementById('searchInput').value.trim();
     const resultDiv = document.getElementById('searchResult');
@@ -1075,17 +1075,20 @@ async function searchWallet() {
     
     try {
         // Fetch REAL balance from API
-        const validation = await isAddressValid(address);
+        const balanceData = await getRealBalance(address);
         
-        if (validation.valid) {
-            // Format balance with 6 decimal places
-            const balanceFormatted = validation.balance.toFixed(6);
-            const balanceDisplay = validation.balance > 0 ? balanceFormatted : '0.000000';
+        if (balanceData.success) {
+            const balance = balanceData.balance;
+            const balanceFormatted = balance.toFixed(6);
+            const balanceDisplay = balance > 0 ? balanceFormatted : '0.000000';
             
-            // Determine color and icon based on balance
-            const balanceColor = validation.balance > 0 ? '#00ff66' : '#ffc800';
-            const balanceIcon = validation.balance > 0 ? '💰' : '💳';
-            const statusText = validation.balance > 0 ? 'With balance' : 'Zero balance';
+            // Also fetch staking info
+            const stakingInfo = await getStakingInfo(address);
+            const stakedAmount = stakingInfo.success ? stakingInfo.staked : 0;
+            
+            const balanceColor = balance > 0 ? '#00ff66' : '#ffc800';
+            const balanceIcon = balance > 0 ? '💰' : '💳';
+            const statusText = balance > 0 ? 'With balance' : 'Zero balance';
             
             resultDiv.innerHTML = `
                 <div style="border: 2px solid ${balanceColor}; border-radius: 12px; padding: 20px; background: rgba(0,0,0,0.8);">
@@ -1093,7 +1096,7 @@ async function searchWallet() {
                         <span style="font-size: 3rem;">✅</span>
                         <h3 style="color: ${balanceColor}; margin-top: 10px;">Wallet Found</h3>
                         <span style="background: rgba(0,255,100,0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid ${balanceColor}; font-size: 12px; color: ${balanceColor};">
-                            ${statusText} • ${validation.source || 'blockchain'}
+                            ${statusText} • ${balanceData.source || 'blockchain'}
                         </span>
                     </div>
                     
@@ -1112,7 +1115,21 @@ async function searchWallet() {
                     <div class="metric-row">
                         <span class="metric-label">💵 USD Value:</span>
                         <span class="metric-value" style="color: #ffc800; font-size: 1.2rem;">
-                            $${(validation.balance * 10).toFixed(2)} USD
+                            $${(balance * 10).toFixed(2)} USD
+                        </span>
+                    </div>
+                    
+                    <div class="metric-row">
+                        <span class="metric-label">🔒 Staked:</span>
+                        <span class="metric-value" style="color: #ffc800;">
+                            ${stakedAmount.toFixed(4)} BRD
+                        </span>
+                    </div>
+                    
+                    <div class="metric-row">
+                        <span class="metric-label">📊 Staking APY:</span>
+                        <span class="metric-value" style="color: #00ff66;">
+                            ${stakingInfo.apy || 18}%
                         </span>
                     </div>
                     
@@ -1131,22 +1148,15 @@ async function searchWallet() {
                         <span class="metric-value" style="font-size: 11px;">${new Date().toLocaleString()}</span>
                     </div>
                     
-                    <div class="metric-row">
-                        <span class="metric-label">📊 Source:</span>
-                        <span class="metric-value" style="font-size: 11px; color: #888;">${validation.source || 'Bradicoin API'}</span>
-                    </div>
-                    
-                    ${validation.exists === false && validation.balance === 0 ? `
-                        <div style="margin-top: 10px; padding: 10px; background: rgba(255,200,0,0.1); border-radius: 8px; border: 1px solid #ffc800;">
-                            <span style="color: #ffc800;">ℹ️ Valid address, waiting for transactions on the blockchain</span>
-                        </div>
-                    ` : ''}
-                    
-                    ${validation.balance > 0 ? `
+                    ${balance > 0 ? `
                         <div style="margin-top: 10px; padding: 10px; background: rgba(0,255,100,0.1); border-radius: 8px; border: 1px solid #00ff66;">
                             <span style="color: #00ff66;">✅ Balance recognized by Bradicoin blockchain</span>
                         </div>
-                    ` : ''}
+                    ` : `
+                        <div style="margin-top: 10px; padding: 10px; background: rgba(255,200,0,0.1); border-radius: 8px; border: 1px solid #ffc800;">
+                            <span style="color: #ffc800;">ℹ️ Wallet found but has zero balance</span>
+                        </div>
+                    `}
                     
                     <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                         <button onclick="document.getElementById('searchResult').classList.remove('show');" 
@@ -1166,7 +1176,7 @@ async function searchWallet() {
             `;
             
             // Save wallet to history
-            saveWalletToHistory(address, validation.balance);
+            saveWalletToHistory(address, balance);
             
         } else {
             // ADDRESS NOT FOUND
@@ -1203,6 +1213,257 @@ async function searchWallet() {
                 </button>
             </div>
         `;
+    }
+}
+        
+// ==================== FETCH REAL BALANCE FROM API ====================
+async function getRealBalance(address) {
+    try {
+        const response = await fetch(`${API_URL}/api/balance/${address}`);
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const balance = data.data?.balance ?? data.balance ?? 0;
+            return {
+                success: true,
+                balance: balance,
+                exists: true,
+                source: 'api'
+            };
+        }
+        return { success: false, balance: 0, exists: false };
+    } catch (error) {
+        console.error('Error fetching balance:', error);
+        return { success: false, balance: 0, exists: false, error: error.message };
+    }
+}
+
+// ==================== DEPOSIT FUNCTION ====================
+async function depositToWallet(address, amount) {
+    if (!address || !amount || amount <= 0) {
+        return { success: false, error: 'Invalid address or amount' };
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/deposit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                address: address,
+                amount: amount
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const newBalance = data.data?.balance ?? data.balance ?? 0;
+            return {
+                success: true,
+                balance: newBalance,
+                deposited: amount,
+                message: `✅ Deposit of ${amount} BRD successful! New balance: ${newBalance} BRD`
+            };
+        }
+        
+        return { success: false, error: data.message || 'Deposit failed' };
+    } catch (error) {
+        console.error('Deposit error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ==================== STAKING REWARD FUNCTION ====================
+async function addStakingReward(address, rewardAmount) {
+    if (!address || !rewardAmount || rewardAmount <= 0) {
+        return { success: false, error: 'Invalid address or reward amount' };
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/api/staking/reward`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                address: address,
+                reward: rewardAmount
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const newBalance = data.data?.balance ?? data.balance ?? 0;
+            return {
+                success: true,
+                balance: newBalance,
+                reward: rewardAmount,
+                message: `⭐ Staking reward of ${rewardAmount} BRD added! New balance: ${newBalance} BRD`
+            };
+        }
+        
+        return { success: false, error: data.message || 'Staking reward failed' };
+    } catch (error) {
+        console.error('Staking reward error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ==================== TRANSFER FUNCTION ====================
+async function transferBRD(sender, recipient, amount) {
+    if (!sender || !recipient || !amount || amount <= 0) {
+        return { success: false, error: 'Invalid sender, recipient or amount' };
+    }
+
+    try {
+        // First check sender balance
+        const balanceCheck = await getRealBalance(sender);
+        if (!balanceCheck.success || balanceCheck.balance < amount) {
+            return { 
+                success: false, 
+                error: `Insufficient balance. Available: ${balanceCheck.balance || 0} BRD, Required: ${amount} BRD`
+            };
+        }
+
+        const response = await fetch(`${API_URL}/api/transfer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                sender: sender,
+                recipient: recipient,
+                amount: amount
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const senderBalance = data.data?.senderBalance ?? 0;
+            const recipientBalance = data.data?.recipientBalance ?? 0;
+            return {
+                success: true,
+                senderBalance: senderBalance,
+                recipientBalance: recipientBalance,
+                amount: amount,
+                message: `💸 Transfer of ${amount} BRD from ${sender} to ${recipient} successful!`
+            };
+        }
+        
+        return { success: false, error: data.message || 'Transfer failed' };
+    } catch (error) {
+        console.error('Transfer error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ==================== GET STAKING INFO ====================
+async function getStakingInfo(address) {
+    try {
+        const response = await fetch(`${API_URL}/api/staking/${address}`);
+        const data = await response.json();
+        
+        if (data && data.success) {
+            return {
+                success: true,
+                staked: data.data?.staked ?? 0,
+                rewards: data.data?.rewards ?? 0,
+                apy: data.data?.apy ?? 18,
+                totalStaked: data.data?.totalStaked ?? 0
+            };
+        }
+        return { success: false, staked: 0, rewards: 0 };
+    } catch (error) {
+        console.error('Staking info error:', error);
+        return { success: false, staked: 0, rewards: 0 };
+    }
+}
+
+// ==================== STAKE TOKENS ====================
+async function stakeTokens(address, amount) {
+    if (!address || !amount || amount <= 0) {
+        return { success: false, error: 'Invalid address or amount' };
+    }
+
+    try {
+        // Check balance first
+        const balanceCheck = await getRealBalance(address);
+        if (!balanceCheck.success || balanceCheck.balance < amount) {
+            return { 
+                success: false, 
+                error: `Insufficient balance. Available: ${balanceCheck.balance || 0} BRD, Required: ${amount} BRD`
+            };
+        }
+
+        const response = await fetch(`${API_URL}/api/stake`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                address: address,
+                amount: amount
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const newBalance = data.data?.balance ?? 0;
+            const stakedAmount = data.data?.staked ?? amount;
+            return {
+                success: true,
+                balance: newBalance,
+                staked: stakedAmount,
+                message: `🔒 ${amount} BRD staked successfully!`
+            };
+        }
+        
+        return { success: false, error: data.message || 'Staking failed' };
+    } catch (error) {
+        console.error('Stake error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ==================== UNSTAKE TOKENS ====================
+async function unstakeTokens(address, amount) {
+    if (!address || !amount || amount <= 0) {
+        return { success: false, error: 'Invalid address or amount' };
+    }
+
+    try {
+        // Check staking info first
+        const stakingInfo = await getStakingInfo(address);
+        if (!stakingInfo.success || stakingInfo.staked < amount) {
+            return { 
+                success: false, 
+                error: `Insufficient staked amount. Staked: ${stakingInfo.staked || 0} BRD, Requested: ${amount} BRD`
+            };
+        }
+
+        const response = await fetch(`${API_URL}/api/unstake`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                address: address,
+                amount: amount
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.success) {
+            const newBalance = data.data?.balance ?? 0;
+            const remainingStaked = data.data?.staked ?? 0;
+            return {
+                success: true,
+                balance: newBalance,
+                staked: remainingStaked,
+                message: `⬇️ ${amount} BRD unstaked successfully!`
+            };
+        }
+        
+        return { success: false, error: data.message || 'Unstaking failed' };
+    } catch (error) {
+        console.error('Unstake error:', error);
+        return { success: false, error: error.message };
     }
 }
 
@@ -1377,10 +1638,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ==================== EXPORT GLOBAL FUNCTIONS ====================
+window.getRealBalance = getRealBalance;
+window.depositToWallet = depositToWallet;
+window.addStakingReward = addStakingReward;
+window.transferBRD = transferBRD;
+window.getStakingInfo = getStakingInfo;
+window.stakeTokens = stakeTokens;
+window.unstakeTokens = unstakeTokens;
 window.searchWallet = searchWallet;
 window.refreshBalance = refreshBalance;
+window.handleStake = handleStake;
+window.handleUnstake = handleUnstake;
+window.handleTransfer = handleTransfer;
 window.copyToClipboard = copyToClipboard;
-window.updateRecentWalletsList = updateRecentWalletsList;
+window.showNotification = showNotification;
 
         // ==================== TRADUÇÕES DOS BOTÕES E TÍTULOS ====================
         const buttonTranslations = {

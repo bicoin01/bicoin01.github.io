@@ -971,44 +971,156 @@ const payment = await client.createPayment({
         let lastSearchedAddress = '';
 
         // ==================== CONSTANTES ====================
-        const BASE_SUPPLY = 100000000000000000; // 100,000,000,000,000,000 BRD
-
-        // Função para formatar números grandes
+        const BASE_SUPPLY = 100000000000000000;
+        
         function formatNumber(num) {
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
-        // Função para calcular o total supply atualizado
         function getCurrentTotalSupply() {
-            const chain = getLocalChain();
-            const totalStaked = Object.values(chain.staking).reduce((sum, s) => sum + (s.staked || 0), 0);
-            const totalRewards = Object.values(chain.staking).reduce((sum, s) => sum + (s.rewards || 0), 0);
-            const totalDeposits = chain.transactions
-                .filter(tx => tx.type === 'deposit')
-                .reduce((sum, tx) => sum + (tx.amount || 0), 0);
-            
-            // Total supply = base + staked + rewards + deposits
-            return BASE_SUPPLY + totalStaked + totalRewards + totalDeposits;
+            // ... conteúdo existente ...
         }
 
-        // Função para atualizar o total supply na interface
         function updateTotalSupplyDisplay() {
-            const totalSupply = getCurrentTotalSupply();
-            const totalSupplyUSD = totalSupply * 10; // 1 BRD = $10 USD
-            
-            const totalEl = document.getElementById('totalValue');
-            const circulatingEl = document.getElementById('circulatingValue');
-            const realMarketCapEl = document.getElementById('realMarketCapValue');
-            const dilutedMCEl = document.getElementById('dilutedMCValue');
-            const targetMCEl = document.getElementById('targetMCValue');
-            
-            if (totalEl) totalEl.textContent = formatNumber(totalSupply) + ' BRD';
-            if (circulatingEl) circulatingEl.textContent = formatNumber(totalSupply) + ' BRD';
-            if (realMarketCapEl) realMarketCapEl.textContent = '$' + formatNumber(totalSupplyUSD);
-            if (dilutedMCEl) dilutedMCEl.textContent = '$' + formatNumber(totalSupplyUSD);
-            if (targetMCEl) targetMCEl.textContent = '$' + formatNumber(totalSupplyUSD);
+            // ... conteúdo existente ...
         }
 
+        // ==================== CONSTANTS ====================
+        const BASE_SUPPLY = 100000000000000000;
+        
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function getCurrentTotalSupply() {
+            // ... existing content ...
+        }
+
+        function updateTotalSupplyDisplay() {
+            // ... existing content ...
+        }
+
+        // ✅ INSERT HERE - CONSENSUS SYSTEM
+        // ==================== CONSENSUS SYSTEM ====================
+        const CONSENSUS = {
+            validators: [],
+            blocks: [],
+            transactions: [],
+            lastBlock: null,
+            blockTime: 12000, // 12 seconds
+            maxValidators: 21
+        };
+
+        // Function to add a validator
+        function addValidator(address, stake) {
+            const chain = getLocalChain();
+            if (!chain.validators) chain.validators = [];
+            
+            const existing = chain.validators.find(v => v.address === address);
+            if (existing) {
+                existing.stake = stake;
+                existing.lastActive = Date.now();
+            } else {
+                chain.validators.push({
+                    address: address,
+                    stake: stake,
+                    joined: Date.now(),
+                    lastActive: Date.now(),
+                    blocksProposed: 0,
+                    rewards: 0
+                });
+            }
+            saveLocalChain(chain);
+            updateValidatorsDisplay();
+        }
+
+        // Function to remove a validator
+        function removeValidator(address) {
+            const chain = getLocalChain();
+            if (!chain.validators) return;
+            chain.validators = chain.validators.filter(v => v.address !== address);
+            saveLocalChain(chain);
+            updateValidatorsDisplay();
+        }
+
+        // Function to select the next validator (Proof of Stake)
+        function selectNextValidator() {
+            const chain = getLocalChain();
+            if (!chain.validators || chain.validators.length === 0) return null;
+            
+            const totalStake = chain.validators.reduce((sum, v) => sum + v.stake, 0);
+            let random = Math.random() * totalStake;
+            
+            for (const validator of chain.validators) {
+                random -= validator.stake;
+                if (random <= 0) {
+                    return validator;
+                }
+            }
+            return chain.validators[0];
+        }
+
+        // Function to propose a block
+        function proposeBlock(transactions) {
+            const validator = selectNextValidator();
+            if (!validator) {
+                showNotification('⚠️ No validators available!', '#ffc800');
+                return null;
+            }
+            
+            const chain = getLocalChain();
+            const block = {
+                index: chain.blocks ? chain.blocks.length : 0,
+                timestamp: Date.now(),
+                transactions: transactions || [],
+                validator: validator.address,
+                previousHash: chain.lastBlock ? chain.lastBlock.hash : '0x0000',
+                hash: generateBlockHash(chain.lastBlock ? chain.lastBlock.hash : '0x0000', transactions || [])
+            };
+            
+            if (!chain.blocks) chain.blocks = [];
+            chain.blocks.push(block);
+            chain.lastBlock = block;
+            
+            const validatorData = chain.validators.find(v => v.address === validator.address);
+            if (validatorData) {
+                validatorData.blocksProposed += 1;
+                validatorData.rewards += 0.1;
+            }
+            
+            saveLocalChain(chain);
+            updateBlockDisplay(block);
+            showNotification(`⛏️ Block #${block.index} proposed by ${validator.address.substring(0, 10)}...`, '#00ff66');
+            return block;
+        }
+
+        // Function to generate block hash
+        function generateBlockHash(previousHash, transactions) {
+            const data = previousHash + JSON.stringify(transactions) + Date.now().toString();
+            let hash = '';
+            for (let i = 0; i < 64; i++) {
+                const char = data.charCodeAt(i % data.length);
+                hash += (char + i).toString(16).padStart(2, '0').slice(0, 1);
+            }
+            return '0x' + hash;
+        }
+
+        // Function to validate a block
+        function validateBlock(block) {
+            const chain = getLocalChain();
+            if (!chain.blocks) return false;
+            
+            if (block.index !== chain.blocks.length) return false;
+            if (chain.lastBlock && block.previousHash !== chain.lastBlock.hash) return false;
+            if (!chain.validators.find(v => v.address === block.validator)) return false;
+            
+            return true;
+        }
+
+        // ==================== ERROR MESSAGES ====================
+        const errorMessages = {
+            // ... existing content ...
+        };
         // ==================== MENSAGENS DE ERRO ====================
         const errorMessages = {
             en: {

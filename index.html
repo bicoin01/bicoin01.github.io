@@ -834,9 +834,9 @@
                             </div>
                             <span id="activeStatus" style="color: #00ff66;">Active</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelRealMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelDilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelTargetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">--</span></div>
+                        <div class="metric-row"><span class="metric-label" id="labelRealMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">$790T</span></div>
+                        <div class="metric-row"><span class="metric-label" id="labelDilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">$790T</span></div>
+                        <div class="metric-row"><span class="metric-label" id="labelTargetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">$790T</span></div>
                     </div>
 
                     <div class="metric-card metric-card-purple">
@@ -857,9 +857,9 @@
                             </div>
                             <span id="yesStatus" style="color: #00ff66;">Yes</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelStabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelBoughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">--</span></div>
-                        <div class="metric-row"><div class="flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span class="metric-label" id="labelBurnedToday">Burned Today</span></div><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">--</span></div>
+                        <div class="metric-row"><span class="metric-label" id="labelStabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">$2.5B</span></div>
+                        <div class="metric-row"><span class="metric-label" id="labelBoughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">15M BRD</span></div>
+                        <div class="metric-row"><div class="flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span class="metric-label" id="labelBurnedToday">Burned Today</span></div><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">8.5M BRD</span></div>
                     </div>
                 </div>
             </div>
@@ -1142,13 +1142,10 @@ const payment = await client.createPayment({
         // ==================== COMPLETE TRANSLATIONS ====================
         const translations = {
             en: {
-                // Page Title
                 pageTitle: 'Bradicoin Blockchain',
                 apiChecking: 'Checking API connection...',
                 apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
                 apiOffline: '⚠️ API Offline - Using local data',
-                
-                // Search
                 searchPlaceholder: 'Paste Bradicoin wallet address here (Br...)',
                 searchBtn: 'Search',
                 refreshBtn: 'Refresh',
@@ -1158,8 +1155,6 @@ const payment = await client.createPayment({
                 tabBlock: '📦 Block',
                 tabToken: '🪙 Token',
                 loading: 'Searching blockchain...',
-                
-                // Nav Sections
                 sectionCore: '🔗 CORE BLOCKCHAIN',
                 sectionMilitary: '🛡️ MILITARY & SECURITY',
                 sectionExploration: '🔍 BLOCKCHAIN EXPLORATION',
@@ -1167,8 +1162,6 @@ const payment = await client.createPayment({
                 sectionIndustries: '🏭 INDUSTRIES',
                 sectionWeb3: '🌐 WEB3 & INVESTMENTS',
                 sectionGovernance: '⚙️ GOVERNANCE & UPDATES',
-                
-                // Nav Buttons
                 navBlockchainV2: '🔗 Blockchain V2',
                 navExternalAPI: '🌐 External API',
                 navTransactionHistory: '📜 Transaction History',
@@ -1218,8 +1211,6 @@ const payment = await client.createPayment({
                 navCryptoMarketplace: '🏪 Cryptocurrency Marketplace',
                 navAiTech: '🤖 Artificial Intelligence News',
                 navBlockchainSecurity: '🔐 Blockchain Security',
-                
-                // Network Panel
                 networkStatus: 'Network Status',
                 blockchainValid: 'Blockchain Valid',
                 networkMetrics: 'Network Metrics',
@@ -1263,16 +1254,12 @@ const payment = await client.createPayment({
                 stabilityFund: 'Stability Fund',
                 boughtToday: 'Bought Today',
                 burnedToday: 'Burned Today',
-                
-                // Validators
                 validatorsTitle: '🛡️ Validators',
                 validatorCount: 'Active',
                 noValidators: 'No validators active',
                 becomeValidatorText: 'Become a validator by staking 1000+ BRD',
                 btnBecomeValidator: '⚡ Become Validator',
                 btnViewStats: '📊 View Stats',
-                
-                // Staking Stats
                 stakingStatsTitle: '💰 Staking Stats',
                 stakingLive: 'Live',
                 loadingStaking: 'Loading staking stats...',
@@ -1280,8 +1267,6 @@ const payment = await client.createPayment({
                 totalRewards: 'Total Rewards',
                 activeStakers: 'Active Stakers',
                 apy: 'APY',
-                
-                // Security Dashboard
                 securityDashboardTitle: '🛡️ Security Dashboard',
                 secure: '🟢 Secure',
                 encryption: 'Encryption',
@@ -1296,16 +1281,12 @@ const payment = await client.createPayment({
                 btnProtectData: '🔒 Protect Data',
                 btnVerifyIntegrity: '🌳 Verify Integrity',
                 btnSecurityStatus: '📊 Security Status',
-                
-                // Transaction History
                 transactionHistoryTitle: 'Transaction History',
                 refresh: '⟳ Refresh',
                 totalTransactions: 'Total transactions: ',
                 noTransactions: 'No transactions found',
                 searchHint: 'Use the search above to find wallet transactions',
                 searchHint2: '💡 Search for a wallet to see its transaction history',
-                
-                // Developer API
                 devApiTitle: '👨‍💻 DEVELOPER API',
                 devApiAvailable: '🟢 Available',
                 devSdkTitle: '📦 SDK Installation',
@@ -1323,8 +1304,6 @@ const payment = await client.createPayment({
                 copyKeys: '📋 Copy Keys',
                 docsLink: '📚 API Documentation',
                 statusLink: '🩺 API Status',
-                
-                // Token Modal
                 tokenModalTitle: '🪙 Bradicoin Tokens',
                 tokenName: 'Token Name',
                 tokenSymbol: 'Symbol',
@@ -1338,25 +1317,21 @@ const payment = await client.createPayment({
                 tokenPricePlaceholder: 'Enter price in USD',
                 create: 'Create',
                 cancel: 'Cancel',
-                
-                // Footer
                 footerCopyright: '© 2025 Bradicoin Blockchain. All rights reserved.',
                 footerAbout: 'About',
                 footerContact: 'Contact',
                 footerTerms: 'Terms of Use',
                 footerPrivacy: 'Privacy',
                 footerSupport: 'Support',
-                
-                // Error Messages
                 errorTitle: 'Wallet Not Found',
                 errorMessage: 'The wallet address you entered does not exist on the Bradicoin blockchain.',
                 errorTip: '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".',
                 errorButton: 'Clear search',
-                
-                // Mining
                 mineBlock: '⛏️ Mine Block',
                 mining: '⛏️ Mining...',
-                blockMined: '✅ Block Mined!'
+                blockMined: '✅ Block Mined!',
+                walletNotFound: 'Wallet Not Found',
+                invalidAddress: 'Invalid wallet address. Please check and try again.'
             },
             pt: {
                 pageTitle: 'Blockchain Bradicoin',
@@ -1546,7 +1521,9 @@ const payment = await client.createPayment({
                 errorButton: 'Limpar busca',
                 mineBlock: '⛏️ Minerar Bloco',
                 mining: '⛏️ Minerando...',
-                blockMined: '✅ Bloco Minerado!'
+                blockMined: '✅ Bloco Minerado!',
+                walletNotFound: 'Carteira Não Encontrada',
+                invalidAddress: 'Endereço de carteira inválido. Verifique e tente novamente.'
             },
             es: {
                 pageTitle: 'Blockchain Bradicoin',
@@ -1736,7 +1713,9 @@ const payment = await client.createPayment({
                 errorButton: 'Limpiar búsqueda',
                 mineBlock: '⛏️ Minar Bloque',
                 mining: '⛏️ Minando...',
-                blockMined: '✅ Bloque Minado!'
+                blockMined: '✅ Bloque Minado!',
+                walletNotFound: 'Cartera No Encontrada',
+                invalidAddress: 'Dirección de billetera inválida. Verifique y vuelva a intentarlo.'
             },
             ar: {
                 pageTitle: 'بلوكشين براديكوين',
@@ -1926,7 +1905,9 @@ const payment = await client.createPayment({
                 errorButton: 'مسح البحث',
                 mineBlock: '⛏️ تعدين كتلة',
                 mining: '⛏️ جاري التعدين...',
-                blockMined: '✅ تم تعدين الكتلة!'
+                blockMined: '✅ تم تعدين الكتلة!',
+                walletNotFound: 'المحفظة غير موجودة',
+                invalidAddress: 'عنوان محفظة غير صالح. تحقق وحاول مرة أخرى.'
             }
         };
 
@@ -2112,9 +2093,116 @@ const payment = await client.createPayment({
             if (tabMap[tab]) {
                 document.getElementById(tabMap[tab]).classList.add('active');
             }
-            if (document.getElementById('searchInput').value.trim()) {
-                searchWallet();
+            
+            // Show modal with tab content
+            const t = translations[currentLang] || translations.en;
+            const modal = document.getElementById('featureModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            const tabTitles = {
+                'wallet': '💰 Wallet',
+                'staking': '🔒 Staking',
+                'transaction': '📜 Transaction',
+                'block': '📦 Block'
+            };
+            
+            title.textContent = tabTitles[tab] || tab;
+            
+            let content = '';
+            if (tab === 'wallet') {
+                content = `
+                    <h2>💰 Wallet Management</h2>
+                    <p>Manage your Bradicoin wallet, view balances, and perform transactions.</p>
+                    <div class="metric-card">
+                        <div class="metric-row"><span>Total Wallets</span><span style="color:#00ff66;">12,345</span></div>
+                        <div class="metric-row"><span>Active Wallets</span><span style="color:#00ff66;">8,901</span></div>
+                        <div class="metric-row"><span>New Today</span><span style="color:#ffc800;">234</span></div>
+                        <div class="metric-row"><span>Total Balance</span><span style="color:#00ccff;">1,245,678 BRD</span></div>
+                    </div>
+                    <div class="highlight-box green">
+                        <h3>🔑 Wallet Features</h3>
+                        <ul>
+                            <li>Create and manage multiple wallets</li>
+                            <li>View real-time balances</li>
+                            <li>Send and receive BRD tokens</li>
+                            <li>Track transaction history</li>
+                            <li>Secure private key management</li>
+                        </ul>
+                    </div>
+                    <button class="feature-btn green" onclick="showNotification('💰 Wallet management is ready!','#00ff66')">💼 Manage Wallet</button>
+                `;
+            } else if (tab === 'staking') {
+                content = `
+                    <h2>🔒 Staking & Rewards</h2>
+                    <p>Stake your BRD tokens and earn rewards while securing the network.</p>
+                    <div class="metric-card">
+                        <div class="metric-row"><span>Total Staked</span><span style="color:#ffc800;">850,000 BRD</span></div>
+                        <div class="metric-row"><span>APY</span><span style="color:#00ff66;">18%</span></div>
+                        <div class="metric-row"><span>Active Validators</span><span style="color:#00ccff;">12</span></div>
+                        <div class="metric-row"><span>Rewards Pool</span><span style="color:#c864ff;">150,000 BRD</span></div>
+                    </div>
+                    <div class="highlight-box yellow">
+                        <h3>💰 Staking Benefits</h3>
+                        <ul>
+                            <li>Earn passive income with up to 18% APY</li>
+                            <li>Help secure the Bradicoin network</li>
+                            <li>Become a validator with 1000+ BRD</li>
+                            <li>Auto-compounding rewards</li>
+                            <li>Flexible unstaking options</li>
+                        </ul>
+                    </div>
+                    <button class="feature-btn yellow" onclick="showNotification('🔒 Staking is ready!','#ffc800')">🔒 Start Staking</button>
+                `;
+            } else if (tab === 'transaction') {
+                content = `
+                    <h2>📜 Transaction History</h2>
+                    <p>View and track all your transactions on the Bradicoin blockchain.</p>
+                    <div class="metric-card">
+                        <div class="metric-row"><span>Total Transactions</span><span style="color:#00ccff;">45,678</span></div>
+                        <div class="metric-row"><span>Today</span><span style="color:#00ff66;">234</span></div>
+                        <div class="metric-row"><span>Average Fee</span><span style="color:#ffc800;">$0.15</span></div>
+                        <div class="metric-row"><span>Status</span><span style="color:#00ff66;">🟢 All Systems Operational</span></div>
+                    </div>
+                    <div class="highlight-box cyan">
+                        <h3>📊 Transaction Features</h3>
+                        <ul>
+                            <li>Real-time transaction monitoring</li>
+                            <li>Detailed transaction history</li>
+                            <li>Advanced filtering and search</li>
+                            <li>Export transaction data</li>
+                            <li>Transaction receipts and confirmations</li>
+                        </ul>
+                    </div>
+                    <button class="feature-btn" onclick="showNotification('📜 Transaction history loaded!','#00ccff')">📊 View Transactions</button>
+                `;
+            } else if (tab === 'block') {
+                content = `
+                    <h2>📦 Block Explorer</h2>
+                    <p>Explore blocks and transactions on the Bradicoin blockchain.</p>
+                    <div class="metric-card">
+                        <div class="metric-row"><span>Current Block</span><span style="color:#00ccff;">#1,234,567</span></div>
+                        <div class="metric-row"><span>Block Time</span><span style="color:#00ff66;">12s</span></div>
+                        <div class="metric-row"><span>Transactions per Block</span><span style="color:#ffc800;">~25</span></div>
+                        <div class="metric-row"><span>Blockchain Size</span><span style="color:#c864ff;">1.2 TB</span></div>
+                    </div>
+                    <div class="highlight-box purple">
+                        <h3>🔍 Block Explorer Features</h3>
+                        <ul>
+                            <li>View block details and transactions</li>
+                            <li>Search by block number or hash</li>
+                            <li>Track block confirmations</li>
+                            <li>View transaction history per block</li>
+                            <li>Real-time block updates</li>
+                        </ul>
+                    </div>
+                    <button class="feature-btn purple" onclick="showNotification('📦 Block explorer is ready!','#c864ff')">🔍 Explore Blocks</button>
+                `;
             }
+            
+            body.innerHTML = content;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         }
 
         // ==================== TOKEN MODAL ====================
@@ -2145,16 +2233,6 @@ const payment = await client.createPayment({
             `;
             
             tokenData.forEach(token => {
-                const iconColors = {
-                    '#00ffff': 'text-cyan',
-                    '#f7931a': 'text-yellow',
-                    '#627eea': 'text-blue',
-                    '#9945ff': 'text-purple',
-                    '#0033ad': 'text-blue',
-                    '#e6007a': 'text-pink',
-                    '#2a5ada': 'text-blue',
-                    '#ff007a': 'text-pink'
-                };
                 html += `
                     <div class="token-card">
                         <div class="token-card-image" style="background:linear-gradient(135deg, ${token.color}, ${token.color}88);">
@@ -2268,15 +2346,20 @@ const payment = await client.createPayment({
                 const balanceResult = await getRealBalance(address);
                 const errMsg = translations[currentLang] || translations.en;
                 
-                if (!balanceResult.exists && balanceResult.source === 'api') {
+                // Check if wallet exists via API or local
+                const chain = getLocalChain();
+                const exists = chain.balances[address] !== undefined || chain.staking[address] !== undefined;
+                
+                if (!exists && !apiOnline) {
+                    // Show wallet not found error with X button
                     resultDiv.className = 'result-box error';
                     resultDiv.innerHTML = `
                         <div style="text-align: center; padding: 30px 20px;">
                             <div class="error-icon">🔍</div>
-                            <h3 class="error-title">${errMsg.errorTitle}</h3>
-                            <p class="error-message">${errMsg.errorMessage}</p>
-                            <p class="error-tip">${errMsg.errorTip}</p>
-                            <button class="error-clear-btn" onclick="clearSearch()">${errMsg.errorButton}</button>
+                            <h3 class="error-title">${errMsg.walletNotFound || 'Wallet Not Found'}</h3>
+                            <p class="error-message">${errMsg.invalidAddress || 'The wallet address you entered does not exist on the Bradicoin blockchain.'}</p>
+                            <p class="error-tip">${errMsg.errorTip || '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".'}</p>
+                            <button class="error-clear-btn" onclick="clearSearch()">${errMsg.errorButton || 'Clear search'}</button>
                         </div>
                     `;
                     resultDiv.classList.add('show');
@@ -2330,141 +2413,41 @@ const payment = await client.createPayment({
                     </div>
                 `;
 
-                if (tab === 'wallet') {
-                    const balanceColor = balance > 0 ? '#00ff66' : '#ffc800';
-                    resultHTML += `
-                        <div style="font-size: 32px; text-align: center; margin: 10px 0; color: ${balanceColor};">
-                            ${balance.toFixed(6)} <span style="font-size: 16px; color: #888;">BRD</span>
+                // Show balance with proper formatting
+                const balanceDisplay = balance.toFixed(6);
+                const usdValue = (balance * 10).toFixed(2);
+                
+                resultHTML += `
+                    <div style="font-size: 28px; text-align: center; margin: 10px 0; color: ${balance > 0 ? '#00ff66' : '#ffc800'};">
+                        ${balanceDisplay} <span style="font-size: 16px; color: #888;">BRD</span>
+                    </div>
+                    <div class="result-grid">
+                        <div class="result-item" style="border-left-color: #00ff66;">
+                            <div class="result-item-label">💰 Balance</div>
+                            <div class="result-item-value green">${balanceDisplay} BRD</div>
                         </div>
-                        <div class="result-grid">
-                            <div class="result-item" style="border-left-color: #00ff66;">
-                                <div class="result-item-label">💰 Balance</div>
-                                <div class="result-item-value green">${balance.toFixed(6)} BRD</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #00ccff;">
-                                <div class="result-item-label">📊 USD Value</div>
-                                <div class="result-item-value cyan">$${(balance * 10).toFixed(2)}</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #ffc800;">
-                                <div class="result-item-label">🔒 Staked</div>
-                                <div class="result-item-value yellow">${staked.toFixed(2)} BRD</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: magenta;">
-                                <div class="result-item-label">⭐ Rewards</div>
-                                <div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #c864ff;">
-                                <div class="result-item-label">📈 APY</div>
-                                <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #ff6464;">
-                                <div class="result-item-label">🔄 Status</div>
-                                <div class="result-item-value" style="color: ${balance > 0 ? '#00ff66' : '#ffc800'};">${balance > 0 ? '✅ Active' : '⚠️ Empty'}</div>
-                            </div>
+                        <div class="result-item" style="border-left-color: #00ccff;">
+                            <div class="result-item-label">📊 USD Value</div>
+                            <div class="result-item-value cyan">$${usdValue}</div>
                         </div>
-                    `;
-                } else if (tab === 'staking') {
-                    resultHTML += `
-                        <div style="text-align: center; margin: 10px 0;">
-                            <span style="font-size: 14px; color: #888;">Staking Overview</span>
+                        <div class="result-item" style="border-left-color: #ffc800;">
+                            <div class="result-item-label">🔒 Staked</div>
+                            <div class="result-item-value yellow">${staked.toFixed(2)} BRD</div>
                         </div>
-                        <div class="result-grid">
-                            <div class="result-item" style="border-left-color: #00ff66;">
-                                <div class="result-item-label">🔒 Staked</div>
-                                <div class="result-item-value green">${staked.toFixed(2)} BRD</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #ffc800;">
-                                <div class="result-item-label">⭐ Rewards</div>
-                                <div class="result-item-value yellow">${rewards.toFixed(2)} BRD</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #c864ff;">
-                                <div class="result-item-label">📈 APY</div>
-                                <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #00ccff;">
-                                <div class="result-item-label">🌐 Total Staked</div>
-                                <div class="result-item-value cyan">${stakingInfo.totalStaked.toFixed(2)} BRD</div>
-                            </div>
+                        <div class="result-item" style="border-left-color: magenta;">
+                            <div class="result-item-label">⭐ Rewards</div>
+                            <div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div>
                         </div>
-                    `;
-                } else if (tab === 'transaction') {
-                    const chain = getLocalChain();
-                    const userTxs = chain.transactions.filter(tx => 
-                        tx.address === address || tx.sender === address || tx.recipient === address
-                    );
-                    const txCount = userTxs.length;
-                    
-                    resultHTML += `
-                        <div style="text-align: center; margin: 10px 0;">
-                            <span style="font-size: 14px; color: #888;">Transaction History</span>
-                            <span style="font-size: 24px; color: #00ccff; display: block;">${txCount} transactions</span>
+                        <div class="result-item" style="border-left-color: #c864ff;">
+                            <div class="result-item-label">📈 APY</div>
+                            <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
                         </div>
-                    `;
-
-                    if (txCount > 0) {
-                        const recentTxs = userTxs.slice(0, 5);
-                        resultHTML += `<div style="max-height: 300px; overflow-y: auto;">`;
-                        recentTxs.forEach(tx => {
-                            const isIncoming = tx.recipient === address;
-                            const amount = tx.amount || 0;
-                            const date = new Date(tx.timestamp || Date.now()).toLocaleString();
-                            const txHash = tx.txHash || generateWalletHash(address + tx.timestamp);
-                            
-                            resultHTML += `
-                                <div style="display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid rgba(0,200,255,0.05); flex-wrap: wrap; gap: 4px;">
-                                    <div>
-                                        <span style="color: ${isIncoming ? '#00ff66' : '#ff6464'};">
-                                            ${isIncoming ? '⬇️ Received' : '⬆️ Sent'}
-                                        </span>
-                                        <span style="font-size: 10px; color: #666; margin-left: 8px;">${date}</span>
-                                    </div>
-                                    <div style="font-weight: bold; color: ${isIncoming ? '#00ff66' : '#ff6464'};">
-                                        ${isIncoming ? '+' : '-'} ${amount.toFixed(6)} BRD
-                                    </div>
-                                    <div style="width: 100%; font-size: 9px; color: #666; font-family: monospace; word-break: break-all; background: rgba(200,100,255,0.05); padding: 2px 6px; border-radius: 3px; border: 1px solid rgba(200,100,255,0.05);">
-                                        🧾 ${txHash}
-                                    </div>
-                                </div>
-                            `;
-                        });
-                        resultHTML += `</div>`;
-                        if (txCount > 5) {
-                            resultHTML += `<div style="text-align: center; margin-top: 8px; color: #888; font-size: 11px;">+ ${txCount - 5} more transactions</div>`;
-                        }
-                    } else {
-                        resultHTML += `
-                            <div style="text-align: center; padding: 20px; color: #666;">
-                                <div style="font-size: 2rem;">📭</div>
-                                <p>No transactions found for this address</p>
-                            </div>
-                        `;
-                    }
-                } else if (tab === 'block') {
-                    const blockHash = generateWalletHash('block_' + address);
-                    resultHTML += `
-                        <div style="text-align: center; margin: 10px 0;">
-                            <span style="font-size: 14px; color: #888;">Block Explorer</span>
+                        <div class="result-item" style="border-left-color: #ff6464;">
+                            <div class="result-item-label">🔄 Status</div>
+                            <div class="result-item-value" style="color: ${balance > 0 ? '#00ff66' : '#ffc800'};">${balance > 0 ? '✅ Active' : '⚠️ Empty'}</div>
                         </div>
-                        <div class="result-grid">
-                            <div class="result-item" style="border-left-color: #00ccff;">
-                                <div class="result-item-label">📦 Latest Block</div>
-                                <div class="result-item-value cyan">#${Math.floor(Math.random() * 10000) + 1000}</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #00ff66;">
-                                <div class="result-item-label">⏱️ Block Time</div>
-                                <div class="result-item-value green">${(Math.random() * 10 + 5).toFixed(1)}s</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #ffc800;">
-                                <div class="result-item-label">📊 Transactions</div>
-                                <div class="result-item-value yellow">${Math.floor(Math.random() * 20) + 1}</div>
-                            </div>
-                            <div class="result-item" style="border-left-color: #c864ff;">
-                                <div class="result-item-label">🔗 Block Hash</div>
-                                <div class="result-item-value" style="color: #c864ff; font-size: 11px; word-break: break-all; font-family: monospace;">${blockHash.substring(0, 30)}...</div>
-                            </div>
-                        </div>
-                    `;
-                }
+                    </div>
+                `;
 
                 resultHTML += `
                     <div class="last-updated">
@@ -4084,9 +4067,9 @@ const payment = await client.createPayment({
             document.getElementById('stakedValue').textContent = '0';
             document.getElementById('burnedValue').textContent = '0';
             document.getElementById('deflationValue').textContent = '0%';
-            document.getElementById('realMarketCapValue').textContent = '$' + formatNumber(totalSupplyUSD);
-            document.getElementById('dilutedMCValue').textContent = '$' + formatNumber(totalSupplyUSD);
-            document.getElementById('targetMCValue').textContent = '$' + formatNumber(totalSupplyUSD);
+            document.getElementById('realMarketCapValue').textContent = '$790T';
+            document.getElementById('dilutedMCValue').textContent = '$790T';
+            document.getElementById('targetMCValue').textContent = '$790T';
             document.getElementById('stabilityFundValue').textContent = '$2.5B';
             document.getElementById('boughtTodayValue').textContent = '15M BRD';
             document.getElementById('burnedTodayValue').textContent = '8.5M BRD';
@@ -4259,11 +4242,13 @@ const payment = await client.createPayment({
             
             document.querySelectorAll('.search-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
-                    document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    currentTab = this.dataset.tab;
-                    if (currentTab !== 'token' && document.getElementById('searchInput').value.trim()) {
-                        searchWallet();
+                    const tabId = this.dataset.tab;
+                    if (tabId === 'token') {
+                        openTokenModal();
+                    } else {
+                        document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        switchTab(tabId);
                     }
                 });
             });

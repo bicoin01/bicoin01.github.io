@@ -2400,6 +2400,106 @@ function addAPIRetryButton() {
             openTokenModal();
         }
 
+// ==================== GET STAKING INFO ====================
+async function getStakingInfo(address) {
+    // Try API first if online
+    if (apiOnline) {
+        try {
+            const response = await fetch(`${API_URL}/api/staking/${address}`, {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                signal: AbortSignal.timeout(5000)
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('📡 Staking API Response:', data);
+                
+                // Extract staking data from different response formats
+                let staked = 0;
+                let rewards = 0;
+                let apy = 18;
+                let totalStaked = 0;
+                
+                if (data.data) {
+                    staked = data.data.staked || data.data.stake || 0;
+                    rewards = data.data.rewards || data.data.reward || 0;
+                    apy = data.data.apy || data.data.APY || 18;
+                    totalStaked = data.data.totalStaked || 0;
+                } else {
+                    staked = data.staked || data.stake || 0;
+                    rewards = data.rewards || data.reward || 0;
+                    apy = data.apy || data.APY || 18;
+                    totalStaked = data.totalStaked || 0;
+                }
+                
+                return { 
+                    success: true, 
+                    staked: parseFloat(staked) || 0, 
+                    rewards: parseFloat(rewards) || 0, 
+                    apy: parseFloat(apy) || 18, 
+                    totalStaked: parseFloat(totalStaked) || 0,
+                    source: 'api'
+                };
+            }
+        } catch (error) {
+            console.log('❌ Staking API Error:', error.message);
+        }
+    }
+    
+    // Fallback to local data
+    console.log('📁 Using local staking data for:', address);
+    const chain = getLocalChain();
+    const staking = chain.staking[address] || { staked: 0, rewards: 0 };
+    
+    // Calculate rewards if staked
+    let rewardsAmount = staking.rewards || 0;
+    if (staking.staked > 0) {
+        // Calculate rewards based on time
+        const lastUpdate = staking.lastUpdate || Date.now();
+        const timeElapsed = (Date.now() - lastUpdate) / (1000 * 60 * 60 * 24 * 365);
+        const apy = 18;
+        const earnedRewards = staking.staked * (apy / 100) * timeElapsed;
+        rewardsAmount += earnedRewards;
+    }
+    
+    return { 
+        success: true, 
+        staked: staking.staked || 0, 
+        rewards: rewardsAmount, 
+        apy: 18, 
+        totalStaked: Object.values(chain.staking).reduce((sum, s) => sum + (s.staked || 0), 0),
+        source: 'local'
+    };
+}
+
+// ==================== AUTO-CREATE WALLET ====================
+function autoCreateWallet(address) {
+    if (!address || !address.startsWith('Br')) return false;
+    
+    const chain = getLocalChain();
+    
+    // Check if wallet already exists
+    if (chain.balances[address] !== undefined) return true;
+    
+    // Create wallet with initial balance
+    chain.balances[address] = 1000; // Initial balance of 1000 BRD
+    chain.transactions.unshift({
+        type: 'deposit',
+        address: address,
+        amount: 1000,
+        timestamp: Date.now(),
+        txHash: generateWalletHash(address + Date.now())
+    });
+    
+    saveLocalChain(chain);
+    console.log(`✅ Wallet ${address.substring(0, 12)}... created with 1000 BRD`);
+    return true;
+}
+
         // ==================== SEARCH WALLET ====================
     async function searchWallet() {
     const input = document.getElementById('searchInput');

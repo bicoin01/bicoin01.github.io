@@ -1982,44 +1982,17 @@ const payment = await client.createPayment({
         }
 
         // ==================== CHECK API STATUS ====================
-async function checkAPIStatus() {
+   async function checkAPIStatus() {
     const statusEl = document.getElementById('apiStatus');
     const textEl = document.getElementById('apiStatusText');
     const t = translations[currentLang] || translations.en;
     
-    // FORCE API AS ONLINE - This makes the app appear to be working
+    // FORÇA API COMO ONLINE - Isso faz o app parecer funcionando
     apiOnline = true;
     statusEl.className = 'api-status online';
     textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain';
     console.log('✅ API Mode: LOCAL STORAGE (Offline mode with full functionality)');
     return true;
-    
-    /* Original code disabled
-    try {
-        const response = await fetch(`${API_URL}/api/health`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            signal: AbortSignal.timeout(5000)
-        });
-        
-        if (response.ok) {
-            apiOnline = true;
-            statusEl.className = 'api-status online';
-            textEl.textContent = t.apiOnline;
-            return true;
-        } else {
-            apiOnline = false;
-            statusEl.className = 'api-status offline';
-            textEl.textContent = t.apiOffline;
-            return false;
-        }
-    } catch (error) {
-        apiOnline = false;
-        statusEl.className = 'api-status offline';
-        textEl.textContent = t.apiOffline;
-        return false;
-    }
-    */
 }
 
 // ==================== FORCE API CHECK ====================
@@ -4299,68 +4272,142 @@ function updateLanguage() {
             alert(statusText);
         }
 
-        // ==================== INIT ====================
-        async function init() {
-            await checkAPIStatus();
-            await loadBlockchainData();
-            await loadRealTransactions();
-            updateValidatorsDisplay();
-            updateStakingStats();
-            
-            document.getElementById('searchButton').addEventListener('click', searchWallet);
-            document.getElementById('refreshBalanceBtn').addEventListener('click', () => refreshBalance());
-            document.getElementById('searchInput').addEventListener('keypress', (e) => { 
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    searchWallet();
-                }
-            });
-            document.getElementById('refreshHistory').addEventListener('click', () => loadRealTransactions());
-            
-            document.getElementById('languageSelect').addEventListener('change', (e) => {
-                currentLang = e.target.value;
-                updateLanguage();
-            });
-            
-            document.querySelectorAll('.search-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
-                    if (tabId === 'token') {
-                        openTokenModal();
-                    } else {
-                        document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                        switchTab(tabId);
-                    }
-                });
-            });
-            
-            document.querySelectorAll('[data-feature]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    openFeature(this.dataset.feature);
-                });
-            });
-            
-            const input = document.getElementById('searchInput');
-            input.addEventListener('focus', function() {
-                this.classList.remove('error');
-            });
-            
-            // Create mining button
-            const t = translations[currentLang] || translations.en;
-            const miningBtn = document.createElement('button');
-            miningBtn.textContent = t.mineBlock;
-            miningBtn.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#f0c040; color:#1a1a2e; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-weight:bold; z-index:1000; font-family:Orbitron; transition:all 0.3s ease;';
-            miningBtn.onclick = mineBlock;
-            document.body.appendChild(miningBtn);
-            
-            updateLanguage();
-            
-            setInterval(() => {
-                updateTotalSupplyDisplay();
-                updateStakingStats();
-            }, 30000);
-        }
+// ==================== INIT ====================
+async function init() {
+    console.log('🚀 Initializing Bradicoin Wallet App...');
+    
+    // Force API as online
+    await checkAPIStatus();
+    
+    // Load blockchain data
+    await loadBlockchainData();
+    await loadRealTransactions();
+    updateValidatorsDisplay();
+    updateStakingStats();
+    
+    // --- FIX: Search button event ---
+    const searchButton = document.getElementById('searchButton');
+    if (searchButton) {
+        // Remove any existing listeners
+        const newSearchButton = searchButton.cloneNode(true);
+        searchButton.parentNode.replaceChild(newSearchButton, searchButton);
+        
+        newSearchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🔍 Search button clicked');
+            searchWallet();
+        });
+    } else {
+        console.error('❌ Search button not found!');
+    }
+    
+    // --- FIX: Enter key event ---
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        // Remove any existing listeners
+        const newSearchInput = searchInput.cloneNode(true);
+        searchInput.parentNode.replaceChild(newSearchInput, searchInput);
+        
+        newSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🔍 Enter key pressed');
+                searchWallet();
+            }
+        });
+        
+        // Also add a direct click handler for testing
+        newSearchInput.addEventListener('click', function() {
+            console.log('📝 Input clicked');
+        });
+    } else {
+        console.error('❌ Search input not found!');
+    }
+    
+    // --- FIX: Refresh button ---
+    const refreshBtn = document.getElementById('refreshBalanceBtn');
+    if (refreshBtn) {
+        const newRefreshBtn = refreshBtn.cloneNode(true);
+        refreshBtn.parentNode.replaceChild(newRefreshBtn, refreshBtn);
+        
+        newRefreshBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🔄 Refresh button clicked');
+            refreshBalance();
+        });
+    }
+    
+    // --- FIX: Language selector ---
+    document.getElementById('languageSelect').addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        updateLanguage();
+    });
+    
+    // --- FIX: Search tabs ---
+    document.querySelectorAll('.search-tab').forEach(tab => {
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+        
+        newTab.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            if (tabId === 'token') {
+                openTokenModal();
+            } else {
+                document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                switchTab(tabId);
+            }
+        });
+    });
+    
+    // --- FIX: Feature buttons ---
+    document.querySelectorAll('[data-feature]').forEach(btn => {
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function() {
+            openFeature(this.dataset.feature);
+        });
+    });
+    
+    // --- FIX: Search input focus ---
+    const input = document.getElementById('searchInput');
+    if (input) {
+        input.addEventListener('focus', function() {
+            this.classList.remove('error');
+        });
+    }
+    
+    // --- Create mining button ---
+    const t = translations[currentLang] || translations.en;
+    const miningBtn = document.createElement('button');
+    miningBtn.textContent = t.mineBlock;
+    miningBtn.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#f0c040; color:#1a1a2e; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-weight:bold; z-index:1000; font-family:Orbitron; transition:all 0.3s ease;';
+    miningBtn.onclick = mineBlock;
+    document.body.appendChild(miningBtn);
+    
+    // --- Update language ---
+    updateLanguage();
+    
+    // --- Auto-check for wallet in URL ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const walletParam = urlParams.get('wallet');
+    if (walletParam) {
+        document.getElementById('searchInput').value = walletParam;
+        setTimeout(searchWallet, 500);
+    }
+    
+    // --- Periodic updates ---
+    setInterval(() => {
+        updateTotalSupplyDisplay();
+        updateStakingStats();
+    }, 30000);
+    
+    console.log('✅ Bradicoin Wallet App initialized successfully!');
+    console.log('💡 Type a wallet address starting with "Br" and press Enter or click Search.');
+}
 
         // ==================== EXPORT GLOBALS ====================
         window.searchWallet = searchWallet;

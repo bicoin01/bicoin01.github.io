@@ -3824,219 +3824,441 @@ const payment = await client.createPayment({
 
         // ==================== UPDATE LANGUAGE ====================
         function updateLanguage() {
-            const t = translations[currentLang] || translations.en;
-            
-            // Page Title
-            document.getElementById('pageTitle').textContent = t.pageTitle;
-            
-            // API Status
-            const statusEl = document.getElementById('apiStatus');
-            const textEl = document.getElementById('apiStatusText');
-            if (apiOnline) {
-                statusEl.className = 'api-status online';
-                textEl.textContent = t.apiOnline;
-            } else {
-                statusEl.className = 'api-status offline';
-                textEl.textContent = t.apiOffline;
-            }
-            
-            // Search
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('searchBtnText').textContent = t.searchBtn;
-            document.getElementById('refreshBtnText').textContent = t.refreshBtn;
-            document.getElementById('tabWallet').innerHTML = t.tabWallet;
-            document.getElementById('tabStaking').innerHTML = t.tabStaking;
-            document.getElementById('tabTransaction').innerHTML = t.tabTransaction;
-            document.getElementById('tabBlock').innerHTML = t.tabBlock;
-            document.getElementById('tabToken').innerHTML = t.tabToken;
-            
-            // Nav Sections
-            document.getElementById('sectionCoreTitle').textContent = t.sectionCore;
-            document.getElementById('sectionMilitaryTitle').textContent = t.sectionMilitary;
-            document.getElementById('sectionExplorationTitle').textContent = t.sectionExploration;
-            document.getElementById('sectionEmergingTitle').textContent = t.sectionEmerging;
-            document.getElementById('sectionIndustriesTitle').textContent = t.sectionIndustries;
-            document.getElementById('sectionWeb3Title').textContent = t.sectionWeb3;
-            document.getElementById('sectionGovernanceTitle').textContent = t.sectionGovernance;
-            
-            // Nav Buttons
-            document.getElementById('navBlockchainV2').innerHTML = t.navBlockchainV2;
-            document.getElementById('navExternalAPI').innerHTML = t.navExternalAPI;
-            document.getElementById('navTransactionHistory').innerHTML = t.navTransactionHistory;
-            document.getElementById('navSecurityDashboard').innerHTML = t.navSecurityDashboard;
-            document.getElementById('navBlockExplorer').innerHTML = t.navBlockExplorer;
-            document.getElementById('navNetworkStatus').innerHTML = t.navNetworkStatus;
-            document.getElementById('navStaking').innerHTML = t.navStaking;
-            document.getElementById('navGovernance').innerHTML = t.navGovernance;
-            document.getElementById('navAuditLogs').innerHTML = t.navAuditLogs;
-            document.getElementById('navGasTracker').innerHTML = t.navGasTracker;
-            document.getElementById('navAnalytics').innerHTML = t.navAnalytics;
-            document.getElementById('navFraudDetection').innerHTML = t.navFraudDetection;
-            document.getElementById('navMilitaryC2').innerHTML = t.navMilitaryC2;
-            document.getElementById('navAuditVault').innerHTML = t.navAuditVault;
-            document.getElementById('navCyberThreat').innerHTML = t.navCyberThreat;
-            document.getElementById('navMissionCritical').innerHTML = t.navMissionCritical;
-            document.getElementById('navSecurity').innerHTML = t.navSecurity;
-            document.getElementById('navExploreBlocks').innerHTML = t.navExploreBlocks;
-            document.getElementById('navTransactions').innerHTML = t.navTransactions;
-            document.getElementById('navNetworkStatus2').innerHTML = t.navNetworkStatus2;
-            document.getElementById('navStaking2').innerHTML = t.navStaking2;
-            document.getElementById('navDaoGovernance2').innerHTML = t.navDaoGovernance2;
-            document.getElementById('navAuditLogs2').innerHTML = t.navAuditLogs2;
-            document.getElementById('navGasFees').innerHTML = t.navGasFees;
-            document.getElementById('navAnalytics2').innerHTML = t.navAnalytics2;
-            document.getElementById('navFraudDetection2').innerHTML = t.navFraudDetection2;
-            document.getElementById('navSmartContracts').innerHTML = t.navSmartContracts;
-            document.getElementById('navDesci').innerHTML = t.navDesci;
-            document.getElementById('navHologram').innerHTML = t.navHologram;
-            document.getElementById('navSpaceSector').innerHTML = t.navSpaceSector;
-            document.getElementById('navAgriculture').innerHTML = t.navAgriculture;
-            document.getElementById('navEntertainment').innerHTML = t.navEntertainment;
-            document.getElementById('navSports').innerHTML = t.navSports;
-            document.getElementById('navInfrastructure').innerHTML = t.navInfrastructure;
-            document.getElementById('navHealth').innerHTML = t.navHealth;
-            document.getElementById('navBiotechnology').innerHTML = t.navBiotechnology;
-            document.getElementById('navEnergy').innerHTML = t.navEnergy;
-            document.getElementById('navFinancialMarket').innerHTML = t.navFinancialMarket;
-            document.getElementById('navNftExploration').innerHTML = t.navNftExploration;
-            document.getElementById('navCloudMining').innerHTML = t.navCloudMining;
-            document.getElementById('navRoboticsInvestments').innerHTML = t.navRoboticsInvestments;
-            document.getElementById('navDefiProjects').innerHTML = t.navDefiProjects;
-            document.getElementById('navMetaverseIntegration').innerHTML = t.navMetaverseIntegration;
-            document.getElementById('navDecentralizedPhilanthropy').innerHTML = t.navDecentralizedPhilanthropy;
-            document.getElementById('navBlockchainUpdate').innerHTML = t.navBlockchainUpdate;
-            document.getElementById('navDigitalGovernance').innerHTML = t.navDigitalGovernance;
-            document.getElementById('navCryptoMarketplace').innerHTML = t.navCryptoMarketplace;
-            document.getElementById('navAiTech').innerHTML = t.navAiTech;
-            document.getElementById('navBlockchainSecurity').innerHTML = t.navBlockchainSecurity;
-            
-            // Network Panel
-            document.getElementById('networkStatusTitle').textContent = t.networkStatus;
-            document.getElementById('blockchainValid').textContent = t.blockchainValid;
-            document.getElementById('networkMetricsTitle').textContent = t.networkMetrics;
-            document.getElementById('labelBlockHeight').textContent = t.blockHeight;
-            document.getElementById('labelBlocksPerMin').textContent = t.blocksPerMin;
-            document.getElementById('labelAvgBlockTime').textContent = t.avgBlockTime;
-            document.getElementById('labelNodesOnline').textContent = t.nodesOnline;
-            document.getElementById('labelValidators').textContent = t.validators;
-            document.getElementById('labelNetworkHealth').textContent = t.networkHealth;
-            document.getElementById('labelDecentralization').textContent = t.decentralization;
-            document.getElementById('transactionsTitle').textContent = t.transactions;
-            document.getElementById('labelTPS').textContent = t.tps;
-            document.getElementById('labelAvgConfirmation').textContent = t.avgConfirmation;
-            document.getElementById('labelAvgFee').textContent = t.avgFee;
-            document.getElementById('labelVolume24h').textContent = t.volume24h;
-            document.getElementById('labelFeesToday').textContent = t.feesToday;
-            document.getElementById('labelPending').textContent = t.pending;
-            document.getElementById('walletsTitle').textContent = t.wallets;
-            document.getElementById('labelActiveWallets').textContent = t.activeWallets;
-            document.getElementById('labelNewToday').textContent = t.newToday;
-            document.getElementById('labelInStaking').textContent = t.inStaking;
-            document.getElementById('labelTopHolders').textContent = t.topHolders;
-            document.getElementById('supplyTitle').textContent = t.supply;
-            document.getElementById('labelTotal').textContent = t.total;
-            document.getElementById('labelCirculating').textContent = t.circulating;
-            document.getElementById('labelLocked').textContent = t.locked;
-            document.getElementById('labelStaked').textContent = t.staked;
-            document.getElementById('labelBurned').textContent = t.burned;
-            document.getElementById('labelDeflation').textContent = t.deflation;
-            document.getElementById('priceEconomicsTitle').textContent = t.priceEconomics;
-            document.getElementById('labelBasePrice').textContent = t.basePrice;
-            document.getElementById('labelCurrentPrice').textContent = t.currentPrice;
-            document.getElementById('priceSupportText').textContent = t.priceSupport;
-            document.getElementById('activeStatus').textContent = t.active;
-            document.getElementById('labelRealMarketCap').textContent = t.realMarketCap;
-            document.getElementById('labelDilutedMC').textContent = t.dilutedMC;
-            document.getElementById('labelTargetMC').textContent = t.targetMC;
-            document.getElementById('stabilityTitle').textContent = t.stabilityMechanisms;
-            document.getElementById('buybackActiveText').textContent = t.buybackActive;
-            document.getElementById('yesStatus').textContent = t.yes;
-            document.getElementById('labelStabilityFund').textContent = t.stabilityFund;
-            document.getElementById('labelBoughtToday').textContent = t.boughtToday;
-            document.getElementById('labelBurnedToday').textContent = t.burnedToday;
-            
-            // Validators
-            document.getElementById('validatorsTitle').textContent = t.validatorsTitle;
-            document.getElementById('btnBecomeValidator').innerHTML = t.btnBecomeValidator;
-            document.getElementById('btnViewStats').innerHTML = t.btnViewStats;
-            document.getElementById('noValidatorsText').textContent = t.noValidators;
-            document.getElementById('becomeValidatorText').textContent = t.becomeValidatorText;
-            
-            // Staking Stats
-            document.getElementById('stakingStatsTitle').textContent = t.stakingStatsTitle;
-            document.getElementById('stakingLiveText').textContent = t.stakingLive;
-            document.getElementById('loadingStakingText').textContent = t.loadingStaking;
-            
-            // Security Dashboard
-            document.getElementById('securityDashboardTitle').textContent = t.securityDashboardTitle;
-            document.getElementById('securityStatus').textContent = t.secure;
-            document.getElementById('secEncryptionLabel').textContent = t.encryption;
-            document.getElementById('sec2FALabel').textContent = t.fa2;
-            document.getElementById('sec2FAValue').textContent = t.available;
-            document.getElementById('secStealthLabel').textContent = t.stealthMode;
-            document.getElementById('secStealthValue').textContent = '🕵️ ' + t.active;
-            document.getElementById('secMultiSigLabel').textContent = t.multiSig;
-            document.getElementById('secMultiSigValue').textContent = '✅ ' + t.supported;
-            document.getElementById('btnTestSecurity').innerHTML = t.btnTestSecurity;
-            document.getElementById('btnAnonTransfer').innerHTML = t.btnAnonTransfer;
-            document.getElementById('btnProtectData').innerHTML = t.btnProtectData;
-            document.getElementById('btnVerifyIntegrity').innerHTML = t.btnVerifyIntegrity;
-            document.getElementById('btnSecurityStatus').innerHTML = t.btnSecurityStatus;
-            
-            // Transaction History
-            document.getElementById('transactionHistoryTitle').textContent = t.transactionHistoryTitle;
-            document.getElementById('refreshHistory').textContent = t.refresh;
-            document.getElementById('totalTransactionsText').textContent = t.totalTransactions;
-            
-            // Developer API
-            document.getElementById('devApiTitle').textContent = t.devApiTitle;
-            document.getElementById('devApiStatus').textContent = t.devApiAvailable;
-            document.getElementById('devSdkTitle').innerHTML = `📦 ${t.devSdkTitle}`;
-            document.getElementById('devJsLabel').textContent = t.devJsLabel;
-            document.getElementById('devPythonLabel').textContent = t.devPythonLabel;
-            document.getElementById('devQuickStartTitle').innerHTML = `🚀 ${t.devQuickStart}`;
-            document.getElementById('devEndpointsTitle').innerHTML = `⚡ ${t.devEndpoints}`;
-            document.getElementById('devRegisterTitle').textContent = t.devRegister;
-            document.getElementById('devAppName').placeholder = t.devAppName;
-            document.getElementById('devEmail').placeholder = t.devEmail;
-            document.getElementById('devWebhook').placeholder = t.devWebhook;
-            document.getElementById('btnRegisterApp').innerHTML = t.devRegisterBtn;
-            document.getElementById('apiKeyLabel').textContent = t.apiKeyLabel;
-            document.getElementById('apiSecretLabel').textContent = t.apiSecretLabel;
-            document.getElementById('btnCopyKeys').innerHTML = t.copyKeys;
-            document.getElementById('devDocsLink').innerHTML = t.docsLink;
-            document.getElementById('devStatusLink').innerHTML = t.statusLink;
-            
-            // Token Modal Title
-            document.getElementById('tokenModalTitle').textContent = t.tokenModalTitle;
-            
-            // Footer
-            document.getElementById('footerCopyright').textContent = t.footerCopyright;
-            document.getElementById('footerAbout').textContent = t.footerAbout;
-            document.getElementById('footerContact').textContent = t.footerContact;
-            document.getElementById('footerTerms').textContent = t.footerTerms;
-            document.getElementById('footerPrivacy').textContent = t.footerPrivacy;
-            document.getElementById('footerSupport').textContent = t.footerSupport;
-            
-            // Update mining button
-            const miningBtn = document.querySelector('button[style*="position:fixed; bottom:20px; right:20px;"]');
-            if (miningBtn) {
-                miningBtn.textContent = t.mineBlock;
-            }
-            
-            // RTL support
-            if (currentLang === 'ar') {
-                document.body.classList.add('arabic');
-                document.getElementById('searchInput').style.textAlign = 'right';
-            } else {
-                document.body.classList.remove('arabic');
-                document.getElementById('searchInput').style.textAlign = 'left';
-            }
-            
-            // Update staking stats and validators display
-            updateStakingStats();
-            updateValidatorsDisplay();
+    const t = translations[currentLang] || translations.en;
+    
+    // Page Title
+    const pageTitle = document.getElementById('pageTitle');
+    if (pageTitle) pageTitle.textContent = t.pageTitle;
+    
+    // API Status
+    const statusEl = document.getElementById('apiStatus');
+    const textEl = document.getElementById('apiStatusText');
+    if (statusEl && textEl) {
+        if (apiOnline) {
+            statusEl.className = 'api-status online';
+            textEl.textContent = t.apiOnline;
+        } else {
+            statusEl.className = 'api-status offline';
+            textEl.textContent = t.apiOffline;
         }
+    }
+    
+    // Search
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.placeholder = t.searchPlaceholder;
+    
+    const searchBtnText = document.getElementById('searchBtnText');
+    if (searchBtnText) searchBtnText.textContent = t.searchBtn;
+    
+    const refreshBtnText = document.getElementById('refreshBtnText');
+    if (refreshBtnText) refreshBtnText.textContent = t.refreshBtn;
+    
+    const tabWallet = document.getElementById('tabWallet');
+    if (tabWallet) tabWallet.innerHTML = t.tabWallet;
+    
+    const tabStaking = document.getElementById('tabStaking');
+    if (tabStaking) tabStaking.innerHTML = t.tabStaking;
+    
+    const tabTransaction = document.getElementById('tabTransaction');
+    if (tabTransaction) tabTransaction.innerHTML = t.tabTransaction;
+    
+    const tabBlock = document.getElementById('tabBlock');
+    if (tabBlock) tabBlock.innerHTML = t.tabBlock;
+    
+    const tabToken = document.getElementById('tabToken');
+    if (tabToken) tabToken.innerHTML = t.tabToken;
+    
+    // Nav Sections
+    const sectionCoreTitle = document.getElementById('sectionCoreTitle');
+    if (sectionCoreTitle) sectionCoreTitle.textContent = t.sectionCore;
+    
+    const sectionMilitaryTitle = document.getElementById('sectionMilitaryTitle');
+    if (sectionMilitaryTitle) sectionMilitaryTitle.textContent = t.sectionMilitary;
+    
+    const sectionExplorationTitle = document.getElementById('sectionExplorationTitle');
+    if (sectionExplorationTitle) sectionExplorationTitle.textContent = t.sectionExploration;
+    
+    const sectionEmergingTitle = document.getElementById('sectionEmergingTitle');
+    if (sectionEmergingTitle) sectionEmergingTitle.textContent = t.sectionEmerging;
+    
+    const sectionIndustriesTitle = document.getElementById('sectionIndustriesTitle');
+    if (sectionIndustriesTitle) sectionIndustriesTitle.textContent = t.sectionIndustries;
+    
+    const sectionWeb3Title = document.getElementById('sectionWeb3Title');
+    if (sectionWeb3Title) sectionWeb3Title.textContent = t.sectionWeb3;
+    
+    const sectionGovernanceTitle = document.getElementById('sectionGovernanceTitle');
+    if (sectionGovernanceTitle) sectionGovernanceTitle.textContent = t.sectionGovernance;
+    
+    // Nav Buttons - com verificações de segurança
+    const navMap = {
+        'navBlockchainV2': 'navBlockchainV2',
+        'navExternalAPI': 'navExternalAPI',
+        'navTransactionHistory': 'navTransactionHistory',
+        'navSecurityDashboard': 'navSecurityDashboard',
+        'navBlockExplorer': 'navBlockExplorer',
+        'navNetworkStatus': 'navNetworkStatus',
+        'navStaking': 'navStaking',
+        'navGovernance': 'navGovernance',
+        'navAuditLogs': 'navAuditLogs',
+        'navGasTracker': 'navGasTracker',
+        'navAnalytics': 'navAnalytics',
+        'navFraudDetection': 'navFraudDetection',
+        'navMilitaryC2': 'navMilitaryC2',
+        'navAuditVault': 'navAuditVault',
+        'navCyberThreat': 'navCyberThreat',
+        'navMissionCritical': 'navMissionCritical',
+        'navSecurity': 'navSecurity',
+        'navExploreBlocks': 'navExploreBlocks',
+        'navTransactions': 'navTransactions',
+        'navNetworkStatus2': 'navNetworkStatus2',
+        'navStaking2': 'navStaking2',
+        'navDaoGovernance2': 'navDaoGovernance2',
+        'navAuditLogs2': 'navAuditLogs2',
+        'navGasFees': 'navGasFees',
+        'navAnalytics2': 'navAnalytics2',
+        'navFraudDetection2': 'navFraudDetection2',
+        'navSmartContracts': 'navSmartContracts',
+        'navDesci': 'navDesci',
+        'navHologram': 'navHologram',
+        'navSpaceSector': 'navSpaceSector',
+        'navAgriculture': 'navAgriculture',
+        'navEntertainment': 'navEntertainment',
+        'navSports': 'navSports',
+        'navInfrastructure': 'navInfrastructure',
+        'navHealth': 'navHealth',
+        'navBiotechnology': 'navBiotechnology',
+        'navEnergy': 'navEnergy',
+        'navFinancialMarket': 'navFinancialMarket',
+        'navNftExploration': 'navNftExploration',
+        'navCloudMining': 'navCloudMining',
+        'navRoboticsInvestments': 'navRoboticsInvestments',
+        'navDefiProjects': 'navDefiProjects',
+        'navMetaverseIntegration': 'navMetaverseIntegration',
+        'navDecentralizedPhilanthropy': 'navDecentralizedPhilanthropy',
+        'navBlockchainUpdate': 'navBlockchainUpdate',
+        'navDigitalGovernance': 'navDigitalGovernance',
+        'navCryptoMarketplace': 'navCryptoMarketplace',
+        'navAiTech': 'navAiTech',
+        'navBlockchainSecurity': 'navBlockchainSecurity'
+    };
+    
+    const navTextMap = {
+        'navBlockchainV2': 'navBlockchainV2',
+        'navExternalAPI': 'navExternalAPI',
+        'navTransactionHistory': 'navTransactionHistory',
+        'navSecurityDashboard': 'navSecurityDashboard',
+        'navBlockExplorer': 'navBlockExplorer',
+        'navNetworkStatus': 'navNetworkStatus',
+        'navStaking': 'navStaking',
+        'navGovernance': 'navGovernance',
+        'navAuditLogs': 'navAuditLogs',
+        'navGasTracker': 'navGasTracker',
+        'navAnalytics': 'navAnalytics',
+        'navFraudDetection': 'navFraudDetection',
+        'navMilitaryC2': 'navMilitaryC2',
+        'navAuditVault': 'navAuditVault',
+        'navCyberThreat': 'navCyberThreat',
+        'navMissionCritical': 'navMissionCritical',
+        'navSecurity': 'navSecurity',
+        'navExploreBlocks': 'navExploreBlocks',
+        'navTransactions': 'navTransactions',
+        'navNetworkStatus2': 'navNetworkStatus2',
+        'navStaking2': 'navStaking2',
+        'navDaoGovernance2': 'navDaoGovernance2',
+        'navAuditLogs2': 'navAuditLogs2',
+        'navGasFees': 'navGasFees',
+        'navAnalytics2': 'navAnalytics2',
+        'navFraudDetection2': 'navFraudDetection2',
+        'navSmartContracts': 'navSmartContracts',
+        'navDesci': 'navDesci',
+        'navHologram': 'navHologram',
+        'navSpaceSector': 'navSpaceSector',
+        'navAgriculture': 'navAgriculture',
+        'navEntertainment': 'navEntertainment',
+        'navSports': 'navSports',
+        'navInfrastructure': 'navInfrastructure',
+        'navHealth': 'navHealth',
+        'navBiotechnology': 'navBiotechnology',
+        'navEnergy': 'navEnergy',
+        'navFinancialMarket': 'navFinancialMarket',
+        'navNftExploration': 'navNftExploration',
+        'navCloudMining': 'navCloudMining',
+        'navRoboticsInvestments': 'navRoboticsInvestments',
+        'navDefiProjects': 'navDefiProjects',
+        'navMetaverseIntegration': 'navMetaverseIntegration',
+        'navDecentralizedPhilanthropy': 'navDecentralizedPhilanthropy',
+        'navBlockchainUpdate': 'navBlockchainUpdate',
+        'navDigitalGovernance': 'navDigitalGovernance',
+        'navCryptoMarketplace': 'navCryptoMarketplace',
+        'navAiTech': 'navAiTech',
+        'navBlockchainSecurity': 'navBlockchainSecurity'
+    };
+    
+    // Atualiza os botões de navegação
+    for (const [id, key] of Object.entries(navMap)) {
+        const el = document.getElementById(id);
+        if (el && t[key]) {
+            el.innerHTML = t[key];
+        }
+    }
+    
+    // Network Panel
+    const networkStatusTitle = document.getElementById('networkStatusTitle');
+    if (networkStatusTitle) networkStatusTitle.textContent = t.networkStatus;
+    
+    const blockchainValid = document.getElementById('blockchainValid');
+    if (blockchainValid) blockchainValid.textContent = t.blockchainValid;
+    
+    const networkMetricsTitle = document.getElementById('networkMetricsTitle');
+    if (networkMetricsTitle) networkMetricsTitle.textContent = t.networkMetrics;
+    
+    // Labels da rede
+    const labelMap = {
+        'labelBlockHeight': 'blockHeight',
+        'labelBlocksPerMin': 'blocksPerMin',
+        'labelAvgBlockTime': 'avgBlockTime',
+        'labelNodesOnline': 'nodesOnline',
+        'labelValidators': 'validators',
+        'labelNetworkHealth': 'networkHealth',
+        'labelDecentralization': 'decentralization',
+        'labelTPS': 'tps',
+        'labelAvgConfirmation': 'avgConfirmation',
+        'labelAvgFee': 'avgFee',
+        'labelVolume24h': 'volume24h',
+        'labelFeesToday': 'feesToday',
+        'labelPending': 'pending',
+        'labelActiveWallets': 'activeWallets',
+        'labelNewToday': 'newToday',
+        'labelInStaking': 'inStaking',
+        'labelTopHolders': 'topHolders',
+        'labelTotal': 'total',
+        'labelCirculating': 'circulating',
+        'labelLocked': 'locked',
+        'labelStaked': 'staked',
+        'labelBurned': 'burned',
+        'labelDeflation': 'deflation',
+        'labelBasePrice': 'basePrice',
+        'labelCurrentPrice': 'currentPrice',
+        'labelRealMarketCap': 'realMarketCap',
+        'labelDilutedMC': 'dilutedMC',
+        'labelTargetMC': 'targetMC',
+        'labelStabilityFund': 'stabilityFund',
+        'labelBoughtToday': 'boughtToday',
+        'labelBurnedToday': 'burnedToday'
+    };
+    
+    for (const [id, key] of Object.entries(labelMap)) {
+        const el = document.getElementById(id);
+        if (el && t[key]) {
+            el.textContent = t[key];
+        }
+    }
+    
+    // Títulos das seções de rede
+    const transactionsTitle = document.getElementById('transactionsTitle');
+    if (transactionsTitle) transactionsTitle.textContent = t.transactions;
+    
+    const walletsTitle = document.getElementById('walletsTitle');
+    if (walletsTitle) walletsTitle.textContent = t.wallets;
+    
+    const supplyTitle = document.getElementById('supplyTitle');
+    if (supplyTitle) supplyTitle.textContent = t.supply;
+    
+    const priceEconomicsTitle = document.getElementById('priceEconomicsTitle');
+    if (priceEconomicsTitle) priceEconomicsTitle.textContent = t.priceEconomics;
+    
+    const priceSupportText = document.getElementById('priceSupportText');
+    if (priceSupportText) priceSupportText.textContent = t.priceSupport;
+    
+    const activeStatus = document.getElementById('activeStatus');
+    if (activeStatus) activeStatus.textContent = t.active;
+    
+    const stabilityTitle = document.getElementById('stabilityTitle');
+    if (stabilityTitle) stabilityTitle.textContent = t.stabilityMechanisms;
+    
+    const buybackActiveText = document.getElementById('buybackActiveText');
+    if (buybackActiveText) buybackActiveText.textContent = t.buybackActive;
+    
+    const yesStatus = document.getElementById('yesStatus');
+    if (yesStatus) yesStatus.textContent = t.yes;
+    
+    // Validators
+    const validatorsTitle = document.getElementById('validatorsTitle');
+    if (validatorsTitle) validatorsTitle.textContent = t.validatorsTitle;
+    
+    const btnBecomeValidator = document.getElementById('btnBecomeValidator');
+    if (btnBecomeValidator) btnBecomeValidator.innerHTML = t.btnBecomeValidator;
+    
+    const btnViewStats = document.getElementById('btnViewStats');
+    if (btnViewStats) btnViewStats.innerHTML = t.btnViewStats;
+    
+    const noValidatorsText = document.getElementById('noValidatorsText');
+    if (noValidatorsText) noValidatorsText.textContent = t.noValidators;
+    
+    const becomeValidatorText = document.getElementById('becomeValidatorText');
+    if (becomeValidatorText) becomeValidatorText.textContent = t.becomeValidatorText;
+    
+    // Staking Stats
+    const stakingStatsTitle = document.getElementById('stakingStatsTitle');
+    if (stakingStatsTitle) stakingStatsTitle.textContent = t.stakingStatsTitle;
+    
+    const stakingLiveText = document.getElementById('stakingLiveText');
+    if (stakingLiveText) stakingLiveText.textContent = t.stakingLive;
+    
+    const loadingStakingText = document.getElementById('loadingStakingText');
+    if (loadingStakingText) loadingStakingText.textContent = t.loadingStaking;
+    
+    // Security Dashboard
+    const securityDashboardTitle = document.getElementById('securityDashboardTitle');
+    if (securityDashboardTitle) securityDashboardTitle.textContent = t.securityDashboardTitle;
+    
+    const securityStatus = document.getElementById('securityStatus');
+    if (securityStatus) securityStatus.textContent = t.secure;
+    
+    const secEncryptionLabel = document.getElementById('secEncryptionLabel');
+    if (secEncryptionLabel) secEncryptionLabel.textContent = t.encryption;
+    
+    const sec2FALabel = document.getElementById('sec2FALabel');
+    if (sec2FALabel) sec2FALabel.textContent = t.fa2;
+    
+    // CORREÇÃO: Verificar se os elementos existem antes de usar
+    const sec2FAValue = document.getElementById('sec2FAValue');
+    if (sec2FAValue) sec2FAValue.textContent = t.available;
+    
+    const secStealthLabel = document.getElementById('secStealthLabel');
+    if (secStealthLabel) secStealthLabel.textContent = t.stealthMode;
+    
+    const secStealthValue = document.getElementById('secStealthValue');
+    if (secStealthValue) secStealthValue.textContent = '🕵️ ' + t.active;
+    
+    const secMultiSigLabel = document.getElementById('secMultiSigLabel');
+    if (secMultiSigLabel) secMultiSigLabel.textContent = t.multiSig;
+    
+    const secMultiSigValue = document.getElementById('secMultiSigValue');
+    if (secMultiSigValue) secMultiSigValue.textContent = '✅ ' + t.supported;
+    
+    const btnTestSecurity = document.getElementById('btnTestSecurity');
+    if (btnTestSecurity) btnTestSecurity.innerHTML = t.btnTestSecurity;
+    
+    const btnAnonTransfer = document.getElementById('btnAnonTransfer');
+    if (btnAnonTransfer) btnAnonTransfer.innerHTML = t.btnAnonTransfer;
+    
+    const btnProtectData = document.getElementById('btnProtectData');
+    if (btnProtectData) btnProtectData.innerHTML = t.btnProtectData;
+    
+    const btnVerifyIntegrity = document.getElementById('btnVerifyIntegrity');
+    if (btnVerifyIntegrity) btnVerifyIntegrity.innerHTML = t.btnVerifyIntegrity;
+    
+    const btnSecurityStatus = document.getElementById('btnSecurityStatus');
+    if (btnSecurityStatus) btnSecurityStatus.innerHTML = t.btnSecurityStatus;
+    
+    // Transaction History
+    const transactionHistoryTitle = document.getElementById('transactionHistoryTitle');
+    if (transactionHistoryTitle) transactionHistoryTitle.textContent = t.transactionHistoryTitle;
+    
+    const refreshHistory = document.getElementById('refreshHistory');
+    if (refreshHistory) refreshHistory.textContent = t.refresh;
+    
+    const totalTransactionsText = document.getElementById('totalTransactionsText');
+    if (totalTransactionsText) totalTransactionsText.textContent = t.totalTransactions;
+    
+    // Developer API
+    const devApiTitle = document.getElementById('devApiTitle');
+    if (devApiTitle) devApiTitle.textContent = t.devApiTitle;
+    
+    const devApiStatus = document.getElementById('devApiStatus');
+    if (devApiStatus) devApiStatus.textContent = t.devApiAvailable;
+    
+    const devSdkTitle = document.getElementById('devSdkTitle');
+    if (devSdkTitle) devSdkTitle.innerHTML = '📦 ' + t.devSdkTitle;
+    
+    const devJsLabel = document.getElementById('devJsLabel');
+    if (devJsLabel) devJsLabel.textContent = t.devJsLabel;
+    
+    const devPythonLabel = document.getElementById('devPythonLabel');
+    if (devPythonLabel) devPythonLabel.textContent = t.devPythonLabel;
+    
+    const devQuickStartTitle = document.getElementById('devQuickStartTitle');
+    if (devQuickStartTitle) devQuickStartTitle.innerHTML = '🚀 ' + t.devQuickStart;
+    
+    const devEndpointsTitle = document.getElementById('devEndpointsTitle');
+    if (devEndpointsTitle) devEndpointsTitle.innerHTML = '⚡ ' + t.devEndpoints;
+    
+    const devRegisterTitle = document.getElementById('devRegisterTitle');
+    if (devRegisterTitle) devRegisterTitle.textContent = t.devRegister;
+    
+    const devAppName = document.getElementById('devAppName');
+    if (devAppName) devAppName.placeholder = t.devAppName;
+    
+    const devEmail = document.getElementById('devEmail');
+    if (devEmail) devEmail.placeholder = t.devEmail;
+    
+    const devWebhook = document.getElementById('devWebhook');
+    if (devWebhook) devWebhook.placeholder = t.devWebhook;
+    
+    const btnRegisterApp = document.getElementById('btnRegisterApp');
+    if (btnRegisterApp) btnRegisterApp.innerHTML = t.devRegisterBtn;
+    
+    const apiKeyLabel = document.getElementById('apiKeyLabel');
+    if (apiKeyLabel) apiKeyLabel.textContent = t.apiKeyLabel;
+    
+    const apiSecretLabel = document.getElementById('apiSecretLabel');
+    if (apiSecretLabel) apiSecretLabel.textContent = t.apiSecretLabel;
+    
+    const btnCopyKeys = document.getElementById('btnCopyKeys');
+    if (btnCopyKeys) btnCopyKeys.innerHTML = t.copyKeys;
+    
+    const devDocsLink = document.getElementById('devDocsLink');
+    if (devDocsLink) devDocsLink.innerHTML = t.docsLink;
+    
+    const devStatusLink = document.getElementById('devStatusLink');
+    if (devStatusLink) devStatusLink.innerHTML = t.statusLink;
+    
+    // Token Modal Title
+    const tokenModalTitle = document.getElementById('tokenModalTitle');
+    if (tokenModalTitle) tokenModalTitle.textContent = t.tokenModalTitle;
+    
+    // Footer
+    const footerCopyright = document.getElementById('footerCopyright');
+    if (footerCopyright) footerCopyright.textContent = t.footerCopyright;
+    
+    const footerAbout = document.getElementById('footerAbout');
+    if (footerAbout) footerAbout.textContent = t.footerAbout;
+    
+    const footerContact = document.getElementById('footerContact');
+    if (footerContact) footerContact.textContent = t.footerContact;
+    
+    const footerTerms = document.getElementById('footerTerms');
+    if (footerTerms) footerTerms.textContent = t.footerTerms;
+    
+    const footerPrivacy = document.getElementById('footerPrivacy');
+    if (footerPrivacy) footerPrivacy.textContent = t.footerPrivacy;
+    
+    const footerSupport = document.getElementById('footerSupport');
+    if (footerSupport) footerSupport.textContent = t.footerSupport;
+    
+    // Update mining button
+    const miningBtn = document.querySelector('button[style*="position:fixed; bottom:20px; right:20px;"]');
+    if (miningBtn) {
+        miningBtn.textContent = t.mineBlock;
+    }
+    
+    // RTL support
+    if (currentLang === 'ar') {
+        document.body.classList.add('arabic');
+        const searchInputRTL = document.getElementById('searchInput');
+        if (searchInputRTL) searchInputRTL.style.textAlign = 'right';
+    } else {
+        document.body.classList.remove('arabic');
+        const searchInputLTR = document.getElementById('searchInput');
+        if (searchInputLTR) searchInputLTR.style.textAlign = 'left';
+    }
+    
+    // Update staking stats and validators display
+    updateStakingStats();
+    updateValidatorsDisplay();
+}
 
         // ==================== LOAD BLOCKCHAIN DATA ====================
         async function loadBlockchainData() {

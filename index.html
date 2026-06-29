@@ -2071,72 +2071,109 @@ function addAPIRetryButton() {
 }
 
         // ==================== API FUNCTIONS ====================
-        async function getRealBalance(address) {
-            if (apiOnline) {
-                try {
-                    const response = await fetch(`${API_URL}/api/balance/${address}`, {
-                        signal: AbortSignal.timeout(8000)
-                    });
-                    const data = await response.json();
-                    
-                    if (data && data.success) {
-                        const balance = data.data?.balance ?? data.balance ?? 0;
-                        return { 
-                            success: true, 
-                            balance: balance, 
-                            exists: true, 
-                            source: 'api',
-                            timestamp: data.data?.timestamp || data.timestamp || Date.now()
-                        };
-                    } else {
-                        return { success: false, exists: false, source: 'api', error: data?.message || 'Wallet not found' };
-                    }
-                } catch (error) {}
-            }
+  async function getRealBalance(address) {
+    // Try API first if online
+    if (apiOnline) {
+        try {
+            console.log(`📡 Fetching balance for: ${address}`);
             
-            const chain = getLocalChain();
-            const balance = chain.balances[address] || 0;
-            return { 
-                success: true, 
-                balance: balance, 
-                exists: balance > 0 || chain.staking[address] !== undefined,
-                source: 'local',
-                timestamp: chain.lastUpdated || Date.now()
-            };
-        }
-
-        async function getStakingInfo(address) {
-            if (apiOnline) {
+            const response = await fetch(`${API_URL}/api/balance/${address}`, {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                signal: AbortSignal.timeout(10000)
+            });
+            
+            console.log(`📡 API Response Status: ${response.status}`);
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('📡 API Response Data:', data);
+                
+                // Extract balance from different possible response formats
+                let balance = 0;
+                if (data.data && data.data.balance !== undefined) {
+                    balance = data.data.balance;
+                } else if (data.balance !== undefined) {
+                    balance = data.balance;
+                } else if (data.balance_brd !== undefined) {
+                    balance = data.balance_brd;
+                } else if (data.result !== undefined) {
+                    balance = data.result;
+                } else if (data.total !== undefined) {
+                    balance = data.total;
+                } else if (data.amount !== undefined) {
+                    balance = data.amount;
+                } else {
+                    // Try to find any number in the response
+                    for (const key of Object.keys(data)) {
+                        if (typeof data[key] === 'number' && data[key] > 0) {
+                            balance = data[key];
+                            break;
+                        }
+                    }
+                }
+                
+                console.log(`💰 Balance extracted: ${balance}`);
+                
+                return { 
+                    success: true, 
+                    balance: parseFloat(balance) || 0, 
+                    exists: true, 
+                    source: 'api',
+                    timestamp: data.timestamp || data.data?.timestamp || Date.now(),
+                    rawData: data // Keep raw data for debugging
+                };
+            } else {
+                console.log(`⚠️ API returned status: ${response.status}`);
+                // Try alternative endpoint
                 try {
-                    const response = await fetch(`${API_URL}/api/staking/${address}`, {
+                    const altResponse = await fetch(`${API_URL}/wallet/${address}`, {
+                        method: 'GET',
+                        headers: { 'Accept': 'application/json' },
                         signal: AbortSignal.timeout(5000)
                     });
-                    const data = await response.json();
-                    if (data && data.success) {
+                    
+                    if (altResponse.ok) {
+                        const data = await altResponse.json();
+                        console.log('📡 Alternative API Response:', data);
+                        
+                        let balance = 0;
+                        if (data.balance !== undefined) balance = data.balance;
+                        else if (data.data?.balance !== undefined) balance = data.data.balance;
+                        
                         return { 
                             success: true, 
-                            staked: data.data?.staked ?? 0, 
-                            rewards: data.data?.rewards ?? 0, 
-                            apy: data.data?.apy ?? 18, 
-                            totalStaked: data.data?.totalStaked ?? 0,
-                            source: 'api'
+                            balance: parseFloat(balance) || 0, 
+                            exists: true, 
+                            source: 'api',
+                            timestamp: Date.now()
                         };
                     }
-                } catch (error) {}
+                } catch (altError) {
+                    console.log('⚠️ Alternative endpoint failed:', altError.message);
+                }
             }
-            
-            const chain = getLocalChain();
-            const staking = chain.staking[address] || { staked: 0, rewards: 0 };
-            return { 
-                success: true, 
-                staked: staking.staked || 0, 
-                rewards: staking.rewards || 0, 
-                apy: 18, 
-                totalStaked: Object.values(chain.staking).reduce((sum, s) => sum + (s.staked || 0), 0),
-                source: 'local'
-            };
+        } catch (error) {
+            console.log('❌ API Error:', error.message);
         }
-
+    }
+    
+    // Fallback to local data
+    console.log('📁 Using local data for:', address);
+    const chain = getLocalChain();
+    const balance = chain.balances[address] || 0;
+    
+    return { 
+        success: true, 
+        balance: balance, 
+        exists: balance > 0 || chain.staking[address] !== undefined,
+        source: 'local',
+        timestamp: chain.lastUpdated || Date.now()
+    };
+}
         // ==================== SWITCH TAB ====================
         function switchTab(tab) {
             currentTab = tab;
@@ -2365,180 +2402,212 @@ function addAPIRetryButton() {
 
         // ==================== SEARCH WALLET ====================
         async function searchWallet() {
-            const input = document.getElementById('searchInput');
-            const address = input.value.trim();
-            const resultDiv = document.getElementById('searchResult');
-            const t = translations[currentLang] || translations.en;
+    const input = document.getElementById('searchInput');
+    const address = input.value.trim();
+    const resultDiv = document.getElementById('searchResult');
+    const t = translations[currentLang] || translations.en;
 
-           if (!exists) {
-    // Tenta criar a wallet automaticamente
-    const created = autoCreateWallet(address);
-    if (created) {
-        showNotification(`✅ Wallet ${address.substring(0, 12)}... created with 1000 BRD!`, '#00ff66');
-        // Recarrega a busca com a nova wallet
-        await searchWallet();
+    if (!address) {
+        resultDiv.className = 'result-box error';
+        resultDiv.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <div class="error-icon">⌨️</div>
+                <h3 class="error-title">Please enter an address</h3>
+                <p class="error-message">Enter a Bradicoin wallet address to search</p>
+                <p class="error-tip">💡 Example: BrDemo123, BrStaker001</p>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
         return;
     }
-}
 
-            input.classList.remove('error');
-            lastSearchedAddress = address;
+    input.classList.remove('error');
+    lastSearchedAddress = address;
 
-            resultDiv.className = 'result-box';
+    resultDiv.className = 'result-box';
+    resultDiv.innerHTML = `
+        <div style="text-align: center; color: cyan; padding: 20px;">
+            <div style="font-size: 2rem; animation: pulse 1.2s ease-in-out infinite;">🔍</div>
+            <p class="loading-pulse" style="margin-top: 10px;">${t.loading}</p>
+            <p style="font-size: 11px; color: #888; margin-top: 5px;">${address.substring(0, 20)}...</p>
+            ${apiOnline ? '<p style="font-size: 10px; color: #00ff66; margin-top: 5px;">✅ Connected to blockchain</p>' : '<p style="font-size: 10px; color: #ffc800; margin-top: 5px;">⚠️ Using local data</p>'}
+        </div>
+    `;
+    resultDiv.classList.add('show');
+
+    try {
+        const balanceResult = await getRealBalance(address);
+        const errMsg = translations[currentLang] || translations.en;
+        
+        // Check if wallet exists via API or local
+        const chain = getLocalChain();
+        let exists = chain.balances[address] !== undefined || chain.staking[address] !== undefined;
+        
+        // If wallet doesn't exist, try to create it automatically
+        if (!exists) {
+            const created = autoCreateWallet(address);
+            if (created) {
+                showNotification(`✅ Wallet ${address.substring(0, 12)}... created with 1000 BRD!`, '#00ff66');
+                // Reload the search with the new wallet
+                await searchWallet();
+                return;
+            }
+        }
+
+        // If wallet doesn't exist and API is offline, show error
+        if (!exists && !apiOnline) {
+            resultDiv.className = 'result-box error';
             resultDiv.innerHTML = `
-                <div style="text-align: center; color: cyan; padding: 20px;">
-                    <div style="font-size: 2rem; animation: pulse 1.2s ease-in-out infinite;">🔍</div>
-                    <p class="loading-pulse" style="margin-top: 10px;">${t.loading}</p>
-                    <p style="font-size: 11px; color: #888; margin-top: 5px;">${address.substring(0, 20)}...</p>
-                    ${apiOnline ? '<p style="font-size: 10px; color: #00ff66; margin-top: 5px;">✅ Connected to blockchain</p>' : '<p style="font-size: 10px; color: #ffc800; margin-top: 5px;">⚠️ Using local data</p>'}
+                <div style="text-align: center; padding: 30px 20px;">
+                    <div class="error-icon">🔍</div>
+                    <h3 class="error-title">${errMsg.walletNotFound || 'Wallet Not Found'}</h3>
+                    <p class="error-message">${errMsg.invalidAddress || 'The wallet address you entered does not exist on the Bradicoin blockchain.'}</p>
+                    <p class="error-tip">${errMsg.errorTip || '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".'}</p>
+                    <button class="error-clear-btn" onclick="clearSearch()">${errMsg.errorButton || 'Clear search'}</button>
                 </div>
             `;
             resultDiv.classList.add('show');
+            input.classList.add('error');
+            return;
+        }
 
-            try {
-                const balanceResult = await getRealBalance(address);
-                const errMsg = translations[currentLang] || translations.en;
-                
-                // Check if wallet exists via API or local
-                const chain = getLocalChain();
-                const exists = chain.balances[address] !== undefined || chain.staking[address] !== undefined;
-                
-                if (!exists && !apiOnline) {
-                    // Show wallet not found error with X button
-                    resultDiv.className = 'result-box error';
-                    resultDiv.innerHTML = `
-                        <div style="text-align: center; padding: 30px 20px;">
-                            <div class="error-icon">🔍</div>
-                            <h3 class="error-title">${errMsg.walletNotFound || 'Wallet Not Found'}</h3>
-                            <p class="error-message">${errMsg.invalidAddress || 'The wallet address you entered does not exist on the Bradicoin blockchain.'}</p>
-                            <p class="error-tip">${errMsg.errorTip || '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".'}</p>
-                            <button class="error-clear-btn" onclick="clearSearch()">${errMsg.errorButton || 'Clear search'}</button>
-                        </div>
-                    `;
-                    resultDiv.classList.add('show');
-                    input.classList.add('error');
-                    return;
-                }
-
-                const balance = balanceResult.balance || 0;
-                const stakingInfo = await getStakingInfo(address);
-                const staked = stakingInfo.staked || 0;
-                const rewards = stakingInfo.rewards || 0;
-                const apy = stakingInfo.apy || 18;
-
-                const walletHash = generateWalletHash(address);
-                const timestamp = getCurrentTimestamp();
-                const totalSupply = getCurrentTotalSupply();
-
-                const tab = currentTab;
-                let resultHTML = `
-                    <div class="result-header">
-                        <div>
-                            <span style="font-size: 14px; color: #888;">Address</span>
-                            <div class="result-address">${address}</div>
-                        </div>
-                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <button class="result-copy-btn" onclick="copyToClipboard('${address}')">📋 Copy</button>
-                            <button class="result-copy-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: cyan; color: cyan;">🔄 Refresh</button>
-                            ${balanceResult.source === 'api' ? '<span style="font-size:10px;color:#00ff66;background:rgba(0,255,100,0.1);padding:2px 8px;border-radius:10px;">✅ Live</span>' : '<span style="font-size:10px;color:#ffc800;background:rgba(255,200,0,0.1);padding:2px 8px;border-radius:10px;">📁 Local</span>'}
-                        </div>
-                    </div>
-                `;
-
-                resultHTML += `
-                    <div class="wallet-meta">
-                        <div class="wallet-meta-item">
-                            <span class="label">🔗 Wallet Hash</span>
-                            <span class="value hash">${walletHash}</span>
-                        </div>
-                        <div class="wallet-meta-item">
-                            <span class="label">📅 Last Update</span>
-                            <span class="value time">${timestamp.full}</span>
-                        </div>
-                        <div class="wallet-meta-item">
-                            <span class="label">📊 Total Supply</span>
-                            <span class="value" style="color: #ffc800;">${formatNumber(totalSupply)} BRD</span>
-                        </div>
-                        <div class="wallet-meta-item">
-                            <span class="label">🪙 Token</span>
-                            <span class="value" style="color: #00ff66;">BRD</span>
-                        </div>
-                    </div>
-                `;
-
-                // Show balance with proper formatting
-                const balanceDisplay = balance.toFixed(6);
-                const usdValue = (balance * 10).toFixed(2);
-                
-                resultHTML += `
-                    <div style="font-size: 28px; text-align: center; margin: 10px 0; color: ${balance > 0 ? '#00ff66' : '#ffc800'};">
-                        ${balanceDisplay} <span style="font-size: 16px; color: #888;">BRD</span>
-                    </div>
-                    <div class="result-grid">
-                        <div class="result-item" style="border-left-color: #00ff66;">
-                            <div class="result-item-label">💰 Balance</div>
-                            <div class="result-item-value green">${balanceDisplay} BRD</div>
-                        </div>
-                        <div class="result-item" style="border-left-color: #00ccff;">
-                            <div class="result-item-label">📊 USD Value</div>
-                            <div class="result-item-value cyan">$${usdValue}</div>
-                        </div>
-                        <div class="result-item" style="border-left-color: #ffc800;">
-                            <div class="result-item-label">🔒 Staked</div>
-                            <div class="result-item-value yellow">${staked.toFixed(2)} BRD</div>
-                        </div>
-                        <div class="result-item" style="border-left-color: magenta;">
-                            <div class="result-item-label">⭐ Rewards</div>
-                            <div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div>
-                        </div>
-                        <div class="result-item" style="border-left-color: #c864ff;">
-                            <div class="result-item-label">📈 APY</div>
-                            <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
-                        </div>
-                        <div class="result-item" style="border-left-color: #ff6464;">
-                            <div class="result-item-label">🔄 Status</div>
-                            <div class="result-item-value" style="color: ${balance > 0 ? '#00ff66' : '#ffc800'};">${balance > 0 ? '✅ Active' : '⚠️ Empty'}</div>
-                        </div>
-                    </div>
-                `;
-
-                resultHTML += `
-                    <div class="last-updated">
-                        ⏱️ Updated: <span id="lastUpdateTime">${timestamp.full}</span>
-                        <button onclick="updateTimestamp()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:10px;margin-left:10px;">↻</button>
-                    </div>
-                `;
-
-                resultHTML += `
-                    <div class="result-actions">
-                        <button class="result-action-btn" onclick="copyToClipboard('${address}')">📋 Copy Address</button>
-                        <button class="result-action-btn" onclick="copyToClipboard('${walletHash}')" style="border-color: #c864ff; color: #c864ff;">🔗 Copy Hash</button>
-                        <button class="result-action-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: #00ff66; color: #00ff66;">🔄 Refresh</button>
-                        <button class="result-action-btn" onclick="handleDeposit('${address}')" style="border-color: #00ff66; color: #00ff66;">💰 Deposit</button>
-                        <button class="result-action-btn" onclick="handleStake('${address}')" style="border-color: #ffc800; color: #ffc800;">🔒 Stake</button>
-                        <button class="result-action-btn" onclick="handleUnstake('${address}')" style="border-color: #ff6464; color: #ff6464;">⬇️ Unstake</button>
-                        <button class="result-action-btn" onclick="handleTransfer('${address}')" style="border-color: #00ccff; color: #00ccff;">💸 Transfer</button>
-                    </div>
-                `;
-
-                resultDiv.className = 'result-box';
-                resultDiv.innerHTML = resultHTML;
-                resultDiv.classList.add('show');
-                saveWalletToHistory(address, balance);
-
-            } catch (error) {
-                resultDiv.className = 'result-box error';
-                resultDiv.innerHTML = `
-                    <div style="text-align: center; padding: 20px;">
-                        <div class="error-icon">⚠️</div>
-                        <h3 class="error-title">Connection Error</h3>
-                        <p class="error-message">Could not connect to the Bradicoin blockchain.</p>
-                        <button class="error-clear-btn" onclick="clearSearch()">Try Again</button>
-                    </div>
-                `;
-                resultDiv.classList.add('show');
+        // Get balance - if balanceResult has data from API, use it; otherwise use local
+        let balance = balanceResult.balance || 0;
+        
+        // If balance equals total supply, it might be the API returning supply instead of wallet balance
+        const totalSupply = getCurrentTotalSupply();
+        if (balance === totalSupply && balance > 1000000) {
+            console.warn('⚠️ Balance equals total supply - using local balance instead');
+            const localBalance = chain.balances[address] || 0;
+            if (localBalance > 0 && localBalance !== totalSupply) {
+                balance = localBalance;
+                balanceResult.source = 'local (corrected)';
             }
         }
+        
+        const stakingInfo = await getStakingInfo(address);
+        const staked = stakingInfo.staked || 0;
+        const rewards = stakingInfo.rewards || 0;
+        const apy = stakingInfo.apy || 18;
+
+        const walletHash = generateWalletHash(address);
+        const timestamp = getCurrentTimestamp();
+
+        // Format balance display
+        const balanceDisplay = balance.toFixed(2);
+        const usdValue = (balance * 10).toFixed(2);
+
+        let resultHTML = `
+            <div class="result-header">
+                <div>
+                    <span style="font-size: 14px; color: #888;">Address</span>
+                    <div class="result-address">${address}</div>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="result-copy-btn" onclick="copyToClipboard('${address}')">📋 Copy</button>
+                    <button class="result-copy-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: cyan; color: cyan;">🔄 Refresh</button>
+                    ${balanceResult.source === 'api' ? '<span style="font-size:10px;color:#00ff66;background:rgba(0,255,100,0.1);padding:2px 8px;border-radius:10px;">✅ Live</span>' : '<span style="font-size:10px;color:#ffc800;background:rgba(255,200,0,0.1);padding:2px 8px;border-radius:10px;">📁 Local</span>'}
+                </div>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="wallet-meta">
+                <div class="wallet-meta-item">
+                    <span class="label">🔗 Wallet Hash</span>
+                    <span class="value hash">${walletHash}</span>
+                </div>
+                <div class="wallet-meta-item">
+                    <span class="label">📅 Last Update</span>
+                    <span class="value time">${timestamp.full}</span>
+                </div>
+                <div class="wallet-meta-item">
+                    <span class="label">📊 Total Supply</span>
+                    <span class="value" style="color: #ffc800;">${formatNumber(totalSupply)} BRD</span>
+                </div>
+                <div class="wallet-meta-item">
+                    <span class="label">🪙 Token</span>
+                    <span class="value" style="color: #00ff66;">BRD</span>
+                </div>
+            </div>
+        `;
+
+        // Show balance with proper formatting
+        resultHTML += `
+            <div style="font-size: 28px; text-align: center; margin: 10px 0; color: ${balance > 0 ? '#00ff66' : '#ffc800'};">
+                ${balanceDisplay} <span style="font-size: 16px; color: #888;">BRD</span>
+            </div>
+            <div style="text-align: center; font-size: 14px; color: #888; margin-bottom: 10px;">
+                ≈ $${usdValue} USD
+            </div>
+            <div class="result-grid">
+                <div class="result-item" style="border-left-color: #00ff66;">
+                    <div class="result-item-label">💰 Balance</div>
+                    <div class="result-item-value green">${balanceDisplay} BRD</div>
+                </div>
+                <div class="result-item" style="border-left-color: #00ccff;">
+                    <div class="result-item-label">📊 USD Value</div>
+                    <div class="result-item-value cyan">$${usdValue}</div>
+                </div>
+                <div class="result-item" style="border-left-color: #ffc800;">
+                    <div class="result-item-label">🔒 Staked</div>
+                    <div class="result-item-value yellow">${staked.toFixed(2)} BRD</div>
+                </div>
+                <div class="result-item" style="border-left-color: magenta;">
+                    <div class="result-item-label">⭐ Rewards</div>
+                    <div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div>
+                </div>
+                <div class="result-item" style="border-left-color: #c864ff;">
+                    <div class="result-item-label">📈 APY</div>
+                    <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
+                </div>
+                <div class="result-item" style="border-left-color: #ff6464;">
+                    <div class="result-item-label">🔄 Status</div>
+                    <div class="result-item-value" style="color: ${balance > 0 ? '#00ff66' : '#ffc800'};">${balance > 0 ? '✅ Active' : '⚠️ Empty'}</div>
+                </div>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="last-updated">
+                ⏱️ Updated: <span id="lastUpdateTime">${timestamp.full}</span>
+                <button onclick="updateTimestamp()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:10px;margin-left:10px;">↻</button>
+            </div>
+        `;
+
+        resultHTML += `
+            <div class="result-actions">
+                <button class="result-action-btn" onclick="copyToClipboard('${address}')">📋 Copy Address</button>
+                <button class="result-action-btn" onclick="copyToClipboard('${walletHash}')" style="border-color: #c864ff; color: #c864ff;">🔗 Copy Hash</button>
+                <button class="result-action-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: #00ff66; color: #00ff66;">🔄 Refresh</button>
+                <button class="result-action-btn" onclick="handleDeposit('${address}')" style="border-color: #00ff66; color: #00ff66;">💰 Deposit</button>
+                <button class="result-action-btn" onclick="handleStake('${address}')" style="border-color: #ffc800; color: #ffc800;">🔒 Stake</button>
+                <button class="result-action-btn" onclick="handleUnstake('${address}')" style="border-color: #ff6464; color: #ff6464;">⬇️ Unstake</button>
+                <button class="result-action-btn" onclick="handleTransfer('${address}')" style="border-color: #00ccff; color: #00ccff;">💸 Transfer</button>
+                <button class="result-action-btn" onclick="claimStakingRewards('${address}')" style="border-color: #ffc800; color: #ffc800;">🎯 Claim Rewards</button>
+            </div>
+        `;
+
+        resultDiv.className = 'result-box';
+        resultDiv.innerHTML = resultHTML;
+        resultDiv.classList.add('show');
+        saveWalletToHistory(address, balance);
+
+    } catch (error) {
+        console.error('Search error:', error);
+        resultDiv.className = 'result-box error';
+        resultDiv.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <div class="error-icon">⚠️</div>
+                <h3 class="error-title">Connection Error</h3>
+                <p class="error-message">Could not connect to the Bradicoin blockchain.</p>
+                <button class="error-clear-btn" onclick="clearSearch()">Try Again</button>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+    }
+}
 
         // ==================== AUXILIARY FUNCTIONS ====================
         function clearSearch() {

@@ -1991,62 +1991,52 @@ async function checkAPIStatus() {
     statusEl.className = 'api-status checking';
     textEl.textContent = '🔄 Connecting to API...';
     
-    try {
-        console.log('🔄 Checking API at:', API_URL);
-        
-        const response = await fetch(`${API_URL}/api/health`, {
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            signal: AbortSignal.timeout(15000) // 15 seconds timeout
-        });
-        
-        console.log('📡 API Response Status:', response.status);
-        
-        if (response.ok) {
-            const data = await response.json();
-            console.log('✅ API Response Data:', data);
-            
-            apiOnline = true;
-            statusEl.className = 'api-status online';
-            textEl.textContent = t.apiOnline;
-            return true;
-        } else {
-            apiOnline = false;
-            statusEl.className = 'api-status offline';
-            textEl.textContent = t.apiOffline + ' (Status: ' + response.status + ')';
-            console.log('⚠️ API returned status:', response.status);
-            return false;
-        }
-    } catch (error) {
-        console.error('❌ API Connection Error:', error.message);
-        
-        // Try alternative endpoint
+    // List of possible endpoints to try
+    const endpoints = [
+        '/api/health',
+        '/health', 
+        '/ping',
+        '/status',
+        '/'
+    ];
+    
+    console.log('🔄 Checking API at:', API_URL);
+    
+    for (const endpoint of endpoints) {
         try {
-            console.log('🔄 Trying alternative endpoint...');
-            const altResponse = await fetch(`${API_URL}/`, {
+            console.log(`📡 Trying endpoint: ${endpoint}`);
+            
+            const response = await fetch(`${API_URL}${endpoint}`, {
                 method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 signal: AbortSignal.timeout(5000)
             });
             
-            if (altResponse.ok) {
+            console.log(`📡 ${endpoint} - Status:`, response.status);
+            
+            if (response.ok) {
+                const data = await response.json().catch(() => ({}));
+                console.log(`✅ API Online via ${endpoint}!`, data);
+                
                 apiOnline = true;
                 statusEl.className = 'api-status online';
-                textEl.textContent = t.apiOnline;
-                console.log('✅ API Online via root endpoint!');
+                textEl.textContent = t.apiOnline + ` (${endpoint})`;
                 return true;
             }
-        } catch (altError) {
-            console.log('⚠️ Alternative endpoint also failed');
+        } catch (error) {
+            console.log(`❌ ${endpoint} failed:`, error.message);
         }
-        
-        apiOnline = false;
-        statusEl.className = 'api-status offline';
-        textEl.textContent = t.apiOffline + ' (Error: ' + error.message + ')';
-        return false;
     }
+    
+    // If all endpoints failed
+    apiOnline = false;
+    statusEl.className = 'api-status offline';
+    textEl.textContent = t.apiOffline + ' - No endpoints responded';
+    console.log('❌ All API endpoints failed');
+    return false;
 }
 
 // ==================== FORCE API CHECK ====================

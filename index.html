@@ -1982,36 +1982,53 @@ const payment = await client.createPayment({
         }
 
         // ==================== CHECK API STATUS ====================
-        async function checkAPIStatus() {
-            const statusEl = document.getElementById('apiStatus');
-            const textEl = document.getElementById('apiStatusText');
-            const t = translations[currentLang] || translations.en;
-            
-            try {
-                const response = await fetch(`${API_URL}/api/health`, {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' },
-                    signal: AbortSignal.timeout(5000)
-                });
-                
-                if (response.ok) {
-                    apiOnline = true;
-                    statusEl.className = 'api-status online';
-                    textEl.textContent = t.apiOnline;
-                    return true;
-                } else {
-                    apiOnline = false;
-                    statusEl.className = 'api-status offline';
-                    textEl.textContent = t.apiOffline;
-                    return false;
-                }
-            } catch (error) {
-                apiOnline = false;
-                statusEl.className = 'api-status offline';
-                textEl.textContent = t.apiOffline;
-                return false;
-            }
+async function checkAPIStatus() {
+    const statusEl = document.getElementById('apiStatus');
+    const textEl = document.getElementById('apiStatusText');
+    const t = translations[currentLang] || translations.en;
+    
+    // First, try a simple ping to "wake up" the API if it's in sleep mode
+    try {
+        await fetch(`${API_URL}/`, {
+            method: 'HEAD',
+            mode: 'no-cors', // This can help with CORS
+            signal: AbortSignal.timeout(3000)
+        });
+    } catch (e) {
+        // Ignore HEAD error
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/api/health`, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            signal: AbortSignal.timeout(10000) // 10 seconds timeout
+        });
+        
+        if (response.ok) {
+            apiOnline = true;
+            statusEl.className = 'api-status online';
+            textEl.textContent = t.apiOnline;
+            console.log('✅ API Online!');
+            return true;
+        } else {
+            apiOnline = false;
+            statusEl.className = 'api-status offline';
+            textEl.textContent = t.apiOffline + ' (Status: ' + response.status + ')';
+            console.log('⚠️ API responded with status:', response.status);
+            return false;
         }
+    } catch (error) {
+        apiOnline = false;
+        statusEl.className = 'api-status offline';
+        textEl.textContent = t.apiOffline + ' (Error: ' + error.message + ')';
+        console.log('❌ Error connecting to API:', error.message);
+        return false;
+    }
+}
 
         // ==================== API FUNCTIONS ====================
         async function getRealBalance(address) {

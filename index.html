@@ -2401,7 +2401,7 @@ function addAPIRetryButton() {
         }
 
         // ==================== SEARCH WALLET ====================
-        async function searchWallet() {
+    async function searchWallet() {
     const input = document.getElementById('searchInput');
     const address = input.value.trim();
     const resultDiv = document.getElementById('searchResult');
@@ -2453,6 +2453,9 @@ function addAPIRetryButton() {
                 await searchWallet();
                 return;
             }
+            // Re-check after creation attempt
+            const updatedChain = getLocalChain();
+            exists = updatedChain.balances[address] !== undefined || updatedChain.staking[address] !== undefined;
         }
 
         // If wallet doesn't exist and API is offline, show error

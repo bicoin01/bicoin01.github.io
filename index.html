@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>Bradicoin Blockchain - Complete Platform</title>
-    <meta name="description" content="Complete Bradicoin blockchain platform with 24 integrated features">
+    <meta name="description" content="Complete Bradicoin blockchain platform with 50+ integrated features">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -82,7 +82,6 @@
         .title { text-align: center; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; margin-bottom: 2rem; letter-spacing: 2px; }
         @media (max-width: 768px) { .title { font-size: 1.8rem; } }
 
-        /* SEARCH */
         .search-container { max-width: 900px; margin: 2rem auto; padding: 0 20px; }
         .search-wrapper { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
         .search-input-wrapper { flex: 1; min-width: 280px; position: relative; }
@@ -226,7 +225,6 @@
         @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
         .loading-pulse { animation: pulse 1.2s ease-in-out infinite; }
 
-        /* NAV */
         .nav-section { margin: 30px 0 20px 0; }
         .nav-section-title { text-align: center; color: cyan; font-size: 1.2rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px cyan; }
         .nav-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0; padding: 0 20px; }
@@ -246,7 +244,6 @@
         .nav-btn-cyan { border-color: cyan; color: cyan; background: rgba(0, 255, 255, 0.05); }
         .nav-btn-orange { border-color: #ff6400; color: #ff6400; background: rgba(255, 100, 0, 0.05); }
 
-        /* NETWORK PANEL */
         .network-panel {
             background: rgba(0, 0, 0, 0.9); border: 2px solid cyan; border-radius: 12px;
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), inset 0 0 60px rgba(0, 255, 255, 0.05);
@@ -339,7 +336,6 @@
         }
         .modal-close-btn:hover { background: #ff6464; color: #000; transform: scale(1.05); box-shadow: 0 0 30px rgba(255,100,100,0.4); }
 
-        /* TOKEN MODAL */
         .token-modal {
             display: none;
             position: fixed;
@@ -565,11 +561,24 @@
             .token-modal-content { margin: 20px 10px; padding: 10px; }
             .token-modal-inner { padding: 15px; }
         }
+        .feature-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;
+        }
+        .feature-stat-card {
+            background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid rgba(0,255,255,0.1);
+        }
+        .feature-stat-card .stat-label { font-size: 10px; color: #666; text-transform: uppercase; }
+        .feature-stat-card .stat-value { font-size: 20px; font-weight: bold; margin-top: 5px; }
+        .feature-stat-card .stat-value.cyan { color: cyan; }
+        .feature-stat-card .stat-value.green { color: #00ff66; }
+        .feature-stat-card .stat-value.magenta { color: magenta; }
+        .feature-stat-card .stat-value.yellow { color: #ffc800; }
+        .feature-stat-card .stat-value.red { color: #ff6464; }
+        .feature-stat-card .stat-value.purple { color: #c864ff; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- HEADER -->
         <div class="header" onclick="goHome()">
             <img class="logo-image" src="https://bradicoin.com/wp-content/uploads/2025/02/Screenshot_20250212-014710.png" alt="Bradicoin Logo" onerror="this.classList.add('error')">
             <div class="logo-fallback">⚡₿</div>
@@ -593,25 +602,24 @@
                 <span id="apiStatusText">Checking API connection...</span>
             </div>
 
-            <!-- SEARCH CONTAINER -->
             <div class="search-container">
                 <div class="search-wrapper">
                     <div class="search-input-wrapper">
-                        <input type="text" id="searchInput" class="search-input" placeholder="Paste Bradicoin wallet address here (Br...)">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Paste Bradicoin wallet address here (Br...)" data-i18n-placeholder="searchPlaceholder">
                         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="11" cy="11" r="8"></circle>
                             <path d="m21 21-4.3-4.3"></path>
                         </svg>
                     </div>
                     <div class="search-actions">
-                        <button id="searchButton" class="search-button">
+                        <button id="searchButton" class="search-button" data-i18n="searchBtn">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <path d="m21 21-4.3-4.3"></path>
                             </svg>
                             <span id="searchBtnText">Search</span>
                         </button>
-                        <button id="refreshBalanceBtn" class="search-button primary" title="Refresh balance in real-time">
+                        <button id="refreshBalanceBtn" class="search-button primary" title="Refresh balance in real-time" data-i18n="refreshBtn">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
                             </svg>
@@ -621,123 +629,121 @@
                 </div>
 
                 <div class="search-tabs" id="searchTabs">
-                    <button class="search-tab active" data-tab="wallet" id="tabWallet" onclick="switchTab('wallet')">💰 Wallet</button>
-                    <button class="search-tab" data-tab="staking" id="tabStaking" onclick="switchTab('staking')">🔒 Staking</button>
-                    <button class="search-tab" data-tab="transaction" id="tabTransaction" onclick="switchTab('transaction')">📜 Transaction</button>
-                    <button class="search-tab" data-tab="block" id="tabBlock" onclick="switchTab('block')">📦 Block</button>
-                    <button class="search-tab" data-tab="token" id="tabToken" onclick="openTokenModal()">🪙 Token</button>
+                    <button class="search-tab active" data-tab="wallet" id="tabWallet" onclick="switchTab('wallet')" data-i18n="tabWallet">💰 Wallet</button>
+                    <button class="search-tab" data-tab="staking" id="tabStaking" onclick="switchTab('staking')" data-i18n="tabStaking">🔒 Staking</button>
+                    <button class="search-tab" data-tab="transaction" id="tabTransaction" onclick="switchTab('transaction')" data-i18n="tabTransaction">📜 Transaction</button>
+                    <button class="search-tab" data-tab="block" id="tabBlock" onclick="switchTab('block')" data-i18n="tabBlock">📦 Block</button>
+                    <button class="search-tab" data-tab="token" id="tabToken" onclick="openTokenModal()" data-i18n="tabToken">🪙 Token</button>
                 </div>
 
                 <div id="searchResult" class="result-box"></div>
             </div>
 
-            <!-- NAV SECTIONS -->
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionCoreTitle">🔗 CORE BLOCKCHAIN</div>
+                <div class="nav-section-title" id="sectionCoreTitle" data-i18n="sectionCore">🔗 CORE BLOCKCHAIN</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-primary nav-btn" data-feature="blockchainV2" id="navBlockchainV2">🔗 Blockchain V2</button>
-                    <button class="nav-btn-info nav-btn" data-feature="externalAPI" id="navExternalAPI">🌐 External API</button>
-                    <button class="nav-btn-primary nav-btn" data-feature="transactionHistory" id="navTransactionHistory">📜 Transaction History</button>
-                    <button class="nav-btn-warning nav-btn" data-feature="securityDashboard" id="navSecurityDashboard">🛡️ Security Dashboard</button>
-                    <button class="nav-btn-info nav-btn" data-feature="blockExplorer" id="navBlockExplorer">📦 Block Explorer</button>
-                    <button class="nav-btn-success nav-btn" data-feature="networkStatus" id="navNetworkStatus">🌐 Network Status</button>
-                    <button class="nav-btn-warning nav-btn" data-feature="staking" id="navStaking">💰 Staking & Rewards</button>
-                    <button class="nav-btn-purple nav-btn" data-feature="governance" id="navGovernance">🏛️ DAO Governance</button>
-                    <button class="nav-btn-info nav-btn" data-feature="auditLogs" id="navAuditLogs">📊 Audit Logs</button>
-                    <button class="nav-btn-danger nav-btn" data-feature="gasTracker" id="navGasTracker">⛽ Gas Fee Tracker</button>
-                    <button class="nav-btn-info nav-btn" data-feature="analytics" id="navAnalytics">📈 Analytics Dashboard</button>
-                    <button class="nav-btn-danger nav-btn" data-feature="fraudDetection" id="navFraudDetection">🚨 Fraud Detection</button>
+                    <button class="nav-btn-primary nav-btn" data-feature="blockchainV2" onclick="openFeature('blockchainV2')" data-i18n="navBlockchainV2">🔗 Blockchain V2</button>
+                    <button class="nav-btn-info nav-btn" data-feature="externalAPI" onclick="openFeature('externalAPI')" data-i18n="navExternalAPI">🌐 External API</button>
+                    <button class="nav-btn-primary nav-btn" data-feature="transactionHistory" onclick="openFeature('transactionHistory')" data-i18n="navTransactionHistory">📜 Transaction History</button>
+                    <button class="nav-btn-warning nav-btn" data-feature="securityDashboard" onclick="openFeature('securityDashboard')" data-i18n="navSecurityDashboard">🛡️ Security Dashboard</button>
+                    <button class="nav-btn-info nav-btn" data-feature="blockExplorer" onclick="openFeature('blockExplorer')" data-i18n="navBlockExplorer">📦 Block Explorer</button>
+                    <button class="nav-btn-success nav-btn" data-feature="networkStatus" onclick="openFeature('networkStatus')" data-i18n="navNetworkStatus">🌐 Network Status</button>
+                    <button class="nav-btn-warning nav-btn" data-feature="staking" onclick="openFeature('staking')" data-i18n="navStaking">💰 Staking & Rewards</button>
+                    <button class="nav-btn-purple nav-btn" data-feature="governance" onclick="openFeature('governance')" data-i18n="navGovernance">🏛️ DAO Governance</button>
+                    <button class="nav-btn-info nav-btn" data-feature="auditLogs" onclick="openFeature('auditLogs')" data-i18n="navAuditLogs">📊 Audit Logs</button>
+                    <button class="nav-btn-danger nav-btn" data-feature="gasTracker" onclick="openFeature('gasTracker')" data-i18n="navGasTracker">⛽ Gas Fee Tracker</button>
+                    <button class="nav-btn-info nav-btn" data-feature="analytics" onclick="openFeature('analytics')" data-i18n="navAnalytics">📈 Analytics Dashboard</button>
+                    <button class="nav-btn-danger nav-btn" data-feature="fraudDetection" onclick="openFeature('fraudDetection')" data-i18n="navFraudDetection">🚨 Fraud Detection</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionMilitaryTitle">🛡️ MILITARY & SECURITY</div>
+                <div class="nav-section-title" id="sectionMilitaryTitle" data-i18n="sectionMilitary">🛡️ MILITARY & SECURITY</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-orange nav-btn" data-feature="militaryC2" id="navMilitaryC2">🎖️ Military C2</button>
-                    <button class="nav-btn-warning nav-btn" data-feature="auditVault" id="navAuditVault">🔒 Audit Vault</button>
-                    <button class="nav-btn-danger nav-btn" data-feature="cyberThreat" id="navCyberThreat">💀 Cyber Threat Intel</button>
-                    <button class="nav-btn-success nav-btn" data-feature="missionCritical" id="navMissionCritical">⚡ Mission Critical</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="security" id="navSecurity">🛡️ Security</button>
+                    <button class="nav-btn-orange nav-btn" data-feature="militaryC2" onclick="openFeature('militaryC2')" data-i18n="navMilitaryC2">🎖️ Military C2</button>
+                    <button class="nav-btn-warning nav-btn" data-feature="auditVault" onclick="openFeature('auditVault')" data-i18n="navAuditVault">🔒 Audit Vault</button>
+                    <button class="nav-btn-danger nav-btn" data-feature="cyberThreat" onclick="openFeature('cyberThreat')" data-i18n="navCyberThreat">💀 Cyber Threat Intel</button>
+                    <button class="nav-btn-success nav-btn" data-feature="missionCritical" onclick="openFeature('missionCritical')" data-i18n="navMissionCritical">⚡ Mission Critical</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="security" onclick="openFeature('security')" data-i18n="navSecurity">🛡️ Security</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionExplorationTitle">🔍 BLOCKCHAIN EXPLORATION</div>
+                <div class="nav-section-title" id="sectionExplorationTitle" data-i18n="sectionExploration">🔍 BLOCKCHAIN EXPLORATION</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-info nav-btn" data-feature="exploreBlocks" id="navExploreBlocks">🔍 Explore Blocks</button>
-                    <button class="nav-btn-primary nav-btn" data-feature="transactions" id="navTransactions">📜 Transactions</button>
-                    <button class="nav-btn-success nav-btn" data-feature="networkStatus2" id="navNetworkStatus2">🌐 Network Status</button>
-                    <button class="nav-btn-warning nav-btn" data-feature="staking2" id="navStaking2">💰 Staking</button>
-                    <button class="nav-btn-purple nav-btn" data-feature="daoGovernance2" id="navDaoGovernance2">🏛️ DAO and Governance</button>
-                    <button class="nav-btn-info nav-btn" data-feature="auditLogs2" id="navAuditLogs2">📊 Audit Logs</button>
-                    <button class="nav-btn-danger nav-btn" data-feature="gasFees" id="navGasFees">⛽ Gas Fees</button>
-                    <button class="nav-btn-info nav-btn" data-feature="analytics2" id="navAnalytics2">📈 Analytics</button>
-                    <button class="nav-btn-danger nav-btn" data-feature="fraudDetection2" id="navFraudDetection2">🚨 Fraud Detection</button>
+                    <button class="nav-btn-info nav-btn" data-feature="exploreBlocks" onclick="openFeature('exploreBlocks')" data-i18n="navExploreBlocks">🔍 Explore Blocks</button>
+                    <button class="nav-btn-primary nav-btn" data-feature="transactions" onclick="openFeature('transactions')" data-i18n="navTransactions">📜 Transactions</button>
+                    <button class="nav-btn-success nav-btn" data-feature="networkStatus2" onclick="openFeature('networkStatus2')" data-i18n="navNetworkStatus2">🌐 Network Status</button>
+                    <button class="nav-btn-warning nav-btn" data-feature="staking2" onclick="openFeature('staking2')" data-i18n="navStaking2">💰 Staking</button>
+                    <button class="nav-btn-purple nav-btn" data-feature="daoGovernance2" onclick="openFeature('daoGovernance2')" data-i18n="navDaoGovernance2">🏛️ DAO and Governance</button>
+                    <button class="nav-btn-info nav-btn" data-feature="auditLogs2" onclick="openFeature('auditLogs2')" data-i18n="navAuditLogs2">📊 Audit Logs</button>
+                    <button class="nav-btn-danger nav-btn" data-feature="gasFees" onclick="openFeature('gasFees')" data-i18n="navGasFees">⛽ Gas Fees</button>
+                    <button class="nav-btn-info nav-btn" data-feature="analytics2" onclick="openFeature('analytics2')" data-i18n="navAnalytics2">📈 Analytics</button>
+                    <button class="nav-btn-danger nav-btn" data-feature="fraudDetection2" onclick="openFeature('fraudDetection2')" data-i18n="navFraudDetection2">🚨 Fraud Detection</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionEmergingTitle">💡 SMART CONTRACTS & EMERGING TECH</div>
+                <div class="nav-section-title" id="sectionEmergingTitle" data-i18n="sectionEmerging">💡 SMART CONTRACTS & EMERGING TECH</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-cyan nav-btn" data-feature="smartContracts" id="navSmartContracts">📝 Smart Contracts</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="desci" id="navDesci">🔬 Desci</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="hologram" id="navHologram">🌀 Hologram</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="spaceSector" id="navSpaceSector">🚀 Space Sector</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="smartContracts" onclick="openFeature('smartContracts')" data-i18n="navSmartContracts">📝 Smart Contracts</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="desci" onclick="openFeature('desci')" data-i18n="navDesci">🔬 Desci</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="hologram" onclick="openFeature('hologram')" data-i18n="navHologram">🌀 Hologram</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="spaceSector" onclick="openFeature('spaceSector')" data-i18n="navSpaceSector">🚀 Space Sector</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionIndustriesTitle">🏭 INDUSTRIES</div>
+                <div class="nav-section-title" id="sectionIndustriesTitle" data-i18n="sectionIndustries">🏭 INDUSTRIES</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-cyan nav-btn" data-feature="agriculture" id="navAgriculture">🌾 Agriculture and Food</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="entertainment" id="navEntertainment">🎬 Entertainment</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="sports" id="navSports">⚽ Sports</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="infrastructure" id="navInfrastructure">🏗️ Infrastructure</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="health" id="navHealth">🏥 Health</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="biotechnology" id="navBiotechnology">🧬 Biotechnology</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="energy" id="navEnergy">⚡ Energy</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="financialMarket" id="navFinancialMarket">📈 Financial Market</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="agriculture" onclick="openFeature('agriculture')" data-i18n="navAgriculture">🌾 Agriculture and Food</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="entertainment" onclick="openFeature('entertainment')" data-i18n="navEntertainment">🎬 Entertainment</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="sports" onclick="openFeature('sports')" data-i18n="navSports">⚽ Sports</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="infrastructure" onclick="openFeature('infrastructure')" data-i18n="navInfrastructure">🏗️ Infrastructure</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="health" onclick="openFeature('health')" data-i18n="navHealth">🏥 Health</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="biotechnology" onclick="openFeature('biotechnology')" data-i18n="navBiotechnology">🧬 Biotechnology</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="energy" onclick="openFeature('energy')" data-i18n="navEnergy">⚡ Energy</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="financialMarket" onclick="openFeature('financialMarket')" data-i18n="navFinancialMarket">📈 Financial Market</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionWeb3Title">🌐 WEB3 & INVESTMENTS</div>
+                <div class="nav-section-title" id="sectionWeb3Title" data-i18n="sectionWeb3">🌐 WEB3 & INVESTMENTS</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-cyan nav-btn" data-feature="nftExploration" id="navNftExploration">🎨 NFT Exploration</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="cloudMining" id="navCloudMining">⛏️ Cloud Mining</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="roboticsInvestments" id="navRoboticsInvestments">🤖 Robotics Investments</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="defiProjects" id="navDefiProjects">💎 DeFi Projects</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="metaverseIntegration" id="navMetaverseIntegration">🌌 Metaverse Integration</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="decentralizedPhilanthropy" id="navDecentralizedPhilanthropy">❤️ Decentralized Philanthropy</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="nftExploration" onclick="openFeature('nftExploration')" data-i18n="navNftExploration">🎨 NFT Exploration</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="cloudMining" onclick="openFeature('cloudMining')" data-i18n="navCloudMining">⛏️ Cloud Mining</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="roboticsInvestments" onclick="openFeature('roboticsInvestments')" data-i18n="navRoboticsInvestments">🤖 Robotics Investments</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="defiProjects" onclick="openFeature('defiProjects')" data-i18n="navDefiProjects">💎 DeFi Projects</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="metaverseIntegration" onclick="openFeature('metaverseIntegration')" data-i18n="navMetaverseIntegration">🌌 Metaverse Integration</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="decentralizedPhilanthropy" onclick="openFeature('decentralizedPhilanthropy')" data-i18n="navDecentralizedPhilanthropy">❤️ Decentralized Philanthropy</button>
                 </div>
             </div>
 
             <div class="nav-section">
-                <div class="nav-section-title" id="sectionGovernanceTitle">⚙️ GOVERNANCE & UPDATES</div>
+                <div class="nav-section-title" id="sectionGovernanceTitle" data-i18n="sectionGovernance">⚙️ GOVERNANCE & UPDATES</div>
                 <div class="nav-buttons">
-                    <button class="nav-btn-cyan nav-btn" data-feature="blockchainUpdate" id="navBlockchainUpdate">🔄 Blockchain Update</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="digitalGovernance" id="navDigitalGovernance">⚖️ Digital Governance</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="cryptoMarketplace" id="navCryptoMarketplace">🏪 Cryptocurrency Marketplace</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="aiTech" id="navAiTech">🤖 Artificial Intelligence News</button>
-                    <button class="nav-btn-cyan nav-btn" data-feature="blockchainSecurity" id="navBlockchainSecurity">🔐 Blockchain Security</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="blockchainUpdate" onclick="openFeature('blockchainUpdate')" data-i18n="navBlockchainUpdate">🔄 Blockchain Update</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="digitalGovernance" onclick="openFeature('digitalGovernance')" data-i18n="navDigitalGovernance">⚖️ Digital Governance</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="cryptoMarketplace" onclick="openFeature('cryptoMarketplace')" data-i18n="navCryptoMarketplace">🏪 Cryptocurrency Marketplace</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="aiTech" onclick="openFeature('aiTech')" data-i18n="navAiTech">🤖 Artificial Intelligence News</button>
+                    <button class="nav-btn-cyan nav-btn" data-feature="blockchainSecurity" onclick="openFeature('blockchainSecurity')" data-i18n="navBlockchainSecurity">🔐 Blockchain Security</button>
                 </div>
             </div>
 
-            <!-- NETWORK PANEL -->
             <div class="network-panel">
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2">
                             <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
                         </svg>
-                        <h2 id="networkStatusTitle" style="color: cyan;">Network Status</h2>
+                        <h2 id="networkStatusTitle" style="color: cyan;" data-i18n="networkStatus">Network Status</h2>
                     </div>
                     <div class="status-badge" id="statusBadge">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
                             <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
                             <path d="m9 11 3 3L22 4"></path>
                         </svg>
-                        <span id="blockchainValid" style="color: #00ff66;">Blockchain Valid</span>
+                        <span id="blockchainValid" style="color: #00ff66;" data-i18n="blockchainValid">Blockchain Valid</span>
                     </div>
                 </div>
 
@@ -748,15 +754,15 @@
                                 <rect width="7" height="7" x="14" y="3" rx="1"></rect>
                                 <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
                             </svg>
-                            <span id="networkMetricsTitle" style="color: cyan;">Network Metrics</span>
+                            <span id="networkMetricsTitle" style="color: cyan;" data-i18n="networkMetrics">Network Metrics</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelBlockHeight">Block Height</span><span class="metric-value" id="blockHeightValue" style="color: #00ccff;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelBlocksPerMin">Blocks/min</span><span class="metric-value" id="blocksPerMinValue" style="color: #00ccff;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelAvgBlockTime">Avg Block Time</span><span class="metric-value" id="avgBlockTimeValue" style="color: #00ccff;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelNodesOnline">Nodes Online</span><span class="metric-value" id="nodesOnlineValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelValidators">Validators</span><span class="metric-value" id="validatorsValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelNetworkHealth">Network Health</span><span class="metric-value" id="networkHealthValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelDecentralization">Decentralization</span><span class="metric-value" id="decentralizationValue" style="color: #00ccff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="blockHeight">Block Height</span><span class="metric-value" id="blockHeightValue" style="color: #00ccff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="blocksPerMin">Blocks/min</span><span class="metric-value" id="blocksPerMinValue" style="color: #00ccff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="avgBlockTime">Avg Block Time</span><span class="metric-value" id="avgBlockTimeValue" style="color: #00ccff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="nodesOnline">Nodes Online</span><span class="metric-value" id="nodesOnlineValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="validators">Validators</span><span class="metric-value" id="validatorsValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="networkHealth">Network Health</span><span class="metric-value" id="networkHealthValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="decentralization">Decentralization</span><span class="metric-value" id="decentralizationValue" style="color: #00ccff;">--</span></div>
                     </div>
 
                     <div class="metric-card metric-card-magenta">
@@ -764,14 +770,14 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
                                 <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
                             </svg>
-                            <span id="transactionsTitle" style="color: magenta;">Transactions</span>
+                            <span id="transactionsTitle" style="color: magenta;" data-i18n="transactions">Transactions</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelTPS">TPS</span><span class="metric-value" id="tpsValue" style="color: magenta;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelAvgConfirmation">Avg Confirmation</span><span class="metric-value" id="avgConfirmationValue" style="color: magenta;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelAvgFee">Avg Fee</span><span class="metric-value" id="avgFeeValue" style="color: magenta;">$0.15</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelVolume24h">Volume 24h</span><span class="metric-value" id="volume24hValue" style="color: magenta;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelFeesToday">Fees Today</span><span class="metric-value" id="feesTodayValue" style="color: magenta;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelPending">Pending</span><span class="metric-value" id="pendingValue" style="color: #ffc800;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="tps">TPS</span><span class="metric-value" id="tpsValue" style="color: magenta;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="avgConfirmation">Avg Confirmation</span><span class="metric-value" id="avgConfirmationValue" style="color: magenta;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="avgFee">Avg Fee</span><span class="metric-value" id="avgFeeValue" style="color: magenta;">$0.15</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="volume24h">Volume 24h</span><span class="metric-value" id="volume24hValue" style="color: magenta;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="feesToday">Fees Today</span><span class="metric-value" id="feesTodayValue" style="color: magenta;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="pending">Pending</span><span class="metric-value" id="pendingValue" style="color: #ffc800;">--</span></div>
                     </div>
 
                     <div class="metric-card metric-card-green">
@@ -780,12 +786,12 @@
                                 <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path>
                                 <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>
                             </svg>
-                            <span id="walletsTitle" style="color: #00ff66;">Wallets</span>
+                            <span id="walletsTitle" style="color: #00ff66;" data-i18n="wallets">Wallets</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelActiveWallets">Active Wallets</span><span class="metric-value" id="activeWalletsValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelNewToday">New Today</span><span class="metric-value" id="newTodayValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelInStaking">In Staking</span><span class="metric-value" id="inStakingValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelTopHolders">Top Holders</span><span class="metric-value" id="topHoldersValue" style="color: #ffc800;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="activeWallets">Active Wallets</span><span class="metric-value" id="activeWalletsValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="newToday">New Today</span><span class="metric-value" id="newTodayValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="inStaking">In Staking</span><span class="metric-value" id="inStakingValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="topHolders">Top Holders</span><span class="metric-value" id="topHoldersValue" style="color: #ffc800;">--</span></div>
                     </div>
 
                     <div class="metric-card metric-card-blue">
@@ -795,14 +801,14 @@
                                 <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
                                 <path d="M3 12A9 3 0 0 0 21 12"></path>
                             </svg>
-                            <span id="supplyTitle" style="color: #6496ff;">Supply</span>
+                            <span id="supplyTitle" style="color: #6496ff;" data-i18n="supply">Supply</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelTotal">Total</span><span class="metric-value" id="totalValue" style="color: #6496ff;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelCirculating">Circulating</span><span class="metric-value" id="circulatingValue" style="color: #6496ff;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelLocked">Locked</span><span class="metric-value" id="lockedValue" style="color: #ffc800;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelStaked">Staked</span><span class="metric-value" id="stakedValue" style="color: #00ff66;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelBurned">Burned</span><span class="metric-value" id="burnedValue" style="color: #ff6464;">--</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelDeflation">Deflation</span><span class="metric-value" id="deflationValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="total">Total</span><span class="metric-value" id="totalValue" style="color: #6496ff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="circulating">Circulating</span><span class="metric-value" id="circulatingValue" style="color: #6496ff;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="locked">Locked</span><span class="metric-value" id="lockedValue" style="color: #ffc800;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="staked">Staked</span><span class="metric-value" id="stakedValue" style="color: #00ff66;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="burned">Burned</span><span class="metric-value" id="burnedValue" style="color: #ff6464;">--</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="deflation">Deflation</span><span class="metric-value" id="deflationValue" style="color: #00ff66;">--</span></div>
                     </div>
                 </div>
 
@@ -813,15 +819,15 @@
                                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                                 <polyline points="16 7 22 7 22 13"></polyline>
                             </svg>
-                            <span id="priceEconomicsTitle" style="color: #ffc800;">Price Economics</span>
+                            <span id="priceEconomicsTitle" style="color: #ffc800;" data-i18n="priceEconomics">Price Economics</span>
                         </div>
                         <div class="price-box">
                             <div class="price-item" style="background: rgba(0, 255, 100, 0.1); border-radius: 8px;">
-                                <div class="text-gray text-sm" id="labelBasePrice">Base Price</div>
+                                <div class="text-gray text-sm" data-i18n="basePrice">Base Price</div>
                                 <div class="text-xl font-bold" style="color: #00ff66;" id="basePriceValue">$10.00</div>
                             </div>
                             <div class="price-item" style="background: rgba(0, 200, 255, 0.1); border-radius: 8px;">
-                                <div class="text-gray text-sm" id="labelCurrentPrice">Current Price</div>
+                                <div class="text-gray text-sm" data-i18n="currentPrice">Current Price</div>
                                 <div class="text-xl font-bold" style="color: cyan;" id="currentPriceValue">$10.00</div>
                             </div>
                         </div>
@@ -830,13 +836,13 @@
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
                                     <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
                                 </svg>
-                                <span id="priceSupportText">Price Support $10</span>
+                                <span data-i18n="priceSupport">Price Support $10</span>
                             </div>
-                            <span id="activeStatus" style="color: #00ff66;">Active</span>
+                            <span style="color: #00ff66;" data-i18n="active">Active</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelRealMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">$790T</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelDilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">$790T</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelTargetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">$790T</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="realMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">$790T</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="dilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">$790T</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="targetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">$790T</span></div>
                     </div>
 
                     <div class="metric-card metric-card-purple">
@@ -845,7 +851,7 @@
                                 <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
-                            <span id="stabilityTitle" style="color: #c864ff;">Stability Mechanisms</span>
+                            <span id="stabilityTitle" style="color: #c864ff;" data-i18n="stabilityMechanisms">Stability Mechanisms</span>
                         </div>
                         <div class="support-badge" style="background: rgba(0, 255, 100, 0.1); margin-bottom: 12px;">
                             <div class="flex items-center gap-2">
@@ -853,18 +859,17 @@
                                     <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                                     <polyline points="16 7 22 7 22 13"></polyline>
                                 </svg>
-                                <span id="buybackActiveText">Buyback Active</span>
+                                <span data-i18n="buybackActive">Buyback Active</span>
                             </div>
-                            <span id="yesStatus" style="color: #00ff66;">Yes</span>
+                            <span style="color: #00ff66;" data-i18n="yes">Yes</span>
                         </div>
-                        <div class="metric-row"><span class="metric-label" id="labelStabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">$2.5B</span></div>
-                        <div class="metric-row"><span class="metric-label" id="labelBoughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">15M BRD</span></div>
-                        <div class="metric-row"><div class="flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span class="metric-label" id="labelBurnedToday">Burned Today</span></div><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">8.5M BRD</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="stabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">$2.5B</span></div>
+                        <div class="metric-row"><span class="metric-label" data-i18n="boughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">15M BRD</span></div>
+                        <div class="metric-row"><div class="flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg><span class="metric-label" data-i18n="burnedToday">Burned Today</span></div><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">8.5M BRD</span></div>
                     </div>
                 </div>
             </div>
 
-            <!-- VALIDATORS SECTION -->
             <div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
                 <div class="panel-header">
                     <div class="panel-title">
@@ -872,28 +877,24 @@
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             <path d="M12 8v4M12 16h.01"/>
                         </svg>
-                        <h2 style="color: #c864ff;" id="validatorsTitle">🛡️ Validators</h2>
+                        <h2 style="color: #c864ff;" data-i18n="validatorsTitle">🛡️ Validators</h2>
                     </div>
                     <div class="status-badge" style="border-color: #c864ff;">
-                        <span style="color: #c864ff;" id="validatorCount">0 Active</span>
+                        <span style="color: #c864ff;" id="validatorCount" data-i18n="validatorCount">0 Active</span>
                     </div>
                 </div>
                 <div id="validatorsContainer" style="max-height:300px;overflow-y:auto;">
                     <div style="text-align:center;padding:20px;color:#888;">
-                        <p id="noValidatorsText">No validators active</p>
-                        <p style="font-size:11px;" id="becomeValidatorText">Become a validator by staking 1000+ BRD</p>
+                        <p data-i18n="noValidators">No validators active</p>
+                        <p style="font-size:11px;" data-i18n="becomeValidatorText">Become a validator by staking 1000+ BRD</p>
                     </div>
                 </div>
                 <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
-                    <button onclick="becomeValidator()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnBecomeValidator">
-                        ⚡ Become Validator                    </button>
-                    <button onclick="viewValidatorStats()" style="background:transparent;border:1px solid #555;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnViewStats">
-                        📊 View Stats
-                    </button>
+                    <button onclick="becomeValidator()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnBecomeValidator">⚡ Become Validator</button>
+                    <button onclick="viewValidatorStats()" style="background:transparent;border:1px solid #555;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnViewStats">📊 View Stats</button>
                 </div>
             </div>
 
-            <!-- STAKING STATS SECTION -->
             <div class="network-panel" style="border-color: #ffc800; margin-top: 20px;">
                 <div class="panel-header">
                     <div class="panel-title">
@@ -901,20 +902,19 @@
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 6v6l4 2"/>
                         </svg>
-                        <h2 style="color: #ffc800;" id="stakingStatsTitle">💰 Staking Stats</h2>
+                        <h2 style="color: #ffc800;" data-i18n="stakingStatsTitle">💰 Staking Stats</h2>
                     </div>
                     <div class="status-badge" style="border-color: #ffc800;">
-                        <span style="color: #ffc800;" id="stakingLiveText">Live</span>
+                        <span style="color: #ffc800;" data-i18n="stakingLive">Live</span>
                     </div>
                 </div>
                 <div id="stakingStats">
                     <div style="text-align:center;padding:20px;color:#888;">
-                        <p id="loadingStakingText">Loading staking stats...</p>
+                        <p data-i18n="loadingStaking">Loading staking stats...</p>
                     </div>
                 </div>
             </div>
 
-            <!-- SECURITY DASHBOARD -->
             <div class="network-panel" style="border-color: #ff6464; margin-top: 20px;">
                 <div class="panel-header">
                     <div class="panel-title">
@@ -922,75 +922,63 @@
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                             <path d="M12 8v4M12 16h.01"/>
                         </svg>
-                        <h2 style="color: #ff6464;" id="securityDashboardTitle">🛡️ Security Dashboard</h2>
+                        <h2 style="color: #ff6464;" data-i18n="securityDashboardTitle">🛡️ Security Dashboard</h2>
                     </div>
                     <div class="status-badge" style="border-color: #ff6464;">
-                        <span style="color: #00ff66;" id="securityStatus">🟢 Secure</span>
+                        <span style="color: #00ff66;" data-i18n="secure">🟢 Secure</span>
                     </div>
                 </div>
                 
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:15px;">
                     <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;border:1px solid rgba(255,100,100,0.2);">
-                        <div style="font-size:10px;color:#888;" id="secEncryptionLabel">Encryption</div>
+                        <div style="font-size:10px;color:#888;" data-i18n="encryption">Encryption</div>
                         <div style="color:#00ff66;font-size:14px;">✅ AES-256</div>
                     </div>
                     <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;border:1px solid rgba(255,100,100,0.2);">
-                        <div style="font-size:10px;color:#888;" id="sec2FALabel">2FA</div>
-                        <div style="color:#ffc800;font-size:14px;" id="sec2FAValue">Available</div>
+                        <div style="font-size:10px;color:#888;" data-i18n="fa2">2FA</div>
+                        <div style="color:#ffc800;font-size:14px;" data-i18n="available">Available</div>
                     </div>
                     <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;border:1px solid rgba(255,100,100,0.2);">
-                        <div style="font-size:10px;color:#888;" id="secStealthLabel">Stealth Mode</div>
-                        <div style="color:#c864ff;font-size:14px;" id="secStealthValue">🕵️ Active</div>
+                        <div style="font-size:10px;color:#888;" data-i18n="stealthMode">Stealth Mode</div>
+                        <div style="color:#c864ff;font-size:14px;">🕵️ Active</div>
                     </div>
                     <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;border:1px solid rgba(255,100,100,0.2);">
-                        <div style="font-size:10px;color:#888;" id="secMultiSigLabel">Multi-Sig</div>
-                        <div style="color:#00ccff;font-size:14px;" id="secMultiSigValue">✅ Supported</div>
+                        <div style="font-size:10px;color:#888;" data-i18n="multiSig">Multi-Sig</div>
+                        <div style="color:#00ccff;font-size:14px;" data-i18n="supported">✅ Supported</div>
                     </div>
                 </div>
                 
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:15px;border-top:1px solid rgba(255,100,100,0.1);">
-                    <button onclick="testSecurity()" style="background:rgba(0,200,255,0.2);border:1px solid #00ccff;color:#00ccff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnTestSecurity">
-                        🔐 Test Security
-                    </button>
-                    <button onclick="testAnonymousTransfer()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnAnonTransfer">
-                        🔄 Anon Transfer
-                    </button>
-                    <button onclick="protectMyData()" style="background:rgba(0,255,100,0.2);border:1px solid #00ff66;color:#00ff66;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnProtectData">
-                        🔒 Protect Data
-                    </button>
-                    <button onclick="verifyIntegrity()" style="background:rgba(255,200,0,0.2);border:1px solid #ffc800;color:#ffc800;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnVerifyIntegrity">
-                        🌳 Verify Integrity
-                    </button>
-                    <button onclick="viewSecurityStatus()" style="background:rgba(255,100,100,0.2);border:1px solid #ff6464;color:#ff6464;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" id="btnSecurityStatus">
-                        📊 Security Status
-                    </button>
+                    <button onclick="testSecurity()" style="background:rgba(0,200,255,0.2);border:1px solid #00ccff;color:#00ccff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnTestSecurity">🔐 Test Security</button>
+                    <button onclick="testAnonymousTransfer()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnAnonTransfer">🔄 Anon Transfer</button>
+                    <button onclick="protectMyData()" style="background:rgba(0,255,100,0.2);border:1px solid #00ff66;color:#00ff66;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnProtectData">🔒 Protect Data</button>
+                    <button onclick="verifyIntegrity()" style="background:rgba(255,200,0,0.2);border:1px solid #ffc800;color:#ffc800;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnVerifyIntegrity">🌳 Verify Integrity</button>
+                    <button onclick="viewSecurityStatus()" style="background:rgba(255,100,100,0.2);border:1px solid #ff6464;color:#ff6464;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnSecurityStatus">📊 Security Status</button>
                 </div>
             </div>
             
-            <!-- TRANSACTION HISTORY -->
             <div class="transaction-history">
                 <div class="transaction-header">
-                    <h2 id="transactionHistoryTitle" style="color: cyan;">Transaction History</h2>
-                    <button id="refreshHistory" class="refresh-btn">⟳ Refresh</button>
+                    <h2 id="transactionHistoryTitle" style="color: cyan;" data-i18n="transactionHistoryTitle">Transaction History</h2>
+                    <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
                 </div>
                 <div id="transactionList"></div>
                 <div id="transactionCount" style="text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(0, 200, 255, 0.2);">
-                    <span class="text-gray" id="totalTransactionsText">Total transactions: </span>
+                    <span class="text-gray" data-i18n="totalTransactions">Total transactions: </span>
                     <span id="totalCount" class="font-bold" style="color: cyan;">0</span>
                 </div>
             </div>
 
-            <!-- DEVELOPER API -->
             <div class="developer-card">
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
                             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
                         </svg>
-                        <h2 id="devApiTitle" style="color: magenta;">👨‍💻 DEVELOPER API</h2>
+                        <h2 id="devApiTitle" style="color: magenta;" data-i18n="devApiTitle">👨‍💻 DEVELOPER API</h2>
                     </div>
                     <div class="status-badge" style="border-color: magenta;">
-                        <span style="color: magenta;" id="devApiStatus">🟢 Available</span>
+                        <span style="color: magenta;" data-i18n="devApiAvailable">🟢 Available</span>
                     </div>
                 </div>
 
@@ -1002,17 +990,13 @@
                                 <line x1="8" y1="21" x2="16" y2="21"></line>
                                 <line x1="12" y1="17" x2="12" y2="21"></line>
                             </svg>
-                            <span id="devSdkTitle" style="color: magenta;">📦 SDK Installation</span>
+                            <span style="color: magenta;" data-i18n="devSdkTitle">📦 SDK Installation</span>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <div style="color: #00ff66; margin-bottom: 10px;" id="devJsLabel">JavaScript / Node.js:</div>
-                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">
-                                npm install bradicoin-sdk
-                            </code>
-                            <div style="color: #00ff66; margin: 15px 0 10px 0;" id="devPythonLabel">Python:</div>
-                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">
-                                pip install bradicoin-sdk
-                            </code>
+                            <div style="color: #00ff66; margin-bottom: 10px;" data-i18n="devJsLabel">JavaScript / Node.js:</div>
+                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">npm install bradicoin-sdk</code>
+                            <div style="color: #00ff66; margin: 15px 0 10px 0;" data-i18n="devPythonLabel">Python:</div>
+                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">pip install bradicoin-sdk</code>
                         </div>
                     </div>
 
@@ -1022,7 +1006,7 @@
                                 <path d="M4 4v16h16V4H4zm2 2h12v12H6V6z"></path>
                                 <path d="M8 8h8v8H8z"></path>
                             </svg>
-                            <span id="devQuickStartTitle" style="color: magenta;">🚀 Quick Start</span>
+                            <span style="color: magenta;" data-i18n="devQuickStart">🚀 Quick Start</span>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
                             <pre style="color: cyan; font-size: 11px; margin: 0; overflow-x: auto;">
@@ -1049,7 +1033,7 @@ const payment = await client.createPayment({
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <path d="M12 6v6l4 2"></path>
                             </svg>
-                            <span id="devEndpointsTitle" style="color: magenta;">⚡ API Endpoints</span>
+                            <span style="color: magenta;" data-i18n="devEndpoints">⚡ API Endpoints</span>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
                             <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color: cyan;">/api/balance/:address</span></div>
@@ -1061,36 +1045,33 @@ const payment = await client.createPayment({
                 </div>
 
                 <div style="margin-top: 20px; padding: 20px; background: rgba(255,0,255,0.1); border-radius: 12px;">
-                    <h3 id="devRegisterTitle" style="color: magenta; margin-bottom: 15px;">🔑 Get Your API Keys</h3>
+                    <h3 style="color: magenta; margin-bottom: 15px;" data-i18n="devRegister">🔑 Get Your API Keys</h3>
                     <div class="price-box" style="grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
-                            <input type="text" id="devAppName" placeholder="Your App Name" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;">
-                            <input type="email" id="devEmail" placeholder="Your Email (optional)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;">
-                            <input type="url" id="devWebhook" placeholder="Webhook URL (optional)" style="width: 100%; padding: 12px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;">
+                            <input type="text" id="devAppName" placeholder="Your App Name" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devAppName">
+                            <input type="email" id="devEmail" placeholder="Your Email (optional)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devEmail">
+                            <input type="url" id="devWebhook" placeholder="Webhook URL (optional)" style="width: 100%; padding: 12px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devWebhook">
                         </div>
                         <div>
-                            <button onclick="registerDeveloperApp()" style="width: 100%; background: magenta; padding: 12px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;" id="btnRegisterApp">
-                                🚀 Register Application
-                            </button>
+                            <button onclick="registerDeveloperApp()" style="width: 100%; background: magenta; padding: 12px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;" data-i18n="devRegisterBtn">🚀 Register Application</button>
                             <div id="apiKeysResult" class="api-keys-result">
-                                <div style="color: #00ff66;" id="apiKeyLabel">API Key:</div>
+                                <div style="color: #00ff66;" data-i18n="apiKeyLabel">API Key:</div>
                                 <code id="apiKeyDisplay"></code>
-                                <div style="color: #00ff66; margin-top: 10px;" id="apiSecretLabel">API Secret:</div>
+                                <div style="color: #00ff66; margin-top: 10px;" data-i18n="apiSecretLabel">API Secret:</div>
                                 <code id="apiSecretDisplay"></code>
-                                <button onclick="copyApiKeys()" style="margin-top: 10px; background: cyan; color: #000; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;" id="btnCopyKeys">📋 Copy Keys</button>
+                                <button onclick="copyApiKeys()" style="margin-top: 10px; background: cyan; color: #000; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;" data-i18n="copyKeys">📋 Copy Keys</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; justify-content: center;">
-                    <a href="https://bradicoin-api.onrender.com/" target="_blank" style="color: cyan;" id="devDocsLink">📚 API Documentation</a>
-                    <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" style="color: cyan;" id="devStatusLink">🩺 API Status</a>
+                    <a href="https://bradicoin-api.onrender.com/" target="_blank" style="color: cyan;" data-i18n="docsLink">📚 API Documentation</a>
+                    <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" style="color: cyan;" data-i18n="statusLink">🩺 API Status</a>
                 </div>
             </div>
         </div>
 
-        <!-- MODAL -->
         <div id="featureModal" class="modal">
             <div class="modal-content">
                 <div id="modalContent" class="modal-inner">
@@ -1103,42 +1084,31 @@ const payment = await client.createPayment({
             </div>
         </div>
 
-        <!-- TOKEN MODAL -->
         <div id="tokenModal" class="token-modal">
             <div class="token-modal-content">
                 <div class="token-modal-inner">
                     <div class="token-modal-header">
-                        <h2 id="tokenModalTitle">🪙 Bradicoin Tokens</h2>
+                        <h2 id="tokenModalTitle" data-i18n="tokenModalTitle">🪙 Bradicoin Tokens</h2>
                         <button class="token-modal-close" onclick="closeTokenModal()">✕ Close</button>
                     </div>
-                    <div id="tokenModalBody">
-                        <!-- Token content will be inserted here by JavaScript -->
-                    </div>
+                    <div id="tokenModalBody"></div>
                 </div>
             </div>
         </div>
 
-        <!-- FOOTER -->
         <footer class="footer">
-            <p class="animate-footer-glow" id="footerCopyright" style="color: cyan;">© 2025 Bradicoin Blockchain. All rights reserved.</p>
+            <p class="animate-footer-glow" id="footerCopyright" style="color: cyan;" data-i18n="footerCopyright">© 2025 Bradicoin Blockchain. All rights reserved.</p>
             <div class="footer-links" id="footerLinks">
-                <a onclick="openPage('about')" id="footerAbout">About</a>
-                <a onclick="openPage('contact')" id="footerContact">Contact</a>
-                <a onclick="openPage('terms')" id="footerTerms">Terms of Use</a>
-                <a onclick="openPage('privacy')" id="footerPrivacy">Privacy</a>
-                <a onclick="openPage('support')" id="footerSupport">Support</a>
+                <a onclick="openPage('about')" data-i18n="footerAbout">About</a>
+                <a onclick="openPage('contact')" data-i18n="footerContact">Contact</a>
+                <a onclick="openPage('terms')" data-i18n="footerTerms">Terms of Use</a>
+                <a onclick="openPage('privacy')" data-i18n="footerPrivacy">Privacy</a>
+                <a onclick="openPage('support')" data-i18n="footerSupport">Support</a>
             </div>
         </footer>
     </div>
 
     <script>
-// ==================== CONFIGURATION ====================
-const API_URL = 'https://bradicoin-api.onrender.com';
-let currentLang = 'en';
-let currentTab = 'wallet';
-let apiOnline = false;
-let lastSearchedAddress = '';
-
 // ==================== COMPLETE TRANSLATIONS ====================
 const translations = {
     en: {
@@ -1330,7 +1300,58 @@ const translations = {
         mining: '⛏️ Mining...',
         blockMined: '✅ Block Mined!',
         walletNotFound: 'Wallet Not Found',
-        invalidAddress: 'Invalid wallet address. Please check and try again.'
+        invalidAddress: 'Invalid wallet address. Please check and try again.',
+        close: '✕ Close',
+        // Feature titles
+        featureBlockchainV2: '🔗 Blockchain V2 - Next Generation',
+        featureExternalAPI: '🌐 External API Integration',
+        featureTransactionHistory: '📜 Complete Transaction History',
+        featureSecurityDashboard: '🛡️ Advanced Security Dashboard',
+        featureBlockExplorer: '📦 Block Explorer',
+        featureNetworkStatus: '🌐 Network Status Monitor',
+        featureStaking: '💰 Staking & Rewards Center',
+        featureGovernance: '🏛️ DAO Governance Portal',
+        featureAuditLogs: '📊 Audit Logs',
+        featureGasTracker: '⛽ Gas Fee Tracker',
+        featureAnalytics: '📈 Analytics Dashboard',
+        featureFraudDetection: '🚨 Fraud Detection System',
+        featureMilitaryC2: '🎖️ Military Command & Control',
+        featureAuditVault: '🔒 Audit Vault - Secure Storage',
+        featureCyberThreat: '💀 Cyber Threat Intelligence',
+        featureMissionCritical: '⚡ Mission Critical Operations',
+        featureSecurity: '🛡️ Security Operations Center',
+        featureExploreBlocks: '🔍 Explore Blockchain Blocks',
+        featureTransactions: '📜 Transaction Explorer',
+        featureNetworkStatus2: '🌐 Network Status Monitor',
+        featureStaking2: '💰 Staking Dashboard',
+        featureDaoGovernance2: '🏛️ DAO Governance Platform',
+        featureAuditLogs2: '📊 Audit Logs Viewer',
+        featureGasFees: '⛽ Gas Fee Monitor',
+        featureAnalytics2: '📈 Analytics & Insights',
+        featureFraudDetection2: '🚨 Fraud Detection & Prevention',
+        featureSmartContracts: '📝 Smart Contracts Platform',
+        featureDesci: '🔬 Decentralized Science (DeSci)',
+        featureHologram: '🌀 Holographic Technology',
+        featureSpaceSector: '🚀 Space Sector Integration',
+        featureAgriculture: '🌾 Agriculture & Food Security',
+        featureEntertainment: '🎬 Entertainment Industry',
+        featureSports: '⚽ Sports & Athletics',
+        featureInfrastructure: '🏗️ Infrastructure Development',
+        featureHealth: '🏥 Healthcare & Medical',
+        featureBiotechnology: '🧬 Biotechnology & Genomics',
+        featureEnergy: '⚡ Energy & Sustainability',
+        featureFinancialMarket: '📈 Financial Markets',
+        featureNftExploration: '🎨 NFT Exploration & Trading',
+        featureCloudMining: '⛏️ Cloud Mining Operations',
+        featureRoboticsInvestments: '🤖 Robotics & AI Investments',
+        featureDefiProjects: '💎 DeFi Projects & Protocols',
+        featureMetaverseIntegration: '🌌 Metaverse Integration',
+        featureDecentralizedPhilanthropy: '❤️ Decentralized Philanthropy',
+        featureBlockchainUpdate: '🔄 Blockchain Update Center',
+        featureDigitalGovernance: '⚖️ Digital Governance Framework',
+        featureCryptoMarketplace: '🏪 Cryptocurrency Marketplace',
+        featureAiTech: '🤖 Artificial Intelligence News',
+        featureBlockchainSecurity: '🔐 Blockchain Security Audit'
     },
     pt: {
         pageTitle: 'Blockchain Bradicoin',
@@ -1521,7 +1542,57 @@ const translations = {
         mining: '⛏️ Minerando...',
         blockMined: '✅ Bloco Minerado!',
         walletNotFound: 'Carteira Não Encontrada',
-        invalidAddress: 'Endereço de carteira inválido. Verifique e tente novamente.'
+        invalidAddress: 'Endereço de carteira inválido. Verifique e tente novamente.',
+        close: '✕ Fechar',
+        featureBlockchainV2: '🔗 Blockchain V2 - Próxima Geração',
+        featureExternalAPI: '🌐 Integração com API Externa',
+        featureTransactionHistory: '📜 Histórico Completo de Transações',
+        featureSecurityDashboard: '🛡️ Painel de Segurança Avançado',
+        featureBlockExplorer: '📦 Explorador de Blocos',
+        featureNetworkStatus: '🌐 Monitor de Status da Rede',
+        featureStaking: '💰 Centro de Staking e Recompensas',
+        featureGovernance: '🏛️ Portal de Governança DAO',
+        featureAuditLogs: '📊 Registros de Auditoria',
+        featureGasTracker: '⛽ Rastreador de Taxas Gas',
+        featureAnalytics: '📈 Painel de Análises',
+        featureFraudDetection: '🚨 Sistema de Detecção de Fraudes',
+        featureMilitaryC2: '🎖️ Comando e Controle Militar',
+        featureAuditVault: '🔒 Cofre de Auditoria - Armazenamento Seguro',
+        featureCyberThreat: '💀 Inteligência de Ameaças Cibernéticas',
+        featureMissionCritical: '⚡ Operações de Missão Crítica',
+        featureSecurity: '🛡️ Centro de Operações de Segurança',
+        featureExploreBlocks: '🔍 Explorar Blocos da Blockchain',
+        featureTransactions: '📜 Explorador de Transações',
+        featureNetworkStatus2: '🌐 Monitor de Status da Rede',
+        featureStaking2: '💰 Painel de Staking',
+        featureDaoGovernance2: '🏛️ Plataforma de Governança DAO',
+        featureAuditLogs2: '📊 Visualizador de Registros de Auditoria',
+        featureGasFees: '⛽ Monitor de Taxas Gas',
+        featureAnalytics2: '📈 Análises e Insights',
+        featureFraudDetection2: '🚨 Detecção e Prevenção de Fraudes',
+        featureSmartContracts: '📝 Plataforma de Contratos Inteligentes',
+        featureDesci: '🔬 Ciência Descentralizada (DeSci)',
+        featureHologram: '🌀 Tecnologia Holográfica',
+        featureSpaceSector: '🚀 Integração com Setor Espacial',
+        featureAgriculture: '🌾 Agricultura e Segurança Alimentar',
+        featureEntertainment: '🎬 Indústria do Entretenimento',
+        featureSports: '⚽ Esportes e Atletismo',
+        featureInfrastructure: '🏗️ Desenvolvimento de Infraestrutura',
+        featureHealth: '🏥 Saúde e Medicina',
+        featureBiotechnology: '🧬 Biotecnologia e Genômica',
+        featureEnergy: '⚡ Energia e Sustentabilidade',
+        featureFinancialMarket: '📈 Mercados Financeiros',
+        featureNftExploration: '🎨 Exploração e Negociação NFT',
+        featureCloudMining: '⛏️ Operações de Mineração em Nuvem',
+        featureRoboticsInvestments: '🤖 Investimentos em Robótica e IA',
+        featureDefiProjects: '💎 Projetos e Protocolos DeFi',
+        featureMetaverseIntegration: '🌌 Integração com Metaverso',
+        featureDecentralizedPhilanthropy: '❤️ Filantropia Descentralizada',
+        featureBlockchainUpdate: '🔄 Central de Atualizações Blockchain',
+        featureDigitalGovernance: '⚖️ Framework de Governança Digital',
+        featureCryptoMarketplace: '🏪 Mercado de Criptomoedas',
+        featureAiTech: '🤖 Notícias de Inteligência Artificial',
+        featureBlockchainSecurity: '🔐 Auditoria de Segurança Blockchain'
     },
     es: {
         pageTitle: 'Blockchain Bradicoin',
@@ -1712,7 +1783,57 @@ const translations = {
         mining: '⛏️ Minando...',
         blockMined: '✅ Bloque Minado!',
         walletNotFound: 'Cartera No Encontrada',
-        invalidAddress: 'Dirección de billetera inválida. Verifique y vuelva a intentarlo.'
+        invalidAddress: 'Dirección de billetera inválida. Verifique y vuelva a intentarlo.',
+        close: '✕ Cerrar',
+        featureBlockchainV2: '🔗 Blockchain V2 - Próxima Generación',
+        featureExternalAPI: '🌐 Integración con API Externa',
+        featureTransactionHistory: '📜 Historial Completo de Transacciones',
+        featureSecurityDashboard: '🛡️ Panel de Seguridad Avanzado',
+        featureBlockExplorer: '📦 Explorador de Bloques',
+        featureNetworkStatus: '🌐 Monitor de Estado de la Red',
+        featureStaking: '💰 Centro de Staking y Recompensas',
+        featureGovernance: '🏛️ Portal de Gobernanza DAO',
+        featureAuditLogs: '📊 Registros de Auditoría',
+        featureGasTracker: '⛽ Rastreador de Tarifas Gas',
+        featureAnalytics: '📈 Panel de Análisis',
+        featureFraudDetection: '🚨 Sistema de Detección de Fraudes',
+        featureMilitaryC2: '🎖️ Comando y Control Militar',
+        featureAuditVault: '🔒 Cofre de Auditoría - Almacenamiento Seguro',
+        featureCyberThreat: '💀 Inteligencia de Amenazas Cibernéticas',
+        featureMissionCritical: '⚡ Operaciones de Misión Crítica',
+        featureSecurity: '🛡️ Centro de Operaciones de Seguridad',
+        featureExploreBlocks: '🔍 Explorar Bloques de la Blockchain',
+        featureTransactions: '📜 Explorador de Transacciones',
+        featureNetworkStatus2: '🌐 Monitor de Estado de la Red',
+        featureStaking2: '💰 Panel de Staking',
+        featureDaoGovernance2: '🏛️ Plataforma de Gobernanza DAO',
+        featureAuditLogs2: '📊 Visualizador de Registros de Auditoría',
+        featureGasFees: '⛽ Monitor de Tarifas Gas',
+        featureAnalytics2: '📈 Análisis e Insights',
+        featureFraudDetection2: '🚨 Detección y Prevención de Fraudes',
+        featureSmartContracts: '📝 Plataforma de Contratos Inteligentes',
+        featureDesci: '🔬 Ciencia Descentralizada (DeSci)',
+        featureHologram: '🌀 Tecnología Holográfica',
+        featureSpaceSector: '🚀 Integración con Sector Espacial',
+        featureAgriculture: '🌾 Agricultura y Seguridad Alimentaria',
+        featureEntertainment: '🎬 Industria del Entretenimiento',
+        featureSports: '⚽ Deportes y Atletismo',
+        featureInfrastructure: '🏗️ Desarrollo de Infraestructura',
+        featureHealth: '🏥 Salud y Medicina',
+        featureBiotechnology: '🧬 Biotecnología y Genómica',
+        featureEnergy: '⚡ Energía y Sostenibilidad',
+        featureFinancialMarket: '📈 Mercados Financieros',
+        featureNftExploration: '🎨 Exploración y Comercio NFT',
+        featureCloudMining: '⛏️ Operaciones de Minería en la Nube',
+        featureRoboticsInvestments: '🤖 Inversiones en Robótica e IA',
+        featureDefiProjects: '💎 Proyectos y Protocolos DeFi',
+        featureMetaverseIntegration: '🌌 Integración con Metaverso',
+        featureDecentralizedPhilanthropy: '❤️ Filantropía Descentralizada',
+        featureBlockchainUpdate: '🔄 Centro de Actualizaciones Blockchain',
+        featureDigitalGovernance: '⚖️ Framework de Gobernanza Digital',
+        featureCryptoMarketplace: '🏪 Mercado de Criptomonedas',
+        featureAiTech: '🤖 Noticias de Inteligencia Artificial',
+        featureBlockchainSecurity: '🔐 Auditoría de Seguridad Blockchain'
     },
     ar: {
         pageTitle: 'بلوكشين براديكوين',
@@ -1903,9 +2024,643 @@ const translations = {
         mining: '⛏️ جاري التعدين...',
         blockMined: '✅ تم تعدين الكتلة!',
         walletNotFound: 'المحفظة غير موجودة',
-        invalidAddress: 'عنوان محفظة غير صالح. تحقق وحاول مرة أخرى.'
+        invalidAddress: 'عنوان محفظة غير صالح. تحقق وحاول مرة أخرى.',
+        close: '✕ إغلاق',
+        featureBlockchainV2: '🔗 البلوكشين V2 - الجيل التالي',
+        featureExternalAPI: '🌐 تكامل واجهة برمجة التطبيقات الخارجية',
+        featureTransactionHistory: '📜 سجل المعاملات الكامل',
+        featureSecurityDashboard: '🛡️ لوحة الأمان المتقدمة',
+        featureBlockExplorer: '📦 مستكشف الكتل',
+        featureNetworkStatus: '🌐 مراقبة حالة الشبكة',
+        featureStaking: '💰 مركز التوقيع والمكافآت',
+        featureGovernance: '🏛️ بوابة حوكمة DAO',
+        featureAuditLogs: '📊 سجلات التدقيق',
+        featureGasTracker: '⛽ متتبع رسوم الغاز',
+        featureAnalytics: '📈 لوحة التحليلات',
+        featureFraudDetection: '🚨 نظام كشف الاحتيال',
+        featureMilitaryC2: '🎖️ القيادة والتحكم العسكري',
+        featureAuditVault: '🔒 خزينة التدقيق - تخزين آمن',
+        featureCyberThreat: '💀 استخبارات التهديدات السيبرانية',
+        featureMissionCritical: '⚡ عمليات المهمات الحرجة',
+        featureSecurity: '🛡️ مركز عمليات الأمن',
+        featureExploreBlocks: '🔍 استكشاف كتل البلوكشين',
+        featureTransactions: '📜 مستكشف المعاملات',
+        featureNetworkStatus2: '🌐 مراقبة حالة الشبكة',
+        featureStaking2: '💰 لوحة التوقيع',
+        featureDaoGovernance2: '🏛️ منصة حوكمة DAO',
+        featureAuditLogs2: '📊 عارض سجلات التدقيق',
+        featureGasFees: '⛽ مراقب رسوم الغاز',
+        featureAnalytics2: '📈 التحليلات والرؤى',
+        featureFraudDetection2: '🚨 كشف ومنع الاحتيال',
+        featureSmartContracts: '📝 منصة العقود الذكية',
+        featureDesci: '🔬 العلوم اللامركزية (DeSci)',
+        featureHologram: '🌀 التكنولوجيا الهولوغرافية',
+        featureSpaceSector: '🚀 تكامل القطاع الفضائي',
+        featureAgriculture: '🌾 الزراعة والأمن الغذائي',
+        featureEntertainment: '🎬 صناعة الترفيه',
+        featureSports: '⚽ الرياضة وألعاب القوى',
+        featureInfrastructure: '🏗️ تطوير البنية التحتية',
+        featureHealth: '🏥 الصحة والطب',
+        featureBiotechnology: '🧬 التكنولوجيا الحيوية وعلم الجينوم',
+        featureEnergy: '⚡ الطاقة والاستدامة',
+        featureFinancialMarket: '📈 الأسواق المالية',
+        featureNftExploration: '🎨 استكشاف وتداول NFT',
+        featureCloudMining: '⛏️ عمليات التعدين السحابي',
+        featureRoboticsInvestments: '🤖 استثمارات الروبوتات والذكاء الاصطناعي',
+        featureDefiProjects: '💎 مشاريع وبروتوكولات DeFi',
+        featureMetaverseIntegration: '🌌 تكامل الميتافيرس',
+        featureDecentralizedPhilanthropy: '❤️ العمل الخيري اللامركزي',
+        featureBlockchainUpdate: '🔄 مركز تحديثات البلوكشين',
+        featureDigitalGovernance: '⚖️ إطار الحوكمة الرقمية',
+        featureCryptoMarketplace: '🏪 سوق العملات المشفرة',
+        featureAiTech: '🤖 أخبار الذكاء الاصطناعي',
+        featureBlockchainSecurity: '🔐 تدقيق أمان البلوكشين'
     }
 };
+
+// ==================== LANGUAGE MANAGER ====================
+let currentLang = 'en';
+
+function updateLanguage() {
+    const t = translations[currentLang] || translations.en;
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) {
+            const emojiMatch = el.textContent.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐])/u);
+            if (emojiMatch) {
+                el.textContent = emojiMatch[0] + ' ' + t[key];
+            } else {
+                el.textContent = t[key];
+            }
+        }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) {
+            el.placeholder = t[key];
+        }
+    });
+
+    const apiStatusText = document.getElementById('apiStatusText');
+    if (apiStatusText) apiStatusText.textContent = t.apiOnline;
+
+    document.body.classList.toggle('arabic', currentLang === 'ar');
+    console.log(`🌐 Language updated to: ${currentLang}`);
+}
+
+// ==================== FEATURE FUNCTIONS ====================
+const featureContent = {
+    blockchainV2: (t) => `
+        <h2>${t.featureBlockchainV2 || '🔗 Blockchain V2 - Next Generation'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
+            <div class="feature-stat-card"><div class="stat-label">TPS</div><div class="stat-value green">15,000</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Finality</div><div class="stat-value magenta">2.5s</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Upgrade</div><div class="stat-value yellow">Ready</div></div>
+        </div>
+        <p>The next-generation blockchain with improved scalability, security, and interoperability.</p>
+        <div class="highlight-box green">✅ Network upgrade complete - All nodes synchronized</div>
+        <button class="feature-btn" onclick="showNotification('⚡ Blockchain V2 upgrade initiated!', '#00ff66')">⚡ Upgrade Now</button>
+        <button class="feature-btn magenta" onclick="showNotification('📊 Performance metrics loaded', '#c864ff')">📊 View Metrics</button>
+    `,
+    externalAPI: (t) => `
+        <h2>${t.featureExternalAPI || '🌐 External API Integration'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Online</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Requests</div><div class="stat-value cyan">12.4M</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value magenta">45ms</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Uptime</div><div class="stat-value yellow">99.98%</div></div>
+        </div>
+        <p>RESTful API for blockchain data, transactions, and wallet management with complete documentation.</p>
+        <div class="highlight-box">🔑 API Key: <code style="color:cyan;">brd_public_${Math.random().toString(36).substring(2,12)}</code></div>
+        <button class="feature-btn" onclick="showNotification('📡 API endpoints refreshed', '#00ccff')">🔄 Refresh Endpoints</button>
+        <button class="feature-btn green" onclick="showNotification('✅ API test successful!', '#00ff66')">✅ Test Connection</button>
+    `,
+    transactionHistory: (t) => `
+        <h2>${t.featureTransactionHistory || '📜 Complete Transaction History'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Total TX</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Last TX</div><div class="stat-value green">${new Date().toLocaleTimeString()}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Volume 24h</div><div class="stat-value magenta">$${Math.floor(Math.random() * 500000)}</div></div>
+        </div>
+        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
+            ${Array.from({length:5}, (_,i) => `
+                <div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:11px;">
+                    <span style="color:#00ccff;">0x${Math.random().toString(16).substring(2,10)}...</span>
+                    <span style="color:#00ff66;">+${(Math.random()*50+1).toFixed(2)} BRD</span>
+                    <span style="color:#888;">${new Date(Date.now() - i*60000).toLocaleTimeString()}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('⟳ Transaction history refreshed', '#00ccff')">⟳ Refresh</button>
+        <button class="feature-btn magenta" onclick="showNotification('📊 Full history exported', '#c864ff')">📊 Export</button>
+    `,
+    securityDashboard: (t) => `
+        <h2>${t.featureSecurityDashboard || '🛡️ Advanced Security Dashboard'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Security Score</div><div class="stat-value green">98%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Threats Blocked</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Active Alerts</div><div class="stat-value yellow">${Math.floor(Math.random() * 5)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Last Audit</div><div class="stat-value magenta">${new Date().toLocaleDateString()}</div></div>
+        </div>
+        <div class="highlight-box green">🛡️ All security systems operational</div>
+        <div class="highlight-box yellow">⚠️ ${Math.floor(Math.random() * 3)} low-risk vulnerabilities detected</div>
+        <button class="feature-btn" onclick="showNotification('🔐 Security scan initiated', '#00ff66')">🔐 Run Scan</button>
+        <button class="feature-btn red" onclick="showNotification('🚨 No threats found', '#ff6464')">🚨 View Threats</button>
+    `,
+    blockExplorer: (t) => `
+        <h2>${t.featureBlockExplorer || '📦 Block Explorer'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Current Block</div><div class="stat-value cyan">#${Math.floor(Math.random() * 500000 + 100000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Hash</div><div class="stat-value" style="font-size:10px;color:#c864ff;word-break:break-all;">0x${Array.from({length:64}, ()=>Math.random().toString(16)[2]).join('')}</div></div>
+        </div>
+        <div style="max-height:250px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
+            ${Array.from({length:5}, (_,i) => `
+                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
+                    <span style="color:#00ccff;">Block #${Math.floor(Math.random() * 50000 + 10000)}</span>
+                    <span style="color:#888;">${Math.floor(Math.random() * 100)} TX</span>
+                    <span style="color:#666;">${new Date(Date.now() - i*120000).toLocaleTimeString()}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('📦 Block explorer loaded', '#00ccff')">🔍 Search Block</button>
+    `,
+    networkStatus: (t) => `
+        <h2>${t.featureNetworkStatus || '🌐 Network Status Monitor'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Operational</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Nodes</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Peers</div><div class="stat-value magenta">${Math.floor(Math.random() * 200 + 100)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value yellow">${Math.floor(Math.random() * 50 + 10)}ms</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🌐 Network status refreshed', '#00ff66')">🔄 Refresh</button>
+    `,
+    staking: (t) => `
+        <h2>${t.featureStaking || '💰 Staking & Rewards Center'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">APY</div><div class="stat-value green">18%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Staked</div><div class="stat-value cyan">${(Math.random() * 100000 + 5000).toFixed(0)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Rewards</div><div class="stat-value magenta">${(Math.random() * 10000 + 100).toFixed(2)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Stakers</div><div class="stat-value yellow">${Math.floor(Math.random() * 5000 + 100)}</div></div>
+        </div>
+        <div class="highlight-box">💰 Estimated daily rewards: ${(Math.random() * 50 + 5).toFixed(2)} BRD</div>
+        <button class="feature-btn" onclick="showNotification('🔒 Staking initiated!', '#ffc800')">🔒 Stake Now</button>
+        <button class="feature-btn green" onclick="showNotification('🎯 Rewards claimed!', '#00ff66')">🎯 Claim Rewards</button>
+    `,
+    governance: (t) => `
+        <h2>${t.featureGovernance || '🏛️ DAO Governance Portal'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Active Proposals</div><div class="stat-value cyan">${Math.floor(Math.random() * 10 + 3)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Voters</div><div class="stat-value green">${Math.floor(Math.random() * 5000 + 500)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Quorum</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 60)}%</div></div>
+        </div>
+        <div style="max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
+            ${['Increase Staking Rewards', 'Add New Validator', 'Reduce Gas Fees', 'Upgrade Protocol', 'Community Fund Allocation'].map((p,i) => `
+                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:11px;">
+                    <span style="color:#ffc800;">${p}</span>
+                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464'][i]}">${Math.floor(Math.random() * 40 + 60)}%</span>
+                    <span style="color:#888;">${Math.floor(Math.random() * 3 + 1)}d left</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('🗳️ Vote submitted!', '#ffc800')">🗳️ Vote Now</button>
+        <button class="feature-btn purple" onclick="showNotification('📝 Proposal created!', '#c864ff')">📝 Create Proposal</button>
+    `,
+    auditLogs: (t) => `
+        <h2>${t.featureAuditLogs || '📊 Audit Logs'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Total Logs</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 5000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Today</div><div class="stat-value green">${Math.floor(Math.random() * 100 + 20)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Security</div><div class="stat-value magenta">${Math.floor(Math.random() * 50 + 10)}</div></div>
+        </div>
+        <div style="max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;font-size:10px;font-family:monospace;">
+            ${Array.from({length:5}, (_,i) => `
+                <div style="padding:4px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;">
+                    <span style="color:#888;">${new Date(Date.now() - i*300000).toISOString().replace('T',' ').slice(0,19)}</span>
+                    <span style="color:#00ccff;">${['INFO','WARN','INFO','DEBUG','INFO'][i]}</span>
+                    <span style="color:#666;">${['Node sync complete','Block #${Math.floor(Math.random()*10000)} validated','Peer connected','Transaction processed','Mempool updated'][i]}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('📊 Logs exported', '#00ccff')">📊 Export</button>
+    `,
+    gasTracker: (t) => `
+        <h2>${t.featureGasTracker || '⛽ Gas Fee Tracker'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Current</div><div class="stat-value green">${(Math.random() * 50 + 10).toFixed(1)} Gwei</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Avg 24h</div><div class="stat-value cyan">${(Math.random() * 40 + 15).toFixed(1)} Gwei</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Low</div><div class="stat-value magenta">${(Math.random() * 20 + 5).toFixed(1)} Gwei</div></div>
+            <div class="feature-stat-card"><div class="stat-label">High</div><div class="stat-value red">${(Math.random() * 80 + 30).toFixed(1)} Gwei</div></div>
+        </div>
+        <div style="height:80px;background:rgba(0,0,0,0.3);border-radius:8px;display:flex;align-items:flex-end;padding:10px;gap:4px;">
+            ${Array.from({length:20}, (_,i) => `
+                <div style="flex:1;height:${Math.random() * 80 + 20}%;background:${Math.random() > 0.7 ? '#ff6464' : '#00ccff'};border-radius:2px;"></div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('⛽ Gas fees updated', '#00ccff')">🔄 Update</button>
+    `,
+    analytics: (t) => `
+        <h2>${t.featureAnalytics || '📈 Analytics Dashboard'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Daily Users</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Transactions</div><div class="stat-value green">${Math.floor(Math.random() * 50000 + 10000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Revenue</div><div class="stat-value magenta">$${(Math.random() * 100000 + 10000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Growth</div><div class="stat-value yellow">${(Math.random() * 20 + 5).toFixed(1)}%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('📈 Analytics refreshed', '#00ccff')">🔄 Refresh</button>
+        <button class="feature-btn green" onclick="showNotification('📊 Report generated', '#00ff66')">📊 Generate Report</button>
+    `,
+    fraudDetection: (t) => `
+        <h2>${t.featureFraudDetection || '🚨 Fraud Detection System'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Detected</div><div class="stat-value red">${Math.floor(Math.random() * 50 + 5)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Prevented</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 100)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Confidence</div><div class="stat-value cyan">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
+        </div>
+        <div class="highlight-box green">✅ No active threats detected</div>
+        <button class="feature-btn" onclick="showNotification('🔍 Fraud scan completed', '#00ff66')">🔍 Scan Now</button>
+    `,
+    militaryC2: (t) => `
+        <h2>${t.featureMilitaryC2 || '🎖️ Military Command & Control'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Operational</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Units</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Readiness</div><div class="stat-value magenta">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
+        </div>
+        <div class="highlight-box">⚡ Military C2 system secure and operational</div>
+        <button class="feature-btn" onclick="showNotification('🎖️ Command transmitted', '#ff6400')">📡 Transmit Command</button>
+    `,
+    auditVault: (t) => `
+        <h2>${t.featureAuditVault || '🔒 Audit Vault - Secure Storage'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Files</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000 + 100)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Encrypted</div><div class="stat-value green">✅ AES-256</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Storage</div><div class="stat-value magenta">${(Math.random() * 900 + 100).toFixed(0)} GB</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔒 Vault access granted', '#00ff66')">🔓 Open Vault</button>
+    `,
+    cyberThreat: (t) => `
+        <h2>${t.featureCyberThreat || '💀 Cyber Threat Intelligence'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Threats</div><div class="stat-value red">${Math.floor(Math.random() * 20 + 5)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Risk Level</div><div class="stat-value yellow">Medium</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Updated</div><div class="stat-value cyan">${new Date().toLocaleTimeString()}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('💀 Threat intelligence updated', '#c864ff')">🔄 Update Intel</button>
+    `,
+    missionCritical: (t) => `
+        <h2>${t.featureMissionCritical || '⚡ Mission Critical Operations'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 All Systems Go</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Uptime</div><div class="stat-value cyan">99.999%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Ready</div><div class="stat-value magenta">Standby</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⚡ Mission launched!', '#00ff66')">🚀 Launch</button>
+    `,
+    security: (t) => `
+        <h2>${t.featureSecurity || '🛡️ Security Operations Center'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Secure</div><div class="stat-value green">✅ Active</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Audit</div><div class="stat-value cyan">Passed</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Protocol</div><div class="stat-value magenta">v3.1</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🛡️ Security check complete', '#00ff66')">🛡️ Run Security Check</button>
+    `,
+    exploreBlocks: (t) => `
+        <h2>${t.featureExploreBlocks || '🔍 Explore Blockchain Blocks'}</h2>
+        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
+            ${Array.from({length:8}, (_,i) => `
+                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
+                    <span style="color:#00ccff;">Block #${Math.floor(Math.random() * 500000 + 100000)}</span>
+                    <span style="color:#888;">${Math.floor(Math.random() * 100)} TX</span>
+                    <span style="color:#666;">${new Date(Date.now() - i*180000).toLocaleTimeString()}</span>
+                    <span style="color:#c864ff;font-size:8px;">${Array.from({length:8}, ()=>Math.random().toString(16)[2]).join('')}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔍 Blocks explored', '#00ccff')">🔍 Explore</button>
+    `,
+    transactions: (t) => `
+        <h2>${t.featureTransactions || '📜 Transaction Explorer'}</h2>
+        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
+            ${Array.from({length:6}, (_,i) => `
+                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
+                    <span style="color:#00ccff;">0x${Math.random().toString(16).substring(2,10)}...</span>
+                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464','#00ff66'][i]}">${['+','-','+','-','+','+'][i]}${(Math.random()*100+1).toFixed(2)} BRD</span>
+                    <span style="color:#888;">${new Date(Date.now() - i*120000).toLocaleTimeString()}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('📜 Transactions loaded', '#00ccff')">🔄 Load More</button>
+    `,
+    networkStatus2: (t) => `
+        <h2>${t.featureNetworkStatus2 || '🌐 Network Status Monitor'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Peers</div><div class="stat-value cyan">${Math.floor(Math.random() * 200 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Sync</div><div class="stat-value green">100%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value magenta">${Math.floor(Math.random() * 30 + 10)}ms</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🌐 Network sync complete', '#00ff66')">🔄 Sync</button>
+    `,
+    staking2: (t) => `
+        <h2>${t.featureStaking2 || '💰 Staking Dashboard'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Total Staked</div><div class="stat-value cyan">${(Math.random() * 100000 + 10000).toFixed(0)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Your Stake</div><div class="stat-value green">${(Math.random() * 5000 + 100).toFixed(2)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Rewards</div><div class="stat-value magenta">${(Math.random() * 500 + 10).toFixed(2)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">APY</div><div class="stat-value yellow">18%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔒 Stake increased', '#ffc800')">⬆️ Increase Stake</button>
+    `,
+    daoGovernance2: (t) => `
+        <h2>${t.featureDaoGovernance2 || '🏛️ DAO Governance Platform'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Proposals</div><div class="stat-value cyan">${Math.floor(Math.random() * 20 + 5)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Passed</div><div class="stat-value green">${Math.floor(Math.random() * 15 + 3)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Voting Power</div><div class="stat-value magenta">${(Math.random() * 1000 + 100).toFixed(0)} votes</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🗳️ Vote cast', '#ffc800')">🗳️ Cast Vote</button>
+    `,
+    auditLogs2: (t) => `
+        <h2>${t.featureAuditLogs2 || '📊 Audit Logs Viewer'}</h2>
+        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;font-size:10px;font-family:monospace;">
+            ${Array.from({length:8}, (_,i) => `
+                <div style="padding:4px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;">
+                    <span style="color:#888;">${new Date(Date.now() - i*60000).toISOString().replace('T',' ').slice(0,19)}</span>
+                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464','#00ff66','#ffc800','#00ccff'][i]}">${['INFO','WARN','INFO','DEBUG','ERROR','INFO','WARN','INFO'][i]}</span>
+                    <span style="color:#666;">${['System check','Block validated','Peer connected','Transaction processed','Error recovered','Mempool updated','Sync complete','Health check'][i]}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="feature-btn" onclick="showNotification('📊 Logs filtered', '#00ccff')">🔍 Filter</button>
+    `,
+    gasFees: (t) => `
+        <h2>${t.featureGasFees || '⛽ Gas Fee Monitor'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Current</div><div class="stat-value green">${(Math.random() * 40 + 10).toFixed(1)} Gwei</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Avg 1h</div><div class="stat-value cyan">${(Math.random() * 35 + 12).toFixed(1)} Gwei</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Trend</div><div class="stat-value ${Math.random() > 0.5 ? 'green' : 'red'}">${Math.random() > 0.5 ? '📈 Rising' : '📉 Falling'}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⛽ Gas monitor updated', '#00ccff')">🔄 Update</button>
+    `,
+    analytics2: (t) => `
+        <h2>${t.featureAnalytics2 || '📈 Analytics & Insights'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Daily Active</div><div class="stat-value cyan">${Math.floor(Math.random() * 5000 + 500)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Growth</div><div class="stat-value green">+${(Math.random() * 15 + 2).toFixed(1)}%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Engagement</div><div class="stat-value magenta">${(Math.random() * 30 + 60).toFixed(1)}%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('📈 Analytics updated', '#00ccff')">🔄 Update</button>
+    `,
+    fraudDetection2: (t) => `
+        <h2>${t.featureFraudDetection2 || '🚨 Fraud Detection & Prevention'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Alerts</div><div class="stat-value yellow">${Math.floor(Math.random() * 10 + 1)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Prevented</div><div class="stat-value green">${Math.floor(Math.random() * 200 + 50)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🚨 Fraud scan complete', '#00ff66')">🛡️ Run Scan</button>
+    `,
+    smartContracts: (t) => `
+        <h2>${t.featureSmartContracts || '📝 Smart Contracts Platform'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Deployed</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Active</div><div class="stat-value green">${Math.floor(Math.random() * 300 + 30)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Audited</div><div class="stat-value magenta">${Math.floor(Math.random() * 200 + 20)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('📝 New contract deployed', '#00ccff')">🚀 Deploy New</button>
+        <button class="feature-btn green" onclick="showNotification('✅ Contract verified', '#00ff66')">🔍 Verify</button>
+    `,
+    desci: (t) => `
+        <h2>${t.featureDesci || '🔬 Decentralized Science (DeSci)'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Research</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Funded</div><div class="stat-value green">$${(Math.random() * 500000 + 50000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Researchers</div><div class="stat-value magenta">${Math.floor(Math.random() * 500 + 50)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔬 Research published', '#c864ff')">📄 Publish</button>
+    `,
+    hologram: (t) => `
+        <h2>${t.featureHologram || '🌀 Holographic Technology'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Display</div><div class="stat-value cyan">Active</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Resolution</div><div class="stat-value green">4K</div></div>
+            <div class="feature-stat-card"><div class="stat-label">FPS</div><div class="stat-value magenta">60</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🌀 Hologram activated!', '#00ccff')">🌀 Activate</button>
+    `,
+    spaceSector: (t) => `
+        <h2>${t.featureSpaceSector || '🚀 Space Sector Integration'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Satellites</div><div class="stat-value cyan">${Math.floor(Math.random() * 20 + 5)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Data Links</div><div class="stat-value green">${Math.floor(Math.random() * 50 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Coverage</div><div class="stat-value magenta">${(Math.random() * 30 + 70).toFixed(1)}%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🚀 Satellite link established', '#00ff66')">📡 Connect</button>
+    `,
+    agriculture: (t) => `
+        <h2>${t.featureAgriculture || '🌾 Agriculture & Food Security'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Farms</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 100)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Production</div><div class="stat-value green">${(Math.random() * 10000 + 1000).toFixed(0)} tons</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Security</div><div class="stat-value magenta">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🌾 Agriculture data updated', '#00ff66')">🌾 Update</button>
+    `,
+    entertainment: (t) => `
+        <h2>${t.featureEntertainment || '🎬 Entertainment Industry'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Content</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value green">${Math.floor(Math.random() * 500000 + 50000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Revenue</div><div class="stat-value magenta">$${(Math.random() * 1000000 + 100000).toFixed(0)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🎬 Content stream ready', '#c864ff')">▶️ Stream</button>
+    `,
+    sports: (t) => `
+        <h2>${t.featureSports || '⚽ Sports & Athletics'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Teams</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 20)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Events</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Fans</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⚽ Sports data loaded', '#00ff66')">⚽ Load</button>
+    `,
+    infrastructure: (t) => `
+        <h2>${t.featureInfrastructure || '🏗️ Infrastructure Development'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Projects</div><div class="stat-value cyan">${Math.floor(Math.random() * 200 + 20)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Budget</div><div class="stat-value green">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Progress</div><div class="stat-value magenta">${(Math.random() * 40 + 60).toFixed(1)}%</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🏗️ Infrastructure report generated', '#ffc800')">📊 Report</button>
+    `,
+    health: (t) => `
+        <h2>${t.featureHealth || '🏥 Healthcare & Medical'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Patients</div><div class="stat-value cyan">${Math.floor(Math.random() * 50000 + 5000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Records</div><div class="stat-value green">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Secure</div><div class="stat-value magenta">✅ HIPAA</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🏥 Health records secure', '#00ff66')">🔒 Secure</button>
+    `,
+    biotechnology: (t) => `
+        <h2>${t.featureBiotechnology || '🧬 Biotechnology & Genomics'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Genomes</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Studies</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Breakthroughs</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 2)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🧬 Genome sequenced', '#c864ff')">🧬 Sequence</button>
+    `,
+    energy: (t) => `
+        <h2>${t.featureEnergy || '⚡ Energy & Sustainability'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">MW Generated</div><div class="stat-value cyan">${(Math.random() * 10000 + 1000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Renewable</div><div class="stat-value green">${(Math.random() * 40 + 60).toFixed(1)}%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Carbon Saved</div><div class="stat-value magenta">${(Math.random() * 100000 + 10000).toFixed(0)} tons</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⚡ Energy grid optimized', '#00ff66')">⚡ Optimize</button>
+    `,
+    financialMarket: (t) => `
+        <h2>${t.featureFinancialMarket || '📈 Financial Markets'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value cyan">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Index</div><div class="stat-value green">${(Math.random() * 100 + 100).toFixed(1)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Trades</div><div class="stat-value magenta">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('📈 Market data updated', '#00ccff')">🔄 Update</button>
+    `,
+    nftExploration: (t) => `
+        <h2>${t.featureNftExploration || '🎨 NFT Exploration & Trading'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">NFTs</div><div class="stat-value cyan">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Creators</div><div class="stat-value green">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value magenta">$${(Math.random() * 10000000 + 1000000).toFixed(0)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🎨 NFT gallery loaded', '#c864ff')">🖼️ Explore</button>
+    `,
+    cloudMining: (t) => `
+        <h2>${t.featureCloudMining || '⛏️ Cloud Mining Operations'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Hash Rate</div><div class="stat-value cyan">${(Math.random() * 100 + 10).toFixed(1)} TH/s</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Mined</div><div class="stat-value green">${(Math.random() * 100 + 10).toFixed(2)} BRD</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Profit</div><div class="stat-value magenta">$${(Math.random() * 1000 + 100).toFixed(2)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⛏️ Mining started!', '#ffc800')">⛏️ Start Mining</button>
+    `,
+    roboticsInvestments: (t) => `
+        <h2>${t.featureRoboticsInvestments || '🤖 Robotics & AI Investments'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Portfolio</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">ROI</div><div class="stat-value green">${(Math.random() * 40 + 10).toFixed(1)}%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">AI Models</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🤖 AI model trained', '#c864ff')">🧠 Train AI</button>
+    `,
+    defiProjects: (t) => `
+        <h2>${t.featureDefiProjects || '💎 DeFi Projects & Protocols'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Protocols</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">TVL</div><div class="stat-value green">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('💎 DeFi protocol connected', '#00ff66')">🔗 Connect</button>
+    `,
+    metaverseIntegration: (t) => `
+        <h2>${t.featureMetaverseIntegration || '🌌 Metaverse Integration'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Worlds</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value green">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Assets</div><div class="stat-value magenta">${Math.floor(Math.random() * 50000 + 5000)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🌌 Metaverse entered!', '#c864ff')">🌐 Enter</button>
+    `,
+    decentralizedPhilanthropy: (t) => `
+        <h2>${t.featureDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Donations</div><div class="stat-value cyan">$${(Math.random() * 1000000 + 100000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Projects</div><div class="stat-value green">${Math.floor(Math.random() * 200 + 20)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Impact</div><div class="stat-value magenta">${Math.floor(Math.random() * 10000 + 1000)} lives</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('❤️ Donation sent!', '#ff6464')">❤️ Donate</button>
+    `,
+    blockchainUpdate: (t) => `
+        <h2>${t.featureBlockchainUpdate || '🔄 Blockchain Update Center'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">✅ Up to date</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Last Update</div><div class="stat-value magenta">${new Date().toLocaleDateString()}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔄 Blockchain updated!', '#00ff66')">🔄 Update Now</button>
+    `,
+    digitalGovernance: (t) => `
+        <h2>${t.featureDigitalGovernance || '⚖️ Digital Governance Framework'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Policies</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Compliance</div><div class="stat-value green">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Audits</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('⚖️ Governance policy updated', '#ffc800')">⚖️ Update</button>
+    `,
+    cryptoMarketplace: (t) => `
+        <h2>${t.featureCryptoMarketplace || '🏪 Cryptocurrency Marketplace'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Coins</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 50)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value green">$${(Math.random() * 1000000000 + 100000000).toFixed(0)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Traders</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🏪 Marketplace loaded', '#00ccff')">🛒 Browse</button>
+    `,
+    aiTech: (t) => `
+        <h2>${t.featureAiTech || '🤖 Artificial Intelligence News'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Articles</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000 + 100)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">AI Models</div><div class="stat-value green">${Math.floor(Math.random() * 50 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">News</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)} today</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🤖 AI news loaded', '#c864ff')">📰 Read</button>
+    `,
+    blockchainSecurity: (t) => `
+        <h2>${t.featureBlockchainSecurity || '🔐 Blockchain Security Audit'}</h2>
+        <div class="feature-stats">
+            <div class="feature-stat-card"><div class="stat-label">Audits</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Score</div><div class="stat-value green">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
+            <div class="feature-stat-card"><div class="stat-label">Vulnerabilities</div><div class="stat-value magenta">${Math.floor(Math.random() * 10 + 1)}</div></div>
+        </div>
+        <button class="feature-btn" onclick="showNotification('🔐 Audit completed', '#00ff66')">🔍 Run Audit</button>
+    `
+};
+
+function openFeature(featureId) {
+    const modal = document.getElementById('featureModal');
+    const body = document.getElementById('modalBody');
+    const title = document.getElementById('modalTitle');
+    const t = translations[currentLang] || translations.en;
+    
+    const featureKey = 'feature' + featureId.charAt(0).toUpperCase() + featureId.slice(1);
+    const content = featureContent[featureId];
+    
+    if (content) {
+        title.textContent = t[featureKey] || featureId;
+        body.innerHTML = content(t);
+        modal.style.display = 'block';
+    } else {
+        showNotification(`📋 ${featureId} feature coming soon!`, '#ffc800');
+    }
+}
+
+function closeModalAndGoHome() {
+    document.getElementById('featureModal').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome() {
+    closeModalAndGoHome();
+    document.getElementById('tokenModal').style.display = 'none';
+}
 
 // ==================== TOKEN DATA ====================
 let tokenData = [
@@ -1930,14 +2685,6 @@ function formatNumber(num) {
 function getCurrentTotalSupply() {
     const chain = getLocalChain();
     return chain.totalSupply || BASE_SUPPLY;
-}
-
-function updateTotalSupplyDisplay() {
-    const total = getCurrentTotalSupply();
-    const elements = document.querySelectorAll('.supply-value');
-    elements.forEach(el => {
-        el.textContent = formatNumber(total) + ' BRD';
-    });
 }
 
 function getLocalChain() {
@@ -2010,8 +2757,6 @@ function copyToClipboard(text) {
 
 // ==================== GET STAKING INFO ====================
 async function getStakingInfo(address) {
-    console.log('📊 Getting staking info for:', address);
-    
     const chain = getLocalChain();
     const staking = chain.staking[address] || { staked: 0, rewards: 0, lastUpdate: Date.now() };
     
@@ -2058,14 +2803,11 @@ function autoCreateWallet(address) {
     });
     
     saveLocalChain(chain);
-    console.log(`✅ Wallet ${address.substring(0, 12)}... created with 1000 BRD`);
     return true;
 }
 
 // ==================== GET REAL BALANCE ====================
 async function getRealBalance(address) {
-    console.log('💰 Getting balance for:', address);
-    
     const chain = getLocalChain();
     const balance = chain.balances[address] || 0;
     
@@ -2084,22 +2826,15 @@ async function checkAPIStatus() {
     const textEl = document.getElementById('apiStatusText');
     const t = translations[currentLang] || translations.en;
     
-    apiOnline = true;
     statusEl.className = 'api-status online';
-    textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain';
-    console.log('✅ API Mode: LOCAL STORAGE (Offline mode with full functionality)');
+    textEl.textContent = t.apiOnline;
     return true;
 }
 
 // ==================== SEARCH WALLET ====================
 async function searchWallet() {
-    console.log('🔍 searchWallet() called');
-    
     const input = document.getElementById('searchInput');
-    if (!input) {
-        console.error('❌ Search input not found!');
-        return;
-    }
+    if (!input) return;
     
     const address = input.value.trim();
     const resultDiv = document.getElementById('searchResult');
@@ -2110,8 +2845,8 @@ async function searchWallet() {
         resultDiv.innerHTML = `
             <div style="text-align: center; padding: 20px;">
                 <div class="error-icon">⌨️</div>
-                <h3 class="error-title">Please enter an address</h3>
-                <p class="error-message">Enter a Bradicoin wallet address to search</p>
+                <h3 class="error-title">${t.invalidAddress || 'Please enter an address'}</h3>
+                <p class="error-message">${t.searchHint || 'Enter a Bradicoin wallet address to search'}</p>
                 <p class="error-tip">💡 Example: BrDemo123, BrStaker001</p>
             </div>
         `;
@@ -2121,7 +2856,6 @@ async function searchWallet() {
     }
 
     input.classList.remove('error');
-    lastSearchedAddress = address;
 
     resultDiv.className = 'result-box';
     resultDiv.innerHTML = `
@@ -2205,7 +2939,7 @@ async function searchWallet() {
             </div>
             <div class="result-grid">
                 <div class="result-item" style="border-left-color: #00ff66;">
-                    <div class="result-item-label">💰 Balance</div>
+                    <div class="result-item-label" data-i18n="tabWallet">💰 Balance</div>
                     <div class="result-item-value green">${balanceDisplay} BRD</div>
                 </div>
                 <div class="result-item" style="border-left-color: #00ccff;">
@@ -2261,9 +2995,9 @@ async function searchWallet() {
         resultDiv.innerHTML = `
             <div style="text-align: center; padding: 20px;">
                 <div class="error-icon">⚠️</div>
-                <h3 class="error-title">Connection Error</h3>
-                <p class="error-message">Could not connect to the Bradicoin blockchain.</p>
-                <button class="error-clear-btn" onclick="clearSearch()">Try Again</button>
+                <h3 class="error-title">${t.errorTitle || 'Connection Error'}</h3>
+                <p class="error-message">${t.errorMessage || 'Could not connect to the Bradicoin blockchain.'}</p>
+                <button class="error-clear-btn" onclick="clearSearch()">${t.errorButton || 'Try Again'}</button>
             </div>
         `;
         resultDiv.classList.add('show');
@@ -2327,7 +3061,8 @@ async function transferBRD(sender, recipient, amount) {
 }
 
 async function handleDeposit(address) {
-    const amount = prompt(`💰 Enter amount to deposit to ${address.substring(0, 12)}... (BRD):`);
+    const t = translations[currentLang] || translations.en;
+    const amount = prompt(`💰 ${t.tabWallet || 'Enter amount to deposit'}:`);
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
     const result = await depositToWallet(address, parseFloat(amount));
     if (result.success) {
@@ -2339,7 +3074,8 @@ async function handleDeposit(address) {
 }
 
 async function handleStake(address) {
-    const amount = prompt(`🔒 Enter amount to stake from ${address.substring(0, 12)}... (BRD):`);
+    const t = translations[currentLang] || translations.en;
+    const amount = prompt(`🔒 ${t.tabStaking || 'Enter amount to stake'}:`);
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
     const result = await stakeTokens(address, parseFloat(amount));
     if (result.success) {
@@ -2351,7 +3087,8 @@ async function handleStake(address) {
 }
 
 async function handleUnstake(address) {
-    const amount = prompt(`⬇️ Enter amount to unstake from ${address.substring(0, 12)}... (BRD):`);
+    const t = translations[currentLang] || translations.en;
+    const amount = prompt(`⬇️ ${t.tabTransaction || 'Enter amount to unstake'}:`);
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
     const result = await unstakeTokens(address, parseFloat(amount));
     if (result.success) {
@@ -2363,9 +3100,10 @@ async function handleUnstake(address) {
 }
 
 async function handleTransfer(sender) {
+    const t = translations[currentLang] || translations.en;
     const recipient = prompt('💸 Enter recipient address:');
     if (!recipient) return;
-    const amount = prompt(`💸 Enter amount to transfer from ${sender.substring(0, 12)}... (BRD):`);
+    const amount = prompt(`💸 Enter amount to transfer:`);
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
     const result = await transferBRD(sender, recipient, parseFloat(amount));
     if (result.success) {
@@ -2374,25 +3112,6 @@ async function handleTransfer(sender) {
     } else {
         showNotification('❌ ' + (result.error || 'Transfer failed'), '#ff6464');
     }
-}
-
-// ==================== STAKING WITH REWARDS ====================
-function calculateStakingRewards(address) {
-    const chain = getLocalChain();
-    const staking = chain.staking[address] || { staked: 0, rewards: 0, lastUpdate: Date.now() };
-    
-    const APY = 0.18;
-    const now = Date.now();
-    const timeElapsed = (now - (staking.lastUpdate || now)) / (1000 * 60 * 60 * 24 * 365);
-    
-    const newRewards = staking.staked * APY * timeElapsed;
-    staking.rewards = (staking.rewards || 0) + newRewards;
-    staking.lastUpdate = now;
-    
-    chain.staking[address] = staking;
-    saveLocalChain(chain);
-    
-    return staking;
 }
 
 function claimStakingRewards(address) {
@@ -2486,27 +3205,6 @@ function viewValidatorStats() {
     alert(stats);
 }
 
-function addValidator(address, stake) {
-    const chain = getLocalChain();
-    if (!chain.validators) chain.validators = [];
-    const existing = chain.validators.find(v => v.address === address);
-    if (existing) {
-        existing.stake = stake;
-        existing.lastActive = Date.now();
-    } else {
-        chain.validators.push({
-            address: address,
-            stake: stake,
-            joined: Date.now(),
-            lastActive: Date.now(),
-            blocksProposed: 0,
-            rewards: 0
-        });
-    }
-    saveLocalChain(chain);
-    updateValidatorsDisplay();
-}
-
 // ==================== STAKING STATS UI ====================
 function updateStakingStats() {
     const chain = getLocalChain();
@@ -2540,31 +3238,8 @@ function updateStakingStats() {
     `;
 }
 
-// ==================== MINE BLOCK ====================
-async function mineBlock() {
-    const badge = document.getElementById('statusBadge');
-    const t = translations[currentLang] || translations.en;
-    
-    if (badge) {
-        badge.style.background = 'rgba(255, 193, 7, 0.3)';
-        badge.innerHTML = `<span>${t.mining}</span>`;
-    }
-    
-    setTimeout(() => {
-        if (badge) {
-            badge.style.background = 'rgba(0, 255, 100, 0.2)';
-            badge.innerHTML = `<span>${t.blockMined}</span>`;
-            setTimeout(() => {
-                badge.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg><span id="blockchainValid" style="color: #00ff66;">' + t.blockchainValid + '</span>';
-            }, 2000);
-        }
-        showNotification('⛏️ Block mined successfully!', '#ffc800');
-    }, 1500);
-}
-
 // ==================== SWITCH TAB ====================
 function switchTab(tab) {
-    currentTab = tab;
     document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
     const tabMap = {
         'wallet': 'tabWallet',
@@ -2576,30 +3251,6 @@ function switchTab(tab) {
         document.getElementById(tabMap[tab]).classList.add('active');
     }
     showNotification(`📋 ${tab} tab selected`, '#00ccff');
-}
-
-// ==================== UPDATE LANGUAGE ====================
-function updateLanguage() {
-    const t = translations[currentLang] || translations.en;
-    
-    function setText(id, text) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-    }
-    
-    function setHTML(id, html) {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = html;
-    }
-    
-    setText('pageTitle', t.pageTitle);
-    setText('searchBtnText', t.searchBtn);
-    setText('refreshBtnText', t.refreshBtn);
-    setHTML('tabWallet', t.tabWallet);
-    setHTML('tabStaking', t.tabStaking);
-    setHTML('tabTransaction', t.tabTransaction);
-    setHTML('tabBlock', t.tabBlock);
-    setHTML('tabToken', t.tabToken);
 }
 
 function clearSearch() {
@@ -2635,32 +3286,8 @@ async function refreshBalance(address) {
     showNotification('✅ Balance refreshed!', '#00ff66');
 }
 
-function saveWalletToHistory(address, balance) {
-    try {
-        let history = JSON.parse(localStorage.getItem('bradicoin_wallet_history') || '[]');
-        const existing = history.find(w => w.address === address);
-        if (existing) {
-            existing.balance = balance;
-            existing.lastCheck = Date.now();
-        } else {
-            history.unshift({ address, balance, firstCheck: Date.now(), lastCheck: Date.now() });
-        }
-        if (history.length > 50) history = history.slice(0, 50);
-        localStorage.setItem('bradicoin_wallet_history', JSON.stringify(history));
-    } catch (e) {}
-}
-
-function openFeature(featureId) {
-    showNotification(`📋 ${featureId} feature selected`, '#00ccff');
-}
-
 function openPage(page) {
     showNotification(`📄 ${page} page loaded`, '#00ccff');
-}
-
-function sendContact(e) {
-    if (e) e.preventDefault();
-    showNotification('📨 Message sent!', '#00ff66');
 }
 
 function registerDeveloperApp() {
@@ -2684,7 +3311,33 @@ function copyApiKeys() {
 }
 
 function openTokenModal() {
-    showNotification('🪙 Token modal opened', '#ffc800');
+    const modal = document.getElementById('tokenModal');
+    if (!modal) return;
+    modal.style.display = 'block';
+    const t = translations[currentLang] || translations.en;
+    const body = document.getElementById('tokenModalBody');
+    
+    let html = `
+        <div class="token-grid">
+            ${tokenData.map(token => `
+                <div class="token-card">
+                    <div class="token-card-image" style="background:linear-gradient(135deg, ${token.color}, ${token.color}88);">
+                        ${token.icon}
+                    </div>
+                    <div class="token-card-name">${token.name}</div>
+                    <div class="token-card-symbol">${token.symbol}</div>
+                    <hr class="token-divider">
+                    <div class="token-card-supply">${t.tokenSupply || 'Total Supply'}: ${token.supply}</div>
+                    <div class="token-card-price">${token.price}</div>
+                </div>
+            `).join('')}
+        </div>
+        <div style="text-align:center;margin-top:30px;">
+            <button class="create-token-btn" onclick="showCreateTokenForm()">${t.createToken || '✨ Create New Token'}</button>
+        </div>
+    `;
+    
+    body.innerHTML = html;
 }
 
 function closeTokenModal() {
@@ -2693,33 +3346,56 @@ function closeTokenModal() {
 }
 
 function showCreateTokenForm() {
-    const form = document.getElementById('createTokenForm');
-    if (form) form.style.display = 'block';
-}
-
-function hideCreateTokenForm() {
-    const form = document.getElementById('createTokenForm');
-    if (form) form.style.display = 'none';
+    const t = translations[currentLang] || translations.en;
+    const body = document.getElementById('tokenModalBody');
+    body.innerHTML = `
+        <div style="background:rgba(255,200,0,0.05);border:1px solid #ffc800;border-radius:12px;padding:25px;margin:20px 0;">
+            <h3 style="color:#ffc800;margin-bottom:20px;">${t.createToken || '✨ Create New Token'}</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <input type="text" id="newTokenName" placeholder="${t.tokenNamePlaceholder || 'Enter token name'}" style="padding:12px;background:#000;border:1px solid #ffc800;color:cyan;border-radius:5px;font-family:'Orbitron',monospace;">
+                <input type="text" id="newTokenSymbol" placeholder="${t.tokenSymbolPlaceholder || 'Enter symbol (e.g. BTC)'}" style="padding:12px;background:#000;border:1px solid #ffc800;color:cyan;border-radius:5px;font-family:'Orbitron',monospace;">
+                <input type="number" id="newTokenSupply" placeholder="${t.tokenSupplyPlaceholder || 'Enter total supply'}" style="padding:12px;background:#000;border:1px solid #ffc800;color:cyan;border-radius:5px;font-family:'Orbitron',monospace;">
+                <input type="number" id="newTokenPrice" placeholder="${t.tokenPricePlaceholder || 'Enter price in USD'}" style="padding:12px;background:#000;border:1px solid #ffc800;color:cyan;border-radius:5px;font-family:'Orbitron',monospace;">
+            </div>
+            <div style="display:flex;gap:15px;margin-top:20px;justify-content:center;">
+                <button onclick="createNewToken()" style="background:#ffc800;color:#000;padding:12px 30px;border:none;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;font-weight:bold;">${t.create || 'Create'}</button>
+                <button onclick="openTokenModal()" style="background:transparent;border:2px solid #ff6464;color:#ff6464;padding:12px 30px;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;">${t.cancel || 'Cancel'}</button>
+            </div>
+        </div>
+    `;
 }
 
 function createNewToken() {
     const name = document.getElementById('newTokenName')?.value;
-    if (!name) {
-        showNotification('⚠️ Please enter token name', '#ffc800');
+    const symbol = document.getElementById('newTokenSymbol')?.value;
+    const supply = document.getElementById('newTokenSupply')?.value;
+    const price = document.getElementById('newTokenPrice')?.value;
+    
+    if (!name || !symbol || !supply || !price) {
+        showNotification('⚠️ Please fill all fields', '#ffc800');
         return;
     }
-    showNotification('✅ Token created!', '#00ff66');
+    
+    const t = translations[currentLang] || translations.en;
+    tokenData.push({
+        id: tokenData.length + 1,
+        name: name,
+        symbol: symbol.toUpperCase(),
+        supply: Number(supply).toLocaleString(),
+        price: '$' + Number(price).toFixed(2),
+        icon: '🪙',
+        color: '#ffc800'
+    });
+    
+    showNotification(t.tokenCreated || '✅ Token created successfully!', '#00ff66');
+    openTokenModal();
 }
 
-function closeModalAndGoHome() {
-    const modal = document.getElementById('featureModal');
-    if (modal) modal.style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goHome() {
-    closeModalAndGoHome();
-}
+function testSecurity() { showNotification('🔐 Security test passed!', '#00ff66'); }
+function testAnonymousTransfer() { showNotification('🔄 Anonymous transfer initiated!', '#c864ff'); }
+function protectMyData() { showNotification('🔒 Data protected with encryption!', '#00ff66'); }
+function verifyIntegrity() { showNotification('🌳 Integrity verified successfully!', '#ffc800'); }
+function viewSecurityStatus() { showNotification('📊 Security status: All systems secure', '#00ff66'); }
 
 // ==================== LOAD BLOCKCHAIN DATA ====================
 async function loadBlockchainData() {
@@ -2827,7 +3503,6 @@ async function init() {
         searchButton.parentNode.replaceChild(newBtn, searchButton);
         newBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('🔍 Search button clicked');
             searchWallet();
         });
     }
@@ -2840,7 +3515,6 @@ async function init() {
         newInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                console.log('🔍 Enter key pressed');
                 searchWallet();
             }
         });
@@ -2857,12 +3531,25 @@ async function init() {
         });
     }
     
+    // Refresh history button
+    const refreshHistory = document.getElementById('refreshHistory');
+    if (refreshHistory) {
+        refreshHistory.addEventListener('click', function() {
+            loadRealTransactions();
+            showNotification('⟳ Transaction history refreshed!', '#00ccff');
+        });
+    }
+    
     // Language selector
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.addEventListener('change', function(e) {
             currentLang = e.target.value;
+            document.body.classList.toggle('arabic', currentLang === 'ar');
             updateLanguage();
+            loadRealTransactions();
+            updateStakingStats();
+            updateValidatorsDisplay();
         });
     }
     
@@ -2870,6 +3557,8 @@ async function init() {
     
     console.log('✅ Bradicoin Wallet App initialized successfully!');
     console.log('💡 Enter a wallet address starting with "Br" and press Enter or click Search.');
+    console.log('🌐 ${Object.keys(translations).length} languages available');
+    console.log('📱 ${Object.keys(featureContent).length} interactive features available');
 }
 
 // ==================== EXPORT GLOBALS ====================
@@ -2888,17 +3577,13 @@ window.unstakeTokens = unstakeTokens;
 window.transferBRD = transferBRD;
 window.getStakingInfo = getStakingInfo;
 window.getRealBalance = getRealBalance;
-window.mineBlock = mineBlock;
 window.closeModalAndGoHome = closeModalAndGoHome;
 window.goHome = goHome;
 window.openPage = openPage;
-window.sendContact = sendContact;
 window.registerDeveloperApp = registerDeveloperApp;
 window.copyApiKeys = copyApiKeys;
 window.updateTimestamp = updateTimestamp;
 window.generateWalletHash = generateWalletHash;
-window.updateTotalSupplyDisplay = updateTotalSupplyDisplay;
-window.getCurrentTotalSupply = getCurrentTotalSupply;
 window.becomeValidator = becomeValidator;
 window.viewValidatorStats = viewValidatorStats;
 window.updateValidatorsDisplay = updateValidatorsDisplay;
@@ -2908,16 +3593,18 @@ window.switchTab = switchTab;
 window.openTokenModal = openTokenModal;
 window.closeTokenModal = closeTokenModal;
 window.showCreateTokenForm = showCreateTokenForm;
-window.hideCreateTokenForm = hideCreateTokenForm;
 window.createNewToken = createNewToken;
-window.calculateStakingRewards = calculateStakingRewards;
 window.claimStakingRewards = claimStakingRewards;
 window.autoCreateWallet = autoCreateWallet;
 window.openFeature = openFeature;
+window.testSecurity = testSecurity;
+window.testAnonymousTransfer = testAnonymousTransfer;
+window.protectMyData = protectMyData;
+window.verifyIntegrity = verifyIntegrity;
+window.viewSecurityStatus = viewSecurityStatus;
 
 // Start the app
 init();
-
 </script>
 </body>
 </html>

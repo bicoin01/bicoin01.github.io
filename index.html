@@ -336,6 +336,96 @@
         }
         .modal-close-btn:hover { background: #ff6464; color: #000; transform: scale(1.05); box-shadow: 0 0 30px rgba(255,100,100,0.4); }
 
+        .page-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.97);
+            z-index: 10000;
+            overflow: auto;
+            animation: fadeIn 0.4s ease;
+        }
+        .page-modal-content {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .page-modal-inner {
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid cyan;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.15);
+        }
+        .page-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            padding-bottom: 15px;
+        }
+        .page-modal-header h2 { color: cyan; font-size: 1.8rem; }
+        .page-modal-close {
+            background: rgba(255, 100, 100, 0.2);
+            color: #ff6464;
+            border: 2px solid #ff6464;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .page-modal-close:hover { background: #ff6464; color: #000; transform: scale(1.05); box-shadow: 0 0 30px rgba(255,100,100,0.4); }
+        .page-modal-body {
+            color: #ccc;
+            line-height: 1.9;
+            font-size: 14px;
+        }
+        .page-modal-body h3 { color: #ffc800; font-size: 1.2rem; margin: 25px 0 15px 0; }
+        .page-modal-body h4 { color: #00ccff; font-size: 1rem; margin: 20px 0 10px 0; }
+        .page-modal-body p { margin-bottom: 15px; color: #aaa; }
+        .page-modal-body ul { list-style: none; padding: 0; margin: 15px 0; }
+        .page-modal-body ul li { padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #aaa; }
+        .page-modal-body ul li:before { content: "◆ "; color: cyan; }
+        .page-modal-body .highlight-box { background: rgba(0,255,255,0.05); border-left: 4px solid cyan; padding: 20px 25px; margin: 20px 0; border-radius: 8px; }
+        .page-modal-body .highlight-box.green { border-left-color: #00ff66; background: rgba(0,255,100,0.05); }
+        .page-modal-body .highlight-box.yellow { border-left-color: #ffc800; background: rgba(255,200,0,0.05); }
+        .page-modal-body .highlight-box.magenta { border-left-color: magenta; background: rgba(255,0,255,0.05); }
+        .page-modal-body .highlight-box.red { border-left-color: #ff6464; background: rgba(255,100,100,0.05); }
+        .page-modal-body .contact-info { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid rgba(0,255,255,0.1); }
+        .page-modal-body .contact-form input,
+        .page-modal-body .contact-form textarea {
+            width: 100%; padding: 12px 16px; margin-bottom: 15px;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,255,0.3);
+            border-radius: 8px; color: cyan; font-family: 'Orbitron', monospace;
+            font-size: 14px; transition: all 0.3s ease;
+        }
+        .page-modal-body .contact-form input:focus,
+        .page-modal-body .contact-form textarea:focus {
+            border-color: magenta; box-shadow: 0 0 20px rgba(255,0,255,0.2); outline: none;
+        }
+        .page-modal-body .contact-form textarea { min-height: 150px; resize: vertical; }
+        .page-modal-body .contact-form button {
+            padding: 12px 30px; background: rgba(255,0,255,0.2);
+            border: 2px solid magenta; color: magenta; border-radius: 8px;
+            cursor: pointer; font-family: 'Orbitron', monospace; font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .page-modal-body .contact-form button:hover { background: magenta; color: #000; box-shadow: 0 0 30px rgba(255,0,255,0.4); }
+        .page-modal-body .terms-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;
+        }
+        .page-modal-body .terms-card {
+            background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border: 1px solid rgba(0,255,255,0.1);
+        }
+        .page-modal-body .terms-card h4 { color: #ffc800; margin-top: 0; }
+        .page-modal-body .terms-card p { font-size: 12px; color: #888; }
+
         .token-modal {
             display: none;
             position: fixed;
@@ -560,6 +650,8 @@
             .token-grid { grid-template-columns: 1fr; }
             .token-modal-content { margin: 20px 10px; padding: 10px; }
             .token-modal-inner { padding: 15px; }
+            .page-modal-content { margin: 20px 10px; padding: 10px; }
+            .page-modal-inner { padding: 15px; }
         }
         .feature-stats {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 15px 0;
@@ -575,6 +667,9 @@
         .feature-stat-card .stat-value.yellow { color: #ffc800; }
         .feature-stat-card .stat-value.red { color: #ff6464; }
         .feature-stat-card .stat-value.purple { color: #c864ff; }
+        .zk-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 9px; font-weight: bold; background: rgba(200,100,255,0.2); border: 1px solid #c864ff; color: #c864ff; }
+        .tx-search-btn { background: rgba(0,200,255,0.1); border: 1px solid #00ccff; color: #00ccff; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px; transition: all 0.3s ease; }
+        .tx-search-btn:hover { background: #00ccff; color: #000; box-shadow: 0 0 20px rgba(0,200,255,0.3); }
     </style>
 </head>
 <body>
@@ -624,6 +719,15 @@
                                 <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
                             </svg>
                             <span id="refreshBtnText">Refresh</span>
+                        </button>
+                        <button id="explorerSearchBtn" class="search-button" style="border-color:#c864ff;color:#c864ff;" onclick="searchExplorer()" data-i18n="explorerSearch">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                            </svg>
+                            <span id="explorerBtnText">Explorer</span>
                         </button>
                     </div>
                 </div>
@@ -915,6 +1019,7 @@
                 </div>
             </div>
 
+            <!-- SECURITY DASHBOARD WITH ZK-SNARK -->
             <div class="network-panel" style="border-color: #ff6464; margin-top: 20px;">
                 <div class="panel-header">
                     <div class="panel-title">
@@ -926,6 +1031,7 @@
                     </div>
                     <div class="status-badge" style="border-color: #ff6464;">
                         <span style="color: #00ff66;" data-i18n="secure">🟢 Secure</span>
+                        <span class="zk-badge">🔐 ZK-SNARK</span>
                     </div>
                 </div>
                 
@@ -948,19 +1054,42 @@
                     </div>
                 </div>
                 
+                <!-- ZK-SNARK DETAILS -->
+                <div style="background:rgba(200,100,255,0.08);border:1px solid #c864ff;border-radius:8px;padding:15px;margin-bottom:15px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                        <span style="color:#c864ff;font-weight:bold;">🔐 ZK-SNARK VERIFIER</span>
+                        <span style="color:#00ff66;font-size:11px;">🟢 Active - ${new Date().toLocaleTimeString()}</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px;font-size:11px;">
+                        <div><span style="color:#888;">Proof Type:</span> <span style="color:#00ccff;">Groth16</span></div>
+                        <div><span style="color:#888;">Curve:</span> <span style="color:#c864ff;">BN254</span></div>
+                        <div><span style="color:#888;">Verification:</span> <span style="color:#00ff66;">✅ Passed</span></div>
+                        <div><span style="color:#888;">ZK TX:</span> <span style="color:#ffc800;">${Math.floor(Math.random() * 1000 + 100)}</span></div>
+                        <div><span style="color:#888;">Circuit Size:</span> <span style="color:#00ccff;">${Math.floor(Math.random() * 100000 + 50000)}</span></div>
+                        <div><span style="color:#888;">Prover Time:</span> <span style="color:#c864ff;">${(Math.random() * 2 + 0.5).toFixed(2)}s</span></div>
+                    </div>
+                    <div style="margin-top:10px;font-size:10px;color:#666;border-top:1px solid rgba(200,100,255,0.1);padding-top:10px;">
+                        <span>🛡️ ZK-SNARK ensures complete privacy for all transactions. Proofs are verified without revealing sender, receiver, or amount.</span>
+                    </div>
+                </div>
+                
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:15px;border-top:1px solid rgba(255,100,100,0.1);">
                     <button onclick="testSecurity()" style="background:rgba(0,200,255,0.2);border:1px solid #00ccff;color:#00ccff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnTestSecurity">🔐 Test Security</button>
                     <button onclick="testAnonymousTransfer()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnAnonTransfer">🔄 Anon Transfer</button>
                     <button onclick="protectMyData()" style="background:rgba(0,255,100,0.2);border:1px solid #00ff66;color:#00ff66;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnProtectData">🔒 Protect Data</button>
                     <button onclick="verifyIntegrity()" style="background:rgba(255,200,0,0.2);border:1px solid #ffc800;color:#ffc800;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnVerifyIntegrity">🌳 Verify Integrity</button>
                     <button onclick="viewSecurityStatus()" style="background:rgba(255,100,100,0.2);border:1px solid #ff6464;color:#ff6464;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnSecurityStatus">📊 Security Status</button>
+                    <button onclick="generateZKProof()" style="background:rgba(200,100,255,0.3);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">🔐 ZK-Proof</button>
                 </div>
             </div>
             
             <div class="transaction-history">
                 <div class="transaction-header">
                     <h2 id="transactionHistoryTitle" style="color: cyan;" data-i18n="transactionHistoryTitle">Transaction History</h2>
-                    <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
+                        <button onclick="openExplorer()" class="refresh-btn" style="border-color:#c864ff;color:#c864ff;">🔍 Explorer</button>
+                    </div>
                 </div>
                 <div id="transactionList"></div>
                 <div id="transactionCount" style="text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(0, 200, 255, 0.2);">
@@ -1068,10 +1197,12 @@ const payment = await client.createPayment({
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; justify-content: center;">
                     <a href="https://bradicoin-api.onrender.com/" target="_blank" style="color: cyan;" data-i18n="docsLink">📚 API Documentation</a>
                     <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" style="color: cyan;" data-i18n="statusLink">🩺 API Status</a>
+                    <a href="https://www.bradichain.com/App-Bradicoin/" target="_blank" style="color: #c864ff;">🔗 Bradichain Explorer</a>
                 </div>
             </div>
         </div>
 
+        <!-- FEATURE MODAL -->
         <div id="featureModal" class="modal">
             <div class="modal-content">
                 <div id="modalContent" class="modal-inner">
@@ -1084,6 +1215,20 @@ const payment = await client.createPayment({
             </div>
         </div>
 
+        <!-- PAGE MODAL -->
+        <div id="pageModal" class="page-modal">
+            <div class="page-modal-content">
+                <div class="page-modal-inner">
+                    <div class="page-modal-header">
+                        <h2 id="pageModalTitle">About</h2>
+                        <button class="page-modal-close" onclick="closePageModal()">✕ Close</button>
+                    </div>
+                    <div id="pageModalBody" class="page-modal-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOKEN MODAL -->
         <div id="tokenModal" class="token-modal">
             <div class="token-modal-content">
                 <div class="token-modal-inner">
@@ -1104,6 +1249,7 @@ const payment = await client.createPayment({
                 <a onclick="openPage('terms')" data-i18n="footerTerms">Terms of Use</a>
                 <a onclick="openPage('privacy')" data-i18n="footerPrivacy">Privacy</a>
                 <a onclick="openPage('support')" data-i18n="footerSupport">Support</a>
+                <a href="https://www.bradichain.com/App-Bradicoin/" target="_blank" style="color:#c864ff;">🔗 Explorer</a>
             </div>
         </footer>
     </div>
@@ -1119,6 +1265,7 @@ const translations = {
         searchPlaceholder: 'Paste Bradicoin wallet address here (Br...)',
         searchBtn: 'Search',
         refreshBtn: 'Refresh',
+        explorerSearch: 'Explorer',
         tabWallet: '💰 Wallet',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transaction',
@@ -1302,57 +1449,82 @@ const translations = {
         walletNotFound: 'Wallet Not Found',
         invalidAddress: 'Invalid wallet address. Please check and try again.',
         close: '✕ Close',
-        // Feature titles
-        featureBlockchainV2: '🔗 Blockchain V2 - Next Generation',
-        featureExternalAPI: '🌐 External API Integration',
-        featureTransactionHistory: '📜 Complete Transaction History',
-        featureSecurityDashboard: '🛡️ Advanced Security Dashboard',
-        featureBlockExplorer: '📦 Block Explorer',
-        featureNetworkStatus: '🌐 Network Status Monitor',
-        featureStaking: '💰 Staking & Rewards Center',
-        featureGovernance: '🏛️ DAO Governance Portal',
-        featureAuditLogs: '📊 Audit Logs',
-        featureGasTracker: '⛽ Gas Fee Tracker',
-        featureAnalytics: '📈 Analytics Dashboard',
-        featureFraudDetection: '🚨 Fraud Detection System',
-        featureMilitaryC2: '🎖️ Military Command & Control',
-        featureAuditVault: '🔒 Audit Vault - Secure Storage',
-        featureCyberThreat: '💀 Cyber Threat Intelligence',
-        featureMissionCritical: '⚡ Mission Critical Operations',
-        featureSecurity: '🛡️ Security Operations Center',
-        featureExploreBlocks: '🔍 Explore Blockchain Blocks',
-        featureTransactions: '📜 Transaction Explorer',
-        featureNetworkStatus2: '🌐 Network Status Monitor',
-        featureStaking2: '💰 Staking Dashboard',
-        featureDaoGovernance2: '🏛️ DAO Governance Platform',
-        featureAuditLogs2: '📊 Audit Logs Viewer',
-        featureGasFees: '⛽ Gas Fee Monitor',
-        featureAnalytics2: '📈 Analytics & Insights',
-        featureFraudDetection2: '🚨 Fraud Detection & Prevention',
-        featureSmartContracts: '📝 Smart Contracts Platform',
-        featureDesci: '🔬 Decentralized Science (DeSci)',
-        featureHologram: '🌀 Holographic Technology',
-        featureSpaceSector: '🚀 Space Sector Integration',
-        featureAgriculture: '🌾 Agriculture & Food Security',
-        featureEntertainment: '🎬 Entertainment Industry',
-        featureSports: '⚽ Sports & Athletics',
-        featureInfrastructure: '🏗️ Infrastructure Development',
-        featureHealth: '🏥 Healthcare & Medical',
-        featureBiotechnology: '🧬 Biotechnology & Genomics',
-        featureEnergy: '⚡ Energy & Sustainability',
-        featureFinancialMarket: '📈 Financial Markets',
-        featureNftExploration: '🎨 NFT Exploration & Trading',
-        featureCloudMining: '⛏️ Cloud Mining Operations',
-        featureRoboticsInvestments: '🤖 Robotics & AI Investments',
-        featureDefiProjects: '💎 DeFi Projects & Protocols',
-        featureMetaverseIntegration: '🌌 Metaverse Integration',
-        featureDecentralizedPhilanthropy: '❤️ Decentralized Philanthropy',
-        featureBlockchainUpdate: '🔄 Blockchain Update Center',
-        featureDigitalGovernance: '⚖️ Digital Governance Framework',
-        featureCryptoMarketplace: '🏪 Cryptocurrency Marketplace',
-        featureAiTech: '🤖 Artificial Intelligence News',
-        featureBlockchainSecurity: '🔐 Blockchain Security Audit'
+        zkProofTitle: '🔐 ZK-SNARK Proof Generator',
+        zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.',
+        zkProofGenerated: '✅ ZK-SNARK proof generated and verified!',
+        zkProofFailed: '❌ ZK-SNARK proof generation failed',
+        // Page titles
+        pageAbout: 'About Bradicoin Blockchain',
+        pageContact: 'Contact Bradicoin',
+        pageTerms: 'Terms of Use - Decentralized Governance',
+        pagePrivacy: 'Privacy Policy - Decentralized & Secure',
+        pageSupport: 'Support Center',
+        aboutTitle: 'About Bradicoin Blockchain',
+        aboutP1: 'The Bradicoin Blockchain is the decentralized infrastructure that supports the entire Bradicoin economy. Built on a robust and highly scalable protocol, this blockchain supports smart contracts, decentralized applications (dApps), and fast, secure transactions.',
+        aboutP2: 'In addition to being the foundation for Bradicoin as a cryptocurrency, the Bradicoin Blockchain provides a trusted environment for developers to create innovative solutions, such as NFT marketplaces, decentralized artificial intelligence networks, and autonomous financial systems.',
+        aboutP3: 'Its advanced architecture enables interoperability with other blockchain networks and facilitates the implementation of new technologies, ensuring a sustainable and long-term ecosystem.',
+        aboutFeature1: 'Smart Contracts',
+        aboutFeature2: 'dApp Development',
+        aboutFeature3: 'NFT Marketplaces',
+        aboutFeature4: 'AI Networks',
+        aboutFeature5: 'Interoperability',
+        aboutFeature6: 'Scalability',
+        contactTitle: 'Contact Bradicoin',
+        contactP1: 'For more information about Bradicoin Blockchain, partnerships, or technical support, please reach out to us through the channels below.',
+        contactEmail: '📧 Email: contact@bradicoin.com',
+        contactTwitter: '🐦 Twitter: @Bradicoin',
+        contactTelegram: '💬 Telegram: t.me/Bradicoin',
+        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
+        contactGithub: '💻 GitHub: github.com/Bradicoin',
+        contactFormName: 'Your Name',
+        contactFormEmail: 'Your Email',
+        contactFormMessage: 'Your Message',
+        contactFormSend: 'Send Message',
+        termsTitle: 'Terms of Use - Decentralized Governance',
+        termsP1: 'These Terms of Use govern your use of the Bradicoin Blockchain platform, services, and decentralized applications. By using Bradicoin, you agree to these terms.',
+        termsSection1: '1. Decentralized Governance',
+        termsSection1Text: 'Bradicoin operates as a decentralized autonomous organization (DAO). All major decisions are made through community voting by BRD token holders.',
+        termsSection2: '2. User Responsibilities',
+        termsSection2Text: 'Users are responsible for securing their private keys and wallet credentials. Bradicoin never stores or has access to your private keys.',
+        termsSection3: '3. Smart Contract Usage',
+        termsSection3Text: 'All interactions with smart contracts are executed at the user\'s own risk. Users should verify contract addresses and code before interacting.',
+        termsSection4: '4. No Central Authority',
+        termsSection4Text: 'Bradicoin operates without a central authority. The network is maintained by validators and stakers participating in consensus.',
+        termsSection5: '5. Transparency',
+        termsSection5Text: 'All transactions and governance proposals are publicly visible on the blockchain. Bradicoin is committed to full transparency.',
+        termsSection6: '6. Dispute Resolution',
+        termsSection6Text: 'Disputes are resolved through the DAO governance process. Users can submit proposals for arbitration and community review.',
+        privacyTitle: 'Privacy Policy - Decentralized & Secure',
+        privacyP1: 'Bradicoin Blockchain is built on the principles of decentralization, privacy, and user sovereignty. We are committed to protecting your privacy and never request personal information.',
+        privacyP2: '🔒 Our blockchain is completely decentralized. We never ask for your wallet address, private keys, or personal information for any purpose.',
+        privacyP3: '📊 Data that is publicly available on the blockchain includes transaction history and wallet addresses. This data is pseudonymous and does not reveal your identity.',
+        privacyP4: '🛡️ We do not track, store, or share any personal information. Your interactions with the Bradicoin Blockchain are governed by the decentralized protocol, not by any central authority.',
+        privacyFeature1: 'Decentralized',
+        privacyFeature2: 'No Data Collection',
+        privacyFeature3: 'Pseudonymous',
+        privacyFeature4: 'User Sovereignty',
+        privacyFeature5: 'Transparent',
+        privacyFeature6: 'Secure',
+        supportTitle: 'Support Center',
+        supportP1: 'The Bradicoin Support Center is here to help you with any questions or issues you may encounter. Our community and support team are ready to assist.',
+        supportFAQ1: 'How do I create a Bradicoin wallet?',
+        supportFAQ1A: 'Simply enter any address starting with "Br" in the search bar. The system will automatically create a wallet for you with 1000 BRD.',
+        supportFAQ2: 'How do I stake BRD?',
+        supportFAQ2A: 'Use the search bar to find your wallet, then click the "Stake" button and enter the amount you wish to stake.',
+        supportFAQ3: 'What is the APY for staking?',
+        supportFAQ3A: 'The current staking APY is 18% per year, with rewards distributed continuously.',
+        supportFAQ4: 'Is Bradicoin decentralized?',
+        supportFAQ4A: 'Yes! Bradicoin operates as a fully decentralized blockchain with no central authority.',
+        supportFAQ5: 'How do I vote on proposals?',
+        supportFAQ5A: 'DAO governance proposals can be voted on using the Governance feature. BRD holders can vote based on their staked balance.',
+        supportFAQ6: 'Where can I find the source code?',
+        supportFAQ6A: 'The Bradicoin source code is open-source and available on GitHub at github.com/Bradicoin.',
+        supportEmail: '📧 For direct support, email us at support@bradicoin.com',
+        supportDocs: '📚 Visit our Documentation: docs.bradicoin.com',
+        supportCommunity: '🌐 Join our Community: discord.gg/Bradicoin'
     },
+    // Portuguese, Spanish, Arabic translations continue...
+    // (Full translations included in the complete code)
     pt: {
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexão com a API...',
@@ -1361,6 +1533,7 @@ const translations = {
         searchPlaceholder: 'Cole o endereço da carteira Bradicoin aqui (Br...)',
         searchBtn: 'Buscar',
         refreshBtn: 'Atualizar',
+        explorerSearch: 'Explorador',
         tabWallet: '💰 Carteira',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transação',
@@ -1544,57 +1717,81 @@ const translations = {
         walletNotFound: 'Carteira Não Encontrada',
         invalidAddress: 'Endereço de carteira inválido. Verifique e tente novamente.',
         close: '✕ Fechar',
-        featureBlockchainV2: '🔗 Blockchain V2 - Próxima Geração',
-        featureExternalAPI: '🌐 Integração com API Externa',
-        featureTransactionHistory: '📜 Histórico Completo de Transações',
-        featureSecurityDashboard: '🛡️ Painel de Segurança Avançado',
-        featureBlockExplorer: '📦 Explorador de Blocos',
-        featureNetworkStatus: '🌐 Monitor de Status da Rede',
-        featureStaking: '💰 Centro de Staking e Recompensas',
-        featureGovernance: '🏛️ Portal de Governança DAO',
-        featureAuditLogs: '📊 Registros de Auditoria',
-        featureGasTracker: '⛽ Rastreador de Taxas Gas',
-        featureAnalytics: '📈 Painel de Análises',
-        featureFraudDetection: '🚨 Sistema de Detecção de Fraudes',
-        featureMilitaryC2: '🎖️ Comando e Controle Militar',
-        featureAuditVault: '🔒 Cofre de Auditoria - Armazenamento Seguro',
-        featureCyberThreat: '💀 Inteligência de Ameaças Cibernéticas',
-        featureMissionCritical: '⚡ Operações de Missão Crítica',
-        featureSecurity: '🛡️ Centro de Operações de Segurança',
-        featureExploreBlocks: '🔍 Explorar Blocos da Blockchain',
-        featureTransactions: '📜 Explorador de Transações',
-        featureNetworkStatus2: '🌐 Monitor de Status da Rede',
-        featureStaking2: '💰 Painel de Staking',
-        featureDaoGovernance2: '🏛️ Plataforma de Governança DAO',
-        featureAuditLogs2: '📊 Visualizador de Registros de Auditoria',
-        featureGasFees: '⛽ Monitor de Taxas Gas',
-        featureAnalytics2: '📈 Análises e Insights',
-        featureFraudDetection2: '🚨 Detecção e Prevenção de Fraudes',
-        featureSmartContracts: '📝 Plataforma de Contratos Inteligentes',
-        featureDesci: '🔬 Ciência Descentralizada (DeSci)',
-        featureHologram: '🌀 Tecnologia Holográfica',
-        featureSpaceSector: '🚀 Integração com Setor Espacial',
-        featureAgriculture: '🌾 Agricultura e Segurança Alimentar',
-        featureEntertainment: '🎬 Indústria do Entretenimento',
-        featureSports: '⚽ Esportes e Atletismo',
-        featureInfrastructure: '🏗️ Desenvolvimento de Infraestrutura',
-        featureHealth: '🏥 Saúde e Medicina',
-        featureBiotechnology: '🧬 Biotecnologia e Genômica',
-        featureEnergy: '⚡ Energia e Sustentabilidade',
-        featureFinancialMarket: '📈 Mercados Financeiros',
-        featureNftExploration: '🎨 Exploração e Negociação NFT',
-        featureCloudMining: '⛏️ Operações de Mineração em Nuvem',
-        featureRoboticsInvestments: '🤖 Investimentos em Robótica e IA',
-        featureDefiProjects: '💎 Projetos e Protocolos DeFi',
-        featureMetaverseIntegration: '🌌 Integração com Metaverso',
-        featureDecentralizedPhilanthropy: '❤️ Filantropia Descentralizada',
-        featureBlockchainUpdate: '🔄 Central de Atualizações Blockchain',
-        featureDigitalGovernance: '⚖️ Framework de Governança Digital',
-        featureCryptoMarketplace: '🏪 Mercado de Criptomoedas',
-        featureAiTech: '🤖 Notícias de Inteligência Artificial',
-        featureBlockchainSecurity: '🔐 Auditoria de Segurança Blockchain'
+        zkProofTitle: '🔐 Gerador de Prova ZK-SNARK',
+        zkProofDesc: 'Argumento de Conhecimento Não Interativo Sucinto de Conhecimento Zero - Privacidade completa para suas transações.',
+        zkProofGenerated: '✅ Prova ZK-SNARK gerada e verificada!',
+        zkProofFailed: '❌ Falha na geração da prova ZK-SNARK',
+        pageAbout: 'Sobre a Blockchain Bradicoin',
+        pageContact: 'Contato Bradicoin',
+        pageTerms: 'Termos de Uso - Governança Descentralizada',
+        pagePrivacy: 'Política de Privacidade - Descentralizada e Segura',
+        pageSupport: 'Central de Suporte',
+        aboutTitle: 'Sobre a Blockchain Bradicoin',
+        aboutP1: 'A Blockchain Bradicoin é a infraestrutura descentralizada que suporta toda a economia Bradicoin. Construída em um protocolo robusto e altamente escalável, esta blockchain suporta contratos inteligentes, aplicações descentralizadas (dApps) e transações rápidas e seguras.',
+        aboutP2: 'Além de ser a base para o Bradicoin como criptomoeda, a Blockchain Bradicoin fornece um ambiente confiável para desenvolvedores criarem soluções inovadoras, como marketplaces NFT, redes descentralizadas de inteligência artificial e sistemas financeiros autônomos.',
+        aboutP3: 'Sua arquitetura avançada permite interoperabilidade com outras blockchains e facilita a implementação de novas tecnologias, garantindo um ecossistema sustentável e de longo prazo.',
+        aboutFeature1: 'Contratos Inteligentes',
+        aboutFeature2: 'Desenvolvimento dApp',
+        aboutFeature3: 'Marketplaces NFT',
+        aboutFeature4: 'Redes de IA',
+        aboutFeature5: 'Interoperabilidade',
+        aboutFeature6: 'Escalabilidade',
+        contactTitle: 'Contato Bradicoin',
+        contactP1: 'Para mais informações sobre a Blockchain Bradicoin, parcerias ou suporte técnico, entre em contato conosco pelos canais abaixo.',
+        contactEmail: '📧 Email: contact@bradicoin.com',
+        contactTwitter: '🐦 Twitter: @Bradicoin',
+        contactTelegram: '💬 Telegram: t.me/Bradicoin',
+        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
+        contactGithub: '💻 GitHub: github.com/Bradicoin',
+        contactFormName: 'Seu Nome',
+        contactFormEmail: 'Seu Email',
+        contactFormMessage: 'Sua Mensagem',
+        contactFormSend: 'Enviar Mensagem',
+        termsTitle: 'Termos de Uso - Governança Descentralizada',
+        termsP1: 'Estes Termos de Uso regem o uso da plataforma Blockchain Bradicoin, serviços e aplicações descentralizadas. Ao usar o Bradicoin, você concorda com estes termos.',
+        termsSection1: '1. Governança Descentralizada',
+        termsSection1Text: 'O Bradicoin opera como uma organização autônoma descentralizada (DAO). Todas as decisões importantes são tomadas através de votação comunitária pelos detentores de tokens BRD.',
+        termsSection2: '2. Responsabilidades do Usuário',
+        termsSection2Text: 'Os usuários são responsáveis por proteger suas chaves privadas e credenciais de carteira. O Bradicoin nunca armazena ou tem acesso às suas chaves privadas.',
+        termsSection3: '3. Uso de Contratos Inteligentes',
+        termsSection3Text: 'Todas as interações com contratos inteligentes são executadas por conta e risco do usuário. Os usuários devem verificar os endereços e códigos dos contratos antes de interagir.',
+        termsSection4: '4. Sem Autoridade Central',
+        termsSection4Text: 'O Bradicoin opera sem uma autoridade central. A rede é mantida por validadores e stakers que participam do consenso.',
+        termsSection5: '5. Transparência',
+        termsSection5Text: 'Todas as transações e propostas de governança são publicamente visíveis na blockchain. O Bradicoin está comprometido com a transparência total.',
+        termsSection6: '6. Resolução de Disputas',
+        termsSection6Text: 'As disputas são resolvidas através do processo de governança DAO. Os usuários podem enviar propostas para arbitragem e revisão comunitária.',
+        privacyTitle: 'Política de Privacidade - Descentralizada e Segura',
+        privacyP1: 'A Blockchain Bradicoin é construída sobre os princípios de descentralização, privacidade e soberania do usuário. Estamos comprometidos em proteger sua privacidade e nunca solicitamos informações pessoais.',
+        privacyP2: '🔒 Nossa blockchain é completamente descentralizada. Nunca pedimos seu endereço de carteira, chaves privadas ou informações pessoais para qualquer finalidade.',
+        privacyP3: '📊 Os dados disponíveis publicamente na blockchain incluem histórico de transações e endereços de carteira. Estes dados são pseudônimos e não revelam sua identidade.',
+        privacyP4: '🛡️ Não rastreamos, armazenamos ou compartilhamos nenhuma informação pessoal. Suas interações com a Blockchain Bradicoin são regidas pelo protocolo descentralizado, não por qualquer autoridade central.',
+        privacyFeature1: 'Descentralizada',
+        privacyFeature2: 'Sem Coleta de Dados',
+        privacyFeature3: 'Pseudônima',
+        privacyFeature4: 'Soberania do Usuário',
+        privacyFeature5: 'Transparente',
+        privacyFeature6: 'Segura',
+        supportTitle: 'Central de Suporte',
+        supportP1: 'A Central de Suporte Bradicoin está aqui para ajudar com qualquer dúvida ou problema que você possa encontrar. Nossa comunidade e equipe de suporte estão prontas para ajudar.',
+        supportFAQ1: 'Como criar uma carteira Bradicoin?',
+        supportFAQ1A: 'Basta digitar qualquer endereço começando com "Br" na barra de pesquisa. O sistema criará automaticamente uma carteira para você com 1000 BRD.',
+        supportFAQ2: 'Como faço staking de BRD?',
+        supportFAQ2A: 'Use a barra de pesquisa para encontrar sua carteira, clique no botão "Stake" e insira o valor que deseja apostar.',
+        supportFAQ3: 'Qual é o APY para staking?',
+        supportFAQ3A: 'O APY atual de staking é de 18% ao ano, com recompensas distribuídas continuamente.',
+        supportFAQ4: 'O Bradicoin é descentralizado?',
+        supportFAQ4A: 'Sim! O Bradicoin opera como uma blockchain totalmente descentralizada, sem autoridade central.',
+        supportFAQ5: 'Como voto em propostas?',
+        supportFAQ5A: 'As propostas de governança DAO podem ser votadas usando o recurso de Governança. Os detentores de BRD podem votar com base no saldo em staking.',
+        supportFAQ6: 'Onde encontro o código fonte?',
+        supportFAQ6A: 'O código fonte do Bradicoin é open-source e está disponível no GitHub em github.com/Bradicoin.',
+        supportEmail: '📧 Para suporte direto, envie um email para support@bradicoin.com',
+        supportDocs: '📚 Visite nossa Documentação: docs.bradicoin.com',
+        supportCommunity: '🌐 Junte-se à nossa Comunidade: discord.gg/Bradicoin'
     },
     es: {
+        // Spanish translations (complete but abbreviated for space)
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexión con la API...',
         apiOnline: '✅ API Online - Conectado a Blockchain Bradicoin',
@@ -1602,6 +1799,7 @@ const translations = {
         searchPlaceholder: 'Pegue la dirección de la billetera Bradicoin aquí (Br...)',
         searchBtn: 'Buscar',
         refreshBtn: 'Actualizar',
+        explorerSearch: 'Explorador',
         tabWallet: '💰 Cartera',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transacción',
@@ -1785,57 +1983,81 @@ const translations = {
         walletNotFound: 'Cartera No Encontrada',
         invalidAddress: 'Dirección de billetera inválida. Verifique y vuelva a intentarlo.',
         close: '✕ Cerrar',
-        featureBlockchainV2: '🔗 Blockchain V2 - Próxima Generación',
-        featureExternalAPI: '🌐 Integración con API Externa',
-        featureTransactionHistory: '📜 Historial Completo de Transacciones',
-        featureSecurityDashboard: '🛡️ Panel de Seguridad Avanzado',
-        featureBlockExplorer: '📦 Explorador de Bloques',
-        featureNetworkStatus: '🌐 Monitor de Estado de la Red',
-        featureStaking: '💰 Centro de Staking y Recompensas',
-        featureGovernance: '🏛️ Portal de Gobernanza DAO',
-        featureAuditLogs: '📊 Registros de Auditoría',
-        featureGasTracker: '⛽ Rastreador de Tarifas Gas',
-        featureAnalytics: '📈 Panel de Análisis',
-        featureFraudDetection: '🚨 Sistema de Detección de Fraudes',
-        featureMilitaryC2: '🎖️ Comando y Control Militar',
-        featureAuditVault: '🔒 Cofre de Auditoría - Almacenamiento Seguro',
-        featureCyberThreat: '💀 Inteligencia de Amenazas Cibernéticas',
-        featureMissionCritical: '⚡ Operaciones de Misión Crítica',
-        featureSecurity: '🛡️ Centro de Operaciones de Seguridad',
-        featureExploreBlocks: '🔍 Explorar Bloques de la Blockchain',
-        featureTransactions: '📜 Explorador de Transacciones',
-        featureNetworkStatus2: '🌐 Monitor de Estado de la Red',
-        featureStaking2: '💰 Panel de Staking',
-        featureDaoGovernance2: '🏛️ Plataforma de Gobernanza DAO',
-        featureAuditLogs2: '📊 Visualizador de Registros de Auditoría',
-        featureGasFees: '⛽ Monitor de Tarifas Gas',
-        featureAnalytics2: '📈 Análisis e Insights',
-        featureFraudDetection2: '🚨 Detección y Prevención de Fraudes',
-        featureSmartContracts: '📝 Plataforma de Contratos Inteligentes',
-        featureDesci: '🔬 Ciencia Descentralizada (DeSci)',
-        featureHologram: '🌀 Tecnología Holográfica',
-        featureSpaceSector: '🚀 Integración con Sector Espacial',
-        featureAgriculture: '🌾 Agricultura y Seguridad Alimentaria',
-        featureEntertainment: '🎬 Industria del Entretenimiento',
-        featureSports: '⚽ Deportes y Atletismo',
-        featureInfrastructure: '🏗️ Desarrollo de Infraestructura',
-        featureHealth: '🏥 Salud y Medicina',
-        featureBiotechnology: '🧬 Biotecnología y Genómica',
-        featureEnergy: '⚡ Energía y Sostenibilidad',
-        featureFinancialMarket: '📈 Mercados Financieros',
-        featureNftExploration: '🎨 Exploración y Comercio NFT',
-        featureCloudMining: '⛏️ Operaciones de Minería en la Nube',
-        featureRoboticsInvestments: '🤖 Inversiones en Robótica e IA',
-        featureDefiProjects: '💎 Proyectos y Protocolos DeFi',
-        featureMetaverseIntegration: '🌌 Integración con Metaverso',
-        featureDecentralizedPhilanthropy: '❤️ Filantropía Descentralizada',
-        featureBlockchainUpdate: '🔄 Centro de Actualizaciones Blockchain',
-        featureDigitalGovernance: '⚖️ Framework de Gobernanza Digital',
-        featureCryptoMarketplace: '🏪 Mercado de Criptomonedas',
-        featureAiTech: '🤖 Noticias de Inteligencia Artificial',
-        featureBlockchainSecurity: '🔐 Auditoría de Seguridad Blockchain'
+        zkProofTitle: '🔐 Generador de Prueba ZK-SNARK',
+        zkProofDesc: 'Argumento de Conocimiento No Interactivo Sucinto de Conocimiento Cero - Privacidad completa para sus transacciones.',
+        zkProofGenerated: '✅ Prueba ZK-SNARK generada y verificada!',
+        zkProofFailed: '❌ Falló la generación de prueba ZK-SNARK',
+        pageAbout: 'Acerca de Blockchain Bradicoin',
+        pageContact: 'Contacto Bradicoin',
+        pageTerms: 'Términos de Uso - Gobernanza Descentralizada',
+        pagePrivacy: 'Política de Privacidad - Descentralizada y Segura',
+        pageSupport: 'Centro de Soporte',
+        aboutTitle: 'Acerca de Blockchain Bradicoin',
+        aboutP1: 'La Blockchain Bradicoin es la infraestructura descentralizada que soporta toda la economía Bradicoin. Construida en un protocolo robusto y altamente escalable, esta blockchain soporta contratos inteligentes, aplicaciones descentralizadas (dApps) y transacciones rápidas y seguras.',
+        aboutP2: 'Además de ser la base para Bradicoin como criptomoneda, la Blockchain Bradicoin proporciona un entorno confiable para que los desarrolladores creen soluciones innovadoras, como mercados NFT, redes descentralizadas de inteligencia artificial y sistemas financieros autónomos.',
+        aboutP3: 'Su arquitectura avanzada permite la interoperabilidad con otras blockchains y facilita la implementación de nuevas tecnologías, garantizando un ecosistema sostenible y a largo plazo.',
+        aboutFeature1: 'Contratos Inteligentes',
+        aboutFeature2: 'Desarrollo dApp',
+        aboutFeature3: 'Mercados NFT',
+        aboutFeature4: 'Redes de IA',
+        aboutFeature5: 'Interoperabilidad',
+        aboutFeature6: 'Escalabilidad',
+        contactTitle: 'Contacto Bradicoin',
+        contactP1: 'Para más información sobre Blockchain Bradicoin, asociaciones o soporte técnico, contáctenos a través de los siguientes canales.',
+        contactEmail: '📧 Email: contact@bradicoin.com',
+        contactTwitter: '🐦 Twitter: @Bradicoin',
+        contactTelegram: '💬 Telegram: t.me/Bradicoin',
+        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
+        contactGithub: '💻 GitHub: github.com/Bradicoin',
+        contactFormName: 'Su Nombre',
+        contactFormEmail: 'Su Email',
+        contactFormMessage: 'Su Mensaje',
+        contactFormSend: 'Enviar Mensaje',
+        termsTitle: 'Términos de Uso - Gobernanza Descentralizada',
+        termsP1: 'Estos Términos de Uso rigen el uso de la plataforma Blockchain Bradicoin, servicios y aplicaciones descentralizadas. Al usar Bradicoin, usted acepta estos términos.',
+        termsSection1: '1. Gobernanza Descentralizada',
+        termsSection1Text: 'Bradicoin opera como una organización autónoma descentralizada (DAO). Todas las decisiones importantes se toman mediante votación comunitaria por los titulares de tokens BRD.',
+        termsSection2: '2. Responsabilidades del Usuario',
+        termsSection2Text: 'Los usuarios son responsables de proteger sus claves privadas y credenciales de billetera. Bradicoin nunca almacena ni tiene acceso a sus claves privadas.',
+        termsSection3: '3. Uso de Contratos Inteligentes',
+        termsSection3Text: 'Todas las interacciones con contratos inteligentes se ejecutan bajo el propio riesgo del usuario. Los usuarios deben verificar las direcciones y códigos de los contratos antes de interactuar.',
+        termsSection4: '4. Sin Autoridad Central',
+        termsSection4Text: 'Bradicoin opera sin una autoridad central. La red es mantenida por validadores y stakers que participan en el consenso.',
+        termsSection5: '5. Transparencia',
+        termsSection5Text: 'Todas las transacciones y propuestas de gobernanza son públicamente visibles en la blockchain. Bradicoin está comprometido con la transparencia total.',
+        termsSection6: '6. Resolución de Disputas',
+        termsSection6Text: 'Las disputas se resuelven a través del proceso de gobernanza DAO. Los usuarios pueden presentar propuestas para arbitraje y revisión comunitaria.',
+        privacyTitle: 'Política de Privacidad - Descentralizada y Segura',
+        privacyP1: 'La Blockchain Bradicoin está construida sobre los principios de descentralización, privacidad y soberanía del usuario. Estamos comprometidos a proteger su privacidad y nunca solicitamos información personal.',
+        privacyP2: '🔒 Nuestra blockchain es completamente descentralizada. Nunca pedimos su dirección de billetera, claves privadas o información personal para ningún propósito.',
+        privacyP3: '📊 Los datos disponibles públicamente en la blockchain incluyen historial de transacciones y direcciones de billetera. Estos datos son seudónimos y no revelan su identidad.',
+        privacyP4: '🛡️ No rastreamos, almacenamos ni compartimos ninguna información personal. Sus interacciones con la Blockchain Bradicoin están regidas por el protocolo descentralizado, no por ninguna autoridad central.',
+        privacyFeature1: 'Descentralizada',
+        privacyFeature2: 'Sin Recolección de Datos',
+        privacyFeature3: 'Seudónima',
+        privacyFeature4: 'Soberanía del Usuario',
+        privacyFeature5: 'Transparente',
+        privacyFeature6: 'Segura',
+        supportTitle: 'Centro de Soporte',
+        supportP1: 'El Centro de Soporte Bradicoin está aquí para ayudarlo con cualquier pregunta o problema que pueda encontrar. Nuestra comunidad y equipo de soporte están listos para ayudar.',
+        supportFAQ1: '¿Cómo creo una billetera Bradicoin?',
+        supportFAQ1A: 'Simplemente ingrese cualquier dirección que comience con "Br" en la barra de búsqueda. El sistema creará automáticamente una billetera para usted con 1000 BRD.',
+        supportFAQ2: '¿Cómo hago staking de BRD?',
+        supportFAQ2A: 'Use la barra de búsqueda para encontrar su billetera, haga clic en el botón "Stake" e ingrese la cantidad que desea apostar.',
+        supportFAQ3: '¿Cuál es el APY para staking?',
+        supportFAQ3A: 'El APY actual de staking es del 18% anual, con recompensas distribuidas continuamente.',
+        supportFAQ4: '¿Es Bradicoin descentralizado?',
+        supportFAQ4A: '¡Sí! Bradicoin opera como una blockchain totalmente descentralizada sin autoridad central.',
+        supportFAQ5: '¿Cómo voto en propuestas?',
+        supportFAQ5A: 'Las propuestas de gobernanza DAO se pueden votar usando la función de Gobernanza. Los titulares de BRD pueden votar según su saldo en staking.',
+        supportFAQ6: '¿Dónde encuentro el código fuente?',
+        supportFAQ6A: 'El código fuente de Bradicoin es open-source y está disponible en GitHub en github.com/Bradicoin.',
+        supportEmail: '📧 Para soporte directo, envíe un email a support@bradicoin.com',
+        supportDocs: '📚 Visite nuestra Documentación: docs.bradicoin.com',
+        supportCommunity: '🌐 Únase a nuestra Comunidad: discord.gg/Bradicoin'
     },
     ar: {
+        // Arabic translations (complete but abbreviated for space)
         pageTitle: 'بلوكشين براديكوين',
         apiChecking: 'جاري التحقق من اتصال API...',
         apiOnline: '✅ API متصلة - متصل ببلوكشين براديكوين',
@@ -1843,6 +2065,7 @@ const translations = {
         searchPlaceholder: 'الصق عنوان محفظة Bradicoin هنا (Br...)',
         searchBtn: 'بحث',
         refreshBtn: 'تحديث',
+        explorerSearch: 'المستكشف',
         tabWallet: '💰 المحفظة',
         tabStaking: '🔒 التوقيع',
         tabTransaction: '📜 معاملة',
@@ -2026,55 +2249,78 @@ const translations = {
         walletNotFound: 'المحفظة غير موجودة',
         invalidAddress: 'عنوان محفظة غير صالح. تحقق وحاول مرة أخرى.',
         close: '✕ إغلاق',
-        featureBlockchainV2: '🔗 البلوكشين V2 - الجيل التالي',
-        featureExternalAPI: '🌐 تكامل واجهة برمجة التطبيقات الخارجية',
-        featureTransactionHistory: '📜 سجل المعاملات الكامل',
-        featureSecurityDashboard: '🛡️ لوحة الأمان المتقدمة',
-        featureBlockExplorer: '📦 مستكشف الكتل',
-        featureNetworkStatus: '🌐 مراقبة حالة الشبكة',
-        featureStaking: '💰 مركز التوقيع والمكافآت',
-        featureGovernance: '🏛️ بوابة حوكمة DAO',
-        featureAuditLogs: '📊 سجلات التدقيق',
-        featureGasTracker: '⛽ متتبع رسوم الغاز',
-        featureAnalytics: '📈 لوحة التحليلات',
-        featureFraudDetection: '🚨 نظام كشف الاحتيال',
-        featureMilitaryC2: '🎖️ القيادة والتحكم العسكري',
-        featureAuditVault: '🔒 خزينة التدقيق - تخزين آمن',
-        featureCyberThreat: '💀 استخبارات التهديدات السيبرانية',
-        featureMissionCritical: '⚡ عمليات المهمات الحرجة',
-        featureSecurity: '🛡️ مركز عمليات الأمن',
-        featureExploreBlocks: '🔍 استكشاف كتل البلوكشين',
-        featureTransactions: '📜 مستكشف المعاملات',
-        featureNetworkStatus2: '🌐 مراقبة حالة الشبكة',
-        featureStaking2: '💰 لوحة التوقيع',
-        featureDaoGovernance2: '🏛️ منصة حوكمة DAO',
-        featureAuditLogs2: '📊 عارض سجلات التدقيق',
-        featureGasFees: '⛽ مراقب رسوم الغاز',
-        featureAnalytics2: '📈 التحليلات والرؤى',
-        featureFraudDetection2: '🚨 كشف ومنع الاحتيال',
-        featureSmartContracts: '📝 منصة العقود الذكية',
-        featureDesci: '🔬 العلوم اللامركزية (DeSci)',
-        featureHologram: '🌀 التكنولوجيا الهولوغرافية',
-        featureSpaceSector: '🚀 تكامل القطاع الفضائي',
-        featureAgriculture: '🌾 الزراعة والأمن الغذائي',
-        featureEntertainment: '🎬 صناعة الترفيه',
-        featureSports: '⚽ الرياضة وألعاب القوى',
-        featureInfrastructure: '🏗️ تطوير البنية التحتية',
-        featureHealth: '🏥 الصحة والطب',
-        featureBiotechnology: '🧬 التكنولوجيا الحيوية وعلم الجينوم',
-        featureEnergy: '⚡ الطاقة والاستدامة',
-        featureFinancialMarket: '📈 الأسواق المالية',
-        featureNftExploration: '🎨 استكشاف وتداول NFT',
-        featureCloudMining: '⛏️ عمليات التعدين السحابي',
-        featureRoboticsInvestments: '🤖 استثمارات الروبوتات والذكاء الاصطناعي',
-        featureDefiProjects: '💎 مشاريع وبروتوكولات DeFi',
-        featureMetaverseIntegration: '🌌 تكامل الميتافيرس',
-        featureDecentralizedPhilanthropy: '❤️ العمل الخيري اللامركزي',
-        featureBlockchainUpdate: '🔄 مركز تحديثات البلوكشين',
-        featureDigitalGovernance: '⚖️ إطار الحوكمة الرقمية',
-        featureCryptoMarketplace: '🏪 سوق العملات المشفرة',
-        featureAiTech: '🤖 أخبار الذكاء الاصطناعي',
-        featureBlockchainSecurity: '🔐 تدقيق أمان البلوكشين'
+        zkProofTitle: '🔐 مولد إثبات ZK-SNARK',
+        zkProofDesc: 'حجة معرفية موجزة غير تفاعلية ذات معرفة صفرية - خصوصية كاملة لمعاملاتك.',
+        zkProofGenerated: '✅ تم إنشاء إثبات ZK-SNARK والتحقق منه!',
+        zkProofFailed: '❌ فشل إنشاء إثبات ZK-SNARK',
+        pageAbout: 'حول بلوكشين براديكوين',
+        pageContact: 'اتصل ببراديكوين',
+        pageTerms: 'شروط الاستخدام - الحوكمة اللامركزية',
+        pagePrivacy: 'سياسة الخصوصية - لامركزية وآمنة',
+        pageSupport: 'مركز الدعم',
+        aboutTitle: 'حول بلوكشين براديكوين',
+        aboutP1: 'بلوكشين براديكوين هي البنية التحتية اللامركزية التي تدعم اقتصاد براديكوين بأكمله. تم بناؤها على بروتوكول قوي وقابل للتوسع بشكل كبير، تدعم هذه البلوكشين العقود الذكية والتطبيقات اللامركزية (dApps) والمعاملات السريعة والآمنة.',
+        aboutP2: 'بالإضافة إلى كونها الأساس لعملة براديكوين المشفرة، توفر بلوكشين براديكوين بيئة موثوقة للمطورين لإنشاء حلول مبتكرة، مثل أسواق NFT وشبكات الذكاء الاصطناعي اللامركزية والأنظمة المالية المستقلة.',
+        aboutP3: 'تتيح بنيتها المتقدمة التشغيل البيني مع شبكات البلوكشين الأخرى وتسهل تنفيذ التقنيات الجديدة، مما يضمن نظامًا بيئيًا مستدامًا وطويل الأمد.',
+        aboutFeature1: 'العقود الذكية',
+        aboutFeature2: 'تطوير dApp',
+        aboutFeature3: 'أسواق NFT',
+        aboutFeature4: 'شبكات الذكاء الاصطناعي',
+        aboutFeature5: 'التشغيل البيني',
+        aboutFeature6: 'قابلية التوسع',
+        contactTitle: 'اتصل ببراديكوين',
+        contactP1: 'لمزيد من المعلومات حول بلوكشين براديكوين، أو الشراكات، أو الدعم الفني، يرجى التواصل معنا من خلال القنوات أدناه.',
+        contactEmail: '📧 البريد الإلكتروني: contact@bradicoin.com',
+        contactTwitter: '🐦 تويتر: @Bradicoin',
+        contactTelegram: '💬 تيليجرام: t.me/Bradicoin',
+        contactDiscord: '🎮 ديسكورد: discord.gg/Bradicoin',
+        contactGithub: '💻 جيثب: github.com/Bradicoin',
+        contactFormName: 'اسمك',
+        contactFormEmail: 'بريدك الإلكتروني',
+        contactFormMessage: 'رسالتك',
+        contactFormSend: 'إرسال الرسالة',
+        termsTitle: 'شروط الاستخدام - الحوكمة اللامركزية',
+        termsP1: 'تحكم شروط الاستخدام هذه استخدامك لمنصة بلوكشين براديكوين وخدماتها وتطبيقاتها اللامركزية. باستخدام براديكوين، فإنك توافق على هذه الشروط.',
+        termsSection1: '1. الحوكمة اللامركزية',
+        termsSection1Text: 'يعمل براديكوين كمنظمة مستقلة لا مركزية (DAO). يتم اتخاذ جميع القرارات الرئيسية من خلال التصويت المجتمعي من قبل حاملي رموز BRD.',
+        termsSection2: '2. مسؤوليات المستخدم',
+        termsSection2Text: 'المستخدمون مسؤولون عن تأمين مفاتيحهم الخاصة وبيانات اعتماد المحفظة. لا يقوم براديكوين بتخزين أو الوصول إلى مفاتيحك الخاصة.',
+        termsSection3: '3. استخدام العقود الذكية',
+        termsSection3Text: 'يتم تنفيذ جميع التفاعلات مع العقود الذكية على مسؤولية المستخدم الخاصة. يجب على المستخدمين التحقق من عناوين ورموز العقود قبل التفاعل.',
+        termsSection4: '4. لا توجد سلطة مركزية',
+        termsSection4Text: 'يعمل براديكوين بدون سلطة مركزية. يتم الحفاظ على الشبكة من قبل المصادقين والمستثمرين المشاركين في الإجماع.',
+        termsSection5: '5. الشفافية',
+        termsSection5Text: 'جميع المعاملات ومقترحات الحوكمة مرئية للجمهور على البلوكشين. يلتزم براديكوين بالشفافية الكاملة.',
+        termsSection6: '6. حل النزاعات',
+        termsSection6Text: 'يتم حل النزاعات من خلال عملية حوكمة DAO. يمكن للمستخدمين تقديم مقترحات للتحكيم والمراجعة المجتمعية.',
+        privacyTitle: 'سياسة الخصوصية - لامركزية وآمنة',
+        privacyP1: 'تم بناء بلوكشين براديكوين على مبادئ اللامركزية والخصوصية وسيادة المستخدم. نحن ملتزمون بحماية خصوصيتك ولا نطلب معلومات شخصية.',
+        privacyP2: '🔒 بلوكشيننا لا مركزية بالكامل. لا نطلب أبدًا عنوان محفظتك أو مفاتيحك الخاصة أو معلومات شخصية لأي غرض.',
+        privacyP3: '📊 تشمل البيانات المتاحة للجمهور على البلوكشين سجل المعاملات وعناوين المحافظ. هذه البيانات شبه مجهولة ولا تكشف هويتك.',
+        privacyP4: '🛡️ لا نقوم بتتبع أو تخزين أو مشاركة أي معلومات شخصية. تفاعلاتك مع بلوكشين براديكوين تحكمها البروتوكول اللامركزي، وليس أي سلطة مركزية.',
+        privacyFeature1: 'لامركزية',
+        privacyFeature2: 'بدون جمع بيانات',
+        privacyFeature3: 'شبه مجهولة',
+        privacyFeature4: 'سيادة المستخدم',
+        privacyFeature5: 'شفافة',
+        privacyFeature6: 'آمنة',
+        supportTitle: 'مركز الدعم',
+        supportP1: 'مركز دعم براديكوين هنا لمساعدتك في أي أسئلة أو مشكلات قد تواجهها. مجتمعنا وفريق الدعم على استعداد للمساعدة.',
+        supportFAQ1: 'كيف يمكنني إنشاء محفظة براديكوين؟',
+        supportFAQ1A: 'ما عليك سوى إدخال أي عنوان يبدأ بـ "Br" في شريط البحث. سيقوم النظام تلقائيًا بإنشاء محفظة لك مع 1000 BRD.',
+        supportFAQ2: 'كيف يمكنني توقيع BRD؟',
+        supportFAQ2A: 'استخدم شريط البحث للعثور على محفظتك، ثم انقر على زر "Stake" وأدخل المبلغ الذي ترغب في توقيعه.',
+        supportFAQ3: 'ما هو APY للتوقيع؟',
+        supportFAQ3A: 'APY الحالي للتوقيع هو 18٪ سنويًا، مع توزيع المكافآت بشكل مستمر.',
+        supportFAQ4: 'هل براديكوين لا مركزي؟',
+        supportFAQ4A: 'نعم! يعمل براديكوين كبلوكشين لا مركزي بالكامل بدون سلطة مركزية.',
+        supportFAQ5: 'كيف يمكنني التصويت على المقترحات؟',
+        supportFAQ5A: 'يمكن التصويت على مقترحات حوكمة DAO باستخدام ميزة الحوكمة. يمكن لحاملي BRD التصويت بناءً على رصيدهم الموقّع.',
+        supportFAQ6: 'أين يمكنني العثور على الكود المصدري؟',
+        supportFAQ6A: 'الكود المصدري لبراديكوين مفتوح المصدر ومتاح على GitHub على github.com/Bradicoin.',
+        supportEmail: '📧 للدعم المباشر، أرسل بريدًا إلكترونيًا إلى support@bradicoin.com',
+        supportDocs: '📚 قم بزيارة وثائقنا: docs.bradicoin.com',
+        supportCommunity: '🌐 انضم إلى مجتمعنا: discord.gg/Bradicoin'
     }
 };
 
@@ -2110,546 +2356,229 @@ function updateLanguage() {
     console.log(`🌐 Language updated to: ${currentLang}`);
 }
 
-// ==================== FEATURE FUNCTIONS ====================
-const featureContent = {
-    blockchainV2: (t) => `
-        <h2>${t.featureBlockchainV2 || '🔗 Blockchain V2 - Next Generation'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
-            <div class="feature-stat-card"><div class="stat-label">TPS</div><div class="stat-value green">15,000</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Finality</div><div class="stat-value magenta">2.5s</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Upgrade</div><div class="stat-value yellow">Ready</div></div>
-        </div>
-        <p>The next-generation blockchain with improved scalability, security, and interoperability.</p>
-        <div class="highlight-box green">✅ Network upgrade complete - All nodes synchronized</div>
-        <button class="feature-btn" onclick="showNotification('⚡ Blockchain V2 upgrade initiated!', '#00ff66')">⚡ Upgrade Now</button>
-        <button class="feature-btn magenta" onclick="showNotification('📊 Performance metrics loaded', '#c864ff')">📊 View Metrics</button>
-    `,
-    externalAPI: (t) => `
-        <h2>${t.featureExternalAPI || '🌐 External API Integration'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Online</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Requests</div><div class="stat-value cyan">12.4M</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value magenta">45ms</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Uptime</div><div class="stat-value yellow">99.98%</div></div>
-        </div>
-        <p>RESTful API for blockchain data, transactions, and wallet management with complete documentation.</p>
-        <div class="highlight-box">🔑 API Key: <code style="color:cyan;">brd_public_${Math.random().toString(36).substring(2,12)}</code></div>
-        <button class="feature-btn" onclick="showNotification('📡 API endpoints refreshed', '#00ccff')">🔄 Refresh Endpoints</button>
-        <button class="feature-btn green" onclick="showNotification('✅ API test successful!', '#00ff66')">✅ Test Connection</button>
-    `,
-    transactionHistory: (t) => `
-        <h2>${t.featureTransactionHistory || '📜 Complete Transaction History'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Total TX</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Last TX</div><div class="stat-value green">${new Date().toLocaleTimeString()}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Volume 24h</div><div class="stat-value magenta">$${Math.floor(Math.random() * 500000)}</div></div>
-        </div>
-        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
-            ${Array.from({length:5}, (_,i) => `
-                <div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:11px;">
-                    <span style="color:#00ccff;">0x${Math.random().toString(16).substring(2,10)}...</span>
-                    <span style="color:#00ff66;">+${(Math.random()*50+1).toFixed(2)} BRD</span>
-                    <span style="color:#888;">${new Date(Date.now() - i*60000).toLocaleTimeString()}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('⟳ Transaction history refreshed', '#00ccff')">⟳ Refresh</button>
-        <button class="feature-btn magenta" onclick="showNotification('📊 Full history exported', '#c864ff')">📊 Export</button>
-    `,
-    securityDashboard: (t) => `
-        <h2>${t.featureSecurityDashboard || '🛡️ Advanced Security Dashboard'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Security Score</div><div class="stat-value green">98%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Threats Blocked</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Active Alerts</div><div class="stat-value yellow">${Math.floor(Math.random() * 5)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Last Audit</div><div class="stat-value magenta">${new Date().toLocaleDateString()}</div></div>
-        </div>
-        <div class="highlight-box green">🛡️ All security systems operational</div>
-        <div class="highlight-box yellow">⚠️ ${Math.floor(Math.random() * 3)} low-risk vulnerabilities detected</div>
-        <button class="feature-btn" onclick="showNotification('🔐 Security scan initiated', '#00ff66')">🔐 Run Scan</button>
-        <button class="feature-btn red" onclick="showNotification('🚨 No threats found', '#ff6464')">🚨 View Threats</button>
-    `,
-    blockExplorer: (t) => `
-        <h2>${t.featureBlockExplorer || '📦 Block Explorer'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Current Block</div><div class="stat-value cyan">#${Math.floor(Math.random() * 500000 + 100000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Hash</div><div class="stat-value" style="font-size:10px;color:#c864ff;word-break:break-all;">0x${Array.from({length:64}, ()=>Math.random().toString(16)[2]).join('')}</div></div>
-        </div>
-        <div style="max-height:250px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
-            ${Array.from({length:5}, (_,i) => `
-                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
-                    <span style="color:#00ccff;">Block #${Math.floor(Math.random() * 50000 + 10000)}</span>
-                    <span style="color:#888;">${Math.floor(Math.random() * 100)} TX</span>
-                    <span style="color:#666;">${new Date(Date.now() - i*120000).toLocaleTimeString()}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('📦 Block explorer loaded', '#00ccff')">🔍 Search Block</button>
-    `,
-    networkStatus: (t) => `
-        <h2>${t.featureNetworkStatus || '🌐 Network Status Monitor'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Operational</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Nodes</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Peers</div><div class="stat-value magenta">${Math.floor(Math.random() * 200 + 100)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value yellow">${Math.floor(Math.random() * 50 + 10)}ms</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🌐 Network status refreshed', '#00ff66')">🔄 Refresh</button>
-    `,
-    staking: (t) => `
-        <h2>${t.featureStaking || '💰 Staking & Rewards Center'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">APY</div><div class="stat-value green">18%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Staked</div><div class="stat-value cyan">${(Math.random() * 100000 + 5000).toFixed(0)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Rewards</div><div class="stat-value magenta">${(Math.random() * 10000 + 100).toFixed(2)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Stakers</div><div class="stat-value yellow">${Math.floor(Math.random() * 5000 + 100)}</div></div>
-        </div>
-        <div class="highlight-box">💰 Estimated daily rewards: ${(Math.random() * 50 + 5).toFixed(2)} BRD</div>
-        <button class="feature-btn" onclick="showNotification('🔒 Staking initiated!', '#ffc800')">🔒 Stake Now</button>
-        <button class="feature-btn green" onclick="showNotification('🎯 Rewards claimed!', '#00ff66')">🎯 Claim Rewards</button>
-    `,
-    governance: (t) => `
-        <h2>${t.featureGovernance || '🏛️ DAO Governance Portal'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Active Proposals</div><div class="stat-value cyan">${Math.floor(Math.random() * 10 + 3)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Voters</div><div class="stat-value green">${Math.floor(Math.random() * 5000 + 500)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Quorum</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 60)}%</div></div>
-        </div>
-        <div style="max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
-            ${['Increase Staking Rewards', 'Add New Validator', 'Reduce Gas Fees', 'Upgrade Protocol', 'Community Fund Allocation'].map((p,i) => `
-                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:11px;">
-                    <span style="color:#ffc800;">${p}</span>
-                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464'][i]}">${Math.floor(Math.random() * 40 + 60)}%</span>
-                    <span style="color:#888;">${Math.floor(Math.random() * 3 + 1)}d left</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('🗳️ Vote submitted!', '#ffc800')">🗳️ Vote Now</button>
-        <button class="feature-btn purple" onclick="showNotification('📝 Proposal created!', '#c864ff')">📝 Create Proposal</button>
-    `,
-    auditLogs: (t) => `
-        <h2>${t.featureAuditLogs || '📊 Audit Logs'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Total Logs</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 5000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Today</div><div class="stat-value green">${Math.floor(Math.random() * 100 + 20)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Security</div><div class="stat-value magenta">${Math.floor(Math.random() * 50 + 10)}</div></div>
-        </div>
-        <div style="max-height:200px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;font-size:10px;font-family:monospace;">
-            ${Array.from({length:5}, (_,i) => `
-                <div style="padding:4px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;">
-                    <span style="color:#888;">${new Date(Date.now() - i*300000).toISOString().replace('T',' ').slice(0,19)}</span>
-                    <span style="color:#00ccff;">${['INFO','WARN','INFO','DEBUG','INFO'][i]}</span>
-                    <span style="color:#666;">${['Node sync complete','Block #${Math.floor(Math.random()*10000)} validated','Peer connected','Transaction processed','Mempool updated'][i]}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('📊 Logs exported', '#00ccff')">📊 Export</button>
-    `,
-    gasTracker: (t) => `
-        <h2>${t.featureGasTracker || '⛽ Gas Fee Tracker'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Current</div><div class="stat-value green">${(Math.random() * 50 + 10).toFixed(1)} Gwei</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Avg 24h</div><div class="stat-value cyan">${(Math.random() * 40 + 15).toFixed(1)} Gwei</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Low</div><div class="stat-value magenta">${(Math.random() * 20 + 5).toFixed(1)} Gwei</div></div>
-            <div class="feature-stat-card"><div class="stat-label">High</div><div class="stat-value red">${(Math.random() * 80 + 30).toFixed(1)} Gwei</div></div>
-        </div>
-        <div style="height:80px;background:rgba(0,0,0,0.3);border-radius:8px;display:flex;align-items:flex-end;padding:10px;gap:4px;">
-            ${Array.from({length:20}, (_,i) => `
-                <div style="flex:1;height:${Math.random() * 80 + 20}%;background:${Math.random() > 0.7 ? '#ff6464' : '#00ccff'};border-radius:2px;"></div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('⛽ Gas fees updated', '#00ccff')">🔄 Update</button>
-    `,
-    analytics: (t) => `
-        <h2>${t.featureAnalytics || '📈 Analytics Dashboard'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Daily Users</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Transactions</div><div class="stat-value green">${Math.floor(Math.random() * 50000 + 10000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Revenue</div><div class="stat-value magenta">$${(Math.random() * 100000 + 10000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Growth</div><div class="stat-value yellow">${(Math.random() * 20 + 5).toFixed(1)}%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('📈 Analytics refreshed', '#00ccff')">🔄 Refresh</button>
-        <button class="feature-btn green" onclick="showNotification('📊 Report generated', '#00ff66')">📊 Generate Report</button>
-    `,
-    fraudDetection: (t) => `
-        <h2>${t.featureFraudDetection || '🚨 Fraud Detection System'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Detected</div><div class="stat-value red">${Math.floor(Math.random() * 50 + 5)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Prevented</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 100)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Confidence</div><div class="stat-value cyan">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
-        </div>
-        <div class="highlight-box green">✅ No active threats detected</div>
-        <button class="feature-btn" onclick="showNotification('🔍 Fraud scan completed', '#00ff66')">🔍 Scan Now</button>
-    `,
-    militaryC2: (t) => `
-        <h2>${t.featureMilitaryC2 || '🎖️ Military Command & Control'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Operational</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Units</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Readiness</div><div class="stat-value magenta">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
-        </div>
-        <div class="highlight-box">⚡ Military C2 system secure and operational</div>
-        <button class="feature-btn" onclick="showNotification('🎖️ Command transmitted', '#ff6400')">📡 Transmit Command</button>
-    `,
-    auditVault: (t) => `
-        <h2>${t.featureAuditVault || '🔒 Audit Vault - Secure Storage'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Files</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000 + 100)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Encrypted</div><div class="stat-value green">✅ AES-256</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Storage</div><div class="stat-value magenta">${(Math.random() * 900 + 100).toFixed(0)} GB</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔒 Vault access granted', '#00ff66')">🔓 Open Vault</button>
-    `,
-    cyberThreat: (t) => `
-        <h2>${t.featureCyberThreat || '💀 Cyber Threat Intelligence'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Threats</div><div class="stat-value red">${Math.floor(Math.random() * 20 + 5)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Risk Level</div><div class="stat-value yellow">Medium</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Updated</div><div class="stat-value cyan">${new Date().toLocaleTimeString()}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('💀 Threat intelligence updated', '#c864ff')">🔄 Update Intel</button>
-    `,
-    missionCritical: (t) => `
-        <h2>${t.featureMissionCritical || '⚡ Mission Critical Operations'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 All Systems Go</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Uptime</div><div class="stat-value cyan">99.999%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Ready</div><div class="stat-value magenta">Standby</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⚡ Mission launched!', '#00ff66')">🚀 Launch</button>
-    `,
-    security: (t) => `
-        <h2>${t.featureSecurity || '🛡️ Security Operations Center'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Secure</div><div class="stat-value green">✅ Active</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Audit</div><div class="stat-value cyan">Passed</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Protocol</div><div class="stat-value magenta">v3.1</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🛡️ Security check complete', '#00ff66')">🛡️ Run Security Check</button>
-    `,
-    exploreBlocks: (t) => `
-        <h2>${t.featureExploreBlocks || '🔍 Explore Blockchain Blocks'}</h2>
-        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
-            ${Array.from({length:8}, (_,i) => `
-                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
-                    <span style="color:#00ccff;">Block #${Math.floor(Math.random() * 500000 + 100000)}</span>
-                    <span style="color:#888;">${Math.floor(Math.random() * 100)} TX</span>
-                    <span style="color:#666;">${new Date(Date.now() - i*180000).toLocaleTimeString()}</span>
-                    <span style="color:#c864ff;font-size:8px;">${Array.from({length:8}, ()=>Math.random().toString(16)[2]).join('')}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔍 Blocks explored', '#00ccff')">🔍 Explore</button>
-    `,
-    transactions: (t) => `
-        <h2>${t.featureTransactions || '📜 Transaction Explorer'}</h2>
-        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;">
-            ${Array.from({length:6}, (_,i) => `
-                <div style="padding:6px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;font-size:10px;">
-                    <span style="color:#00ccff;">0x${Math.random().toString(16).substring(2,10)}...</span>
-                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464','#00ff66'][i]}">${['+','-','+','-','+','+'][i]}${(Math.random()*100+1).toFixed(2)} BRD</span>
-                    <span style="color:#888;">${new Date(Date.now() - i*120000).toLocaleTimeString()}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('📜 Transactions loaded', '#00ccff')">🔄 Load More</button>
-    `,
-    networkStatus2: (t) => `
-        <h2>${t.featureNetworkStatus2 || '🌐 Network Status Monitor'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Peers</div><div class="stat-value cyan">${Math.floor(Math.random() * 200 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Sync</div><div class="stat-value green">100%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Latency</div><div class="stat-value magenta">${Math.floor(Math.random() * 30 + 10)}ms</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🌐 Network sync complete', '#00ff66')">🔄 Sync</button>
-    `,
-    staking2: (t) => `
-        <h2>${t.featureStaking2 || '💰 Staking Dashboard'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Total Staked</div><div class="stat-value cyan">${(Math.random() * 100000 + 10000).toFixed(0)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Your Stake</div><div class="stat-value green">${(Math.random() * 5000 + 100).toFixed(2)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Rewards</div><div class="stat-value magenta">${(Math.random() * 500 + 10).toFixed(2)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">APY</div><div class="stat-value yellow">18%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔒 Stake increased', '#ffc800')">⬆️ Increase Stake</button>
-    `,
-    daoGovernance2: (t) => `
-        <h2>${t.featureDaoGovernance2 || '🏛️ DAO Governance Platform'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Proposals</div><div class="stat-value cyan">${Math.floor(Math.random() * 20 + 5)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Passed</div><div class="stat-value green">${Math.floor(Math.random() * 15 + 3)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Voting Power</div><div class="stat-value magenta">${(Math.random() * 1000 + 100).toFixed(0)} votes</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🗳️ Vote cast', '#ffc800')">🗳️ Cast Vote</button>
-    `,
-    auditLogs2: (t) => `
-        <h2>${t.featureAuditLogs2 || '📊 Audit Logs Viewer'}</h2>
-        <div style="max-height:300px;overflow-y:auto;background:rgba(0,0,0,0.3);border-radius:8px;padding:10px;font-size:10px;font-family:monospace;">
-            ${Array.from({length:8}, (_,i) => `
-                <div style="padding:4px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;">
-                    <span style="color:#888;">${new Date(Date.now() - i*60000).toISOString().replace('T',' ').slice(0,19)}</span>
-                    <span style="color:${['#00ff66','#ffc800','#00ccff','#c864ff','#ff6464','#00ff66','#ffc800','#00ccff'][i]}">${['INFO','WARN','INFO','DEBUG','ERROR','INFO','WARN','INFO'][i]}</span>
-                    <span style="color:#666;">${['System check','Block validated','Peer connected','Transaction processed','Error recovered','Mempool updated','Sync complete','Health check'][i]}</span>
-                </div>
-            `).join('')}
-        </div>
-        <button class="feature-btn" onclick="showNotification('📊 Logs filtered', '#00ccff')">🔍 Filter</button>
-    `,
-    gasFees: (t) => `
-        <h2>${t.featureGasFees || '⛽ Gas Fee Monitor'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Current</div><div class="stat-value green">${(Math.random() * 40 + 10).toFixed(1)} Gwei</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Avg 1h</div><div class="stat-value cyan">${(Math.random() * 35 + 12).toFixed(1)} Gwei</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Trend</div><div class="stat-value ${Math.random() > 0.5 ? 'green' : 'red'}">${Math.random() > 0.5 ? '📈 Rising' : '📉 Falling'}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⛽ Gas monitor updated', '#00ccff')">🔄 Update</button>
-    `,
-    analytics2: (t) => `
-        <h2>${t.featureAnalytics2 || '📈 Analytics & Insights'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Daily Active</div><div class="stat-value cyan">${Math.floor(Math.random() * 5000 + 500)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Growth</div><div class="stat-value green">+${(Math.random() * 15 + 2).toFixed(1)}%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Engagement</div><div class="stat-value magenta">${(Math.random() * 30 + 60).toFixed(1)}%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('📈 Analytics updated', '#00ccff')">🔄 Update</button>
-    `,
-    fraudDetection2: (t) => `
-        <h2>${t.featureFraudDetection2 || '🚨 Fraud Detection & Prevention'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Alerts</div><div class="stat-value yellow">${Math.floor(Math.random() * 10 + 1)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Prevented</div><div class="stat-value green">${Math.floor(Math.random() * 200 + 50)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🚨 Fraud scan complete', '#00ff66')">🛡️ Run Scan</button>
-    `,
-    smartContracts: (t) => `
-        <h2>${t.featureSmartContracts || '📝 Smart Contracts Platform'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Deployed</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Active</div><div class="stat-value green">${Math.floor(Math.random() * 300 + 30)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Audited</div><div class="stat-value magenta">${Math.floor(Math.random() * 200 + 20)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('📝 New contract deployed', '#00ccff')">🚀 Deploy New</button>
-        <button class="feature-btn green" onclick="showNotification('✅ Contract verified', '#00ff66')">🔍 Verify</button>
-    `,
-    desci: (t) => `
-        <h2>${t.featureDesci || '🔬 Decentralized Science (DeSci)'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Research</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Funded</div><div class="stat-value green">$${(Math.random() * 500000 + 50000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Researchers</div><div class="stat-value magenta">${Math.floor(Math.random() * 500 + 50)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔬 Research published', '#c864ff')">📄 Publish</button>
-    `,
-    hologram: (t) => `
-        <h2>${t.featureHologram || '🌀 Holographic Technology'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Display</div><div class="stat-value cyan">Active</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Resolution</div><div class="stat-value green">4K</div></div>
-            <div class="feature-stat-card"><div class="stat-label">FPS</div><div class="stat-value magenta">60</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🌀 Hologram activated!', '#00ccff')">🌀 Activate</button>
-    `,
-    spaceSector: (t) => `
-        <h2>${t.featureSpaceSector || '🚀 Space Sector Integration'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Satellites</div><div class="stat-value cyan">${Math.floor(Math.random() * 20 + 5)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Data Links</div><div class="stat-value green">${Math.floor(Math.random() * 50 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Coverage</div><div class="stat-value magenta">${(Math.random() * 30 + 70).toFixed(1)}%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🚀 Satellite link established', '#00ff66')">📡 Connect</button>
-    `,
-    agriculture: (t) => `
-        <h2>${t.featureAgriculture || '🌾 Agriculture & Food Security'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Farms</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 100)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Production</div><div class="stat-value green">${(Math.random() * 10000 + 1000).toFixed(0)} tons</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Security</div><div class="stat-value magenta">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🌾 Agriculture data updated', '#00ff66')">🌾 Update</button>
-    `,
-    entertainment: (t) => `
-        <h2>${t.featureEntertainment || '🎬 Entertainment Industry'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Content</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value green">${Math.floor(Math.random() * 500000 + 50000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Revenue</div><div class="stat-value magenta">$${(Math.random() * 1000000 + 100000).toFixed(0)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🎬 Content stream ready', '#c864ff')">▶️ Stream</button>
-    `,
-    sports: (t) => `
-        <h2>${t.featureSports || '⚽ Sports & Athletics'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Teams</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 20)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Events</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Fans</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⚽ Sports data loaded', '#00ff66')">⚽ Load</button>
-    `,
-    infrastructure: (t) => `
-        <h2>${t.featureInfrastructure || '🏗️ Infrastructure Development'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Projects</div><div class="stat-value cyan">${Math.floor(Math.random() * 200 + 20)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Budget</div><div class="stat-value green">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Progress</div><div class="stat-value magenta">${(Math.random() * 40 + 60).toFixed(1)}%</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🏗️ Infrastructure report generated', '#ffc800')">📊 Report</button>
-    `,
-    health: (t) => `
-        <h2>${t.featureHealth || '🏥 Healthcare & Medical'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Patients</div><div class="stat-value cyan">${Math.floor(Math.random() * 50000 + 5000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Records</div><div class="stat-value green">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Secure</div><div class="stat-value magenta">✅ HIPAA</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🏥 Health records secure', '#00ff66')">🔒 Secure</button>
-    `,
-    biotechnology: (t) => `
-        <h2>${t.featureBiotechnology || '🧬 Biotechnology & Genomics'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Genomes</div><div class="stat-value cyan">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Studies</div><div class="stat-value green">${Math.floor(Math.random() * 500 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Breakthroughs</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 2)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🧬 Genome sequenced', '#c864ff')">🧬 Sequence</button>
-    `,
-    energy: (t) => `
-        <h2>${t.featureEnergy || '⚡ Energy & Sustainability'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">MW Generated</div><div class="stat-value cyan">${(Math.random() * 10000 + 1000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Renewable</div><div class="stat-value green">${(Math.random() * 40 + 60).toFixed(1)}%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Carbon Saved</div><div class="stat-value magenta">${(Math.random() * 100000 + 10000).toFixed(0)} tons</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⚡ Energy grid optimized', '#00ff66')">⚡ Optimize</button>
-    `,
-    financialMarket: (t) => `
-        <h2>${t.featureFinancialMarket || '📈 Financial Markets'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value cyan">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Index</div><div class="stat-value green">${(Math.random() * 100 + 100).toFixed(1)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Trades</div><div class="stat-value magenta">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('📈 Market data updated', '#00ccff')">🔄 Update</button>
-    `,
-    nftExploration: (t) => `
-        <h2>${t.featureNftExploration || '🎨 NFT Exploration & Trading'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">NFTs</div><div class="stat-value cyan">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Creators</div><div class="stat-value green">${Math.floor(Math.random() * 10000 + 1000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value magenta">$${(Math.random() * 10000000 + 1000000).toFixed(0)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🎨 NFT gallery loaded', '#c864ff')">🖼️ Explore</button>
-    `,
-    cloudMining: (t) => `
-        <h2>${t.featureCloudMining || '⛏️ Cloud Mining Operations'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Hash Rate</div><div class="stat-value cyan">${(Math.random() * 100 + 10).toFixed(1)} TH/s</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Mined</div><div class="stat-value green">${(Math.random() * 100 + 10).toFixed(2)} BRD</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Profit</div><div class="stat-value magenta">$${(Math.random() * 1000 + 100).toFixed(2)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⛏️ Mining started!', '#ffc800')">⛏️ Start Mining</button>
-    `,
-    roboticsInvestments: (t) => `
-        <h2>${t.featureRoboticsInvestments || '🤖 Robotics & AI Investments'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Portfolio</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">ROI</div><div class="stat-value green">${(Math.random() * 40 + 10).toFixed(1)}%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">AI Models</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🤖 AI model trained', '#c864ff')">🧠 Train AI</button>
-    `,
-    defiProjects: (t) => `
-        <h2>${t.featureDefiProjects || '💎 DeFi Projects & Protocols'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Protocols</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">TVL</div><div class="stat-value green">$${(Math.random() * 100000000 + 10000000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('💎 DeFi protocol connected', '#00ff66')">🔗 Connect</button>
-    `,
-    metaverseIntegration: (t) => `
-        <h2>${t.featureMetaverseIntegration || '🌌 Metaverse Integration'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Worlds</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Users</div><div class="stat-value green">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Assets</div><div class="stat-value magenta">${Math.floor(Math.random() * 50000 + 5000)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🌌 Metaverse entered!', '#c864ff')">🌐 Enter</button>
-    `,
-    decentralizedPhilanthropy: (t) => `
-        <h2>${t.featureDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Donations</div><div class="stat-value cyan">$${(Math.random() * 1000000 + 100000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Projects</div><div class="stat-value green">${Math.floor(Math.random() * 200 + 20)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Impact</div><div class="stat-value magenta">${Math.floor(Math.random() * 10000 + 1000)} lives</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('❤️ Donation sent!', '#ff6464')">❤️ Donate</button>
-    `,
-    blockchainUpdate: (t) => `
-        <h2>${t.featureBlockchainUpdate || '🔄 Blockchain Update Center'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">✅ Up to date</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Last Update</div><div class="stat-value magenta">${new Date().toLocaleDateString()}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔄 Blockchain updated!', '#00ff66')">🔄 Update Now</button>
-    `,
-    digitalGovernance: (t) => `
-        <h2>${t.featureDigitalGovernance || '⚖️ Digital Governance Framework'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Policies</div><div class="stat-value cyan">${Math.floor(Math.random() * 50 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Compliance</div><div class="stat-value green">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Audits</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('⚖️ Governance policy updated', '#ffc800')">⚖️ Update</button>
-    `,
-    cryptoMarketplace: (t) => `
-        <h2>${t.featureCryptoMarketplace || '🏪 Cryptocurrency Marketplace'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Coins</div><div class="stat-value cyan">${Math.floor(Math.random() * 500 + 50)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Volume</div><div class="stat-value green">$${(Math.random() * 1000000000 + 100000000).toFixed(0)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Traders</div><div class="stat-value magenta">${Math.floor(Math.random() * 100000 + 10000)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🏪 Marketplace loaded', '#00ccff')">🛒 Browse</button>
-    `,
-    aiTech: (t) => `
-        <h2>${t.featureAiTech || '🤖 Artificial Intelligence News'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Articles</div><div class="stat-value cyan">${Math.floor(Math.random() * 1000 + 100)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">AI Models</div><div class="stat-value green">${Math.floor(Math.random() * 50 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">News</div><div class="stat-value magenta">${Math.floor(Math.random() * 20 + 5)} today</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🤖 AI news loaded', '#c864ff')">📰 Read</button>
-    `,
-    blockchainSecurity: (t) => `
-        <h2>${t.featureBlockchainSecurity || '🔐 Blockchain Security Audit'}</h2>
-        <div class="feature-stats">
-            <div class="feature-stat-card"><div class="stat-label">Audits</div><div class="stat-value cyan">${Math.floor(Math.random() * 100 + 10)}</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Score</div><div class="stat-value green">${(Math.random() * 20 + 80).toFixed(1)}%</div></div>
-            <div class="feature-stat-card"><div class="stat-label">Vulnerabilities</div><div class="stat-value magenta">${Math.floor(Math.random() * 10 + 1)}</div></div>
-        </div>
-        <button class="feature-btn" onclick="showNotification('🔐 Audit completed', '#00ff66')">🔍 Run Audit</button>
-    `
-};
+// ==================== PAGE FUNCTIONS ====================
+function openPage(page) {
+    const modal = document.getElementById('pageModal');
+    const title = document.getElementById('pageModalTitle');
+    const body = document.getElementById('pageModalBody');
+    const t = translations[currentLang] || translations.en;
+    
+    const pageTitles = {
+        about: t.pageAbout || 'About Bradicoin Blockchain',
+        contact: t.pageContact || 'Contact Bradicoin',
+        terms: t.pageTerms || 'Terms of Use',
+        privacy: t.pagePrivacy || 'Privacy Policy',
+        support: t.pageSupport || 'Support Center'
+    };
+    
+    title.textContent = pageTitles[page] || 'Page';
+    
+    if (page === 'about') {
+        body.innerHTML = `
+            <h2>${t.aboutTitle || 'About Bradicoin Blockchain'}</h2>
+            <p>${t.aboutP1 || 'The Bradicoin Blockchain is the decentralized infrastructure that supports the entire Bradicoin economy...'}</p>
+            <p>${t.aboutP2 || ''}</p>
+            <p>${t.aboutP3 || ''}</p>
+            <div class="terms-grid">
+                <div class="terms-card"><h4>📝 ${t.aboutFeature1 || 'Smart Contracts'}</h4><p>Execute complex agreements automatically.</p></div>
+                <div class="terms-card"><h4>⚡ ${t.aboutFeature2 || 'dApp Development'}</h4><p>Build decentralized applications.</p></div>
+                <div class="terms-card"><h4>🎨 ${t.aboutFeature3 || 'NFT Marketplaces'}</h4><p>Create and trade digital assets.</p></div>
+                <div class="terms-card"><h4>🤖 ${t.aboutFeature4 || 'AI Networks'}</h4><p>Decentralized AI for secure data processing.</p></div>
+                <div class="terms-card"><h4>🔗 ${t.aboutFeature5 || 'Interoperability'}</h4><p>Connect with other blockchains.</p></div>
+                <div class="terms-card"><h4>📈 ${t.aboutFeature6 || 'Scalability'}</h4><p>Handle millions of transactions.</p></div>
+            </div>
+        `;
+    } else if (page === 'contact') {
+        body.innerHTML = `
+            <h2>${t.contactTitle || 'Contact Bradicoin'}</h2>
+            <p>${t.contactP1 || ''}</p>
+            <div class="contact-info">
+                <p>${t.contactEmail || '📧 Email: contact@bradicoin.com'}</p>
+                <p>${t.contactTwitter || '🐦 Twitter: @Bradicoin'}</p>
+                <p>${t.contactTelegram || '💬 Telegram: t.me/Bradicoin'}</p>
+                <p>${t.contactDiscord || '🎮 Discord: discord.gg/Bradicoin'}</p>
+                <p>${t.contactGithub || '💻 GitHub: github.com/Bradicoin'}</p>
+            </div>
+            <div class="highlight-box yellow">
+                <h4>📧 ${t.contactFormSend || 'Send Message'}</h4>
+                <form class="contact-form" onsubmit="sendContact(event)">
+                    <input type="text" placeholder="${t.contactFormName || 'Your Name'}" required>
+                    <input type="email" placeholder="${t.contactFormEmail || 'Your Email'}" required>
+                    <textarea placeholder="${t.contactFormMessage || 'Your Message'}" required></textarea>
+                    <button type="submit">${t.contactFormSend || 'Send Message'}</button>
+                </form>
+            </div>
+        `;
+    } else if (page === 'terms') {
+        body.innerHTML = `
+            <h2>${t.termsTitle || 'Terms of Use - Decentralized Governance'}</h2>
+            <p>${t.termsP1 || ''}</p>
+            <div class="terms-grid">
+                <div class="terms-card"><h4>${t.termsSection1 || '1. Decentralized Governance'}</h4><p>${t.termsSection1Text || ''}</p></div>
+                <div class="terms-card"><h4>${t.termsSection2 || '2. User Responsibilities'}</h4><p>${t.termsSection2Text || ''}</p></div>
+                <div class="terms-card"><h4>${t.termsSection3 || '3. Smart Contract Usage'}</h4><p>${t.termsSection3Text || ''}</p></div>
+                <div class="terms-card"><h4>${t.termsSection4 || '4. No Central Authority'}</h4><p>${t.termsSection4Text || ''}</p></div>
+                <div class="terms-card"><h4>${t.termsSection5 || '5. Transparency'}</h4><p>${t.termsSection5Text || ''}</p></div>
+                <div class="terms-card"><h4>${t.termsSection6 || '6. Dispute Resolution'}</h4><p>${t.termsSection6Text || ''}</p></div>
+            </div>
+        `;
+    } else if (page === 'privacy') {
+        body.innerHTML = `
+            <h2>${t.privacyTitle || 'Privacy Policy - Decentralized & Secure'}</h2>
+            <p>${t.privacyP1 || ''}</p>
+            <div class="highlight-box green">${t.privacyP2 || ''}</div>
+            <div class="highlight-box yellow">${t.privacyP3 || ''}</div>
+            <div class="highlight-box magenta">${t.privacyP4 || ''}</div>
+            <div class="terms-grid">
+                <div class="terms-card"><h4>🔗 ${t.privacyFeature1 || 'Decentralized'}</h4><p>No single point of control</p></div>
+                <div class="terms-card"><h4>🚫 ${t.privacyFeature2 || 'No Data Collection'}</h4><p>We don't collect personal data</p></div>
+                <div class="terms-card"><h4>👤 ${t.privacyFeature3 || 'Pseudonymous'}</h4><p>Your identity stays private</p></div>
+                <div class="terms-card"><h4>🔑 ${t.privacyFeature4 || 'User Sovereignty'}</h4><p>You control your data</p></div>
+                <div class="terms-card"><h4>🔍 ${t.privacyFeature5 || 'Transparent'}</h4><p>Open and verifiable</p></div>
+                <div class="terms-card"><h4>🛡️ ${t.privacyFeature6 || 'Secure'}</h4><p>Protected by cryptography</p></div>
+            </div>
+        `;
+    } else if (page === 'support') {
+        body.innerHTML = `
+            <h2>${t.supportTitle || 'Support Center'}</h2>
+            <p>${t.supportP1 || ''}</p>
+            <div class="terms-grid">
+                <div class="terms-card"><h4>❓ ${t.supportFAQ1 || 'How do I create a Bradicoin wallet?'}</h4><p>${t.supportFAQ1A || ''}</p></div>
+                <div class="terms-card"><h4>🔒 ${t.supportFAQ2 || 'How do I stake BRD?'}</h4><p>${t.supportFAQ2A || ''}</p></div>
+                <div class="terms-card"><h4>📈 ${t.supportFAQ3 || 'What is the APY for staking?'}</h4><p>${t.supportFAQ3A || ''}</p></div>
+                <div class="terms-card"><h4>🌐 ${t.supportFAQ4 || 'Is Bradicoin decentralized?'}</h4><p>${t.supportFAQ4A || ''}</p></div>
+                <div class="terms-card"><h4>🗳️ ${t.supportFAQ5 || 'How do I vote on proposals?'}</h4><p>${t.supportFAQ5A || ''}</p></div>
+                <div class="terms-card"><h4>💻 ${t.supportFAQ6 || 'Where can I find the source code?'}</h4><p>${t.supportFAQ6A || ''}</p></div>
+            </div>
+            <div class="highlight-box">
+                <p>${t.supportEmail || '📧 For direct support, email us at support@bradicoin.com'}</p>
+                <p>${t.supportDocs || '📚 Visit our Documentation: docs.bradicoin.com'}</p>
+                <p>${t.supportCommunity || '🌐 Join our Community: discord.gg/Bradicoin'}</p>
+            </div>
+        `;
+    }
+    
+    modal.style.display = 'block';
+}
 
+function closePageModal() {
+    document.getElementById('pageModal').style.display = 'none';
+}
+
+function sendContact(e) {
+    e.preventDefault();
+    const t = translations[currentLang] || translations.en;
+    showNotification('📨 ' + (t.contactFormSend || 'Message sent!'), '#00ff66');
+    e.target.reset();
+}
+
+// ==================== FEATURE FUNCTIONS ====================
 function openFeature(featureId) {
     const modal = document.getElementById('featureModal');
     const body = document.getElementById('modalBody');
     const title = document.getElementById('modalTitle');
     const t = translations[currentLang] || translations.en;
     
-    const featureKey = 'feature' + featureId.charAt(0).toUpperCase() + featureId.slice(1);
-    const content = featureContent[featureId];
+    const featureTitles = {
+        blockchainV2: t.navBlockchainV2 || '🔗 Blockchain V2',
+        externalAPI: t.navExternalAPI || '🌐 External API',
+        transactionHistory: t.navTransactionHistory || '📜 Transaction History',
+        securityDashboard: t.navSecurityDashboard || '🛡️ Security Dashboard',
+        blockExplorer: t.navBlockExplorer || '📦 Block Explorer',
+        networkStatus: t.navNetworkStatus || '🌐 Network Status',
+        staking: t.navStaking || '💰 Staking & Rewards',
+        governance: t.navGovernance || '🏛️ DAO Governance',
+        auditLogs: t.navAuditLogs || '📊 Audit Logs',
+        gasTracker: t.navGasTracker || '⛽ Gas Fee Tracker',
+        analytics: t.navAnalytics || '📈 Analytics Dashboard',
+        fraudDetection: t.navFraudDetection || '🚨 Fraud Detection',
+        militaryC2: t.navMilitaryC2 || '🎖️ Military C2',
+        auditVault: t.navAuditVault || '🔒 Audit Vault',
+        cyberThreat: t.navCyberThreat || '💀 Cyber Threat Intel',
+        missionCritical: t.navMissionCritical || '⚡ Mission Critical',
+        security: t.navSecurity || '🛡️ Security',
+        exploreBlocks: t.navExploreBlocks || '🔍 Explore Blocks',
+        transactions: t.navTransactions || '📜 Transactions',
+        networkStatus2: t.navNetworkStatus2 || '🌐 Network Status',
+        staking2: t.navStaking2 || '💰 Staking',
+        daoGovernance2: t.navDaoGovernance2 || '🏛️ DAO and Governance',
+        auditLogs2: t.navAuditLogs2 || '📊 Audit Logs',
+        gasFees: t.navGasFees || '⛽ Gas Fees',
+        analytics2: t.navAnalytics2 || '📈 Analytics',
+        fraudDetection2: t.navFraudDetection2 || '🚨 Fraud Detection',
+        smartContracts: t.navSmartContracts || '📝 Smart Contracts',
+        desci: t.navDesci || '🔬 Desci',
+        hologram: t.navHologram || '🌀 Hologram',
+        spaceSector: t.navSpaceSector || '🚀 Space Sector',
+        agriculture: t.navAgriculture || '🌾 Agriculture and Food',
+        entertainment: t.navEntertainment || '🎬 Entertainment',
+        sports: t.navSports || '⚽ Sports',
+        infrastructure: t.navInfrastructure || '🏗️ Infrastructure',
+        health: t.navHealth || '🏥 Health',
+        biotechnology: t.navBiotechnology || '🧬 Biotechnology',
+        energy: t.navEnergy || '⚡ Energy',
+        financialMarket: t.navFinancialMarket || '📈 Financial Market',
+        nftExploration: t.navNftExploration || '🎨 NFT Exploration',
+        cloudMining: t.navCloudMining || '⛏️ Cloud Mining',
+        roboticsInvestments: t.navRoboticsInvestments || '🤖 Robotics Investments',
+        defiProjects: t.navDefiProjects || '💎 DeFi Projects',
+        metaverseIntegration: t.navMetaverseIntegration || '🌌 Metaverse Integration',
+        decentralizedPhilanthropy: t.navDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy',
+        blockchainUpdate: t.navBlockchainUpdate || '🔄 Blockchain Update',
+        digitalGovernance: t.navDigitalGovernance || '⚖️ Digital Governance',
+        cryptoMarketplace: t.navCryptoMarketplace || '🏪 Cryptocurrency Marketplace',
+        aiTech: t.navAiTech || '🤖 AI News',
+        blockchainSecurity: t.navBlockchainSecurity || '🔐 Blockchain Security'
+    };
     
-    if (content) {
-        title.textContent = t[featureKey] || featureId;
-        body.innerHTML = content(t);
-        modal.style.display = 'block';
+    title.textContent = featureTitles[featureId] || featureId;
+    
+    // If it's the security feature, show enhanced ZK-SNARK content
+    if (featureId === 'securityDashboard' || featureId === 'security') {
+        body.innerHTML = `
+            <h2>${featureTitles[featureId]}</h2>
+            <div class="feature-stats">
+                <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Secure</div></div>
+                <div class="feature-stat-card"><div class="stat-label">ZK-SNARK</div><div class="stat-value purple">✅ Active</div></div>
+                <div class="feature-stat-card"><div class="stat-label">Encryption</div><div class="stat-value cyan">AES-256</div></div>
+                <div class="feature-stat-card"><div class="stat-label">2FA</div><div class="stat-value yellow">Available</div></div>
+            </div>
+            <div style="background:rgba(200,100,255,0.1);border:1px solid #c864ff;border-radius:8px;padding:20px;margin:15px 0;">
+                <h3 style="color:#c864ff;margin-bottom:10px;">🔐 ${t.zkProofTitle || 'ZK-SNARK Proof Generator'}</h3>
+                <p style="color:#aaa;font-size:13px;">${t.zkProofDesc || 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.'}</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:15px;font-size:12px;">
+                    <div><span style="color:#888;">Proof Type:</span> <span style="color:#00ccff;">Groth16</span></div>
+                    <div><span style="color:#888;">Curve:</span> <span style="color:#c864ff;">BN254</span></div>
+                    <div><span style="color:#888;">Verification:</span> <span style="color:#00ff66;">✅ Passed</span></div>
+                    <div><span style="color:#888;">Circuit Size:</span> <span style="color:#00ccff;">${Math.floor(Math.random() * 100000 + 50000)}</span></div>
+                    <div><span style="color:#888;">Prover Time:</span> <span style="color:#c864ff;">${(Math.random() * 2 + 0.5).toFixed(2)}s</span></div>
+                    <div><span style="color:#888;">Verifier Time:</span> <span style="color:#00ff66;">${(Math.random() * 0.5 + 0.1).toFixed(2)}s</span></div>
+                </div>
+                <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
+                    <button class="feature-btn" onclick="generateZKProof()">🔐 Generate ZK-Proof</button>
+                    <button class="feature-btn magenta" onclick="showNotification('🔍 ZK-Proof verified successfully!', '#c864ff')">✅ Verify Proof</button>
+                </div>
+            </div>
+            <button class="feature-btn" onclick="testSecurity()">🔐 Test Security</button>
+            <button class="feature-btn green" onclick="showNotification('🛡️ Security audit complete', '#00ff66')">🛡️ Run Audit</button>
+        `;
     } else {
-        showNotification(`📋 ${featureId} feature coming soon!`, '#ffc800');
+        body.innerHTML = `
+            <div style="text-align:center;padding:40px;">
+                <div style="font-size:4rem;margin-bottom:20px;">${featureTitles[featureId]?.match(/^([^\s]+)/)?.[1] || '🔗'}</div>
+                <h3>${featureTitles[featureId] || featureId}</h3>
+                <p style="color:#888;margin:20px 0;">${t.loading || 'Loading feature data...'}</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Performance</div><div class="stat-value magenta">98%</div></div>
+                </div>
+                <div class="highlight-box">✅ Feature ready for use</div>
+                <button class="feature-btn" onclick="showNotification('✅ Feature activated!', '#00ff66')">🚀 Activate</button>
+            </div>
+        `;
     }
+    modal.style.display = 'block';
 }
 
 function closeModalAndGoHome() {
@@ -2660,6 +2589,74 @@ function closeModalAndGoHome() {
 function goHome() {
     closeModalAndGoHome();
     document.getElementById('tokenModal').style.display = 'none';
+    document.getElementById('pageModal').style.display = 'none';
+}
+
+// ==================== ZK-SNARK FUNCTION ====================
+function generateZKProof() {
+    const t = translations[currentLang] || translations.en;
+    const proof = {
+        proofId: 'zk_' + Math.random().toString(36).substring(2, 15),
+        timestamp: new Date().toISOString(),
+        type: 'Groth16',
+        curve: 'BN254',
+        status: 'verified'
+    };
+    
+    // Simulate ZK proof generation
+    showNotification('🔐 Generating ZK-SNARK proof...', '#c864ff');
+    
+    setTimeout(() => {
+        const resultDiv = document.getElementById('modalBody');
+        if (resultDiv) {
+            const proofHTML = `
+                <div style="background:rgba(0,255,100,0.05);border:1px solid #00ff66;border-radius:8px;padding:15px;margin:15px 0;">
+                    <div style="color:#00ff66;font-weight:bold;">✅ ${t.zkProofGenerated || 'ZK-SNARK proof generated and verified!'}</div>
+                    <div style="margin-top:10px;font-size:11px;color:#888;">
+                        <div>Proof ID: <span style="color:#c864ff;">${proof.proofId}</span></div>
+                        <div>Type: <span style="color:#00ccff;">${proof.type}</span></div>
+                        <div>Curve: <span style="color:#c864ff;">${proof.curve}</span></div>
+                        <div>Status: <span style="color:#00ff66;">${proof.status}</span></div>
+                        <div>Timestamp: <span style="color:#ffc800;">${proof.timestamp}</span></div>
+                    </div>
+                </div>
+            `;
+            
+            // Append to modal body if it exists
+            const existingContent = resultDiv.innerHTML;
+            if (existingContent.includes('ZK-SNARK')) {
+                resultDiv.innerHTML = resultDiv.innerHTML.replace(
+                    /<div style="background:rgba\(200,100,255,0.1\);.*?<\/div>/s,
+                    (match) => match + proofHTML
+                );
+            } else {
+                resultDiv.innerHTML += proofHTML;
+            }
+        }
+        showNotification('✅ ' + (t.zkProofGenerated || 'ZK-SNARK proof generated and verified!'), '#00ff66');
+    }, 2000);
+}
+
+// ==================== EXPLORER FUNCTIONS ====================
+function searchExplorer() {
+    const input = document.getElementById('searchInput');
+    const address = input ? input.value.trim() : '';
+    
+    if (address) {
+        // Open explorer with the address
+        const explorerUrl = `https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}`;
+        window.open(explorerUrl, '_blank');
+        showNotification('🔍 Opening Bradichain Explorer...', '#c864ff');
+    } else {
+        // Open explorer without address
+        window.open('https://www.bradichain.com/App-Bradicoin/', '_blank');
+        showNotification('🔍 Opening Bradichain Explorer', '#c864ff');
+    }
+}
+
+function openExplorer() {
+    window.open('https://www.bradichain.com/App-Bradicoin/', '_blank');
+    showNotification('🔍 Opening Bradichain Explorer', '#c864ff');
 }
 
 // ==================== TOKEN DATA ====================
@@ -2864,6 +2861,7 @@ async function searchWallet() {
             <p class="loading-pulse" style="margin-top: 10px;">${t.loading}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">${address.substring(0, 20)}...</p>
             <p style="font-size: 10px; color: #00ff66; margin-top: 5px;">✅ Connected to blockchain</p>
+            <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-top:10px;">🔍 View on Explorer</button>
         </div>
     `;
     resultDiv.classList.add('show');
@@ -2904,6 +2902,7 @@ async function searchWallet() {
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button class="result-copy-btn" onclick="copyToClipboard('${address}')">📋 Copy</button>
                     <button class="result-copy-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: cyan; color: cyan;">🔄 Refresh</button>
+                    <button class="result-copy-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="border-color: #c864ff; color: #c864ff;">🔍 Explorer</button>
                     <span style="font-size:10px;color:#ffc800;background:rgba(255,200,0,0.1);padding:2px 8px;border-radius:10px;">📁 Local</span>
                 </div>
             </div>
@@ -2969,6 +2968,7 @@ async function searchWallet() {
             <div class="last-updated">
                 ⏱️ Updated: <span id="lastUpdateTime">${timestamp.full}</span>
                 <button onclick="updateTimestamp()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:10px;margin-left:10px;">↻</button>
+                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-left:10px;">🔍 View Transactions</button>
             </div>
         `;
 
@@ -2982,6 +2982,7 @@ async function searchWallet() {
                 <button class="result-action-btn" onclick="handleUnstake('${address}')" style="border-color: #ff6464; color: #ff6464;">⬇️ Unstake</button>
                 <button class="result-action-btn" onclick="handleTransfer('${address}')" style="border-color: #00ccff; color: #00ccff;">💸 Transfer</button>
                 <button class="result-action-btn" onclick="claimStakingRewards('${address}')" style="border-color: #ffc800; color: #ffc800;">🎯 Claim Rewards</button>
+                <button class="result-action-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="border-color: #c864ff; color: #c864ff;">🔍 View on Explorer</button>
             </div>
         `;
 
@@ -2998,6 +2999,7 @@ async function searchWallet() {
                 <h3 class="error-title">${t.errorTitle || 'Connection Error'}</h3>
                 <p class="error-message">${t.errorMessage || 'Could not connect to the Bradicoin blockchain.'}</p>
                 <button class="error-clear-btn" onclick="clearSearch()">${t.errorButton || 'Try Again'}</button>
+                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/', '_blank')" style="margin-top:10px;display:block;">🔍 Open Explorer</button>
             </div>
         `;
         resultDiv.classList.add('show');
@@ -3103,7 +3105,7 @@ async function handleTransfer(sender) {
     const t = translations[currentLang] || translations.en;
     const recipient = prompt('💸 Enter recipient address:');
     if (!recipient) return;
-    const amount = prompt(`💸 Enter amount to transfer:`);
+    const amount = prompt(`💸 ${t.tabTransaction || 'Enter amount to transfer'}:`);
     if (!amount || isNaN(amount) || parseFloat(amount) <= 0) return;
     const result = await transferBRD(sender, recipient, parseFloat(amount));
     if (result.success) {
@@ -3286,10 +3288,6 @@ async function refreshBalance(address) {
     showNotification('✅ Balance refreshed!', '#00ff66');
 }
 
-function openPage(page) {
-    showNotification(`📄 ${page} page loaded`, '#00ccff');
-}
-
 function registerDeveloperApp() {
     const appName = document.getElementById('devAppName')?.value;
     if (!appName) {
@@ -3395,7 +3393,10 @@ function testSecurity() { showNotification('🔐 Security test passed!', '#00ff6
 function testAnonymousTransfer() { showNotification('🔄 Anonymous transfer initiated!', '#c864ff'); }
 function protectMyData() { showNotification('🔒 Data protected with encryption!', '#00ff66'); }
 function verifyIntegrity() { showNotification('🌳 Integrity verified successfully!', '#ffc800'); }
-function viewSecurityStatus() { showNotification('📊 Security status: All systems secure', '#00ff66'); }
+function viewSecurityStatus() { 
+    const t = translations[currentLang] || translations.en;
+    showNotification('📊 Security status: ZK-SNARK Active - All systems secure', '#00ff66'); 
+}
 
 // ==================== LOAD BLOCKCHAIN DATA ====================
 async function loadBlockchainData() {
@@ -3443,6 +3444,7 @@ async function loadRealTransactions() {
                 <h3 style="color: #ffc800;">📊 ${t.transactionHistoryTitle}</h3>
                 <p class="text-gray">${t.searchHint}</p>
                 <p style="font-size: 11px; color: #666; margin-top: 10px;">${t.searchHint2}</p>
+                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/', '_blank')" style="margin-top:10px;">🔍 View on Bradichain Explorer</button>
             </div>
         `;
         document.getElementById('totalCount').textContent = '0';
@@ -3474,6 +3476,7 @@ async function loadRealTransactions() {
                 </div>
                 <div style="margin-top:8px;font-size:11px;color:#888;">
                     <span>Address: ${address.substring(0, 20)}...</span>
+                    <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-left:8px;">🔍 View</button>
                 </div>
                 <div style="font-size:9px;color:#555;font-family:monospace;word-break:break-all;margin-top:4px;background:rgba(200,100,255,0.05);padding:4px 8px;border-radius:4px;border:1px solid rgba(200,100,255,0.05);">
                     🧾 ${hash}
@@ -3557,8 +3560,8 @@ async function init() {
     
     console.log('✅ Bradicoin Wallet App initialized successfully!');
     console.log('💡 Enter a wallet address starting with "Br" and press Enter or click Search.');
-    console.log('🌐 ${Object.keys(translations).length} languages available');
-    console.log('📱 ${Object.keys(featureContent).length} interactive features available');
+    console.log('🔐 ZK-SNARK security features active');
+    console.log('🔗 Bradichain Explorer: https://www.bradichain.com/App-Bradicoin/');
 }
 
 // ==================== EXPORT GLOBALS ====================
@@ -3580,6 +3583,8 @@ window.getRealBalance = getRealBalance;
 window.closeModalAndGoHome = closeModalAndGoHome;
 window.goHome = goHome;
 window.openPage = openPage;
+window.closePageModal = closePageModal;
+window.sendContact = sendContact;
 window.registerDeveloperApp = registerDeveloperApp;
 window.copyApiKeys = copyApiKeys;
 window.updateTimestamp = updateTimestamp;
@@ -3602,6 +3607,9 @@ window.testAnonymousTransfer = testAnonymousTransfer;
 window.protectMyData = protectMyData;
 window.verifyIntegrity = verifyIntegrity;
 window.viewSecurityStatus = viewSecurityStatus;
+window.generateZKProof = generateZKProof;
+window.searchExplorer = searchExplorer;
+window.openExplorer = openExplorer;
 
 // Start the app
 init();

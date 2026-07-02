@@ -727,7 +727,7 @@
                                 <rect x="3" y="14" width="7" height="7" rx="1"></rect>
                                 <rect x="14" y="14" width="7" height="7" rx="1"></rect>
                             </svg>
-                            <span id="explorerBtnText">Explorer</span>
+                            <span id="explorerBtnText">Blockchain</span>
                         </button>
                     </div>
                 </div>
@@ -1088,7 +1088,6 @@
                     <h2 id="transactionHistoryTitle" style="color: cyan;" data-i18n="transactionHistoryTitle">Transaction History</h2>
                     <div style="display:flex;gap:8px;flex-wrap:wrap;">
                         <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
-                        <button onclick="openExplorer()" class="refresh-btn" style="border-color:#c864ff;color:#c864ff;">🔍 Explorer</button>
                     </div>
                 </div>
                 <div id="transactionList"></div>
@@ -1197,7 +1196,6 @@ const payment = await client.createPayment({
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; justify-content: center;">
                     <a href="https://bradicoin-api.onrender.com/" target="_blank" style="color: cyan;" data-i18n="docsLink">📚 API Documentation</a>
                     <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" style="color: cyan;" data-i18n="statusLink">🩺 API Status</a>
-                    <a href="https://www.bradichain.com/App-Bradicoin/" target="_blank" style="color: #c864ff;">🔗 Bradichain Explorer</a>
                 </div>
             </div>
         </div>
@@ -1249,7 +1247,6 @@ const payment = await client.createPayment({
                 <a onclick="openPage('terms')" data-i18n="footerTerms">Terms of Use</a>
                 <a onclick="openPage('privacy')" data-i18n="footerPrivacy">Privacy</a>
                 <a onclick="openPage('support')" data-i18n="footerSupport">Support</a>
-                <a href="https://www.bradichain.com/App-Bradicoin/" target="_blank" style="color:#c864ff;">🔗 Explorer</a>
             </div>
         </footer>
     </div>
@@ -1265,7 +1262,7 @@ const translations = {
         searchPlaceholder: 'Paste Bradicoin wallet address here (Br...)',
         searchBtn: 'Search',
         refreshBtn: 'Refresh',
-        explorerSearch: 'Explorer',
+        explorerSearch: 'Blockchain',
         tabWallet: '💰 Wallet',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transaction',
@@ -1453,7 +1450,6 @@ const translations = {
         zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.',
         zkProofGenerated: '✅ ZK-SNARK proof generated and verified!',
         zkProofFailed: '❌ ZK-SNARK proof generation failed',
-        // Page titles
         pageAbout: 'About Bradicoin Blockchain',
         pageContact: 'Contact Bradicoin',
         pageTerms: 'Terms of Use - Decentralized Governance',
@@ -1472,10 +1468,6 @@ const translations = {
         contactTitle: 'Contact Bradicoin',
         contactP1: 'For more information about Bradicoin Blockchain, partnerships, or technical support, please reach out to us through the channels below.',
         contactEmail: '📧 Email: contact@bradicoin.com',
-        contactTwitter: '🐦 Twitter: @Bradicoin',
-        contactTelegram: '💬 Telegram: t.me/Bradicoin',
-        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
-        contactGithub: '💻 GitHub: github.com/Bradicoin',
         contactFormName: 'Your Name',
         contactFormEmail: 'Your Email',
         contactFormMessage: 'Your Message',
@@ -1523,8 +1515,6 @@ const translations = {
         supportDocs: '📚 Visit our Documentation: docs.bradicoin.com',
         supportCommunity: '🌐 Join our Community: discord.gg/Bradicoin'
     },
-    // Portuguese, Spanish, Arabic translations continue...
-    // (Full translations included in the complete code)
     pt: {
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexão com a API...',
@@ -1533,7 +1523,7 @@ const translations = {
         searchPlaceholder: 'Cole o endereço da carteira Bradicoin aqui (Br...)',
         searchBtn: 'Buscar',
         refreshBtn: 'Atualizar',
-        explorerSearch: 'Explorador',
+        explorerSearch: 'Blockchain',
         tabWallet: '💰 Carteira',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transação',
@@ -1739,10 +1729,6 @@ const translations = {
         contactTitle: 'Contato Bradicoin',
         contactP1: 'Para mais informações sobre a Blockchain Bradicoin, parcerias ou suporte técnico, entre em contato conosco pelos canais abaixo.',
         contactEmail: '📧 Email: contact@bradicoin.com',
-        contactTwitter: '🐦 Twitter: @Bradicoin',
-        contactTelegram: '💬 Telegram: t.me/Bradicoin',
-        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
-        contactGithub: '💻 GitHub: github.com/Bradicoin',
         contactFormName: 'Seu Nome',
         contactFormEmail: 'Seu Email',
         contactFormMessage: 'Sua Mensagem',
@@ -1791,7 +1777,6 @@ const translations = {
         supportCommunity: '🌐 Junte-se à nossa Comunidade: discord.gg/Bradicoin'
     },
     es: {
-        // Spanish translations (complete but abbreviated for space)
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexión con la API...',
         apiOnline: '✅ API Online - Conectado a Blockchain Bradicoin',
@@ -1799,7 +1784,7 @@ const translations = {
         searchPlaceholder: 'Pegue la dirección de la billetera Bradicoin aquí (Br...)',
         searchBtn: 'Buscar',
         refreshBtn: 'Actualizar',
-        explorerSearch: 'Explorador',
+        explorerSearch: 'Blockchain',
         tabWallet: '💰 Cartera',
         tabStaking: '🔒 Staking',
         tabTransaction: '📜 Transacción',
@@ -2005,10 +1990,6 @@ const translations = {
         contactTitle: 'Contacto Bradicoin',
         contactP1: 'Para más información sobre Blockchain Bradicoin, asociaciones o soporte técnico, contáctenos a través de los siguientes canales.',
         contactEmail: '📧 Email: contact@bradicoin.com',
-        contactTwitter: '🐦 Twitter: @Bradicoin',
-        contactTelegram: '💬 Telegram: t.me/Bradicoin',
-        contactDiscord: '🎮 Discord: discord.gg/Bradicoin',
-        contactGithub: '💻 GitHub: github.com/Bradicoin',
         contactFormName: 'Su Nombre',
         contactFormEmail: 'Su Email',
         contactFormMessage: 'Su Mensaje',
@@ -2057,7 +2038,6 @@ const translations = {
         supportCommunity: '🌐 Únase a nuestra Comunidad: discord.gg/Bradicoin'
     },
     ar: {
-        // Arabic translations (complete but abbreviated for space)
         pageTitle: 'بلوكشين براديكوين',
         apiChecking: 'جاري التحقق من اتصال API...',
         apiOnline: '✅ API متصلة - متصل ببلوكشين براديكوين',
@@ -2065,7 +2045,7 @@ const translations = {
         searchPlaceholder: 'الصق عنوان محفظة Bradicoin هنا (Br...)',
         searchBtn: 'بحث',
         refreshBtn: 'تحديث',
-        explorerSearch: 'المستكشف',
+        explorerSearch: 'بلوكشين',
         tabWallet: '💰 المحفظة',
         tabStaking: '🔒 التوقيع',
         tabTransaction: '📜 معاملة',
@@ -2271,10 +2251,6 @@ const translations = {
         contactTitle: 'اتصل ببراديكوين',
         contactP1: 'لمزيد من المعلومات حول بلوكشين براديكوين، أو الشراكات، أو الدعم الفني، يرجى التواصل معنا من خلال القنوات أدناه.',
         contactEmail: '📧 البريد الإلكتروني: contact@bradicoin.com',
-        contactTwitter: '🐦 تويتر: @Bradicoin',
-        contactTelegram: '💬 تيليجرام: t.me/Bradicoin',
-        contactDiscord: '🎮 ديسكورد: discord.gg/Bradicoin',
-        contactGithub: '💻 جيثب: github.com/Bradicoin',
         contactFormName: 'اسمك',
         contactFormEmail: 'بريدك الإلكتروني',
         contactFormMessage: 'رسالتك',
@@ -2394,10 +2370,6 @@ function openPage(page) {
             <p>${t.contactP1 || ''}</p>
             <div class="contact-info">
                 <p>${t.contactEmail || '📧 Email: contact@bradicoin.com'}</p>
-                <p>${t.contactTwitter || '🐦 Twitter: @Bradicoin'}</p>
-                <p>${t.contactTelegram || '💬 Telegram: t.me/Bradicoin'}</p>
-                <p>${t.contactDiscord || '🎮 Discord: discord.gg/Bradicoin'}</p>
-                <p>${t.contactGithub || '💻 GitHub: github.com/Bradicoin'}</p>
             </div>
             <div class="highlight-box yellow">
                 <h4>📧 ${t.contactFormSend || 'Send Message'}</h4>
@@ -2533,7 +2505,6 @@ function openFeature(featureId) {
     
     title.textContent = featureTitles[featureId] || featureId;
     
-    // If it's the security feature, show enhanced ZK-SNARK content
     if (featureId === 'securityDashboard' || featureId === 'security') {
         body.innerHTML = `
             <h2>${featureTitles[featureId]}</h2>
@@ -2603,7 +2574,6 @@ function generateZKProof() {
         status: 'verified'
     };
     
-    // Simulate ZK proof generation
     showNotification('🔐 Generating ZK-SNARK proof...', '#c864ff');
     
     setTimeout(() => {
@@ -2622,7 +2592,6 @@ function generateZKProof() {
                 </div>
             `;
             
-            // Append to modal body if it exists
             const existingContent = resultDiv.innerHTML;
             if (existingContent.includes('ZK-SNARK')) {
                 resultDiv.innerHTML = resultDiv.innerHTML.replace(
@@ -2641,22 +2610,13 @@ function generateZKProof() {
 function searchExplorer() {
     const input = document.getElementById('searchInput');
     const address = input ? input.value.trim() : '';
-    
-    if (address) {
-        // Open explorer with the address
-        const explorerUrl = `https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}`;
-        window.open(explorerUrl, '_blank');
-        showNotification('🔍 Opening Bradichain Explorer...', '#c864ff');
-    } else {
-        // Open explorer without address
-        window.open('https://www.bradichain.com/App-Bradicoin/', '_blank');
-        showNotification('🔍 Opening Bradichain Explorer', '#c864ff');
-    }
+    const t = translations[currentLang] || translations.en;
+    showNotification('🔍 ' + (t.explorerSearch || 'Blockchain') + ' search: ' + (address || 'All'), '#c864ff');
 }
 
 function openExplorer() {
-    window.open('https://www.bradichain.com/App-Bradicoin/', '_blank');
-    showNotification('🔍 Opening Bradichain Explorer', '#c864ff');
+    const t = translations[currentLang] || translations.en;
+    showNotification('🔍 ' + (t.explorerSearch || 'Blockchain') + ' view', '#c864ff');
 }
 
 // ==================== TOKEN DATA ====================
@@ -2861,7 +2821,6 @@ async function searchWallet() {
             <p class="loading-pulse" style="margin-top: 10px;">${t.loading}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">${address.substring(0, 20)}...</p>
             <p style="font-size: 10px; color: #00ff66; margin-top: 5px;">✅ Connected to blockchain</p>
-            <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-top:10px;">🔍 View on Explorer</button>
         </div>
     `;
     resultDiv.classList.add('show');
@@ -2902,7 +2861,6 @@ async function searchWallet() {
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button class="result-copy-btn" onclick="copyToClipboard('${address}')">📋 Copy</button>
                     <button class="result-copy-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: cyan; color: cyan;">🔄 Refresh</button>
-                    <button class="result-copy-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="border-color: #c864ff; color: #c864ff;">🔍 Explorer</button>
                     <span style="font-size:10px;color:#ffc800;background:rgba(255,200,0,0.1);padding:2px 8px;border-radius:10px;">📁 Local</span>
                 </div>
             </div>
@@ -2968,7 +2926,6 @@ async function searchWallet() {
             <div class="last-updated">
                 ⏱️ Updated: <span id="lastUpdateTime">${timestamp.full}</span>
                 <button onclick="updateTimestamp()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:10px;margin-left:10px;">↻</button>
-                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-left:10px;">🔍 View Transactions</button>
             </div>
         `;
 
@@ -2982,7 +2939,6 @@ async function searchWallet() {
                 <button class="result-action-btn" onclick="handleUnstake('${address}')" style="border-color: #ff6464; color: #ff6464;">⬇️ Unstake</button>
                 <button class="result-action-btn" onclick="handleTransfer('${address}')" style="border-color: #00ccff; color: #00ccff;">💸 Transfer</button>
                 <button class="result-action-btn" onclick="claimStakingRewards('${address}')" style="border-color: #ffc800; color: #ffc800;">🎯 Claim Rewards</button>
-                <button class="result-action-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="border-color: #c864ff; color: #c864ff;">🔍 View on Explorer</button>
             </div>
         `;
 
@@ -2999,7 +2955,6 @@ async function searchWallet() {
                 <h3 class="error-title">${t.errorTitle || 'Connection Error'}</h3>
                 <p class="error-message">${t.errorMessage || 'Could not connect to the Bradicoin blockchain.'}</p>
                 <button class="error-clear-btn" onclick="clearSearch()">${t.errorButton || 'Try Again'}</button>
-                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/', '_blank')" style="margin-top:10px;display:block;">🔍 Open Explorer</button>
             </div>
         `;
         resultDiv.classList.add('show');
@@ -3444,7 +3399,6 @@ async function loadRealTransactions() {
                 <h3 style="color: #ffc800;">📊 ${t.transactionHistoryTitle}</h3>
                 <p class="text-gray">${t.searchHint}</p>
                 <p style="font-size: 11px; color: #666; margin-top: 10px;">${t.searchHint2}</p>
-                <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/', '_blank')" style="margin-top:10px;">🔍 View on Bradichain Explorer</button>
             </div>
         `;
         document.getElementById('totalCount').textContent = '0';
@@ -3476,7 +3430,6 @@ async function loadRealTransactions() {
                 </div>
                 <div style="margin-top:8px;font-size:11px;color:#888;">
                     <span>Address: ${address.substring(0, 20)}...</span>
-                    <button class="tx-search-btn" onclick="window.open('https://www.bradichain.com/App-Bradicoin/?address=${encodeURIComponent(address)}', '_blank')" style="margin-left:8px;">🔍 View</button>
                 </div>
                 <div style="font-size:9px;color:#555;font-family:monospace;word-break:break-all;margin-top:4px;background:rgba(200,100,255,0.05);padding:4px 8px;border-radius:4px;border:1px solid rgba(200,100,255,0.05);">
                     🧾 ${hash}
@@ -3499,7 +3452,6 @@ async function init() {
     updateValidatorsDisplay();
     updateStakingStats();
     
-    // Search button
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
         const newBtn = searchButton.cloneNode(true);
@@ -3510,7 +3462,6 @@ async function init() {
         });
     }
     
-    // Enter key
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         const newInput = searchInput.cloneNode(true);
@@ -3523,7 +3474,6 @@ async function init() {
         });
     }
     
-    // Refresh button
     const refreshBtn = document.getElementById('refreshBalanceBtn');
     if (refreshBtn) {
         const newBtn = refreshBtn.cloneNode(true);
@@ -3534,7 +3484,6 @@ async function init() {
         });
     }
     
-    // Refresh history button
     const refreshHistory = document.getElementById('refreshHistory');
     if (refreshHistory) {
         refreshHistory.addEventListener('click', function() {
@@ -3543,7 +3492,6 @@ async function init() {
         });
     }
     
-    // Language selector
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.addEventListener('change', function(e) {
@@ -3561,7 +3509,6 @@ async function init() {
     console.log('✅ Bradicoin Wallet App initialized successfully!');
     console.log('💡 Enter a wallet address starting with "Br" and press Enter or click Search.');
     console.log('🔐 ZK-SNARK security features active');
-    console.log('🔗 Bradichain Explorer: https://www.bradichain.com/App-Bradicoin/');
 }
 
 // ==================== EXPORT GLOBALS ====================

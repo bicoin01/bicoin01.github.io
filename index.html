@@ -1287,9 +1287,10 @@ const payment = await client.createPayment({
     </div>
 
     <script>
+
 // ==================== COMPLETE TRANSLATIONS ====================
-const translations = {
-    en: {
+    const translations = {
+       en: {
         pageTitle: 'Bradicoin Blockchain',
         apiChecking: 'Checking API connection...',
         apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
@@ -1304,6 +1305,47 @@ const translations = {
         tabBlock: '📦 Block',
         tabToken: '🪙 Token',
         loading: 'Searching blockchain...',
+        searchExample: 'Example: BrDemo123, BrStaker001',
+        invalidAddress: 'Please enter an address',
+        invalidAddressTitle: 'Invalid Address',
+        invalidAddressMessage: 'The address must start with ',
+        walletNotFoundTitle: 'Wallet Not Found',
+        walletNotFoundMessage: 'The address was not found on the Bradicoin blockchain.',
+        walletFound: 'WALLET FOUND',
+        walletCreated: 'Wallet',
+        createdWith: 'created with',
+        clearSearch: 'Clear Search',
+        viewExplorer: 'View on Explorer',
+        online: 'Online',
+        offline: 'Offline',
+        explorer: 'Explorer',
+        userLabel: 'User',
+        addressLabel: 'Address',
+        balanceLabel: 'Balance',
+        stakedLabel: 'Staked',
+        rewardsLabel: 'Rewards',
+        statusLabel: 'Status',
+        activeLabel: 'Active',
+        emptyLabel: 'Empty',
+        updatedLabel: 'Updated',
+        copyLabel: 'Copy',
+        depositLabel: 'Deposit',
+        stakeLabel: 'Stake',
+        transferLabel: 'Transfer',
+        claimRewardsLabel: 'Claim Rewards',
+        explorerLabel: 'Explorer',
+        syncLabel: 'Sync',
+        syncing: 'Syncing with API...',
+        syncSuccess: 'Synced!',
+        syncError: 'Sync error',
+        noWalletSelected: 'No wallet selected',
+        connectionErrorTitle: 'Connection Error',
+        connectionErrorMessage: 'Could not connect to the blockchain.',
+        checkConnection: 'Check your internet connection.',
+        retryLabel: 'Try Again',
+        searchError: 'Search error',
+        unknown: 'Unknown',
+        walletNotFound: 'Wallet not found',
         sectionCore: '🔗 CORE BLOCKCHAIN',
         sectionMilitary: '🛡️ MILITARY & SECURITY',
         sectionExploration: '🔍 BLOCKCHAIN EXPLORATION',
@@ -1478,8 +1520,6 @@ const translations = {
         mineBlock: '⛏️ Mine Block',
         mining: '⛏️ Mining...',
         blockMined: '✅ Block Mined!',
-        walletNotFound: 'Wallet Not Found',
-        invalidAddress: 'Invalid wallet address. Please check and try again.',
         close: '✕ Close',
         zkProofTitle: '🔐 ZK-SNARK Proof Generator',
         zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.',
@@ -1565,6 +1605,48 @@ const translations = {
         tabBlock: '📦 Bloco',
         tabToken: '🪙 Token',
         loading: 'Buscando na blockchain...',
+        // NOVAS CHAVES PARA A BARRA DE BUSCA - PORTUGUÊS
+        searchExample: 'Exemplo: BrDemo123, BrStaker001',
+        invalidAddress: 'Digite um endereço',
+        invalidAddressTitle: 'Endereço Inválido',
+        invalidAddressMessage: 'O endereço deve começar com ',
+        walletNotFoundTitle: 'Carteira Não Encontrada',
+        walletNotFoundMessage: 'O endereço não foi encontrado na blockchain Bradicoin.',
+        walletFound: 'CARTEIRA ENCONTRADA',
+        walletCreated: 'Carteira',
+        createdWith: 'criada com',
+        clearSearch: 'Limpar Busca',
+        viewExplorer: 'Ver no Explorer',
+        online: 'Online',
+        offline: 'Offline',
+        explorer: 'Explorador',
+        userLabel: 'Usuário',
+        addressLabel: 'Endereço',
+        balanceLabel: 'Saldo',
+        stakedLabel: 'Stake',
+        rewardsLabel: 'Recompensas',
+        statusLabel: 'Status',
+        activeLabel: 'Ativo',
+        emptyLabel: 'Vazio',
+        updatedLabel: 'Atualizado',
+        copyLabel: 'Copiar',
+        depositLabel: 'Depositar',
+        stakeLabel: 'Stake',
+        transferLabel: 'Transferir',
+        claimRewardsLabel: 'Recompensas',
+        explorerLabel: 'Explorador',
+        syncLabel: 'Sincronizar',
+        syncing: 'Sincronizando com a API...',
+        syncSuccess: 'Sincronizado!',
+        syncError: 'Erro ao sincronizar',
+        noWalletSelected: 'Nenhuma carteira selecionada',
+        connectionErrorTitle: 'Erro de Conexão',
+        connectionErrorMessage: 'Não foi possível conectar à blockchain.',
+        checkConnection: 'Verifique sua conexão com a internet.',
+        retryLabel: 'Tentar Novamente',
+        searchError: 'Erro ao buscar',
+        unknown: 'Desconhecido',
+        walletNotFound: 'Carteira não encontrada',
         sectionCore: '🔗 BLOCKCHAIN PRINCIPAL',
         sectionMilitary: '🛡️ MILITAR E SEGURANÇA',
         sectionExploration: '🔍 EXPLORAÇÃO DA BLOCKCHAIN',
@@ -1739,8 +1821,6 @@ const translations = {
         mineBlock: '⛏️ Minerar Bloco',
         mining: '⛏️ Minerando...',
         blockMined: '✅ Bloco Minerado!',
-        walletNotFound: 'Carteira Não Encontrada',
-        invalidAddress: 'Endereço de carteira inválido. Verifique e tente novamente.',
         close: '✕ Fechar',
         zkProofTitle: '🔐 Gerador de Prova ZK-SNARK',
         zkProofDesc: 'Argumento de Conhecimento Não Interativo Sucinto de Conhecimento Zero - Privacidade completa para suas transações.',
@@ -1826,6 +1906,47 @@ const translations = {
         tabBlock: '📦 Bloque',
         tabToken: '🪙 Token',
         loading: 'Buscando en la blockchain...',
+        searchExample: 'Ejemplo: BrDemo123, BrStaker001',
+        invalidAddress: 'Introduzca una dirección',
+        invalidAddressTitle: 'Dirección Inválida',
+        invalidAddressMessage: 'La dirección debe comenzar con ',
+        walletNotFoundTitle: 'Cartera No Encontrada',
+        walletNotFoundMessage: 'La dirección no fue encontrada en la blockchain Bradicoin.',
+        walletFound: 'CARTERA ENCONTRADA',
+        walletCreated: 'Cartera',
+        createdWith: 'creada con',
+        clearSearch: 'Limpiar Búsqueda',
+        viewExplorer: 'Ver en Explorer',
+        online: 'En Línea',
+        offline: 'Desconectado',
+        explorer: 'Explorador',
+        userLabel: 'Usuario',
+        addressLabel: 'Dirección',
+        balanceLabel: 'Saldo',
+        stakedLabel: 'Stake',
+        rewardsLabel: 'Recompensas',
+        statusLabel: 'Estado',
+        activeLabel: 'Activo',
+        emptyLabel: 'Vacío',
+        updatedLabel: 'Actualizado',
+        copyLabel: 'Copiar',
+        depositLabel: 'Depositar',
+        stakeLabel: 'Stake',
+        transferLabel: 'Transferir',
+        claimRewardsLabel: 'Recompensas',
+        explorerLabel: 'Explorador',
+        syncLabel: 'Sincronizar',
+        syncing: 'Sincronizando con la API...',
+        syncSuccess: '¡Sincronizado!',
+        syncError: 'Error al sincronizar',
+        noWalletSelected: 'Ninguna cartera seleccionada',
+        connectionErrorTitle: 'Error de Conexión',
+        connectionErrorMessage: 'No se pudo conectar a la blockchain.',
+        checkConnection: 'Verifique su conexión a internet.',
+        retryLabel: 'Intentar de Nuevo',
+        searchError: 'Error al buscar',
+        unknown: 'Desconocido',
+        walletNotFound: 'Cartera no encontrada',
         sectionCore: '🔗 BLOCKCHAIN PRINCIPAL',
         sectionMilitary: '🛡️ MILITAR Y SEGURIDAD',
         sectionExploration: '🔍 EXPLORACIÓN DE BLOCKCHAIN',
@@ -2000,8 +2121,6 @@ const translations = {
         mineBlock: '⛏️ Minar Bloque',
         mining: '⛏️ Minando...',
         blockMined: '✅ Bloque Minado!',
-        walletNotFound: 'Cartera No Encontrada',
-        invalidAddress: 'Dirección de billetera inválida. Verifique y vuelva a intentarlo.',
         close: '✕ Cerrar',
         zkProofTitle: '🔐 Generador de Prueba ZK-SNARK',
         zkProofDesc: 'Argumento de Conocimiento No Interactivo Sucinto de Conocimiento Cero - Privacidad completa para sus transacciones.',
@@ -2087,6 +2206,48 @@ const translations = {
         tabBlock: '📦 كتلة',
         tabToken: '🪙 رمز',
         loading: 'جاري البحث في البلوكشين...',
+        searchExample: 'مثال: BrDemo123, BrStaker001',
+        invalidAddress: 'الرجاء إدخال عنوان',
+        invalidAddressTitle: 'عنوان غير صالح',
+        invalidAddressMessage: 'يجب أن يبدأ العنوان بـ ',
+        walletNotFoundTitle: 'المحفظة غير موجودة',
+        walletNotFoundMessage: 'لم يتم العثور على العنوان في بلوكشين براديكوين.',
+        walletFound: 'تم العثور على المحفظة',
+        walletCreated: 'محفظة',
+        createdWith: 'تم إنشاؤها بـ',
+        clearSearch: 'مسح البحث',
+        viewExplorer: 'عرض في المستكشف',
+        online: 'متصل',
+        offline: 'غير متصل',
+        explorer: 'المستكشف',
+        userLabel: 'المستخدم',
+        addressLabel: 'العنوان',
+        balanceLabel: 'الرصيد',
+        stakedLabel: 'الموقّع',
+        rewardsLabel: 'المكافآت',
+        statusLabel: 'الحالة',
+        activeLabel: 'نشط',
+        emptyLabel: 'فارغ',
+        updatedLabel: 'تم التحديث',
+        copyLabel: 'نسخ',
+        depositLabel: 'إيداع',
+        stakeLabel: 'توقيع',
+        transferLabel: 'تحويل',
+        claimRewardsLabel: 'المكافآت',
+        explorerLabel: 'المستكشف',
+        syncLabel: 'مزامنة',
+        syncing: 'جاري المزامنة مع API...',
+        syncSuccess: 'تمت المزامنة!',
+        syncError: 'خطأ في المزامنة',
+        noWalletSelected: 'لم يتم اختيار محفظة',
+        connectionErrorTitle: 'خطأ في الاتصال',
+        connectionErrorMessage: 'تعذر الاتصال بالبلوكشين.',
+        checkConnection: 'تحقق من اتصالك بالإنترنت.',
+        retryLabel: 'حاول مرة أخرى',
+        searchError: 'خطأ في البحث',
+        unknown: 'غير معروف',
+        walletNotFound: 'المحفظة غير موجودة',
+        // FIM DAS NOVAS CHAVES
         sectionCore: '🔗 البلوكشين الأساسي',
         sectionMilitary: '🛡️ العسكرية والأمن',
         sectionExploration: '🔍 استكشاف البلوكشين',
@@ -2261,8 +2422,6 @@ const translations = {
         mineBlock: '⛏️ تعدين كتلة',
         mining: '⛏️ جاري التعدين...',
         blockMined: '✅ تم تعدين الكتلة!',
-        walletNotFound: 'المحفظة غير موجودة',
-        invalidAddress: 'عنوان محفظة غير صالح. تحقق وحاول مرة أخرى.',
         close: '✕ إغلاق',
         zkProofTitle: '🔐 مولد إثبات ZK-SNARK',
         zkProofDesc: 'حجة معرفية موجزة غير تفاعلية ذات معرفة صفرية - خصوصية كاملة لمعاملاتك.',
@@ -3016,6 +3175,12 @@ async function getStakingInfo(address) {
     };
 }
 
+// ==================== VALIDAÇÃO DE ENDEREÇO ====================
+function isValidBradicoinAddress(address) {
+    if (!address || typeof address !== 'string') return false;
+    return address.startsWith('Br') && address.length >= 3;
+}
+
 // ==================== AUTO-CREATE WALLET ====================
 function autoCreateWallet(address) {
     if (!address || !address.startsWith('Br')) return false;
@@ -3061,7 +3226,7 @@ async function checkAPIStatus() {
     return true;
 }
 
-// ==================== SEARCH WALLET ====================
+// ==================== SEARCH WALLET - COM TRADUÇÃO COMPLETA ====================
 async function searchWallet() {
     const input = document.getElementById('searchInput');
     if (!input) return;
@@ -3070,14 +3235,39 @@ async function searchWallet() {
     const resultDiv = document.getElementById('searchResult');
     const t = translations[currentLang] || translations.en;
 
+    // Validação do endereço - SEM ENDEREÇO
     if (!address) {
         resultDiv.className = 'result-box error';
         resultDiv.innerHTML = `
-            <div style="text-align: center; padding: 20px;">
+            <div style="position: relative; text-align: center; padding: 20px;">
+                <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                    ✕
+                </button>
                 <div class="error-icon">⌨️</div>
-                <h3 class="error-title">${t.invalidAddress || 'Please enter an address'}</h3>
-                <p class="error-message">${t.searchHint || 'Enter a Bradicoin wallet address to search'}</p>
-                <p class="error-tip">💡 Example: BrDemo123, BrStaker001</p>
+                <h3 class="error-title" style="color: #ffc800;">⚠️ ${t.invalidAddress || 'Please enter an address'}</h3>
+                <p class="error-message" style="color: #aaa;">${t.searchHint || 'Enter a Bradicoin wallet address to search'}</p>
+                <p class="error-tip" style="color: #666; font-size: 12px;">💡 ${t.searchExample || 'Example: BrDemo123, BrStaker001'}</p>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
+        return;
+    }
+
+    // Verifica se começa com "Br" - ENDEREÇO INVÁLIDO
+    if (!address.startsWith('Br')) {
+        resultDiv.className = 'result-box error';
+        resultDiv.innerHTML = `
+            <div style="position: relative; text-align: center; padding: 20px;">
+                <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                    ✕
+                </button>
+                <div class="error-icon">⚠️</div>
+                <h3 class="error-title" style="color: #ff6464;">❌ ${t.invalidAddressTitle || 'Invalid Address'}</h3>
+                <p class="error-message" style="color: #aaa;">${t.invalidAddressMessage || 'The address must start with'}<strong style="color: #ffc800;">"Br"</strong></p>
+                <p class="error-tip" style="color: #666; font-size: 12px;">💡 ${t.searchExample || 'Example: BrWallet123, BrTest456'}</p>
             </div>
         `;
         resultDiv.classList.add('show');
@@ -3087,150 +3277,334 @@ async function searchWallet() {
 
     input.classList.remove('error');
 
+    // Mostra loading - CARREGANDO
     resultDiv.className = 'result-box';
     resultDiv.innerHTML = `
-        <div style="text-align: center; color: cyan; padding: 20px;">
+        <div style="position: relative; text-align: center; color: cyan; padding: 20px;">
+            <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
+                onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                ✕
+            </button>
             <div style="font-size: 2rem; animation: pulse 1.2s ease-in-out infinite;">🔍</div>
-            <p class="loading-pulse" style="margin-top: 10px;">${t.loading}</p>
+            <p class="loading-pulse" style="margin-top: 10px; color: #00ccff;">${t.loading || 'Searching blockchain...'}</p>
             <p style="font-size: 11px; color: #888; margin-top: 5px;">${address.substring(0, 20)}...</p>
-            <p style="font-size: 10px; color: #00ff66; margin-top: 5px;">✅ Connected to blockchain</p>
         </div>
     `;
     resultDiv.classList.add('show');
 
     try {
-        const balanceResult = await getRealBalance(address);
-        const chain = getLocalChain();
-        let exists = chain.balances[address] !== undefined || (chain.staking && chain.staking[address] !== undefined);
+        // Tenta buscar na API primeiro
+        let apiData = null;
+        let apiConnected = false;
+        let balance = 0;
+        let exists = false;
+        let username = t.unknown || 'Unknown';
+        let staked = 0;
+        let rewards = 0;
         
-        if (!exists) {
-            const created = autoCreateWallet(address);
-            if (created) {
-                showNotification(`✅ Wallet ${address.substring(0, 12)}... created with 1000 BRD!`, '#00ff66');
-                await searchWallet();
-                return;
+        // Tenta a API primeiro
+        try {
+            console.log('📡 Conectando à API Bradicoin...');
+            
+            const healthCheck = await fetch(`${API_URL}/health`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            
+            if (healthCheck.ok) {
+                console.log('✅ API Bradicoin está ONLINE');
+                apiConnected = true;
+                
+                const response = await fetch(`${API_URL}/api/balance/${address}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    apiData = await response.json();
+                    console.log('📡 Dados da API:', apiData);
+                    
+                    if (apiData && apiData.success && apiData.data) {
+                        balance = parseFloat(apiData.data.balance) || 0;
+                        exists = apiData.data.exists || false;
+                        username = apiData.data.username || t.unknown || 'Unknown';
+                        staked = parseFloat(apiData.data.staked) || 0;
+                        rewards = parseFloat(apiData.data.rewards) || 0;
+                        
+                        const chain = getLocalChain();
+                        if (exists) {
+                            chain.balances[address] = balance;
+                            chain.lastUpdated = Date.now();
+                            saveLocalChain(chain);
+                        }
+                    }
+                }
+            } else {
+                console.log('⚠️ API offline, usando dados locais');
+                apiConnected = false;
+            }
+        } catch (apiError) {
+            console.log('⚠️ Erro ao conectar à API:', apiError.message);
+            apiConnected = false;
+        }
+
+        // Fallback para dados locais
+        if (!apiConnected || !apiData || !apiData.success) {
+            console.log('📁 Usando dados locais como fallback');
+            
+            const chain = getLocalChain();
+            const localBalance = chain.balances[address];
+            
+            if (localBalance !== undefined) {
+                balance = localBalance;
+                exists = true;
+                
+                const stakingInfo = await getStakingInfo(address);
+                staked = stakingInfo.staked || 0;
+                rewards = stakingInfo.rewards || 0;
+                
+                const localUser = users.find(u => u.walletAddress === address);
+                if (localUser) {
+                    username = localUser.username || t.unknown || 'Unknown';
+                }
+            } else {
+                const created = autoCreateWallet(address);
+                if (created) {
+                    showNotification(`✅ ${t.walletCreated || 'Wallet'} ${address.substring(0, 12)}... ${t.createdWith || 'created with'} 1000 BRD!`, '#00ff66');
+                    await searchWallet();
+                    return;
+                }
+                exists = false;
             }
         }
 
-        let balance = balanceResult.balance || 0;
-        const stakingInfo = await getStakingInfo(address);
-        const staked = stakingInfo.staked || 0;
-        const rewards = stakingInfo.rewards || 0;
-        const apy = stakingInfo.apy || 18;
+        // CARTEIRA NÃO ENCONTRADA - MENSAGEM TRADUZIDA
+        if (!exists && balance === 0) {
+            resultDiv.className = 'result-box error';
+            resultDiv.innerHTML = `
+                <div style="position: relative; text-align: center; padding: 30px 20px;">
+                    <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
+                        onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                        ✕
+                    </button>
+                    <div style="font-size: 48px; margin-bottom: 15px;">🔍</div>
+                    <h3 style="color: #ffaa66; margin-bottom: 8px;">❌ ${t.walletNotFoundTitle || 'Wallet Not Found'}</h3>
+                    <p style="color: #888; font-size: 14px; margin-bottom: 5px;">
+                        ${t.walletNotFoundMessage || 'The address was not found on the Bradicoin blockchain.'}
+                    </p>
+                    <div style="margin: 15px 0; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; font-size: 13px;">
+                        <span style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(168,85,247,0.2);">
+                            🇬🇧 Wallet Not Found
+                        </span>
+                        <span style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(168,85,247,0.2);">
+                            🇧🇷 Carteira não encontrada
+                        </span>
+                        <span style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(168,85,247,0.2);">
+                            🇪🇸 Cartera no encontrada
+                        </span>
+                        <span style="background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; border: 1px solid rgba(168,85,247,0.2);">
+                            🇸🇦 المحفظة غير موجودة
+                        </span>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="clearSearch()" class="btn btn-outline" style="padding: 8px 16px; border-radius: 20px; border: 1px solid #a855f7; background: transparent; color: #e0e5ff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 12px;">
+                            🧹 ${t.clearSearch || 'Clear Search'}
+                        </button>
+                        <button onclick="openBradichainExplorer('${address}')" class="btn btn-bradichain" style="padding: 8px 16px; border-radius: 20px; background: linear-gradient(135deg, #ff6b35, #f7931a); border: none; color: #fff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 12px;">
+                            🌐 ${t.viewExplorer || 'View on Explorer'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            resultDiv.classList.add('show');
+            showStatus(`❌ ${t.walletNotFound || 'Wallet not found'}`, 'searchStatus', 'error');
+            return;
+        }
 
+        // CARTEIRA ENCONTRADA - INFORMAÇÕES TRADUZIDAS
         const walletHash = generateWalletHash(address);
         const timestamp = getCurrentTimestamp();
         const totalSupply = getCurrentTotalSupply();
-
         const balanceDisplay = balance.toFixed(2);
         const usdValue = (balance * 10).toFixed(2);
 
-        let resultHTML = `
-            <div class="result-header">
-                <div>
-                    <span style="font-size: 14px; color: #888;">Address</span>
-                    <div class="result-address">${address}</div>
-                </div>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button class="result-copy-btn" onclick="copyToClipboard('${address}')">📋 Copy</button>
-                    <button class="result-copy-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: cyan; color: cyan;">🔄 Refresh</button>
-                    <span style="font-size:10px;color:#ffc800;background:rgba(255,200,0,0.1);padding:2px 8px;border-radius:10px;">📁 Local</span>
-                </div>
-            </div>
-        `;
-
-        resultHTML += `
-            <div class="wallet-meta">
-                <div class="wallet-meta-item">
-                    <span class="label">🔗 Wallet Hash</span>
-                    <span class="value hash">${walletHash}</span>
-                </div>
-                <div class="wallet-meta-item">
-                    <span class="label">📅 Last Update</span>
-                    <span class="value time">${timestamp.full}</span>
-                </div>
-                <div class="wallet-meta-item">
-                    <span class="label">📊 Total Supply</span>
-                    <span class="value" style="color: #ffc800;">${formatNumber(totalSupply)} BRD</span>
-                </div>
-                <div class="wallet-meta-item">
-                    <span class="label">🪙 Token</span>
-                    <span class="value" style="color: #00ff66;">BRD</span>
-                </div>
-            </div>
-        `;
-
-        resultHTML += `
-            <div style="font-size: 28px; text-align: center; margin: 10px 0; color: ${balance > 0 ? '#00ff66' : '#ffc800'};">
-                ${balanceDisplay} <span style="font-size: 16px; color: #888;">BRD</span>
-            </div>
-            <div style="text-align: center; font-size: 14px; color: #888; margin-bottom: 10px;">
-                ≈ $${usdValue} USD
-            </div>
-            <div class="result-grid">
-                <div class="result-item" style="border-left-color: #00ff66;">
-                    <div class="result-item-label" data-i18n="tabWallet">💰 Balance</div>
-                    <div class="result-item-value green">${balanceDisplay} BRD</div>
-                </div>
-                <div class="result-item" style="border-left-color: #00ccff;">
-                    <div class="result-item-label">📊 USD Value</div>
-                    <div class="result-item-value cyan">$${usdValue}</div>
-                </div>
-                <div class="result-item" style="border-left-color: #ffc800;">
-                    <div class="result-item-label">🔒 Staked</div>
-                    <div class="result-item-value yellow">${staked.toFixed(2)} BRD</div>
-                </div>
-                <div class="result-item" style="border-left-color: magenta;">
-                    <div class="result-item-label">⭐ Rewards</div>
-                    <div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div>
-                </div>
-                <div class="result-item" style="border-left-color: #c864ff;">
-                    <div class="result-item-label">📈 APY</div>
-                    <div class="result-item-value" style="color: #c864ff;">${apy}%</div>
-                </div>
-                <div class="result-item" style="border-left-color: #ff6464;">
-                    <div class="result-item-label">🔄 Status</div>
-                    <div class="result-item-value" style="color: ${balance > 0 ? '#00ff66' : '#ffc800'};">${balance > 0 ? '✅ Active' : '⚠️ Empty'}</div>
-                </div>
-            </div>
-        `;
-
-        resultHTML += `
-            <div class="last-updated">
-                ⏱️ Updated: <span id="lastUpdateTime">${timestamp.full}</span>
-                <button onclick="updateTimestamp()" style="background:transparent;border:none;color:#555;cursor:pointer;font-size:10px;margin-left:10px;">↻</button>
-            </div>
-        `;
-
-        resultHTML += `
-            <div class="result-actions">
-                <button class="result-action-btn" onclick="copyToClipboard('${address}')">📋 Copy Address</button>
-                <button class="result-action-btn" onclick="copyToClipboard('${walletHash}')" style="border-color: #c864ff; color: #c864ff;">🔗 Copy Hash</button>
-                <button class="result-action-btn" onclick="document.getElementById('searchInput').value = '${address}'; searchWallet();" style="border-color: #00ff66; color: #00ff66;">🔄 Refresh</button>
-                <button class="result-action-btn" onclick="handleDeposit('${address}')" style="border-color: #00ff66; color: #00ff66;">💰 Deposit</button>
-                <button class="result-action-btn" onclick="handleStake('${address}')" style="border-color: #ffc800; color: #ffc800;">🔒 Stake</button>
-                <button class="result-action-btn" onclick="handleUnstake('${address}')" style="border-color: #ff6464; color: #ff6464;">⬇️ Unstake</button>
-                <button class="result-action-btn" onclick="handleTransfer('${address}')" style="border-color: #00ccff; color: #00ccff;">💸 Transfer</button>
-                <button class="result-action-btn" onclick="claimStakingRewards('${address}')" style="border-color: #ffc800; color: #ffc800;">🎯 Claim Rewards</button>
-            </div>
-        `;
-
         resultDiv.className = 'result-box';
-        resultDiv.innerHTML = resultHTML;
+        resultDiv.innerHTML = `
+            <div style="position: relative; background: linear-gradient(135deg, rgba(0,255,100,0.08), rgba(0,200,255,0.05)); border: 2px solid #00ff66; border-radius: 20px; padding: 20px;">
+                <!-- Botão Close -->
+                <button onclick="clearSearch()" style="position: absolute; top: 8px; right: 12px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease; z-index: 10;"
+                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                    ✕
+                </button>
+                
+                <!-- Cabeçalho -->
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; padding-right: 30px;">
+                    <div>
+                        <span style="background: #00ff66; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 600;">
+                            ✅ ${t.walletFound || 'WALLET FOUND'}
+                        </span>
+                        <span style="background: linear-gradient(135deg, #f7931a, #ff6b35); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 600; color: #fff; margin-left: 8px;">
+                            <i class="fas fa-link"></i> Bradichain
+                        </span>
+                        ${apiConnected ? '<span style="background: #00ff66; color: #000; padding: 2px 10px; border-radius: 12px; font-size: 9px; margin-left: 8px;">🟢 ' + (t.online || 'Online') + '</span>' : '<span style="background: #ffc800; color: #000; padding: 2px 10px; border-radius: 12px; font-size: 9px; margin-left: 8px;">📁 ' + (t.offline || 'Offline') + '</span>'}
+                    </div>
+                    <button onclick="openBradichainExplorer('${address}')" style="padding: 6px 14px; border-radius: 20px; background: linear-gradient(135deg, #ff6b35, #f7931a); border: none; color: #fff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 11px;">
+                        <i class="fas fa-external-link-alt"></i> ${t.explorer || 'Explorer'}
+                    </button>
+                </div>
+
+                <!-- Informações da carteira - TRADUZIDAS -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px 20px;">
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); grid-column: 1 / -1;">
+                        <span style="color: #888; font-size: 12px;">👤 ${t.userLabel || 'User'}</span>
+                        <span style="font-weight: 600; font-size: 13px;">${username}</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); grid-column: 1 / -1;">
+                        <span style="color: #888; font-size: 12px;">📍 ${t.addressLabel || 'Address'}</span>
+                        <span style="font-family: monospace; font-size: 11px; word-break: break-all;">${address}</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">💰 ${t.balanceLabel || 'Balance'}</span>
+                        <span style="color: #00ff66; font-weight: 600; font-size: 13px;">${balanceDisplay} BRD</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">💵 USD</span>
+                        <span style="color: #ffaa66; font-weight: 600; font-size: 13px;">$${usdValue}</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">🔒 ${t.stakedLabel || 'Staked'}</span>
+                        <span style="color: #ffaa66; font-weight: 600; font-size: 13px;">${staked.toFixed(2)} BRD</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">⭐ ${t.rewardsLabel || 'Rewards'}</span>
+                        <span style="color: #66ffcc; font-weight: 600; font-size: 13px;">${rewards.toFixed(2)} BRD</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">📈 APY</span>
+                        <span style="color: #00f2ff; font-weight: 600; font-size: 13px;">18%</span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <span style="color: #888; font-size: 12px;">🔄 ${t.statusLabel || 'Status'}</span>
+                        <span style="color: ${balance > 0 ? '#00ff88' : '#ffaa66'}; font-weight: 600; font-size: 13px;">
+                            ${balance > 0 ? '✅ ' + (t.activeLabel || 'Active') : '⚠️ ' + (t.emptyLabel || 'Empty')}
+                        </span>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; padding: 6px 0; grid-column: 1 / -1;">
+                        <span style="color: #888; font-size: 12px;">⏱️ ${t.updatedLabel || 'Updated'}</span>
+                        <span style="font-size: 11px;">${timestamp.full}</span>
+                    </div>
+                </div>
+
+                <!-- Botões de ação - TRADUZIDOS -->
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,255,100,0.15); display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="copyToClipboard('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #a855f7; background: transparent; color: #e0e5ff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        <i class="fas fa-copy"></i> ${t.copyLabel || 'Copy'}
+                    </button>
+                    <button onclick="handleDeposit('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #00ff66; background: rgba(0,255,100,0.1); color: #00ff66; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        💰 ${t.depositLabel || 'Deposit'}
+                    </button>
+                    <button onclick="handleStake('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #ffc800; background: rgba(255,200,0,0.1); color: #ffc800; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        🔒 ${t.stakeLabel || 'Stake'}
+                    </button>
+                    <button onclick="handleTransfer('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #00ccff; background: rgba(0,200,255,0.1); color: #00ccff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        💸 ${t.transferLabel || 'Transfer'}
+                    </button>
+                    <button onclick="claimStakingRewards('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #66ffcc; background: rgba(102,255,204,0.1); color: #66ffcc; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        🎯 ${t.claimRewardsLabel || 'Claim Rewards'}
+                    </button>
+                    <button onclick="openBradichainExplorer('${address}')" style="padding: 6px 14px; border-radius: 20px; background: linear-gradient(135deg, #ff6b35, #f7931a); border: none; color: #fff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        🔗 ${t.explorerLabel || 'Explorer'}
+                    </button>
+                    ${apiConnected ? `<button onclick="syncWalletWithAPI('${address}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid #00ccff; background: rgba(0,200,255,0.1); color: #00ccff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px;">
+                        🔄 ${t.syncLabel || 'Sync'}
+                    </button>` : ''}
+                </div>
+            </div>
+        `;
         resultDiv.classList.add('show');
+        showStatus(`✅ ${t.walletFound || 'Wallet found!'}`, 'searchStatus', 'success');
 
     } catch (error) {
-        console.error('Search error:', error);
+        console.error('❌ Erro na busca:', error);
         resultDiv.className = 'result-box error';
         resultDiv.innerHTML = `
-            <div style="text-align: center; padding: 20px;">
-                <div class="error-icon">⚠️</div>
-                <h3 class="error-title">${t.errorTitle || 'Connection Error'}</h3>
-                <p class="error-message">${t.errorMessage || 'Could not connect to the Bradicoin blockchain.'}</p>
-                <button class="error-clear-btn" onclick="clearSearch()">${t.errorButton || 'Try Again'}</button>
+            <div style="position: relative; text-align: center; padding: 30px 20px;">
+                <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                    ✕
+                </button>
+                <div style="font-size: 36px; margin-bottom: 10px;">⚠️</div>
+                <h4 style="color: #ff6464;">${t.connectionErrorTitle || 'Connection Error'}</h4>
+                <p style="color: #888; font-size: 13px;">${t.connectionErrorMessage || 'Could not connect to the blockchain.'}</p>
+                <p style="color: #666; font-size: 11px; margin-top: 5px;">💡 ${t.checkConnection || 'Check your internet connection.'}</p>
+                <button onclick="searchWallet()" style="margin-top: 15px; padding: 10px 25px; border-radius: 20px; border: 2px solid #00ccff; background: transparent; color: #00ccff; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 12px;">
+                    🔄 ${t.retryLabel || 'Try Again'}
+                </button>
             </div>
         `;
         resultDiv.classList.add('show');
+        showStatus(`❌ ${t.searchError || 'Search error'}`, 'searchStatus', 'error');
+    }
+}
+
+// ============================================================
+// FUNÇÃO PARA SINCRONIZAR CARTEIRA COM A API
+// ============================================================
+async function syncWalletWithAPI(address) {
+    const t = translations[currentLang] || translations.en;
+    
+    if (!address) {
+        const input = document.getElementById('searchInput');
+        if (input) address = input.value.trim();
+        if (!address) {
+            showNotification(`⚠️ ${t.noWalletSelected || 'No wallet selected'}`, '#ffc800');
+            return;
+        }
+    }
+    
+    showNotification(`🔄 ${t.syncing || 'Syncing with API...'}`, '#00ccff');
+    
+    try {
+        const response = await fetch(`${API_URL}/api/balance/${address}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.success && data.data) {
+                const balance = parseFloat(data.data.balance) || 0;
+                const chain = getLocalChain();
+                chain.balances[address] = balance;
+                chain.lastUpdated = Date.now();
+                saveLocalChain(chain);
+                
+                showNotification(`✅ ${t.syncSuccess || 'Synced!'} ${t.balanceLabel || 'Balance'}: ${balance.toFixed(2)} BRD`, '#00ff66');
+                await searchWallet();
+            } else {
+                showNotification(`⚠️ ${t.walletNotFound || 'Wallet not found on API'}`, '#ffc800');
+            }
+        } else {
+            showNotification(`⚠️ ${t.apiOffline || 'API offline, using local data'}`, '#ffc800');
+            await searchWallet();
+        }
+    } catch (error) {
+        showNotification(`❌ ${t.syncError || 'Sync error'}: ${error.message}`, '#ff6464');
+    }
+}
+
+// ==================== FUNÇÃO PARA ABRIR EXPLORER ====================
+function openBradichainExplorer(address) {
+    const url = `https://www.bradichain.com/address/${address}`;
+    window.open(url, '_blank');
+    showNotification(`🔍 Abrindo ${url}`, '#00ccff');
+}
+
+// ==================== FUNÇÃO DE STATUS ====================
+function showStatus(msg, elementId, type) {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.textContent = msg;
+        el.className = `status-msg status-${type}`;
+        setTimeout(() => {
+            if (el.textContent === msg) el.textContent = '';
+        }, 5000);
     }
 }
 

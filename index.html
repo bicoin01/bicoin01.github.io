@@ -1288,6 +1288,110 @@ const payment = await client.createPayment({
 
     <script>
 
+// ============================================
+// 1. DEFINA A CONSTANTE API_URL NO INÍCIO
+// ============================================
+const API_URL = 'https://bradicoin-api.onrender.com';
+
+// ============================================
+// 2. DEFINA A ESTRUTURA DE DADOS 'users'
+// ============================================
+let users = [];
+
+function loadUsers() {
+    const saved = localStorage.getItem('bradicoin_users');
+    if (saved) {
+        try {
+            users = JSON.parse(saved);
+            console.log('✅ Usuários carregados do localStorage:', users.length);
+        } catch (e) {
+            console.warn('⚠️ Erro ao carregar usuários, criando dados padrão');
+            createDefaultUsers();
+        }
+    } else {
+        createDefaultUsers();
+    }
+}
+
+function createDefaultUsers() {
+    users = [
+        { 
+            id: 1,
+            username: 'BrDemo123', 
+            walletAddress: 'BrDemo123', 
+            balance: 1000,
+            staked: 0,
+            rewards: 0,
+            createdAt: new Date().toISOString()
+        },
+        { 
+            id: 2,
+            username: 'BrStaker001', 
+            walletAddress: 'BrStaker001', 
+            balance: 5000,
+            staked: 2000,
+            rewards: 360,
+            createdAt: new Date().toISOString()
+        },
+        { 
+            id: 3,
+            username: 'BrDevMaster', 
+            walletAddress: 'BrDevMaster', 
+            balance: 10000,
+            staked: 0,
+            rewards: 0,
+            createdAt: new Date().toISOString()
+        }
+    ];
+    saveUsers();
+    console.log('✅ Usuários padrão criados:', users.length);
+}
+
+function saveUsers() {
+    try {
+        localStorage.setItem('bradicoin_users', JSON.stringify(users));
+    } catch (e) {
+        console.warn('⚠️ Não foi possível salvar usuários:', e.message);
+    }
+}
+
+function findUserByAddress(address) {
+    if (!address) return null;
+    return users.find(u => u.walletAddress === address) || null;
+}
+
+function createUserAutomatically(address) {
+    if (!address || !address.startsWith('Br')) return null;
+    if (findUserByAddress(address)) return findUserByAddress(address);
+    
+    const newUser = {
+        id: users.length + 1,
+        username: address,
+        walletAddress: address,
+        balance: 1000,
+        staked: 0,
+        rewards: 0,
+        createdAt: new Date().toISOString()
+    };
+    
+    users.push(newUser);
+    saveUsers();
+    
+    const chain = getLocalChain();
+    chain.balances[address] = 1000;
+    chain.transactions.unshift({
+        type: 'deposit',
+        address: address,
+        amount: 1000,
+        timestamp: Date.now(),
+        txHash: generateWalletHash(address + Date.now())
+    });
+    saveLocalChain(chain);
+    
+    console.log(`✅ Usuário criado automaticamente: ${address}`);
+    return newUser;
+}
+
 // ==================== COMPLETE TRANSLATIONS ====================
     const translations = {
        en: {
@@ -3610,15 +3714,45 @@ function showStatus(msg, elementId, type) {
 
 // ==================== TRANSACTION FUNCTIONS ====================
 async function depositToWallet(address, amount) {
-    if (!address || !amount || amount <= 0) return { success: false, error: 'Invalid' };
+    if (!address || !amount || amount <= 0) {
+        return { success: false, error: 'Invalid amount' };
+    }
+    
+    loadUsers();
     const chain = getLocalChain();
+    
     if (!chain.balances[address]) chain.balances[address] = 0;
     chain.balances[address] += amount;
     const txHash = generateWalletHash(address + Date.now().toString());
-    chain.transactions.unshift({ type: 'deposit', address, amount, timestamp: Date.now(), txHash: txHash });
+    chain.transactions.unshift({ 
+        type: 'deposit', 
+        address, 
+        amount, 
+        timestamp: Date.now(), 
+        txHash: txHash 
+    });
     chain.lastUpdated = Date.now();
     saveLocalChain(chain);
-    return { success: true, balance: chain.balances[address], deposited: amount, message: `✅ Deposit of ${amount} BRD successful!` };
+    
+    let user = findUserByAddress(address);
+    if (user) {
+        user.balance = (user.balance || 0) + amount;
+        saveUsers();
+    } else {
+        createUserAutomatically(address);
+        user = findUserByAddress(address);
+        if (user) {
+            user.balance = amount;
+            saveUsers();
+        }
+    }
+    
+    return { 
+        success: true, 
+        balance: chain.balances[address], 
+        deposited: amount, 
+        message: `✅ Deposit of ${amount} BRD successful!` 
+    };
 }
 
 async function stakeTokens(address, amount) {
@@ -4092,7 +4226,10 @@ async function loadRealTransactions() {
 // ==================== INIT ====================
 async function init() {
     console.log('🚀 Initializing Bradicoin Wallet App...');
-    
+
+loadUsers();
+console.log('👥 Usuários carregados:', users.length);
+
     await checkAPIStatus();
     await loadBlockchainData();
     await loadRealTransactions();

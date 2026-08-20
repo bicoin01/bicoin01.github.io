@@ -2056,8 +2056,16 @@ function createUserAutomatically(address) {
 }
 
 // ==================== COMPLETE TRANSLATIONS ====================
-    const translations = {
-       en: {
+// ============================================
+// 🌐 TRADUÇÕES COMPLETAS - 4 IDIOMAS
+// ============================================
+
+const translations = {
+    // ==========================================
+    // 🇬🇧 ENGLISH
+    // ==========================================
+    en: {
+        // Interface Principal
         pageTitle: 'Bradicoin Blockchain',
         apiChecking: 'Checking API connection...',
         apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
@@ -2066,11 +2074,6 @@ function createUserAutomatically(address) {
         searchBtn: 'Search',
         refreshBtn: 'Refresh',
         explorerSearch: 'Blockchain',
-        tabWallet: '💰 Wallet',
-        tabStaking: '🔒 Staking',
-        tabTransaction: '📜 Transaction',
-        tabBlock: '📦 Block',
-        tabToken: '🪙 Token',
         loading: 'Searching blockchain...',
         searchExample: 'Example: BrDemo123, BrStaker001',
         invalidAddress: 'Please enter an address',
@@ -2079,13 +2082,25 @@ function createUserAutomatically(address) {
         walletNotFoundTitle: 'Wallet Not Found',
         walletNotFoundMessage: 'The address was not found on the Bradicoin blockchain.',
         walletFound: 'WALLET FOUND',
-        walletCreated: 'Wallet',
+        walletCreated: 'Wallet created with',
         createdWith: 'created with',
         clearSearch: 'Clear Search',
         viewExplorer: 'View on Explorer',
         online: 'Online',
         offline: 'Offline',
         explorer: 'Explorer',
+        unknown: 'Unknown',
+        walletNotFound: 'Wallet not found',
+        close: '✕ Close',
+        
+        // Tabs
+        tabWallet: '💰 Wallet',
+        tabStaking: '🔒 Staking',
+        tabTransaction: '📜 Transaction',
+        tabBlock: '📦 Block',
+        tabToken: '🪙 Token',
+        
+        // Wallet Info
         userLabel: 'User',
         addressLabel: 'Address',
         balanceLabel: 'Balance',
@@ -2106,13 +2121,19 @@ function createUserAutomatically(address) {
         syncSuccess: 'Synced!',
         syncError: 'Sync error',
         noWalletSelected: 'No wallet selected',
+        
+        // Errors
         connectionErrorTitle: 'Connection Error',
         connectionErrorMessage: 'Could not connect to the blockchain.',
         checkConnection: 'Check your internet connection.',
         retryLabel: 'Try Again',
         searchError: 'Search error',
-        unknown: 'Unknown',
-        walletNotFound: 'Wallet not found',
+        errorTitle: 'Wallet Not Found',
+        errorMessage: 'The wallet address you entered does not exist on the Bradicoin blockchain.',
+        errorTip: '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".',
+        errorButton: 'Clear search',
+        
+        // Navigation Sections
         sectionCore: '🔗 CORE BLOCKCHAIN',
         sectionMilitary: '🛡️ MILITARY & SECURITY',
         sectionExploration: '🔍 BLOCKCHAIN EXPLORATION',
@@ -2120,6 +2141,8 @@ function createUserAutomatically(address) {
         sectionIndustries: '🏭 INDUSTRIES',
         sectionWeb3: '🌐 WEB3 & INVESTMENTS',
         sectionGovernance: '⚙️ GOVERNANCE & UPDATES',
+        
+        // Navigation Buttons - Core
         navBlockchainV2: '🔗 Blockchain V2',
         navExternalAPI: '🌐 External API',
         navTransactionHistory: '📜 Transaction History',
@@ -2132,11 +2155,15 @@ function createUserAutomatically(address) {
         navGasTracker: '⛽ Gas Fee Tracker',
         navAnalytics: '📈 Analytics Dashboard',
         navFraudDetection: '🚨 Fraud Detection',
+        
+        // Navigation Buttons - Military
         navMilitaryC2: '🎖️ Military C2',
         navAuditVault: '🔒 Audit Vault',
         navCyberThreat: '💀 Cyber Threat Intel',
         navMissionCritical: '⚡ Mission Critical',
         navSecurity: '🛡️ Security',
+        
+        // Navigation Buttons - Exploration
         navExploreBlocks: '🔍 Explore Blocks',
         navTransactions: '📜 Transactions',
         navNetworkStatus2: '🌐 Network Status',
@@ -2146,10 +2173,14 @@ function createUserAutomatically(address) {
         navGasFees: '⛽ Gas Fees',
         navAnalytics2: '📈 Analytics',
         navFraudDetection2: '🚨 Fraud Detection',
+        
+        // Navigation Buttons - Emerging Tech
         navSmartContracts: '📝 Smart Contracts',
         navDesci: '🔬 Desci',
         navHologram: '🌀 Hologram',
         navSpaceSector: '🚀 Space Sector',
+        
+        // Navigation Buttons - Industries
         navAgriculture: '🌾 Agriculture and Food',
         navEntertainment: '🎬 Entertainment',
         navSports: '⚽ Sports',
@@ -2158,17 +2189,23 @@ function createUserAutomatically(address) {
         navBiotechnology: '🧬 Biotechnology',
         navEnergy: '⚡ Energy',
         navFinancialMarket: '📈 Financial Market',
+        
+        // Navigation Buttons - Web3
         navNftExploration: '🎨 NFT Exploration',
         navCloudMining: '⛏️ Cloud Mining',
         navRoboticsInvestments: '🤖 Robotics Investments',
         navDefiProjects: '💎 DeFi Projects',
         navMetaverseIntegration: '🌌 Metaverse Integration',
         navDecentralizedPhilanthropy: '❤️ Decentralized Philanthropy',
+        
+        // Navigation Buttons - Governance
         navBlockchainUpdate: '🔄 Blockchain Update',
         navDigitalGovernance: '⚖️ Digital Governance',
         navCryptoMarketplace: '🏪 Cryptocurrency Marketplace',
         navAiTech: '🤖 Artificial Intelligence News',
         navBlockchainSecurity: '🔐 Blockchain Security',
+        
+        // Network Panel
         networkStatus: 'Network Status',
         blockchainValid: 'Blockchain Valid',
         networkMetrics: 'Network Metrics',
@@ -2212,12 +2249,16 @@ function createUserAutomatically(address) {
         stabilityFund: 'Stability Fund',
         boughtToday: 'Bought Today',
         burnedToday: 'Burned Today',
+        
+        // Validators
         validatorsTitle: '🛡️ Validators',
         validatorCount: 'Active',
         noValidators: 'No validators active',
         becomeValidatorText: 'Become a validator by staking 1000+ BRD',
         btnBecomeValidator: '⚡ Become Validator',
         btnViewStats: '📊 View Stats',
+        
+        // Staking
         stakingStatsTitle: '💰 Staking Stats',
         stakingLive: 'Live',
         loadingStaking: 'Loading staking stats...',
@@ -2225,6 +2266,8 @@ function createUserAutomatically(address) {
         totalRewards: 'Total Rewards',
         activeStakers: 'Active Stakers',
         apy: 'APY',
+        
+        // Security Dashboard
         securityDashboardTitle: '🛡️ Security Dashboard',
         secure: '🟢 Secure',
         encryption: 'Encryption',
@@ -2238,12 +2281,19 @@ function createUserAutomatically(address) {
         btnProtectData: '🔒 Protect Data',
         btnVerifyIntegrity: '🌳 Verify Integrity',
         btnSecurityStatus: '📊 Security Status',
+        
+        // Transaction History
         transactionHistoryTitle: 'Transaction History',
         refresh: '⟳ Refresh',
         totalTransactions: 'Total transactions: ',
         noTransactions: 'No transactions found',
         searchHint: 'Use the search above to find wallet transactions',
         searchHint2: '💡 Search for a wallet to see its transaction history',
+        mineBlock: '⛏️ Mine Block',
+        mining: '⛏️ Mining...',
+        blockMined: '✅ Block Mined!',
+        
+        // Developer API
         devApiTitle: '👨‍💻 DEVELOPER API',
         devApiAvailable: '🟢 Available',
         devSdkTitle: '📦 SDK Installation',
@@ -2261,6 +2311,8 @@ function createUserAutomatically(address) {
         copyKeys: '📋 Copy Keys',
         docsLink: '📚 API Documentation',
         statusLink: '🩺 API Status',
+        
+        // Tokens
         tokenModalTitle: '🪙 Bradicoin Tokens',
         tokenName: 'Token Name',
         tokenSymbol: 'Symbol',
@@ -2274,29 +2326,23 @@ function createUserAutomatically(address) {
         tokenPricePlaceholder: 'Enter price in USD',
         create: 'Create',
         cancel: 'Cancel',
+        
+        // ZK-SNARK
+        zkProofTitle: '🔐 ZK-SNARK Proof Generator',
+        zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.',
+        zkProofGenerated: '✅ ZK-SNARK proof generated and verified!',
+        zkProofFailed: '❌ ZK-SNARK proof generation failed',
+        
+        // Footer
         footerCopyright: '© 2025 Bradicoin Blockchain. All rights reserved.',
         footerAbout: 'About',
         footerContact: 'Contact',
         footerTerms: 'Terms of Use',
         footerPrivacy: 'Privacy',
         footerSupport: 'Support',
-        errorTitle: 'Wallet Not Found',
-        errorMessage: 'The wallet address you entered does not exist on the Bradicoin blockchain.',
-        errorTip: '💡 Tip: Check if the address is correct and try again. Make sure it starts with "Br".',
-        errorButton: 'Clear search',
-        mineBlock: '⛏️ Mine Block',
-        mining: '⛏️ Mining...',
-        blockMined: '✅ Block Mined!',
-        close: '✕ Close',
-        zkProofTitle: '🔐 ZK-SNARK Proof Generator',
-        zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.',
-        zkProofGenerated: '✅ ZK-SNARK proof generated and verified!',
-        zkProofFailed: '❌ ZK-SNARK proof generation failed',
+        
+        // Pages - About
         pageAbout: 'About Bradicoin Blockchain',
-        pageContact: 'Contact Bradicoin',
-        pageTerms: 'Terms of Use - Decentralized Governance',
-        pagePrivacy: 'Privacy Policy - Decentralized & Secure',
-        pageSupport: 'Support Center',
         aboutTitle: 'About Bradicoin Blockchain',
         aboutP1: 'The Bradicoin Blockchain is the decentralized infrastructure that supports the entire Bradicoin economy. Built on a robust and highly scalable protocol, this blockchain supports smart contracts, decentralized applications (dApps), and fast, secure transactions.',
         aboutP2: 'In addition to being the foundation for Bradicoin as a cryptocurrency, the Bradicoin Blockchain provides a trusted environment for developers to create innovative solutions, such as NFT marketplaces, decentralized artificial intelligence networks, and autonomous financial systems.',
@@ -2307,6 +2353,9 @@ function createUserAutomatically(address) {
         aboutFeature4: 'AI Networks',
         aboutFeature5: 'Interoperability',
         aboutFeature6: 'Scalability',
+        
+        // Pages - Contact
+        pageContact: 'Contact Bradicoin',
         contactTitle: 'Contact Bradicoin',
         contactP1: 'For more information about Bradicoin Blockchain, partnerships, or technical support, please reach out to us through the channels below.',
         contactEmail: '📧 Email: contact@bradicoin.com',
@@ -2314,6 +2363,9 @@ function createUserAutomatically(address) {
         contactFormEmail: 'Your Email',
         contactFormMessage: 'Your Message',
         contactFormSend: 'Send Message',
+        
+        // Pages - Terms
+        pageTerms: 'Terms of Use - Decentralized Governance',
         termsTitle: 'Terms of Use - Decentralized Governance',
         termsP1: 'These Terms of Use govern your use of the Bradicoin Blockchain platform, services, and decentralized applications. By using Bradicoin, you agree to these terms.',
         termsSection1: '1. Decentralized Governance',
@@ -2328,6 +2380,9 @@ function createUserAutomatically(address) {
         termsSection5Text: 'All transactions and governance proposals are publicly visible on the blockchain. Bradicoin is committed to full transparency.',
         termsSection6: '6. Dispute Resolution',
         termsSection6Text: 'Disputes are resolved through the DAO governance process. Users can submit proposals for arbitration and community review.',
+        
+        // Pages - Privacy
+        pagePrivacy: 'Privacy Policy - Decentralized & Secure',
         privacyTitle: 'Privacy Policy - Decentralized & Secure',
         privacyP1: 'Bradicoin Blockchain is built on the principles of decentralization, privacy, and user sovereignty. We are committed to protecting your privacy and never request personal information.',
         privacyP2: '🔒 Our blockchain is completely decentralized. We never ask for your wallet address, private keys, or personal information for any purpose.',
@@ -2339,6 +2394,9 @@ function createUserAutomatically(address) {
         privacyFeature4: 'User Sovereignty',
         privacyFeature5: 'Transparent',
         privacyFeature6: 'Secure',
+        
+        // Pages - Support
+        pageSupport: 'Support Center',
         supportTitle: 'Support Center',
         supportP1: 'The Bradicoin Support Center is here to help you with any questions or issues you may encounter. Our community and support team are ready to assist.',
         supportFAQ1: 'How do I create a Bradicoin wallet?',
@@ -2357,7 +2415,12 @@ function createUserAutomatically(address) {
         supportDocs: '📚 Visit our Documentation: docs.bradicoin.com',
         supportCommunity: '🌐 Join our Community: discord.gg/Bradicoin'
     },
+
+    // ==========================================
+    // 🇧🇷 PORTUGUÊS
+    // ==========================================
     pt: {
+        // Interface Principal
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexão com a API...',
         apiOnline: '✅ API Online - Conectado à Blockchain Bradicoin',
@@ -2366,13 +2429,7 @@ function createUserAutomatically(address) {
         searchBtn: 'Buscar',
         refreshBtn: 'Atualizar',
         explorerSearch: 'Blockchain',
-        tabWallet: '💰 Carteira',
-        tabStaking: '🔒 Staking',
-        tabTransaction: '📜 Transação',
-        tabBlock: '📦 Bloco',
-        tabToken: '🪙 Token',
         loading: 'Buscando na blockchain...',
-        // NOVAS CHAVES PARA A BARRA DE BUSCA - PORTUGUÊS
         searchExample: 'Exemplo: BrDemo123, BrStaker001',
         invalidAddress: 'Digite um endereço',
         invalidAddressTitle: 'Endereço Inválido',
@@ -2380,13 +2437,25 @@ function createUserAutomatically(address) {
         walletNotFoundTitle: 'Carteira Não Encontrada',
         walletNotFoundMessage: 'O endereço não foi encontrado na blockchain Bradicoin.',
         walletFound: 'CARTEIRA ENCONTRADA',
-        walletCreated: 'Carteira',
+        walletCreated: 'Carteira criada com',
         createdWith: 'criada com',
         clearSearch: 'Limpar Busca',
         viewExplorer: 'Ver no Explorer',
         online: 'Online',
         offline: 'Offline',
         explorer: 'Explorador',
+        unknown: 'Desconhecido',
+        walletNotFound: 'Carteira não encontrada',
+        close: '✕ Fechar',
+        
+        // Tabs
+        tabWallet: '💰 Carteira',
+        tabStaking: '🔒 Staking',
+        tabTransaction: '📜 Transação',
+        tabBlock: '📦 Bloco',
+        tabToken: '🪙 Token',
+        
+        // Wallet Info
         userLabel: 'Usuário',
         addressLabel: 'Endereço',
         balanceLabel: 'Saldo',
@@ -2407,13 +2476,19 @@ function createUserAutomatically(address) {
         syncSuccess: 'Sincronizado!',
         syncError: 'Erro ao sincronizar',
         noWalletSelected: 'Nenhuma carteira selecionada',
+        
+        // Errors
         connectionErrorTitle: 'Erro de Conexão',
         connectionErrorMessage: 'Não foi possível conectar à blockchain.',
         checkConnection: 'Verifique sua conexão com a internet.',
         retryLabel: 'Tentar Novamente',
         searchError: 'Erro ao buscar',
-        unknown: 'Desconhecido',
-        walletNotFound: 'Carteira não encontrada',
+        errorTitle: 'Carteira Não Encontrada',
+        errorMessage: 'O endereço da carteira que você digitou não existe na blockchain Bradicoin.',
+        errorTip: '💡 Dica: Verifique se o endereço está correto e tente novamente. Certifique-se de que começa com "Br".',
+        errorButton: 'Limpar busca',
+        
+        // Navigation Sections
         sectionCore: '🔗 BLOCKCHAIN PRINCIPAL',
         sectionMilitary: '🛡️ MILITAR E SEGURANÇA',
         sectionExploration: '🔍 EXPLORAÇÃO DA BLOCKCHAIN',
@@ -2421,6 +2496,8 @@ function createUserAutomatically(address) {
         sectionIndustries: '🏭 INDÚSTRIAS',
         sectionWeb3: '🌐 WEB3 E INVESTIMENTOS',
         sectionGovernance: '⚙️ GOVERNANÇA E ATUALIZAÇÕES',
+        
+        // Navigation Buttons - Core
         navBlockchainV2: '🔗 Blockchain V2',
         navExternalAPI: '🌐 API Externa',
         navTransactionHistory: '📜 Histórico de Transações',
@@ -2433,11 +2510,15 @@ function createUserAutomatically(address) {
         navGasTracker: '⛽ Rastreador de Taxas Gas',
         navAnalytics: '📈 Painel de Análises',
         navFraudDetection: '🚨 Detecção de Fraudes',
+        
+        // Navigation Buttons - Military
         navMilitaryC2: '🎖️ Comando Militar C2',
         navAuditVault: '🔒 Cofre de Auditoria',
         navCyberThreat: '💀 Inteligência de Ameaças Cibernéticas',
         navMissionCritical: '⚡ Missão Crítica',
         navSecurity: '🛡️ Segurança',
+        
+        // Navigation Buttons - Exploration
         navExploreBlocks: '🔍 Explorar Blocos',
         navTransactions: '📜 Transações',
         navNetworkStatus2: '🌐 Status da Rede',
@@ -2447,10 +2528,14 @@ function createUserAutomatically(address) {
         navGasFees: '⛽ Taxas Gas',
         navAnalytics2: '📈 Análises',
         navFraudDetection2: '🚨 Detecção de Fraudes',
+        
+        // Navigation Buttons - Emerging Tech
         navSmartContracts: '📝 Contratos Inteligentes',
         navDesci: '🔬 Desci',
         navHologram: '🌀 Holograma',
         navSpaceSector: '🚀 Setor Espacial',
+        
+        // Navigation Buttons - Industries
         navAgriculture: '🌾 Agricultura e Alimentos',
         navEntertainment: '🎬 Entretenimento',
         navSports: '⚽ Esportes',
@@ -2459,17 +2544,23 @@ function createUserAutomatically(address) {
         navBiotechnology: '🧬 Biotecnologia',
         navEnergy: '⚡ Energia',
         navFinancialMarket: '📈 Mercado Financeiro',
+        
+        // Navigation Buttons - Web3
         navNftExploration: '🎨 Exploração NFT',
         navCloudMining: '⛏️ Mineração em Nuvem',
         navRoboticsInvestments: '🤖 Investimentos em Robótica',
         navDefiProjects: '💎 Projetos DeFi',
         navMetaverseIntegration: '🌌 Integração com Metaverso',
         navDecentralizedPhilanthropy: '❤️ Filantropia Descentralizada',
+        
+        // Navigation Buttons - Governance
         navBlockchainUpdate: '🔄 Atualização da Blockchain',
         navDigitalGovernance: '⚖️ Governança Digital',
         navCryptoMarketplace: '🏪 Mercado de Criptomoedas',
         navAiTech: '🤖 Notícias de Inteligência Artificial',
         navBlockchainSecurity: '🔐 Segurança Blockchain',
+        
+        // Network Panel
         networkStatus: 'Status da Rede',
         blockchainValid: 'Blockchain Válida',
         networkMetrics: 'Métricas da Rede',
@@ -2513,12 +2604,16 @@ function createUserAutomatically(address) {
         stabilityFund: 'Fundo de Estabilidade',
         boughtToday: 'Comprado Hoje',
         burnedToday: 'Queimado Hoje',
+        
+        // Validators
         validatorsTitle: '🛡️ Validadores',
         validatorCount: 'Ativo',
         noValidators: 'Nenhum validador ativo',
         becomeValidatorText: 'Torne-se um validador apostando 1000+ BRD',
         btnBecomeValidator: '⚡ Tornar-se Validador',
         btnViewStats: '📊 Ver Estatísticas',
+        
+        // Staking
         stakingStatsTitle: '💰 Estatísticas de Staking',
         stakingLive: 'Ao Vivo',
         loadingStaking: 'Carregando estatísticas de staking...',
@@ -2526,6 +2621,8 @@ function createUserAutomatically(address) {
         totalRewards: 'Recompensas Totais',
         activeStakers: 'Stakers Ativos',
         apy: 'APY',
+        
+        // Security Dashboard
         securityDashboardTitle: '🛡️ Painel de Segurança',
         secure: '🟢 Seguro',
         encryption: 'Criptografia',
@@ -2539,12 +2636,19 @@ function createUserAutomatically(address) {
         btnProtectData: '🔒 Proteger Dados',
         btnVerifyIntegrity: '🌳 Verificar Integridade',
         btnSecurityStatus: '📊 Status de Segurança',
+        
+        // Transaction History
         transactionHistoryTitle: 'Histórico de Transações',
         refresh: '⟳ Atualizar',
         totalTransactions: 'Total de transações: ',
         noTransactions: 'Nenhuma transação encontrada',
         searchHint: 'Use a busca acima para encontrar transações da carteira',
         searchHint2: '💡 Busque por uma carteira para ver seu histórico de transações',
+        mineBlock: '⛏️ Minerar Bloco',
+        mining: '⛏️ Minerando...',
+        blockMined: '✅ Bloco Minerado!',
+        
+        // Developer API
         devApiTitle: '👨‍💻 API PARA DESENVOLVEDORES',
         devApiAvailable: '🟢 Disponível',
         devSdkTitle: '📦 Instalação do SDK',
@@ -2562,6 +2666,8 @@ function createUserAutomatically(address) {
         copyKeys: '📋 Copiar Chaves',
         docsLink: '📚 Documentação da API',
         statusLink: '🩺 Status da API',
+        
+        // Tokens
         tokenModalTitle: '🪙 Tokens Bradicoin',
         tokenName: 'Nome do Token',
         tokenSymbol: 'Símbolo',
@@ -2575,29 +2681,23 @@ function createUserAutomatically(address) {
         tokenPricePlaceholder: 'Digite o preço em USD',
         create: 'Criar',
         cancel: 'Cancelar',
+        
+        // ZK-SNARK
+        zkProofTitle: '🔐 Gerador de Prova ZK-SNARK',
+        zkProofDesc: 'Argumento de Conhecimento Não Interativo Sucinto de Conhecimento Zero - Privacidade completa para suas transações.',
+        zkProofGenerated: '✅ Prova ZK-SNARK gerada e verificada!',
+        zkProofFailed: '❌ Falha na geração da prova ZK-SNARK',
+        
+        // Footer
         footerCopyright: '© 2025 Blockchain Bradicoin. Todos os direitos reservados.',
         footerAbout: 'Sobre',
         footerContact: 'Contato',
         footerTerms: 'Termos de Uso',
         footerPrivacy: 'Privacidade',
         footerSupport: 'Suporte',
-        errorTitle: 'Carteira Não Encontrada',
-        errorMessage: 'O endereço da carteira que você digitou não existe na blockchain Bradicoin.',
-        errorTip: '💡 Dica: Verifique se o endereço está correto e tente novamente. Certifique-se de que começa com "Br".',
-        errorButton: 'Limpar busca',
-        mineBlock: '⛏️ Minerar Bloco',
-        mining: '⛏️ Minerando...',
-        blockMined: '✅ Bloco Minerado!',
-        close: '✕ Fechar',
-        zkProofTitle: '🔐 Gerador de Prova ZK-SNARK',
-        zkProofDesc: 'Argumento de Conhecimento Não Interativo Sucinto de Conhecimento Zero - Privacidade completa para suas transações.',
-        zkProofGenerated: '✅ Prova ZK-SNARK gerada e verificada!',
-        zkProofFailed: '❌ Falha na geração da prova ZK-SNARK',
+        
+        // Pages - About
         pageAbout: 'Sobre a Blockchain Bradicoin',
-        pageContact: 'Contato Bradicoin',
-        pageTerms: 'Termos de Uso - Governança Descentralizada',
-        pagePrivacy: 'Política de Privacidade - Descentralizada e Segura',
-        pageSupport: 'Central de Suporte',
         aboutTitle: 'Sobre a Blockchain Bradicoin',
         aboutP1: 'A Blockchain Bradicoin é a infraestrutura descentralizada que suporta toda a economia Bradicoin. Construída em um protocolo robusto e altamente escalável, esta blockchain suporta contratos inteligentes, aplicações descentralizadas (dApps) e transações rápidas e seguras.',
         aboutP2: 'Além de ser a base para o Bradicoin como criptomoeda, a Blockchain Bradicoin fornece um ambiente confiável para desenvolvedores criarem soluções inovadoras, como marketplaces NFT, redes descentralizadas de inteligência artificial e sistemas financeiros autônomos.',
@@ -2608,6 +2708,9 @@ function createUserAutomatically(address) {
         aboutFeature4: 'Redes de IA',
         aboutFeature5: 'Interoperabilidade',
         aboutFeature6: 'Escalabilidade',
+        
+        // Pages - Contact
+        pageContact: 'Contato Bradicoin',
         contactTitle: 'Contato Bradicoin',
         contactP1: 'Para mais informações sobre a Blockchain Bradicoin, parcerias ou suporte técnico, entre em contato conosco pelos canais abaixo.',
         contactEmail: '📧 Email: contact@bradicoin.com',
@@ -2615,6 +2718,9 @@ function createUserAutomatically(address) {
         contactFormEmail: 'Seu Email',
         contactFormMessage: 'Sua Mensagem',
         contactFormSend: 'Enviar Mensagem',
+        
+        // Pages - Terms
+        pageTerms: 'Termos de Uso - Governança Descentralizada',
         termsTitle: 'Termos de Uso - Governança Descentralizada',
         termsP1: 'Estes Termos de Uso regem o uso da plataforma Blockchain Bradicoin, serviços e aplicações descentralizadas. Ao usar o Bradicoin, você concorda com estes termos.',
         termsSection1: '1. Governança Descentralizada',
@@ -2629,6 +2735,9 @@ function createUserAutomatically(address) {
         termsSection5Text: 'Todas as transações e propostas de governança são publicamente visíveis na blockchain. O Bradicoin está comprometido com a transparência total.',
         termsSection6: '6. Resolução de Disputas',
         termsSection6Text: 'As disputas são resolvidas através do processo de governança DAO. Os usuários podem enviar propostas para arbitragem e revisão comunitária.',
+        
+        // Pages - Privacy
+        pagePrivacy: 'Política de Privacidade - Descentralizada e Segura',
         privacyTitle: 'Política de Privacidade - Descentralizada e Segura',
         privacyP1: 'A Blockchain Bradicoin é construída sobre os princípios de descentralização, privacidade e soberania do usuário. Estamos comprometidos em proteger sua privacidade e nunca solicitamos informações pessoais.',
         privacyP2: '🔒 Nossa blockchain é completamente descentralizada. Nunca pedimos seu endereço de carteira, chaves privadas ou informações pessoais para qualquer finalidade.',
@@ -2640,6 +2749,9 @@ function createUserAutomatically(address) {
         privacyFeature4: 'Soberania do Usuário',
         privacyFeature5: 'Transparente',
         privacyFeature6: 'Segura',
+        
+        // Pages - Support
+        pageSupport: 'Central de Suporte',
         supportTitle: 'Central de Suporte',
         supportP1: 'A Central de Suporte Bradicoin está aqui para ajudar com qualquer dúvida ou problema que você possa encontrar. Nossa comunidade e equipe de suporte estão prontas para ajudar.',
         supportFAQ1: 'Como criar uma carteira Bradicoin?',
@@ -2658,7 +2770,12 @@ function createUserAutomatically(address) {
         supportDocs: '📚 Visite nossa Documentação: docs.bradicoin.com',
         supportCommunity: '🌐 Junte-se à nossa Comunidade: discord.gg/Bradicoin'
     },
+
+    // ==========================================
+    // 🇪🇸 ESPAÑOL
+    // ==========================================
     es: {
+        // Interface Principal
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexión con la API...',
         apiOnline: '✅ API Online - Conectado a Blockchain Bradicoin',
@@ -2667,11 +2784,6 @@ function createUserAutomatically(address) {
         searchBtn: 'Buscar',
         refreshBtn: 'Actualizar',
         explorerSearch: 'Blockchain',
-        tabWallet: '💰 Cartera',
-        tabStaking: '🔒 Staking',
-        tabTransaction: '📜 Transacción',
-        tabBlock: '📦 Bloque',
-        tabToken: '🪙 Token',
         loading: 'Buscando en la blockchain...',
         searchExample: 'Ejemplo: BrDemo123, BrStaker001',
         invalidAddress: 'Introduzca una dirección',
@@ -2680,13 +2792,25 @@ function createUserAutomatically(address) {
         walletNotFoundTitle: 'Cartera No Encontrada',
         walletNotFoundMessage: 'La dirección no fue encontrada en la blockchain Bradicoin.',
         walletFound: 'CARTERA ENCONTRADA',
-        walletCreated: 'Cartera',
+        walletCreated: 'Cartera creada con',
         createdWith: 'creada con',
         clearSearch: 'Limpiar Búsqueda',
         viewExplorer: 'Ver en Explorer',
         online: 'En Línea',
         offline: 'Desconectado',
         explorer: 'Explorador',
+        unknown: 'Desconocido',
+        walletNotFound: 'Cartera no encontrada',
+        close: '✕ Cerrar',
+        
+        // Tabs
+        tabWallet: '💰 Cartera',
+        tabStaking: '🔒 Staking',
+        tabTransaction: '📜 Transacción',
+        tabBlock: '📦 Bloque',
+        tabToken: '🪙 Token',
+        
+        // Wallet Info
         userLabel: 'Usuario',
         addressLabel: 'Dirección',
         balanceLabel: 'Saldo',
@@ -2707,13 +2831,19 @@ function createUserAutomatically(address) {
         syncSuccess: '¡Sincronizado!',
         syncError: 'Error al sincronizar',
         noWalletSelected: 'Ninguna cartera seleccionada',
+        
+        // Errors
         connectionErrorTitle: 'Error de Conexión',
         connectionErrorMessage: 'No se pudo conectar a la blockchain.',
         checkConnection: 'Verifique su conexión a internet.',
         retryLabel: 'Intentar de Nuevo',
         searchError: 'Error al buscar',
-        unknown: 'Desconocido',
-        walletNotFound: 'Cartera no encontrada',
+        errorTitle: 'Cartera No Encontrada',
+        errorMessage: 'La dirección de la billetera que ingresó no existe en la blockchain Bradicoin.',
+        errorTip: '💡 Consejo: Verifique que la dirección sea correcta y vuelva a intentarlo. Asegúrese de que comience con "Br".',
+        errorButton: 'Limpiar búsqueda',
+        
+        // Navigation Sections
         sectionCore: '🔗 BLOCKCHAIN PRINCIPAL',
         sectionMilitary: '🛡️ MILITAR Y SEGURIDAD',
         sectionExploration: '🔍 EXPLORACIÓN DE BLOCKCHAIN',
@@ -2721,6 +2851,8 @@ function createUserAutomatically(address) {
         sectionIndustries: '🏭 INDUSTRIAS',
         sectionWeb3: '🌐 WEB3 E INVERSIONES',
         sectionGovernance: '⚙️ GOBERNANZA Y ACTUALIZACIONES',
+        
+        // Navigation Buttons - Core
         navBlockchainV2: '🔗 Blockchain V2',
         navExternalAPI: '🌐 API Externa',
         navTransactionHistory: '📜 Historial de Transacciones',
@@ -2733,11 +2865,15 @@ function createUserAutomatically(address) {
         navGasTracker: '⛽ Rastreador de Tarifas Gas',
         navAnalytics: '📈 Panel de Análisis',
         navFraudDetection: '🚨 Detección de Fraudes',
+        
+        // Navigation Buttons - Military
         navMilitaryC2: '🎖️ Comando Militar C2',
         navAuditVault: '🔒 Cofre de Auditoría',
         navCyberThreat: '💀 Inteligencia de Amenazas Cibernéticas',
         navMissionCritical: '⚡ Misión Crítica',
         navSecurity: '🛡️ Seguridad',
+        
+        // Navigation Buttons - Exploration
         navExploreBlocks: '🔍 Explorar Bloques',
         navTransactions: '📜 Transacciones',
         navNetworkStatus2: '🌐 Estado de la Red',
@@ -2747,10 +2883,14 @@ function createUserAutomatically(address) {
         navGasFees: '⛽ Tarifas Gas',
         navAnalytics2: '📈 Análisis',
         navFraudDetection2: '🚨 Detección de Fraudes',
+        
+        // Navigation Buttons - Emerging Tech
         navSmartContracts: '📝 Contratos Inteligentes',
         navDesci: '🔬 Desci',
         navHologram: '🌀 Holograma',
         navSpaceSector: '🚀 Sector Espacial',
+        
+        // Navigation Buttons - Industries
         navAgriculture: '🌾 Agricultura y Alimentos',
         navEntertainment: '🎬 Entretenimiento',
         navSports: '⚽ Deportes',
@@ -2759,17 +2899,23 @@ function createUserAutomatically(address) {
         navBiotechnology: '🧬 Biotecnología',
         navEnergy: '⚡ Energía',
         navFinancialMarket: '📈 Mercado Financiero',
+        
+        // Navigation Buttons - Web3
         navNftExploration: '🎨 Exploración NFT',
         navCloudMining: '⛏️ Minería en la Nube',
         navRoboticsInvestments: '🤖 Inversiones en Robótica',
         navDefiProjects: '💎 Proyectos DeFi',
         navMetaverseIntegration: '🌌 Integración con Metaverso',
         navDecentralizedPhilanthropy: '❤️ Filantropía Descentralizada',
+        
+        // Navigation Buttons - Governance
         navBlockchainUpdate: '🔄 Actualización de Blockchain',
         navDigitalGovernance: '⚖️ Gobernanza Digital',
         navCryptoMarketplace: '🏪 Mercado de Criptomonedas',
         navAiTech: '🤖 Noticias de Inteligencia Artificial',
         navBlockchainSecurity: '🔐 Seguridad Blockchain',
+        
+        // Network Panel
         networkStatus: 'Estado de la Red',
         blockchainValid: 'Blockchain Válida',
         networkMetrics: 'Métricas de Red',
@@ -2813,12 +2959,16 @@ function createUserAutomatically(address) {
         stabilityFund: 'Fondo de Estabilidad',
         boughtToday: 'Comprado Hoy',
         burnedToday: 'Quemado Hoy',
+        
+        // Validators
         validatorsTitle: '🛡️ Validadores',
         validatorCount: 'Activo',
         noValidators: 'Ningún validador activo',
         becomeValidatorText: 'Conviértase en validador apostando 1000+ BRD',
         btnBecomeValidator: '⚡ Convertirse en Validador',
         btnViewStats: '📊 Ver Estadísticas',
+        
+        // Staking
         stakingStatsTitle: '💰 Estadísticas de Staking',
         stakingLive: 'En Vivo',
         loadingStaking: 'Cargando estadísticas de staking...',
@@ -2826,6 +2976,8 @@ function createUserAutomatically(address) {
         totalRewards: 'Recompensas Totales',
         activeStakers: 'Stakers Activos',
         apy: 'APY',
+        
+        // Security Dashboard
         securityDashboardTitle: '🛡️ Panel de Seguridad',
         secure: '🟢 Seguro',
         encryption: 'Cifrado',
@@ -2839,12 +2991,19 @@ function createUserAutomatically(address) {
         btnProtectData: '🔒 Proteger Datos',
         btnVerifyIntegrity: '🌳 Verificar Integridad',
         btnSecurityStatus: '📊 Estado de Seguridad',
+        
+        // Transaction History
         transactionHistoryTitle: 'Historial de Transacciones',
         refresh: '⟳ Actualizar',
         totalTransactions: 'Total de transacciones: ',
         noTransactions: 'No se encontraron transacciones',
         searchHint: 'Use la búsqueda arriba para encontrar transacciones de la billetera',
         searchHint2: '💡 Busque una billetera para ver su historial de transacciones',
+        mineBlock: '⛏️ Minar Bloque',
+        mining: '⛏️ Minando...',
+        blockMined: '✅ Bloque Minado!',
+        
+        // Developer API
         devApiTitle: '👨‍💻 API PARA DESARROLLADORES',
         devApiAvailable: '🟢 Disponible',
         devSdkTitle: '📦 Instalación del SDK',
@@ -2862,6 +3021,8 @@ function createUserAutomatically(address) {
         copyKeys: '📋 Copiar Claves',
         docsLink: '📚 Documentación de la API',
         statusLink: '🩺 Estado de la API',
+        
+        // Tokens
         tokenModalTitle: '🪙 Tokens Bradicoin',
         tokenName: 'Nombre del Token',
         tokenSymbol: 'Símbolo',
@@ -2875,29 +3036,23 @@ function createUserAutomatically(address) {
         tokenPricePlaceholder: 'Ingrese el precio en USD',
         create: 'Crear',
         cancel: 'Cancelar',
+        
+        // ZK-SNARK
+        zkProofTitle: '🔐 Generador de Prueba ZK-SNARK',
+        zkProofDesc: 'Argumento de Conocimiento No Interactivo Sucinto de Conocimiento Cero - Privacidad completa para sus transacciones.',
+        zkProofGenerated: '✅ Prueba ZK-SNARK generada y verificada!',
+        zkProofFailed: '❌ Falló la generación de prueba ZK-SNARK',
+        
+        // Footer
         footerCopyright: '© 2025 Blockchain Bradicoin. Todos los derechos reservados.',
         footerAbout: 'Acerca de',
         footerContact: 'Contacto',
         footerTerms: 'Términos de Uso',
         footerPrivacy: 'Privacidad',
         footerSupport: 'Soporte',
-        errorTitle: 'Cartera No Encontrada',
-        errorMessage: 'La dirección de la billetera que ingresó no existe en la blockchain Bradicoin.',
-        errorTip: '💡 Consejo: Verifique que la dirección sea correcta y vuelva a intentarlo. Asegúrese de que comience con "Br".',
-        errorButton: 'Limpiar búsqueda',
-        mineBlock: '⛏️ Minar Bloque',
-        mining: '⛏️ Minando...',
-        blockMined: '✅ Bloque Minado!',
-        close: '✕ Cerrar',
-        zkProofTitle: '🔐 Generador de Prueba ZK-SNARK',
-        zkProofDesc: 'Argumento de Conocimiento No Interactivo Sucinto de Conocimiento Cero - Privacidad completa para sus transacciones.',
-        zkProofGenerated: '✅ Prueba ZK-SNARK generada y verificada!',
-        zkProofFailed: '❌ Falló la generación de prueba ZK-SNARK',
+        
+        // Pages - About
         pageAbout: 'Acerca de Blockchain Bradicoin',
-        pageContact: 'Contacto Bradicoin',
-        pageTerms: 'Términos de Uso - Gobernanza Descentralizada',
-        pagePrivacy: 'Política de Privacidad - Descentralizada y Segura',
-        pageSupport: 'Centro de Soporte',
         aboutTitle: 'Acerca de Blockchain Bradicoin',
         aboutP1: 'La Blockchain Bradicoin es la infraestructura descentralizada que soporta toda la economía Bradicoin. Construida en un protocolo robusto y altamente escalable, esta blockchain soporta contratos inteligentes, aplicaciones descentralizadas (dApps) y transacciones rápidas y seguras.',
         aboutP2: 'Además de ser la base para Bradicoin como criptomoneda, la Blockchain Bradicoin proporciona un entorno confiable para que los desarrolladores creen soluciones innovadoras, como mercados NFT, redes descentralizadas de inteligencia artificial y sistemas financieros autónomos.',
@@ -2908,6 +3063,9 @@ function createUserAutomatically(address) {
         aboutFeature4: 'Redes de IA',
         aboutFeature5: 'Interoperabilidad',
         aboutFeature6: 'Escalabilidad',
+        
+        // Pages - Contact
+        pageContact: 'Contacto Bradicoin',
         contactTitle: 'Contacto Bradicoin',
         contactP1: 'Para más información sobre Blockchain Bradicoin, asociaciones o soporte técnico, contáctenos a través de los siguientes canales.',
         contactEmail: '📧 Email: contact@bradicoin.com',
@@ -2915,6 +3073,9 @@ function createUserAutomatically(address) {
         contactFormEmail: 'Su Email',
         contactFormMessage: 'Su Mensaje',
         contactFormSend: 'Enviar Mensaje',
+        
+        // Pages - Terms
+        pageTerms: 'Términos de Uso - Gobernanza Descentralizada',
         termsTitle: 'Términos de Uso - Gobernanza Descentralizada',
         termsP1: 'Estos Términos de Uso rigen el uso de la plataforma Blockchain Bradicoin, servicios y aplicaciones descentralizadas. Al usar Bradicoin, usted acepta estos términos.',
         termsSection1: '1. Gobernanza Descentralizada',
@@ -2929,6 +3090,9 @@ function createUserAutomatically(address) {
         termsSection5Text: 'Todas las transacciones y propuestas de gobernanza son públicamente visibles en la blockchain. Bradicoin está comprometido con la transparencia total.',
         termsSection6: '6. Resolución de Disputas',
         termsSection6Text: 'Las disputas se resuelven a través del proceso de gobernanza DAO. Los usuarios pueden presentar propuestas para arbitraje y revisión comunitaria.',
+        
+        // Pages - Privacy
+        pagePrivacy: 'Política de Privacidad - Descentralizada y Segura',
         privacyTitle: 'Política de Privacidad - Descentralizada y Segura',
         privacyP1: 'La Blockchain Bradicoin está construida sobre los principios de descentralización, privacidad y soberanía del usuario. Estamos comprometidos a proteger su privacidad y nunca solicitamos información personal.',
         privacyP2: '🔒 Nuestra blockchain es completamente descentralizada. Nunca pedimos su dirección de billetera, claves privadas o información personal para ningún propósito.',
@@ -2940,6 +3104,9 @@ function createUserAutomatically(address) {
         privacyFeature4: 'Soberanía del Usuario',
         privacyFeature5: 'Transparente',
         privacyFeature6: 'Segura',
+        
+        // Pages - Support
+        pageSupport: 'Centro de Soporte',
         supportTitle: 'Centro de Soporte',
         supportP1: 'El Centro de Soporte Bradicoin está aquí para ayudarlo con cualquier pregunta o problema que pueda encontrar. Nuestra comunidad y equipo de soporte están listos para ayudar.',
         supportFAQ1: '¿Cómo creo una billetera Bradicoin?',
@@ -2958,7 +3125,12 @@ function createUserAutomatically(address) {
         supportDocs: '📚 Visite nuestra Documentación: docs.bradicoin.com',
         supportCommunity: '🌐 Únase a nuestra Comunidad: discord.gg/Bradicoin'
     },
+
+    // ==========================================
+    // 🇸🇦 العربية (ARABIC)
+    // ==========================================
     ar: {
+        // Interface Principal
         pageTitle: 'بلوكشين براديكوين',
         apiChecking: 'جاري التحقق من اتصال API...',
         apiOnline: '✅ API متصلة - متصل ببلوكشين براديكوين',
@@ -2967,11 +3139,6 @@ function createUserAutomatically(address) {
         searchBtn: 'بحث',
         refreshBtn: 'تحديث',
         explorerSearch: 'بلوكشين',
-        tabWallet: '💰 المحفظة',
-        tabStaking: '🔒 التوقيع',
-        tabTransaction: '📜 معاملة',
-        tabBlock: '📦 كتلة',
-        tabToken: '🪙 رمز',
         loading: 'جاري البحث في البلوكشين...',
         searchExample: 'مثال: BrDemo123, BrStaker001',
         invalidAddress: 'الرجاء إدخال عنوان',
@@ -2980,13 +3147,25 @@ function createUserAutomatically(address) {
         walletNotFoundTitle: 'المحفظة غير موجودة',
         walletNotFoundMessage: 'لم يتم العثور على العنوان في بلوكشين براديكوين.',
         walletFound: 'تم العثور على المحفظة',
-        walletCreated: 'محفظة',
+        walletCreated: 'محفظة تم إنشاؤها بـ',
         createdWith: 'تم إنشاؤها بـ',
         clearSearch: 'مسح البحث',
         viewExplorer: 'عرض في المستكشف',
         online: 'متصل',
         offline: 'غير متصل',
         explorer: 'المستكشف',
+        unknown: 'غير معروف',
+        walletNotFound: 'المحفظة غير موجودة',
+        close: '✕ إغلاق',
+        
+        // Tabs
+        tabWallet: '💰 المحفظة',
+        tabStaking: '🔒 التوقيع',
+        tabTransaction: '📜 معاملة',
+        tabBlock: '📦 كتلة',
+        tabToken: '🪙 رمز',
+        
+        // Wallet Info
         userLabel: 'المستخدم',
         addressLabel: 'العنوان',
         balanceLabel: 'الرصيد',
@@ -3007,14 +3186,19 @@ function createUserAutomatically(address) {
         syncSuccess: 'تمت المزامنة!',
         syncError: 'خطأ في المزامنة',
         noWalletSelected: 'لم يتم اختيار محفظة',
+        
+        // Errors
         connectionErrorTitle: 'خطأ في الاتصال',
         connectionErrorMessage: 'تعذر الاتصال بالبلوكشين.',
         checkConnection: 'تحقق من اتصالك بالإنترنت.',
         retryLabel: 'حاول مرة أخرى',
         searchError: 'خطأ في البحث',
-        unknown: 'غير معروف',
-        walletNotFound: 'المحفظة غير موجودة',
-        // FIM DAS NOVAS CHAVES
+        errorTitle: 'المحفظة غير موجودة',
+        errorMessage: 'عنوان المحفظة الذي أدخلته غير موجود في بلوكشين براديكوين.',
+        errorTip: '💡 نصيحة: تحقق من صحة العنوان وحاول مرة أخرى. تأكد من أنه يبدأ بـ "Br".',
+        errorButton: 'مسح البحث',
+        
+        // Navigation Sections
         sectionCore: '🔗 البلوكشين الأساسي',
         sectionMilitary: '🛡️ العسكرية والأمن',
         sectionExploration: '🔍 استكشاف البلوكشين',
@@ -3022,6 +3206,8 @@ function createUserAutomatically(address) {
         sectionIndustries: '🏭 الصناعات',
         sectionWeb3: '🌐 ويب 3 والاستثمارات',
         sectionGovernance: '⚙️ الحوكمة والتحديثات',
+        
+        // Navigation Buttons - Core
         navBlockchainV2: '🔗 البلوكشين V2',
         navExternalAPI: '🌐 واجهة برمجة التطبيقات الخارجية',
         navTransactionHistory: '📜 سجل المعاملات',
@@ -3034,11 +3220,15 @@ function createUserAutomatically(address) {
         navGasTracker: '⛽ متتبع رسوم الغاز',
         navAnalytics: '📈 لوحة التحليلات',
         navFraudDetection: '🚨 كشف الاحتيال',
+        
+        // Navigation Buttons - Military
         navMilitaryC2: '🎖️ القيادة العسكرية C2',
         navAuditVault: '🔒 خزينة التدقيق',
         navCyberThreat: '💀 استخبارات التهديدات السيبرانية',
         navMissionCritical: '⚡ المهمات الحرجة',
         navSecurity: '🛡️ الأمان',
+        
+        // Navigation Buttons - Exploration
         navExploreBlocks: '🔍 استكشاف الكتل',
         navTransactions: '📜 المعاملات',
         navNetworkStatus2: '🌐 حالة الشبكة',
@@ -3048,10 +3238,14 @@ function createUserAutomatically(address) {
         navGasFees: '⛽ رسوم الغاز',
         navAnalytics2: '📈 التحليلات',
         navFraudDetection2: '🚨 كشف الاحتيال',
+        
+        // Navigation Buttons - Emerging Tech
         navSmartContracts: '📝 العقود الذكية',
         navDesci: '🔬 ديسي',
         navHologram: '🌀 الهولوغرام',
         navSpaceSector: '🚀 القطاع الفضائي',
+        
+        // Navigation Buttons - Industries
         navAgriculture: '🌾 الزراعة والأغذية',
         navEntertainment: '🎬 الترفيه',
         navSports: '⚽ الرياضة',
@@ -3060,17 +3254,23 @@ function createUserAutomatically(address) {
         navBiotechnology: '🧬 التكنولوجيا الحيوية',
         navEnergy: '⚡ الطاقة',
         navFinancialMarket: '📈 السوق المالي',
+        
+        // Navigation Buttons - Web3
         navNftExploration: '🎨 استكشاف NFT',
         navCloudMining: '⛏️ التعدين السحابي',
         navRoboticsInvestments: '🤖 استثمارات الروبوتات',
         navDefiProjects: '💎 مشاريع DeFi',
         navMetaverseIntegration: '🌌 تكامل الميتافيرس',
         navDecentralizedPhilanthropy: '❤️ العمل الخيري اللامركزي',
+        
+        // Navigation Buttons - Governance
         navBlockchainUpdate: '🔄 تحديث البلوكشين',
         navDigitalGovernance: '⚖️ الحوكمة الرقمية',
         navCryptoMarketplace: '🏪 سوق العملات المشفرة',
         navAiTech: '🤖 أخبار الذكاء الاصطناعي',
         navBlockchainSecurity: '🔐 أمان البلوكشين',
+        
+        // Network Panel
         networkStatus: 'حالة الشبكة',
         blockchainValid: 'البلوكشين صالح',
         networkMetrics: 'مقاييس الشبكة',
@@ -3114,12 +3314,16 @@ function createUserAutomatically(address) {
         stabilityFund: 'صندوق الاستقرار',
         boughtToday: 'تم الشراء اليوم',
         burnedToday: 'تم الإحراق اليوم',
+        
+        // Validators
         validatorsTitle: '🛡️ المصادقون',
         validatorCount: 'نشط',
         noValidators: 'لا يوجد مصادقون نشطون',
         becomeValidatorText: 'كن مصادقًا عن طريق توقيع 1000+ BRD',
         btnBecomeValidator: '⚡ كن مصادقًا',
         btnViewStats: '📊 عرض الإحصائيات',
+        
+        // Staking
         stakingStatsTitle: '💰 إحصائيات التوقيع',
         stakingLive: 'مباشر',
         loadingStaking: 'جاري تحميل إحصائيات التوقيع...',
@@ -3127,6 +3331,8 @@ function createUserAutomatically(address) {
         totalRewards: 'إجمالي المكافآت',
         activeStakers: 'المستثمرون النشطون',
         apy: 'APY',
+        
+        // Security Dashboard
         securityDashboardTitle: '🛡️ لوحة الأمان',
         secure: '🟢 آمن',
         encryption: 'التشفير',
@@ -3140,12 +3346,19 @@ function createUserAutomatically(address) {
         btnProtectData: '🔒 حماية البيانات',
         btnVerifyIntegrity: '🌳 التحقق من النزاهة',
         btnSecurityStatus: '📊 حالة الأمان',
+        
+        // Transaction History
         transactionHistoryTitle: 'سجل المعاملات',
         refresh: '⟳ تحديث',
         totalTransactions: 'إجمالي المعاملات: ',
         noTransactions: 'لا توجد معاملات',
         searchHint: 'استخدم البحث أعلاه للعثور على معاملات المحفظة',
         searchHint2: '💡 ابحث عن محفظة لرؤية سجل معاملاتها',
+        mineBlock: '⛏️ تعدين كتلة',
+        mining: '⛏️ جاري التعدين...',
+        blockMined: '✅ تم تعدين الكتلة!',
+        
+        // Developer API
         devApiTitle: '👨‍💻 واجهة برمجة التطبيقات للمطورين',
         devApiAvailable: '🟢 متاحة',
         devSdkTitle: '📦 تثبيت SDK',
@@ -3163,6 +3376,8 @@ function createUserAutomatically(address) {
         copyKeys: '📋 نسخ المفاتيح',
         docsLink: '📚 وثائق API',
         statusLink: '🩺 حالة API',
+        
+        // Tokens
         tokenModalTitle: '🪙 رموز براديكوين',
         tokenName: 'اسم الرمز',
         tokenSymbol: 'الرمز',
@@ -3176,29 +3391,23 @@ function createUserAutomatically(address) {
         tokenPricePlaceholder: 'أدخل السعر بالدولار',
         create: 'إنشاء',
         cancel: 'إلغاء',
+        
+        // ZK-SNARK
+        zkProofTitle: '🔐 مولد إثبات ZK-SNARK',
+        zkProofDesc: 'حجة معرفية موجزة غير تفاعلية ذات معرفة صفرية - خصوصية كاملة لمعاملاتك.',
+        zkProofGenerated: '✅ تم إنشاء إثبات ZK-SNARK والتحقق منه!',
+        zkProofFailed: '❌ فشل إنشاء إثبات ZK-SNARK',
+        
+        // Footer
         footerCopyright: '© 2025 بلوكشين براديكوين. جميع الحقوق محفوظة.',
         footerAbout: 'حول',
         footerContact: 'اتصل بنا',
         footerTerms: 'شروط الاستخدام',
         footerPrivacy: 'الخصوصية',
         footerSupport: 'الدعم',
-        errorTitle: 'المحفظة غير موجودة',
-        errorMessage: 'عنوان المحفظة الذي أدخلته غير موجود في بلوكشين براديكوين.',
-        errorTip: '💡 نصيحة: تحقق من صحة العنوان وحاول مرة أخرى. تأكد من أنه يبدأ بـ "Br".',
-        errorButton: 'مسح البحث',
-        mineBlock: '⛏️ تعدين كتلة',
-        mining: '⛏️ جاري التعدين...',
-        blockMined: '✅ تم تعدين الكتلة!',
-        close: '✕ إغلاق',
-        zkProofTitle: '🔐 مولد إثبات ZK-SNARK',
-        zkProofDesc: 'حجة معرفية موجزة غير تفاعلية ذات معرفة صفرية - خصوصية كاملة لمعاملاتك.',
-        zkProofGenerated: '✅ تم إنشاء إثبات ZK-SNARK والتحقق منه!',
-        zkProofFailed: '❌ فشل إنشاء إثبات ZK-SNARK',
+        
+        // Pages - About
         pageAbout: 'حول بلوكشين براديكوين',
-        pageContact: 'اتصل ببراديكوين',
-        pageTerms: 'شروط الاستخدام - الحوكمة اللامركزية',
-        pagePrivacy: 'سياسة الخصوصية - لامركزية وآمنة',
-        pageSupport: 'مركز الدعم',
         aboutTitle: 'حول بلوكشين براديكوين',
         aboutP1: 'بلوكشين براديكوين هي البنية التحتية اللامركزية التي تدعم اقتصاد براديكوين بأكمله. تم بناؤها على بروتوكول قوي وقابل للتوسع بشكل كبير، تدعم هذه البلوكشين العقود الذكية والتطبيقات اللامركزية (dApps) والمعاملات السريعة والآمنة.',
         aboutP2: 'بالإضافة إلى كونها الأساس لعملة براديكوين المشفرة، توفر بلوكشين براديكوين بيئة موثوقة للمطورين لإنشاء حلول مبتكرة، مثل أسواق NFT وشبكات الذكاء الاصطناعي اللامركزية والأنظمة المالية المستقلة.',
@@ -3209,6 +3418,9 @@ function createUserAutomatically(address) {
         aboutFeature4: 'شبكات الذكاء الاصطناعي',
         aboutFeature5: 'التشغيل البيني',
         aboutFeature6: 'قابلية التوسع',
+        
+        // Pages - Contact
+        pageContact: 'اتصل ببراديكوين',
         contactTitle: 'اتصل ببراديكوين',
         contactP1: 'لمزيد من المعلومات حول بلوكشين براديكوين، أو الشراكات، أو الدعم الفني، يرجى التواصل معنا من خلال القنوات أدناه.',
         contactEmail: '📧 البريد الإلكتروني: contact@bradicoin.com',
@@ -3216,6 +3428,9 @@ function createUserAutomatically(address) {
         contactFormEmail: 'بريدك الإلكتروني',
         contactFormMessage: 'رسالتك',
         contactFormSend: 'إرسال الرسالة',
+        
+        // Pages - Terms
+        pageTerms: 'شروط الاستخدام - الحوكمة اللامركزية',
         termsTitle: 'شروط الاستخدام - الحوكمة اللامركزية',
         termsP1: 'تحكم شروط الاستخدام هذه استخدامك لمنصة بلوكشين براديكوين وخدماتها وتطبيقاتها اللامركزية. باستخدام براديكوين، فإنك توافق على هذه الشروط.',
         termsSection1: '1. الحوكمة اللامركزية',
@@ -3230,6 +3445,9 @@ function createUserAutomatically(address) {
         termsSection5Text: 'جميع المعاملات ومقترحات الحوكمة مرئية للجمهور على البلوكشين. يلتزم براديكوين بالشفافية الكاملة.',
         termsSection6: '6. حل النزاعات',
         termsSection6Text: 'يتم حل النزاعات من خلال عملية حوكمة DAO. يمكن للمستخدمين تقديم مقترحات للتحكيم والمراجعة المجتمعية.',
+        
+        // Pages - Privacy
+        pagePrivacy: 'سياسة الخصوصية - لامركزية وآمنة',
         privacyTitle: 'سياسة الخصوصية - لامركزية وآمنة',
         privacyP1: 'تم بناء بلوكشين براديكوين على مبادئ اللامركزية والخصوصية وسيادة المستخدم. نحن ملتزمون بحماية خصوصيتك ولا نطلب معلومات شخصية.',
         privacyP2: '🔒 بلوكشيننا لا مركزية بالكامل. لا نطلب أبدًا عنوان محفظتك أو مفاتيحك الخاصة أو معلومات شخصية لأي غرض.',
@@ -3241,6 +3459,9 @@ function createUserAutomatically(address) {
         privacyFeature4: 'سيادة المستخدم',
         privacyFeature5: 'شفافة',
         privacyFeature6: 'آمنة',
+        
+        // Pages - Support
+        pageSupport: 'مركز الدعم',
         supportTitle: 'مركز الدعم',
         supportP1: 'مركز دعم براديكوين هنا لمساعدتك في أي أسئلة أو مشكلات قد تواجهها. مجتمعنا وفريق الدعم على استعداد للمساعدة.',
         supportFAQ1: 'كيف يمكنني إنشاء محفظة براديكوين؟',
@@ -3260,6 +3481,63 @@ function createUserAutomatically(address) {
         supportCommunity: '🌐 انضم إلى مجتمعنا: discord.gg/Bradicoin'
     }
 };
+
+// ============================================
+// 🌐 FUNÇÃO DE ATUALIZAÇÃO DE IDIOMA
+// ============================================
+
+let currentLang = 'en';
+
+function updateLanguage() {
+    const t = translations[currentLang] || translations.en;
+    
+    // Atualiza elementos com data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) {
+            // Mantém emojis se existirem
+            const emojiMatch = el.textContent.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
+            if (emojiMatch) {
+                el.textContent = emojiMatch[0] + ' ' + t[key];
+            } else {
+                el.textContent = t[key];
+            }
+        }
+    });
+
+    // Atualiza placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (t[key] !== undefined) {
+            el.placeholder = t[key];
+        }
+    });
+
+    // Atualiza título da página
+    document.title = t.pageTitle || 'Bradicoin Blockchain';
+    
+    // Atualiza título principal
+    const pageTitle = document.getElementById('pageTitle');
+    if (pageTitle) pageTitle.textContent = t.pageTitle || 'Bradicoin Blockchain';
+
+    // Atualiza status da API
+    const apiStatusText = document.getElementById('apiStatusText');
+    if (apiStatusText) {
+        const statusEl = document.getElementById('apiStatus');
+        if (statusEl && statusEl.classList.contains('online')) {
+            apiStatusText.textContent = t.apiOnline || '✅ API Online';
+        } else if (statusEl && statusEl.classList.contains('offline')) {
+            apiStatusText.textContent = t.apiOffline || '⚠️ API Offline';
+        } else {
+            apiStatusText.textContent = t.apiChecking || 'Checking API connection...';
+        }
+    }
+
+    // Adiciona classe para RTL (árabe)
+    document.body.classList.toggle('arabic', currentLang === 'ar');
+    
+    console.log(`🌐 Idioma atualizado para: ${currentLang}`);
+}
 
 // ==================== LANGUAGE MANAGER ====================
 let currentLang = 'en';

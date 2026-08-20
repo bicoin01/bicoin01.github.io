@@ -3412,129 +3412,511 @@ function openFeature(featureId) {
     const title = document.getElementById('modalTitle');
     const t = translations[currentLang] || translations.en;
     
+    // Títulos das funcionalidades
     const featureTitles = {
-    // CORE BLOCKCHAIN
-    blockchainV2: t.navBlockchainV2 || '🔗 Blockchain V2',
-    externalAPI: t.navExternalAPI || '🌐 External API',
-    transactionHistory: t.navTransactionHistory || '📜 Transaction History',
-    securityDashboard: t.navSecurityDashboard || '🛡️ Security Dashboard',
-    blockExplorer: t.navBlockExplorer || '📦 Block Explorer',
-    networkStatus: t.navNetworkStatus || '🌐 Network Status',
-    staking: t.navStaking || '💰 Staking & Rewards',
-    governance: t.navGovernance || '🏛️ DAO Governance',
-    auditLogs: t.navAuditLogs || '📊 Audit Logs',
-    gasTracker: t.navGasTracker || '⛽ Gas Fee Tracker',
-    analytics: t.navAnalytics || '📈 Analytics Dashboard',
-    fraudDetection: t.navFraudDetection || '🚨 Fraud Detection',
-    
-    // MILITARY & SECURITY
-    militaryC2: t.navMilitaryC2 || '🎖️ Military C2',
-    auditVault: t.navAuditVault || '🔒 Audit Vault',
-    cyberThreat: t.navCyberThreat || '💀 Cyber Threat Intel',
-    missionCritical: t.navMissionCritical || '⚡ Mission Critical',
-    security: t.navSecurity || '🛡️ Security',
-    
-    // BLOCKCHAIN EXPLORATION
-    exploreBlocks: t.navExploreBlocks || '🔍 Explore Blocks',
-    transactions: t.navTransactions || '📜 Transactions',
-    networkStatus2: t.navNetworkStatus2 || '🌐 Network Status',
-    staking2: t.navStaking2 || '💰 Staking',
-    daoGovernance2: t.navDaoGovernance2 || '🏛️ DAO and Governance',
-    auditLogs2: t.navAuditLogs2 || '📊 Audit Logs',
-    gasFees: t.navGasFees || '⛽ Gas Fees',
-    analytics2: t.navAnalytics2 || '📈 Analytics',
-    fraudDetection2: t.navFraudDetection2 || '🚨 Fraud Detection',
-    
-    // SMART CONTRACTS & EMERGING TECH
-    smartContracts: t.navSmartContracts || '📝 Smart Contracts',
-    desci: t.navDesci || '🔬 Desci',
-    hologram: t.navHologram || '🌀 Hologram',
-    spaceSector: t.navSpaceSector || '🚀 Space Sector',
-    
-    // INDUSTRIES
-    agriculture: t.navAgriculture || '🌾 Agriculture and Food',
-    entertainment: t.navEntertainment || '🎬 Entertainment',
-    sports: t.navSports || '⚽ Sports',
-    infrastructure: t.navInfrastructure || '🏗️ Infrastructure',
-    health: t.navHealth || '🏥 Health',
-    biotechnology: t.navBiotechnology || '🧬 Biotechnology',
-    energy: t.navEnergy || '⚡ Energy',
-    financialMarket: t.navFinancialMarket || '📈 Financial Market',
-    
-    // WEB3 & INVESTMENTS
-    nftExploration: t.navNftExploration || '🎨 NFT Exploration',
-    cloudMining: t.navCloudMining || '⛏️ Cloud Mining',
-    roboticsInvestments: t.navRoboticsInvestments || '🤖 Robotics Investments',
-    defiProjects: t.navDefiProjects || '💎 DeFi Projects',
-    metaverseIntegration: t.navMetaverseIntegration || '🌌 Metaverse Integration',
-    decentralizedPhilanthropy: t.navDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy',
-    
-    // GOVERNANCE & UPDATES
-    blockchainUpdate: t.navBlockchainUpdate || '🔄 Blockchain Update',
-    digitalGovernance: t.navDigitalGovernance || '⚖️ Digital Governance',
-    cryptoMarketplace: t.navCryptoMarketplace || '🏪 Cryptocurrency Marketplace',
-    aiTech: t.navAiTech || '🤖 Artificial Intelligence News',
-    blockchainSecurity: t.navBlockchainSecurity || '🔐 Blockchain Security'
-};
+        blockchainV2: t.navBlockchainV2 || '🔗 Blockchain V2',
+        externalAPI: t.navExternalAPI || '🌐 External API',
+        transactionHistory: t.navTransactionHistory || '📜 Transaction History',
+        securityDashboard: t.navSecurityDashboard || '🛡️ Security Dashboard',
+        blockExplorer: t.navBlockExplorer || '📦 Block Explorer',
+        networkStatus: t.navNetworkStatus || '🌐 Network Status',
+        staking: t.navStaking || '💰 Staking & Rewards',
+        governance: t.navGovernance || '🏛️ DAO Governance',
+        auditLogs: t.navAuditLogs || '📊 Audit Logs',
+        gasTracker: t.navGasTracker || '⛽ Gas Fee Tracker',
+        analytics: t.navAnalytics || '📈 Analytics Dashboard',
+        fraudDetection: t.navFraudDetection || '🚨 Fraud Detection',
+        militaryC2: t.navMilitaryC2 || '🎖️ Military C2',
+        auditVault: t.navAuditVault || '🔒 Audit Vault',
+        cyberThreat: t.navCyberThreat || '💀 Cyber Threat Intel',
+        missionCritical: t.navMissionCritical || '⚡ Mission Critical',
+        security: t.navSecurity || '🛡️ Security',
+        exploreBlocks: t.navExploreBlocks || '🔍 Explore Blocks',
+        transactions: t.navTransactions || '📜 Transactions',
+        networkStatus2: t.navNetworkStatus2 || '🌐 Network Status',
+        staking2: t.navStaking2 || '💰 Staking',
+        daoGovernance2: t.navDaoGovernance2 || '🏛️ DAO and Governance',
+        auditLogs2: t.navAuditLogs2 || '📊 Audit Logs',
+        gasFees: t.navGasFees || '⛽ Gas Fees',
+        analytics2: t.navAnalytics2 || '📈 Analytics',
+        fraudDetection2: t.navFraudDetection2 || '🚨 Fraud Detection',
+        smartContracts: t.navSmartContracts || '📝 Smart Contracts',
+        desci: t.navDesci || '🔬 Desci',
+        hologram: t.navHologram || '🌀 Hologram',
+        spaceSector: t.navSpaceSector || '🚀 Space Sector',
+        agriculture: t.navAgriculture || '🌾 Agriculture and Food',
+        entertainment: t.navEntertainment || '🎬 Entertainment',
+        sports: t.navSports || '⚽ Sports',
+        infrastructure: t.navInfrastructure || '🏗️ Infrastructure',
+        health: t.navHealth || '🏥 Health',
+        biotechnology: t.navBiotechnology || '🧬 Biotechnology',
+        energy: t.navEnergy || '⚡ Energy',
+        financialMarket: t.navFinancialMarket || '📈 Financial Market',
+        nftExploration: t.navNftExploration || '🎨 NFT Exploration',
+        cloudMining: t.navCloudMining || '⛏️ Cloud Mining',
+        roboticsInvestments: t.navRoboticsInvestments || '🤖 Robotics Investments',
+        defiProjects: t.navDefiProjects || '💎 DeFi Projects',
+        metaverseIntegration: t.navMetaverseIntegration || '🌌 Metaverse Integration',
+        decentralizedPhilanthropy: t.navDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy',
+        blockchainUpdate: t.navBlockchainUpdate || '🔄 Blockchain Update',
+        digitalGovernance: t.navDigitalGovernance || '⚖️ Digital Governance',
+        cryptoMarketplace: t.navCryptoMarketplace || '🏪 Cryptocurrency Marketplace',
+        aiTech: t.navAiTech || '🤖 Artificial Intelligence News',
+        blockchainSecurity: t.navBlockchainSecurity || '🔐 Blockchain Security'
+    };
     
     title.textContent = featureTitles[featureId] || featureId;
     
-    if (featureId === 'securityDashboard' || featureId === 'security') {
-        body.innerHTML = `
-            <h2>${featureTitles[featureId]}</h2>
-            <div class="feature-stats">
-                <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Secure</div></div>
-                <div class="feature-stat-card"><div class="stat-label">ZK-SNARK</div><div class="stat-value purple">✅ Active</div></div>
-                <div class="feature-stat-card"><div class="stat-label">Encryption</div><div class="stat-value cyan">AES-256</div></div>
-                <div class="feature-stat-card"><div class="stat-label">2FA</div><div class="stat-value yellow">Available</div></div>
-            </div>
-            <div style="background:rgba(200,100,255,0.1);border:1px solid #c864ff;border-radius:8px;padding:20px;margin:15px 0;">
-                <h3 style="color:#c864ff;margin-bottom:10px;">🔐 ${t.zkProofTitle || 'ZK-SNARK Proof Generator'}</h3>
-                <p style="color:#aaa;font-size:13px;">${t.zkProofDesc || 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge - Complete privacy for your transactions.'}</p>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:15px;font-size:12px;">
-                    <div><span style="color:#888;">Proof Type:</span> <span style="color:#00ccff;">Groth16</span></div>
-                    <div><span style="color:#888;">Curve:</span> <span style="color:#c864ff;">BN254</span></div>
-                    <div><span style="color:#888;">Verification:</span> <span style="color:#00ff66;">✅ Passed</span></div>
-                    <div><span style="color:#888;">Circuit Size:</span> <span style="color:#00ccff;">${Math.floor(Math.random() * 100000 + 50000)}</span></div>
-                    <div><span style="color:#888;">Prover Time:</span> <span style="color:#c864ff;">${(Math.random() * 2 + 0.5).toFixed(2)}s</span></div>
-                    <div><span style="color:#888;">Verifier Time:</span> <span style="color:#00ff66;">${(Math.random() * 0.5 + 0.1).toFixed(2)}s</span></div>
-                </div>
-                <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
-                    <button class="feature-btn" onclick="generateZKProof()">🔐 Generate ZK-Proof</button>
-                    <button class="feature-btn magenta" onclick="showNotification('🔍 ZK-Proof verified successfully!', '#c864ff')">✅ Verify Proof</button>
-                </div>
-            </div>
-            <button class="feature-btn" onclick="testSecurity()">🔐 Test Security</button>
-            <button class="feature-btn green" onclick="showNotification('🛡️ Security audit complete', '#00ff66')">🛡️ Run Audit</button>
-        `;
-    } else {
-        body.innerHTML = `
-            <div style="text-align:center;padding:40px;">
-                <div style="font-size:4rem;margin-bottom:20px;">${featureTitles[featureId]?.match(/^([^\s]+)/)?.[1] || '🔗'}</div>
-                <h3>${featureTitles[featureId] || featureId}</h3>
-                <p style="color:#888;margin:20px 0;">${t.loading || 'Loading feature data...'}</p>
+    // ==========================================
+    // CONTEÚDO PARA CADA FUNCIONALIDADE
+    // ==========================================
+    let content = '';
+    
+    switch(featureId) {
+        // ==========================================
+        // CORE BLOCKCHAIN
+        // ==========================================
+        case 'blockchainV2':
+            content = `
+                <h2>🔗 Blockchain V2</h2>
+                <p>A Bradicoin Blockchain V2 é a evolução da nossa infraestrutura descentralizada, trazendo melhorias significativas em:</p>
                 <div class="feature-stats">
-                    <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Active</div></div>
-                    <div class="feature-stat-card"><div class="stat-label">Version</div><div class="stat-value cyan">v2.4.1</div></div>
-                    <div class="feature-stat-card"><div class="stat-label">Performance</div><div class="stat-value magenta">98%</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Velocidade</div><div class="stat-value green">2.5x mais rápida</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Segurança</div><div class="stat-value cyan">AES-256 + ZK-SNARK</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Escalabilidade</div><div class="stat-value magenta">100K TPS</div></div>
                 </div>
-                <div class="highlight-box">✅ Feature ready for use</div>
-                <button class="feature-btn" onclick="showNotification('✅ Feature activated!', '#00ff66')">🚀 Activate</button>
-            </div>
-        `;
+                <div class="highlight-box">✅ Nova arquitetura de consenso híbrido (PoW + PoS)</div>
+                <ul>
+                    <li>⛏️ Mineração com Proof of Stake</li>
+                    <li>🔐 ZK-SNARK para privacidade total</li>
+                    <li>⚡ Transações em menos de 2 segundos</li>
+                    <li>🌐 Interoperabilidade com Ethereum e outras blockchains</li>
+                </ul>
+                <button class="feature-btn" onclick="showNotification('🚀 Blockchain V2 ativada!', '#00ff66')">🚀 Ativar V2</button>
+            `;
+            break;
+            
+        case 'externalAPI':
+            content = `
+                <h2>🌐 External API</h2>
+                <p>API RESTful completa para integração com a Bradicoin Blockchain.</p>
+                <div class="highlight-box">📡 Endpoints disponíveis:</div>
+                <div class="metric-card">
+                    <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color:#00ccff;">/api/balance/:address</span></div>
+                    <div class="metric-row"><span class="metric-label">POST</span><span class="metric-value" style="color:#00ccff;">/api/register</span></div>
+                    <div class="metric-row"><span class="metric-label">POST</span><span class="metric-value" style="color:#00ccff;">/api/send</span></div>
+                    <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color:#00ccff;">/api/health</span></div>
+                    <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color:#00ccff;">/api/staking/:address</span></div>
+                </div>
+                <button class="feature-btn" onclick="window.open('https://bradicoin-api.onrender.com/', '_blank')">📚 Ver Documentação</button>
+            `;
+            break;
+            
+        case 'transactionHistory':
+            content = `
+                <h2>📜 Transaction History</h2>
+                <p>Visualize todo o histórico de transações da Bradicoin Blockchain.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Total TX</div><div class="stat-value cyan">${blockchainDB.transactionCount || 0}</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Pendentes</div><div class="stat-value yellow">${blockchainDB.pendingTransactions ? blockchainDB.pendingTransactions.length : 0}</div></div>
+                </div>
+                <div class="highlight-box green">🔄 As transações são confirmadas em menos de 5 segundos</div>
+                <button class="feature-btn" onclick="loadRealTransactions();showNotification('📜 Histórico atualizado!', '#00ff66')">🔄 Atualizar</button>
+            `;
+            break;
+            
+        case 'securityDashboard':
+            content = `
+                <h2>🛡️ Security Dashboard</h2>
+                <p>Monitoramento de segurança em tempo real com tecnologia ZK-SNARK.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Seguro</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">ZK-SNARK</div><div class="stat-value purple">✅ Ativo</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Criptografia</div><div class="stat-value cyan">AES-256</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">2FA</div><div class="stat-value yellow">Disponível</div></div>
+                </div>
+                <div style="background:rgba(200,100,255,0.1);border:1px solid #c864ff;border-radius:8px;padding:20px;margin:15px 0;">
+                    <h3 style="color:#c864ff;margin-bottom:10px;">🔐 ZK-SNARK Verifier</h3>
+                    <p style="color:#aaa;font-size:13px;">Provas de conhecimento zero para privacidade total das transações.</p>
+                    <button class="feature-btn" onclick="generateZKProof()">🔐 Gerar ZK-Proof</button>
+                </div>
+            `;
+            break;
+            
+        case 'blockExplorer':
+            content = `
+                <h2>📦 Block Explorer</h2>
+                <p>Explore todos os blocos da Bradicoin Blockchain.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Total Blocos</div><div class="stat-value cyan">${blockchainDB.blocks ? blockchainDB.blocks.length : 0}</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Último Bloco</div><div class="stat-value magenta">#${blockchainDB.blocks ? blockchainDB.blocks.length - 1 : 0}</div></div>
+                </div>
+                <button class="feature-btn" onclick="window.open('https://bradicoin-api.onrender.com/explorer', '_blank')">🔍 Abrir Explorer</button>
+            `;
+            break;
+            
+        case 'networkStatus':
+        case 'networkStatus2':
+            content = `
+                <h2>🌐 Network Status</h2>
+                <p>Status em tempo real da rede Bradicoin.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Nós Online</div><div class="stat-value green">${Math.floor(Math.random() * 50 + 30)}</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Validadores</div><div class="stat-value cyan">${blockchainDB.validators ? blockchainDB.validators.length : 0}</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Saúde da Rede</div><div class="stat-value green">98.7%</div></div>
+                </div>
+                <div class="highlight-box">🟢 Blockchain validada e funcionando</div>
+            `;
+            break;
+            
+        case 'staking':
+        case 'staking2':
+            content = `
+                <h2>💰 Staking & Rewards</h2>
+                <p>Ganhe recompensas passivas com staking de BRD.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">APY</div><div class="stat-value green">18%</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Total Staked</div><div class="stat-value yellow">${Object.values(blockchainDB.stakingPositions || {}).reduce((sum, p) => sum + (p.amount || 0), 0).toFixed(2)} BRD</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Stakers</div><div class="stat-value magenta">${Object.keys(blockchainDB.stakingPositions || {}).length}</div></div>
+                </div>
+                <div class="highlight-box green">💰 Recompensas distribuídas automaticamente a cada hora</div>
+                <button class="feature-btn" onclick="document.getElementById('tabStaking').click()">🔒 Ir para Staking</button>
+            `;
+            break;
+            
+        case 'governance':
+        case 'daoGovernance2':
+            content = `
+                <h2>🏛️ DAO Governance</h2>
+                <p>Participe das decisões da Bradicoin através da governança descentralizada.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Propostas</div><div class="stat-value cyan">${blockchainDB.governanceProposals ? blockchainDB.governanceProposals.length : 0}</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Aprovadas</div><div class="stat-value green">${blockchainDB.governanceProposals ? blockchainDB.governanceProposals.filter(p => p.status === 'passed').length : 0}</div></div>
+                </div>
+                <button class="feature-btn" onclick="createProposal()">📝 Criar Proposta</button>
+                <button class="feature-btn magenta" onclick="showProposals()">📋 Ver Propostas</button>
+            `;
+            break;
+            
+        case 'auditLogs':
+        case 'auditLogs2':
+            content = `
+                <h2>📊 Audit Logs</h2>
+                <p>Registros completos de todas as atividades da blockchain.</p>
+                <div class="highlight-box">🔍 Todos os eventos são registrados e imutáveis</div>
+                <ul>
+                    <li>🔐 Transações registradas</li>
+                    <li>⛏️ Blocos minerados</li>
+                    <li>💳 Transferências</li>
+                    <li>🔒 Staking e unstaking</li>
+                </ul>
+            `;
+            break;
+            
+        case 'gasTracker':
+        case 'gasFees':
+            content = `
+                <h2>⛽ Gas Fee Tracker</h2>
+                <p>Acompanhe as taxas de gas em tempo real.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Gas Base</div><div class="stat-value cyan">0.001 BRD</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Gas Médio</div><div class="stat-value yellow">0.015 BRD</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Gas Alto</div><div class="stat-value magenta">0.05 BRD</div></div>
+                </div>
+            `;
+            break;
+            
+        case 'analytics':
+        case 'analytics2':
+            content = `
+                <h2>📈 Analytics Dashboard</h2>
+                <p>Análise completa da atividade da blockchain.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">TPS</div><div class="stat-value green">0.5</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Volume 24h</div><div class="stat-value cyan">$45M</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Fees Today</div><div class="stat-value yellow">$125K</div></div>
+                </div>
+            `;
+            break;
+            
+        case 'fraudDetection':
+        case 'fraudDetection2':
+            content = `
+                <h2>🚨 Fraud Detection</h2>
+                <p>Sistema inteligente de detecção de fraudes em tempo real.</p>
+                <div class="highlight-box green">🟢 Nenhuma fraude detectada</div>
+                <ul>
+                    <li>✅ Monitoramento 24/7</li>
+                    <li>🔍 Análise de padrões suspeitos</li>
+                    <li>🛡️ Proteção contra ataques</li>
+                </ul>
+            `;
+            break;
+            
+        // ==========================================
+        // MILITARY & SECURITY
+        // ==========================================
+        case 'militaryC2':
+            content = `
+                <h2>🎖️ Military C2</h2>
+                <p>Comando e controle militar para operações seguras na blockchain.</p>
+                <div class="highlight-box red">🔒 Nível de segurança: MÁXIMO</div>
+                <ul>
+                    <li>🛡️ Comunicação criptografada</li>
+                    <li>🔐 Autenticação multifator</li>
+                    <li>⚡ Resposta rápida a ameaças</li>
+                </ul>
+            `;
+            break;
+            
+        case 'auditVault':
+            content = `
+                <h2>🔒 Audit Vault</h2>
+                <p>Cofre de auditoria com registros imutáveis.</p>
+                <div class="highlight-box">📊 Todos os logs são armazenados de forma segura</div>
+            `;
+            break;
+            
+        case 'cyberThreat':
+            content = `
+                <h2>💀 Cyber Threat Intel</h2>
+                <p>Inteligência de ameaças cibernéticas em tempo real.</p>
+                <div class="highlight-box green">🟢 Nenhuma ameaça ativa detectada</div>
+            `;
+            break;
+            
+        case 'missionCritical':
+            content = `
+                <h2>⚡ Mission Critical</h2>
+                <p>Sistemas críticos da Bradicoin Blockchain.</p>
+                <div class="feature-stats">
+                    <div class="feature-stat-card"><div class="stat-label">Uptime</div><div class="stat-value green">99.99%</div></div>
+                    <div class="feature-stat-card"><div class="stat-label">Disponibilidade</div><div class="stat-value cyan">24/7</div></div>
+                </div>
+            `;
+            break;
+            
+        case 'security':
+            content = `
+                <h2>🛡️ Security</h2>
+                <p>Camadas de segurança da Bradicoin Blockchain.</p>
+                <ul>
+                    <li>🔐 AES-256 Encryption</li>
+                    <li>🛡️ ZK-SNARK Privacy</li>
+                    <li>🔒 Multi-Sig Wallets</li>
+                    <li>🕵️ Stealth Mode</li>
+                </ul>
+            `;
+            break;
+            
+        // ==========================================
+        // SMART CONTRACTS & EMERGING TECH
+        // ==========================================
+        case 'smartContracts':
+            content = `
+                <h2>📝 Smart Contracts</h2>
+                <p>Execute contratos inteligentes de forma segura e descentralizada.</p>
+                <div class="highlight-box">✅ Suporte a contratos Ethereum-compatible</div>
+            `;
+            break;
+            
+        case 'desci':
+            content = `
+                <h2>🔬 Desci</h2>
+                <p>Ciência descentralizada para pesquisa e inovação.</p>
+                <div class="highlight-box">🧬 Democratizando o acesso à pesquisa científica</div>
+            `;
+            break;
+            
+        case 'hologram':
+            content = `
+                <h2>🌀 Hologram</h2>
+                <p>Tecnologia holográfica para visualização de dados blockchain.</p>
+            `;
+            break;
+            
+        case 'spaceSector':
+            content = `
+                <h2>🚀 Space Sector</h2>
+                <p>Aplicações blockchain para o setor espacial.</p>
+                <div class="highlight-box">🌍 Conectando a blockchain com o espaço</div>
+            `;
+            break;
+            
+        // ==========================================
+        // INDUSTRIES
+        // ==========================================
+        case 'agriculture':
+            content = `
+                <h2>🌾 Agriculture and Food</h2>
+                <p>Rastreabilidade e transparência na cadeia alimentar.</p>
+                <div class="highlight-box green">🌱 Da fazenda à mesa com total transparência</div>
+            `;
+            break;
+            
+        case 'entertainment':
+            content = `
+                <h2>🎬 Entertainment</h2>
+                <p>Distribuição de conteúdo e royalties via blockchain.</p>
+            `;
+            break;
+            
+        case 'sports':
+            content = `
+                <h2>⚽ Sports</h2>
+                <p>Fan tokens, ingressos NFT e muito mais.</p>
+            `;
+            break;
+            
+        case 'infrastructure':
+            content = `
+                <h2>🏗️ Infrastructure</h2>
+                <p>Blockchain para infraestrutura crítica.</p>
+            `;
+            break;
+            
+        case 'health':
+            content = `
+                <h2>🏥 Health</h2>
+                <p>Prontuários médicos seguros e interoperáveis.</p>
+            `;
+            break;
+            
+        case 'biotechnology':
+            content = `
+                <h2>🧬 Biotechnology</h2>
+                <p>Pesquisa genética e dados biomédicos descentralizados.</p>
+            `;
+            break;
+            
+        case 'energy':
+            content = `
+                <h2>⚡ Energy</h2>
+                <p>Comércio de energia renovável e créditos de carbono.</p>
+            `;
+            break;
+            
+        case 'financialMarket':
+            content = `
+                <h2>📈 Financial Market</h2>
+                <p>DeFi, empréstimos, derivativos e muito mais.</p>
+            `;
+            break;
+            
+        // ==========================================
+        // WEB3 & INVESTMENTS
+        // ==========================================
+        case 'nftExploration':
+            content = `
+                <h2>🎨 NFT Exploration</h2>
+                <p>Explore e negocie NFTs na Bradicoin.</p>
+                <button class="feature-btn" onclick="openTokenModal()">🪙 Ver Tokens</button>
+            `;
+            break;
+            
+        case 'cloudMining':
+            content = `
+                <h2>⛏️ Cloud Mining</h2>
+                <p>Mine BRD sem a necessidade de hardware especializado.</p>
+            `;
+            break;
+            
+        case 'roboticsInvestments':
+            content = `
+                <h2>🤖 Robotics Investments</h2>
+                <p>Invista em robótica e automação via blockchain.</p>
+            `;
+            break;
+            
+        case 'defiProjects':
+            content = `
+                <h2>💎 DeFi Projects</h2>
+                <p>Explore projetos DeFi na Bradicoin.</p>
+            `;
+            break;
+            
+        case 'metaverseIntegration':
+            content = `
+                <h2>🌌 Metaverse Integration</h2>
+                <p>Conecte a blockchain com o metaverso.</p>
+            `;
+            break;
+            
+        case 'decentralizedPhilanthropy':
+            content = `
+                <h2>❤️ Decentralized Philanthropy</h2>
+                <p>Doações transparentes e rastreáveis.</p>
+            `;
+            break;
+            
+        // ==========================================
+        // GOVERNANCE & UPDATES
+        // ==========================================
+        case 'blockchainUpdate':
+            content = `
+                <h2>🔄 Blockchain Update</h2>
+                <p>Últimas atualizações da Bradicoin Blockchain.</p>
+                <div class="highlight-box">📦 Versão atual: v2.4.1</div>
+                <ul>
+                    <li>✅ Gráficos Cyberpunk adicionados</li>
+                    <li>✅ ZK-SNARK implementado</li>
+                    <li>✅ Staking 18% APY</li>
+                </ul>
+            `;
+            break;
+            
+        case 'digitalGovernance':
+            content = `
+                <h2>⚖️ Digital Governance</h2>
+                <p>Governança digital descentralizada.</p>
+            `;
+            break;
+            
+        case 'cryptoMarketplace':
+            content = `
+                <h2>🏪 Cryptocurrency Marketplace</h2>
+                <p>Marketplace de criptomoedas na Bradicoin.</p>
+            `;
+            break;
+            
+        case 'aiTech':
+            content = `
+                <h2>🤖 Artificial Intelligence News</h2>
+                <p>Últimas notícias sobre IA e blockchain.</p>
+            `;
+            break;
+            
+        case 'blockchainSecurity':
+            content = `
+                <h2>🔐 Blockchain Security</h2>
+                <p>Segurança avançada para a Bradicoin Blockchain.</p>
+                <div class="highlight-box green">🟢 Sistema seguro e validado</div>
+            `;
+            break;
+            
+        // ==========================================
+        // DEFAULT
+        // ==========================================
+        default:
+            content = `
+                <div style="text-align:center;padding:40px;">
+                    <div style="font-size:4rem;margin-bottom:20px;">${featureTitles[featureId]?.match(/^([^\s]+)/)?.[1] || '🔗'}</div>
+                    <h3>${featureTitles[featureId] || featureId}</h3>
+                    <p style="color:#888;margin:20px 0;">${t.loading || 'Carregando dados...'}</p>
+                    <div class="feature-stats">
+                        <div class="feature-stat-card"><div class="stat-label">Status</div><div class="stat-value green">🟢 Ativo</div></div>
+                        <div class="feature-stat-card"><div class="stat-label">Versão</div><div class="stat-value cyan">v2.4.1</div></div>
+                        <div class="feature-stat-card"><div class="stat-label">Performance</div><div class="stat-value magenta">98%</div></div>
+                    </div>
+                    <div class="highlight-box">✅ Funcionalidade pronta para uso</div>
+                    <button class="feature-btn" onclick="showNotification('✅ Funcionalidade ativada!', '#00ff66')">🚀 Ativar</button>
+                </div>
+            `;
+            break;
     }
+    
+    body.innerHTML = content;
     modal.style.display = 'block';
-}
-
-function closeModalAndGoHome() {
-    document.getElementById('featureModal').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function goHome() {
-    closeModalAndGoHome();
-    document.getElementById('tokenModal').style.display = 'none';
-    document.getElementById('pageModal').style.display = 'none';
 }
 
 // ==================== ZK-SNARK REAL FUNCTION ====================

@@ -3413,56 +3413,69 @@ function openFeature(featureId) {
     const t = translations[currentLang] || translations.en;
     
     const featureTitles = {
-        blockchainV2: t.navBlockchainV2 || '🔗 Blockchain V2',
-        externalAPI: t.navExternalAPI || '🌐 External API',
-        transactionHistory: t.navTransactionHistory || '📜 Transaction History',
-        securityDashboard: t.navSecurityDashboard || '🛡️ Security Dashboard',
-        blockExplorer: t.navBlockExplorer || '📦 Block Explorer',
-        networkStatus: t.navNetworkStatus || '🌐 Network Status',
-        staking: t.navStaking || '💰 Staking & Rewards',
-        governance: t.navGovernance || '🏛️ DAO Governance',
-        auditLogs: t.navAuditLogs || '📊 Audit Logs',
-        gasTracker: t.navGasTracker || '⛽ Gas Fee Tracker',
-        analytics: t.navAnalytics || '📈 Analytics Dashboard',
-        fraudDetection: t.navFraudDetection || '🚨 Fraud Detection',
-        militaryC2: t.navMilitaryC2 || '🎖️ Military C2',
-        auditVault: t.navAuditVault || '🔒 Audit Vault',
-        cyberThreat: t.navCyberThreat || '💀 Cyber Threat Intel',
-        missionCritical: t.navMissionCritical || '⚡ Mission Critical',
-        security: t.navSecurity || '🛡️ Security',
-        exploreBlocks: t.navExploreBlocks || '🔍 Explore Blocks',
-        transactions: t.navTransactions || '📜 Transactions',
-        networkStatus2: t.navNetworkStatus2 || '🌐 Network Status',
-        staking2: t.navStaking2 || '💰 Staking',
-        daoGovernance2: t.navDaoGovernance2 || '🏛️ DAO and Governance',
-        auditLogs2: t.navAuditLogs2 || '📊 Audit Logs',
-        gasFees: t.navGasFees || '⛽ Gas Fees',
-        analytics2: t.navAnalytics2 || '📈 Analytics',
-        fraudDetection2: t.navFraudDetection2 || '🚨 Fraud Detection',
-        smartContracts: t.navSmartContracts || '📝 Smart Contracts',
-        desci: t.navDesci || '🔬 Desci',
-        hologram: t.navHologram || '🌀 Hologram',
-        spaceSector: t.navSpaceSector || '🚀 Space Sector',
-        agriculture: t.navAgriculture || '🌾 Agriculture and Food',
-        entertainment: t.navEntertainment || '🎬 Entertainment',
-        sports: t.navSports || '⚽ Sports',
-        infrastructure: t.navInfrastructure || '🏗️ Infrastructure',
-        health: t.navHealth || '🏥 Health',
-        biotechnology: t.navBiotechnology || '🧬 Biotechnology',
-        energy: t.navEnergy || '⚡ Energy',
-        financialMarket: t.navFinancialMarket || '📈 Financial Market',
-        nftExploration: t.navNftExploration || '🎨 NFT Exploration',
-        cloudMining: t.navCloudMining || '⛏️ Cloud Mining',
-        roboticsInvestments: t.navRoboticsInvestments || '🤖 Robotics Investments',
-        defiProjects: t.navDefiProjects || '💎 DeFi Projects',
-        metaverseIntegration: t.navMetaverseIntegration || '🌌 Metaverse Integration',
-        decentralizedPhilanthropy: t.navDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy',
-        blockchainUpdate: t.navBlockchainUpdate || '🔄 Blockchain Update',
-        digitalGovernance: t.navDigitalGovernance || '⚖️ Digital Governance',
-        cryptoMarketplace: t.navCryptoMarketplace || '🏪 Cryptocurrency Marketplace',
-        aiTech: t.navAiTech || '🤖 AI News',
-        blockchainSecurity: t.navBlockchainSecurity || '🔐 Blockchain Security'
-    };
+    // CORE BLOCKCHAIN
+    blockchainV2: t.navBlockchainV2 || '🔗 Blockchain V2',
+    externalAPI: t.navExternalAPI || '🌐 External API',
+    transactionHistory: t.navTransactionHistory || '📜 Transaction History',
+    securityDashboard: t.navSecurityDashboard || '🛡️ Security Dashboard',
+    blockExplorer: t.navBlockExplorer || '📦 Block Explorer',
+    networkStatus: t.navNetworkStatus || '🌐 Network Status',
+    staking: t.navStaking || '💰 Staking & Rewards',
+    governance: t.navGovernance || '🏛️ DAO Governance',
+    auditLogs: t.navAuditLogs || '📊 Audit Logs',
+    gasTracker: t.navGasTracker || '⛽ Gas Fee Tracker',
+    analytics: t.navAnalytics || '📈 Analytics Dashboard',
+    fraudDetection: t.navFraudDetection || '🚨 Fraud Detection',
+    
+    // MILITARY & SECURITY
+    militaryC2: t.navMilitaryC2 || '🎖️ Military C2',
+    auditVault: t.navAuditVault || '🔒 Audit Vault',
+    cyberThreat: t.navCyberThreat || '💀 Cyber Threat Intel',
+    missionCritical: t.navMissionCritical || '⚡ Mission Critical',
+    security: t.navSecurity || '🛡️ Security',
+    
+    // BLOCKCHAIN EXPLORATION
+    exploreBlocks: t.navExploreBlocks || '🔍 Explore Blocks',
+    transactions: t.navTransactions || '📜 Transactions',
+    networkStatus2: t.navNetworkStatus2 || '🌐 Network Status',
+    staking2: t.navStaking2 || '💰 Staking',
+    daoGovernance2: t.navDaoGovernance2 || '🏛️ DAO and Governance',
+    auditLogs2: t.navAuditLogs2 || '📊 Audit Logs',
+    gasFees: t.navGasFees || '⛽ Gas Fees',
+    analytics2: t.navAnalytics2 || '📈 Analytics',
+    fraudDetection2: t.navFraudDetection2 || '🚨 Fraud Detection',
+    
+    // SMART CONTRACTS & EMERGING TECH
+    smartContracts: t.navSmartContracts || '📝 Smart Contracts',
+    desci: t.navDesci || '🔬 Desci',
+    hologram: t.navHologram || '🌀 Hologram',
+    spaceSector: t.navSpaceSector || '🚀 Space Sector',
+    
+    // INDUSTRIES
+    agriculture: t.navAgriculture || '🌾 Agriculture and Food',
+    entertainment: t.navEntertainment || '🎬 Entertainment',
+    sports: t.navSports || '⚽ Sports',
+    infrastructure: t.navInfrastructure || '🏗️ Infrastructure',
+    health: t.navHealth || '🏥 Health',
+    biotechnology: t.navBiotechnology || '🧬 Biotechnology',
+    energy: t.navEnergy || '⚡ Energy',
+    financialMarket: t.navFinancialMarket || '📈 Financial Market',
+    
+    // WEB3 & INVESTMENTS
+    nftExploration: t.navNftExploration || '🎨 NFT Exploration',
+    cloudMining: t.navCloudMining || '⛏️ Cloud Mining',
+    roboticsInvestments: t.navRoboticsInvestments || '🤖 Robotics Investments',
+    defiProjects: t.navDefiProjects || '💎 DeFi Projects',
+    metaverseIntegration: t.navMetaverseIntegration || '🌌 Metaverse Integration',
+    decentralizedPhilanthropy: t.navDecentralizedPhilanthropy || '❤️ Decentralized Philanthropy',
+    
+    // GOVERNANCE & UPDATES
+    blockchainUpdate: t.navBlockchainUpdate || '🔄 Blockchain Update',
+    digitalGovernance: t.navDigitalGovernance || '⚖️ Digital Governance',
+    cryptoMarketplace: t.navCryptoMarketplace || '🏪 Cryptocurrency Marketplace',
+    aiTech: t.navAiTech || '🤖 Artificial Intelligence News',
+    blockchainSecurity: t.navBlockchainSecurity || '🔐 Blockchain Security'
+};
     
     title.textContent = featureTitles[featureId] || featureId;
     

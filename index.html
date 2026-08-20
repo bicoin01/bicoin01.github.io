@@ -6,6 +6,7 @@
     <title>Bradicoin Blockchain - Complete Platform</title>
     <meta name="description" content="Complete Bradicoin blockchain platform with 50+ integrated features">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -705,6 +706,211 @@
         .zk-badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 9px; font-weight: bold; background: rgba(200,100,255,0.2); border: 1px solid #c864ff; color: #c864ff; }
         .tx-search-btn { background: rgba(0,200,255,0.1); border: 1px solid #00ccff; color: #00ccff; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', monospace; font-size: 10px; transition: all 0.3s ease; }
         .tx-search-btn:hover { background: #00ccff; color: #000; box-shadow: 0 0 20px rgba(0,200,255,0.3); }
+           
+           /* ==========================================
+           📊 GRÁFICOS - ESTILO CYBERPUNK FUTURISTA
+           ========================================== */
+
+        /* Container do gráfico */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.05), inset 0 0 60px rgba(0, 255, 255, 0.02);
+        }
+
+        /* Efeito de brilho no container */
+        .chart-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.03) 0%, transparent 70%);
+            animation: chartGlow 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes chartGlow {
+            0%, 100% { transform: rotate(0deg); opacity: 0.5; }
+            50% { transform: rotate(180deg); opacity: 1; }
+        }
+
+        /* Título do gráfico */
+        .chart-title {
+            color: #00ffff;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Ponto de status "Live" */
+        .chart-title .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff66;
+            border-radius: 50%;
+            animation: livePulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px #00ff66, 0 0 20px rgba(0, 255, 100, 0.3);
+        }
+
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+        }
+
+        /* Linha neon decorativa */
+        .chart-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 255, 255, 0.3), transparent);
+            margin-left: 10px;
+        }
+
+        .chart-title .chart-time {
+            font-size: 9px;
+            color: #666;
+            letter-spacing: 1px;
+            font-weight: 400;
+            text-shadow: none;
+        }
+
+        /* Wrapper do canvas */
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            z-index: 1;
+        }
+
+        /* Linhas de grade neon (background) */
+        .chart-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20% 20%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Estatísticas rápidas - estilo cyberpunk */
+        .chart-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 255, 255, 0.08);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chart-stat-item {
+            text-align: center;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 255, 255, 0.06);
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .chart-stat-item:hover {
+            border-color: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Efeito de scanline nos stats */
+        .chart-stat-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .chart-stat-item:hover::after {
+            opacity: 1;
+        }
+
+        .chart-stat-item .stat-label {
+            font-size: 8px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        .chart-stat-item .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 4px;
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        /* Cores neon para as estatísticas */
+        .chart-stat-item .stat-value.green { 
+            color: #00ff66; 
+            text-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
+        }
+        .chart-stat-item .stat-value.cyan { 
+            color: #00ffff; 
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .chart-stat-item .stat-value.magenta { 
+            color: #c864ff; 
+            text-shadow: 0 0 20px rgba(200, 100, 255, 0.3);
+        }
+        .chart-stat-item .stat-value.yellow { 
+            color: #ffc800; 
+            text-shadow: 0 0 20px rgba(255, 200, 0, 0.3);
+        }
+
+        /* Responsivo */
+        @media (max-width: 640px) {
+            .chart-wrapper {
+                height: 160px;
+            }
+            .chart-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .chart-stat-item .stat-value {
+                font-size: 14px;
+            }
+            .chart-title {
+                font-size: 9px;
+                letter-spacing: 2px;
+            }
+        }
+      
     </style>
 </head>
 <body>
@@ -1009,6 +1215,40 @@
                 </div>
             </div>
 
+            <!-- ========================================== -->
+            <!-- 📊 GRÁFICOS EM TEMPO REAL - CYBERPUNK     -->
+            <!-- ========================================== -->
+            <div class="chart-container" id="chartContainer">
+                <div class="chart-title">
+                    <span class="live-dot"></span>
+                    <span>⚡ NETWORK ACTIVITY</span>
+                    <span style="font-size:9px;color:#666;letter-spacing:1px;font-weight:400;" id="chartLastUpdate">⏳ initializing...</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="networkChart"></canvas>
+                </div>
+                
+                <!-- Estatísticas Cyberpunk -->
+                <div class="chart-stats">
+                    <div class="chart-stat-item">
+                        <div class="stat-label">⏳ PENDING TX</div>
+                        <div class="stat-value yellow" id="statPendingTX">0</div>
+                    </div>
+                    <div class="chart-stat-item">
+                        <div class="stat-label">⛏️ BLOCKS/MIN</div>
+                        <div class="stat-value cyan" id="statBlocksPerMin">0</div>
+                    </div>
+                    <div class="chart-stat-item">
+                        <div class="stat-label">📦 TOTAL BLOCKS</div>
+                        <div class="stat-value magenta" id="statTotalBlocks">0</div>
+                    </div>
+                    <div class="chart-stat-item">
+                        <div class="stat-label">📜 TOTAL TX</div>
+                        <div class="stat-value green" id="statTotalTX">0</div>
+                    </div>
+                </div>
+            </div>
+  
             <div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
                 <div class="panel-header">
                     <div class="panel-title">
@@ -1287,6 +1527,429 @@ const payment = await client.createPayment({
     </div>
 
     <script>
+
+// ============================================
+// CARREGAR CRYPTOJS DINAMICAMENTE
+// ============================================
+
+function loadCryptoJS() {
+    return new Promise((resolve) => {
+        if (typeof CryptoJS !== 'undefined') {
+            resolve();
+            return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js';
+        script.onload = function() {
+            console.log('✅ CryptoJS carregado dinamicamente!');
+            resolve();
+        };
+        script.onerror = function() {
+            console.warn('⚠️ Falha ao carregar CryptoJS, usando fallback...');
+            // Fallback: definir CryptoJS manualmente
+            window.CryptoJS = {
+                SHA256: function(data) {
+                    return {
+                        toString: function() {
+                            // Função simples de hash
+                            let hash = 0;
+                            const str = data.toString();
+                            for (let i = 0; i < str.length; i++) {
+                                const char = str.charCodeAt(i);
+                                hash = ((hash << 5) - hash) + char;
+                                hash = hash & hash;
+                            }
+                            return '0x' + Math.abs(hash).toString(16).padStart(64, '0');
+                        }
+                    };
+                }
+            };
+            console.log('✅ CryptoJS fallback ativado');
+            resolve();
+        };
+        document.head.appendChild(script);
+    });
+}
+
+// Carregar antes de iniciar
+(async function() {
+    await loadCryptoJS();
+    console.log('✅ Sistema pronto para iniciar!');
+})();
+
+// ============================================
+// ESTRUTURA DE DADOS AVANÇADA
+// ============================================
+
+// Função SHA256 simples e confiável
+function sha256(message) {
+    function rightRotate(value, amount) {
+        return (value >>> amount) | (value << (32 - amount));
+    }
+    
+    var hash = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+    var K = [
+        0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
+        0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
+        0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+        0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
+        0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
+        0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+        0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
+        0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
+    ];
+    
+    var m = [];
+    var l = message.length * 8;
+    
+    for (var i = 0; i < message.length; i++) {
+        m[i >> 2] |= message.charCodeAt(i) << (24 - (i % 4) * 8);
+    }
+    
+    m[i >> 2] |= 0x80 << (24 - (i % 4) * 8);
+    m[((i + 1) >> 2) + 15] = l;
+    
+    var w = new Array(64);
+    var a, b, c, d, e, f, g, h;
+    
+    for (var block = 0; block < m.length; block += 16) {
+        for (var j = 0; j < 16; j++) {
+            w[j] = m[block + j] || 0;
+        }
+        
+        for (var j = 16; j < 64; j++) {
+            var s0 = rightRotate(w[j - 15], 7) ^ rightRotate(w[j - 15], 18) ^ (w[j - 15] >>> 3);
+            var s1 = rightRotate(w[j - 2], 17) ^ rightRotate(w[j - 2], 19) ^ (w[j - 2] >>> 10);
+            w[j] = (w[j - 16] + s0 + w[j - 7] + s1) >>> 0;
+        }
+        
+        a = hash[0]; b = hash[1]; c = hash[2]; d = hash[3];
+        e = hash[4]; f = hash[5]; g = hash[6]; h = hash[7];
+        
+        for (var j = 0; j < 64; j++) {
+            var S1 = rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25);
+            var ch = (e & f) ^ (~e & g);
+            var temp1 = (h + S1 + ch + K[j] + w[j]) >>> 0;
+            var S0 = rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22);
+            var maj = (a & b) ^ (a & c) ^ (b & c);
+            var temp2 = (S0 + maj) >>> 0;
+            
+            h = g; g = f; f = e; e = (d + temp1) >>> 0;
+            d = c; c = b; b = a; a = (temp1 + temp2) >>> 0;
+        }
+        
+        hash[0] = (hash[0] + a) >>> 0;
+        hash[1] = (hash[1] + b) >>> 0;
+        hash[2] = (hash[2] + c) >>> 0;
+        hash[3] = (hash[3] + d) >>> 0;
+        hash[4] = (hash[4] + e) >>> 0;
+        hash[5] = (hash[5] + f) >>> 0;
+        hash[6] = (hash[6] + g) >>> 0;
+        hash[7] = (hash[7] + h) >>> 0;
+    }
+    
+    var result = '';
+    for (var i = 0; i < 8; i++) {
+        result += ('00000000' + (hash[i] >>> 0).toString(16)).slice(-8);
+    }
+    return result;
+}
+
+// ============================================
+// Modelo de Bloco (COM SHA256 EMBUTIDO)
+// ============================================
+class Block {
+    constructor(index, timestamp, transactions, previousHash = '') {
+        this.index = index;
+        this.timestamp = timestamp;
+        this.transactions = transactions;
+        this.previousHash = previousHash;
+        this.hash = this.calculateHash();
+        this.nonce = 0;
+        this.validator = '';
+        this.size = JSON.stringify(transactions).length;
+    }
+
+    calculateHash() {
+        const data = this.index + this.timestamp + JSON.stringify(this.transactions) + this.previousHash + this.nonce;
+        return sha256(data);
+    }
+
+    mineBlock(difficulty) {
+        while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
+            this.nonce++;
+            this.hash = this.calculateHash();
+        }
+        console.log(`⛏️ Block mined: ${this.hash}`);
+    }
+}
+
+    mineBlock(difficulty) {
+        while (this.hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
+            this.nonce++;
+            this.hash = this.calculateHash();
+        }
+        console.log(`⛏️ Block mined: ${this.hash}`);
+    }
+}
+
+// Modelo de Transação
+class Transaction {
+    constructor(sender, recipient, amount, type = 'transfer', metadata = {}) {
+        this.id = 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        this.sender = sender;
+        this.recipient = recipient;
+        this.amount = amount;
+        this.type = type; // 'transfer', 'stake', 'unstake', 'deposit', 'claim'
+        this.timestamp = Date.now();
+        this.metadata = metadata;
+        this.signature = null;
+        this.confirmations = 0;
+        this.status = 'pending'; // 'pending', 'confirmed', 'failed'
+        this.fee = this.calculateFee();
+    }
+
+    calculateFee() {
+        // Taxa baseada no tipo e valor
+        const baseFee = 0.001;
+        const percentFee = this.amount * 0.0001;
+        return Math.max(baseFee, percentFee);
+    }
+
+    sign(privateKey) {
+        // Simulação de assinatura digital
+        this.signature = 'sig_' + this.id + '_' + privateKey.substring(0, 10);
+        return this.signature;
+    }
+
+    verifySignature() {
+        // Verificação simplificada
+        return this.signature !== null && this.signature.startsWith('sig_');
+    }
+}
+
+// Modelo de Staking
+class StakingPosition {
+    constructor(address, amount, lockPeriod = 30) {
+        this.address = address;
+        this.amount = amount;
+        this.lockPeriod = lockPeriod; // dias
+        this.startDate = Date.now();
+        this.endDate = this.startDate + (lockPeriod * 24 * 60 * 60 * 1000);
+        this.rewards = 0;
+        this.claimedRewards = 0;
+        this.status = 'active'; // 'active', 'locked', 'withdrawn'
+        this.apy = 18; // 18% anual
+        this.lastRewardCalculation = Date.now();
+    }
+
+    calculateRewards() {
+        const timeElapsed = (Date.now() - this.lastRewardCalculation) / (1000 * 60 * 60 * 24);
+        const rewardsEarned = this.amount * (this.apy / 100) * (timeElapsed / 365);
+        this.rewards += rewardsEarned;
+        this.lastRewardCalculation = Date.now();
+        return this.rewards;
+    }
+
+    canWithdraw() {
+        return Date.now() > this.endDate;
+    }
+}
+
+// ============================================
+// BANCO DE DADOS LOCAL ESTRUTURADO
+// ============================================
+
+class BlockchainDB {
+    constructor() {
+        this.blocks = [];
+        this.pendingTransactions = [];
+        this.balances = {};
+        this.stakingPositions = {};
+        this.validators = [];
+        this.governanceProposals = [];
+        this.daoVotes = {};
+        this.totalSupply = 100000000000000000;
+        this.difficulty = 4;
+        this.genesisBlock = null;
+        this.lastBlockTime = Date.now();
+        this.transactionCount = 0;
+        this.stakingAPY = 18;
+        this.minStakeAmount = 1000;
+        this.validatorStakeRequirement = 10000;
+        this.loadFromStorage();
+    }
+
+    loadFromStorage() {
+        try {
+            const data = localStorage.getItem('bradicoin_blockchain_db');
+            if (data) {
+                const parsed = JSON.parse(data);
+                Object.assign(this, parsed);
+                console.log('✅ Blockchain DB loaded from storage');
+            } else {
+                this.initializeGenesis();
+            }
+        } catch (e) {
+            console.warn('⚠️ Error loading blockchain DB, initializing new');
+            this.initializeGenesis();
+        }
+    }
+
+    saveToStorage() {
+        try {
+            localStorage.setItem('bradicoin_blockchain_db', JSON.stringify(this));
+        } catch (e) {
+            console.warn('⚠️ Could not save blockchain DB:', e);
+        }
+    }
+
+    initializeGenesis() {
+        const genesis = new Block(0, Date.now(), [], '0');
+        genesis.mineBlock(this.difficulty);
+        this.blocks = [genesis];
+        this.genesisBlock = genesis;
+        this.saveToStorage();
+        console.log('🌱 Genesis block created');
+    }
+
+    getBalance(address) {
+        return this.balances[address] || 0;
+    }
+
+    updateBalance(address, amount, operation = 'add') {
+        if (!this.balances[address]) this.balances[address] = 0;
+        if (operation === 'add') {
+            this.balances[address] += amount;
+        } else if (operation === 'subtract') {
+            if (this.balances[address] < amount) {
+                throw new Error(`Insufficient balance: ${this.balances[address]} < ${amount}`);
+            }
+            this.balances[address] -= amount;
+        }
+        this.saveToStorage();
+        return this.balances[address];
+    }
+
+    addTransaction(tx) {
+        tx.status = 'pending';
+        this.pendingTransactions.push(tx);
+        this.transactionCount++;
+        this.saveToStorage();
+        return tx;
+    }
+
+    minePendingTransactions(validator) {
+        if (this.pendingTransactions.length === 0) return null;
+
+        const blockTransactions = this.pendingTransactions.splice(0, 50);
+        const block = new Block(
+            this.blocks.length,
+            Date.now(),
+            blockTransactions,
+            this.blocks[this.blocks.length - 1].hash
+        );
+        block.validator = validator;
+        block.mineBlock(this.difficulty);
+        
+        // Atualiza saldos
+        blockTransactions.forEach(tx => {
+            if (tx.status === 'pending') {
+                if (tx.type === 'transfer') {
+                    this.updateBalance(tx.sender, tx.amount, 'subtract');
+                    this.updateBalance(tx.recipient, tx.amount, 'add');
+                    tx.status = 'confirmed';
+                } else if (tx.type === 'deposit') {
+                    this.updateBalance(tx.recipient, tx.amount, 'add');
+                    tx.status = 'confirmed';
+                } else if (tx.type === 'stake') {
+                    this.updateBalance(tx.sender, tx.amount, 'subtract');
+                    this.stakingPositions[tx.sender] = new StakingPosition(tx.sender, tx.amount);
+                    tx.status = 'confirmed';
+                } else if (tx.type === 'unstake') {
+                    const pos = this.stakingPositions[tx.sender];
+                    if (pos && pos.canWithdraw()) {
+                        this.updateBalance(tx.sender, tx.amount, 'add');
+                        pos.status = 'withdrawn';
+                        tx.status = 'confirmed';
+                    } else {
+                        tx.status = 'failed';
+                    }
+                }
+                tx.confirmations++;
+            }
+        });
+
+        this.blocks.push(block);
+        this.lastBlockTime = Date.now();
+        this.saveToStorage();
+        return block;
+    }
+
+    getTransactionHistory(address, limit = 20) {
+        const txs = [];
+        for (const block of this.blocks) {
+            for (const tx of block.transactions) {
+                if (tx.sender === address || tx.recipient === address) {
+                    txs.push(tx);
+                }
+            }
+        }
+        // Ordena por timestamp decrescente
+        txs.sort((a, b) => b.timestamp - a.timestamp);
+        return txs.slice(0, limit);
+    }
+
+    getStakingInfo(address) {
+        const pos = this.stakingPositions[address];
+        if (!pos) return { staked: 0, rewards: 0, apy: this.stakingAPY, canWithdraw: false };
+        pos.calculateRewards();
+        return {
+            staked: pos.amount,
+            rewards: pos.rewards,
+            apy: this.stakingAPY,
+            canWithdraw: pos.canWithdraw(),
+            startDate: pos.startDate,
+            endDate: pos.endDate,
+            status: pos.status
+        };
+    }
+
+    getNetworkStats() {
+        const totalStaked = Object.values(this.stakingPositions)
+            .reduce((sum, pos) => sum + pos.amount, 0);
+        
+        return {
+            blockHeight: this.blocks.length,
+            totalTransactions: this.transactionCount,
+            pendingTransactions: this.pendingTransactions.length,
+            totalStaked: totalStaked,
+            validatorsCount: this.validators.length,
+            networkDifficulty: this.difficulty,
+            lastBlockTime: this.lastBlockTime,
+            totalSupply: this.totalSupply,
+            averageBlockTime: this.calculateAverageBlockTime()
+        };
+    }
+
+    calculateAverageBlockTime() {
+        if (this.blocks.length < 2) return 0;
+        const times = [];
+        for (let i = 1; i < this.blocks.length && i < 100; i++) {
+            times.push(this.blocks[i].timestamp - this.blocks[i-1].timestamp);
+        }
+        return times.reduce((a, b) => a + b, 0) / times.length;
+    }
+}
+
+// ============================================
+// INICIALIZAR O BANCO DE DADOS
+// ============================================
+
+const blockchainDB = new BlockchainDB();
+window.blockchainDB = blockchainDB;
+console.log('📊 Blockchain DB initialized with', blockchainDB.blocks.length, 'blocks');
 
 // ============================================
 // 1. DEFINA A CONSTANTE API_URL NO INÍCIO
@@ -4235,7 +4898,7 @@ console.log('👥 Usuários carregados:', users.length);
     await loadRealTransactions();
     updateValidatorsDisplay();
     updateStakingStats();
-    
+    await initChartSystem();
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
         const newBtn = searchButton.cloneNode(true);
@@ -4295,6 +4958,321 @@ console.log('👥 Usuários carregados:', users.length);
     console.log('🔐 ZK-SNARK security features active');
 }
 
+// ============================================
+// 📊 GRÁFICOS CYBERPUNK - SISTEMA COMPLETO
+// ============================================
+
+// ============================================
+// 1. VARIÁVEIS GLOBAIS
+// ============================================
+let networkChart = null;
+let chartDataPoints = {
+    labels: [],
+    transactions: [],
+    blocks: [],
+    timestamps: []
+};
+
+let chartUpdateInterval = null;
+let isChartInitialized = false;
+
+// ============================================
+// 2. CARREGAR CHART.JS DINAMICAMENTE
+// ============================================
+function loadChartJS() {
+    return new Promise((resolve, reject) => {
+        if (typeof Chart !== 'undefined') {
+            resolve();
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+        script.onload = function() {
+            console.log('✅ Chart.js carregado com sucesso!');
+            resolve();
+        };
+        script.onerror = function() {
+            console.error('❌ Erro ao carregar Chart.js');
+            reject(new Error('Chart.js load failed'));
+        };
+        document.head.appendChild(script);
+    });
+}
+
+// ============================================
+// 3. INICIALIZAR GRÁFICO
+// ============================================
+function initNetworkChart() {
+    const canvas = document.getElementById('networkChart');
+    if (!canvas) {
+        console.warn('⚠️ Canvas do gráfico não encontrado');
+        return false;
+    }
+
+    if (typeof Chart === 'undefined') {
+        console.warn('⚠️ Chart.js não disponível');
+        return false;
+    }
+
+    if (networkChart) {
+        networkChart.destroy();
+        networkChart = null;
+    }
+
+    const initialLabels = [];
+    const initialTX = [];
+    const initialBlocks = [];
+    
+    for (let i = 0; i < 6; i++) {
+        initialLabels.push((i * 5) + 's');
+        initialTX.push(0);
+        initialBlocks.push(0);
+    }
+
+    networkChart = new Chart(canvas, {
+        type: 'line',
+        data: {
+            labels: initialLabels,
+            datasets: [
+                {
+                    label: '📜 Pending Transactions',
+                    data: initialTX,
+                    borderColor: '#00ff66',
+                    backgroundColor: 'rgba(0, 255, 100, 0.06)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#00ff66',
+                    pointBorderColor: '#00ff66',
+                    pointBorderWidth: 1,
+                    borderWidth: 2,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#00ff66',
+                    pointHoverBorderColor: '#fff'
+                },
+                {
+                    label: '⛏️ Blocks Mined',
+                    data: initialBlocks,
+                    borderColor: '#c864ff',
+                    backgroundColor: 'rgba(200, 100, 255, 0.06)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#c864ff',
+                    pointBorderColor: '#c864ff',
+                    pointBorderWidth: 1,
+                    borderWidth: 2,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#c864ff',
+                    pointHoverBorderColor: '#fff'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 400,
+                easing: 'easeInOutQuad'
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#888',
+                        font: {
+                            family: 'Orbitron',
+                            size: 9,
+                            weight: '400'
+                        },
+                        boxWidth: 14,
+                        boxHeight: 14,
+                        padding: 12,
+                        usePointStyle: true,
+                        pointStyle: 'circle'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.92)',
+                    titleColor: '#00ffff',
+                    bodyColor: '#aaa',
+                    borderColor: 'rgba(0, 255, 255, 0.2)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12,
+                    titleFont: {
+                        family: 'Orbitron',
+                        size: 10
+                    },
+                    bodyFont: {
+                        family: 'Orbitron',
+                        size: 9
+                    },
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#555',
+                        font: {
+                            family: 'Orbitron',
+                            size: 8,
+                            weight: '400'
+                        },
+                        maxTicksLimit: 7
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.03)',
+                        drawBorder: false
+                    },
+                    border: {
+                        color: 'rgba(255,255,255,0.05)'
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#555',
+                        font: {
+                            family: 'Orbitron',
+                            size: 8,
+                            weight: '400'
+                        },
+                        stepSize: 1,
+                        beginAtZero: true,
+                        maxTicksLimit: 6
+                    },
+                    grid: {
+                        color: 'rgba(255,255,255,0.04)',
+                        drawBorder: false
+                    },
+                    border: {
+                        color: 'rgba(255,255,255,0.05)'
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            elements: {
+                line: {
+                    tension: 0.4
+                }
+            }
+        }
+    });
+
+    isChartInitialized = true;
+    console.log('✅ Gráfico Cyberpunk inicializado com sucesso!');
+    return true;
+}
+
+// ============================================
+// 4. ATUALIZAR GRÁFICO
+// ============================================
+function updateNetworkChart() {
+    if (!networkChart) {
+        if (!initNetworkChart()) {
+            return;
+        }
+    }
+
+    try {
+        const pendingTX = blockchainDB.pendingTransactions ? blockchainDB.pendingTransactions.length : 0;
+        const totalBlocks = blockchainDB.blocks ? blockchainDB.blocks.length : 0;
+        const totalTX = blockchainDB.transactionCount || 0;
+        
+        const now = Date.now();
+        const recentBlocks = blockchainDB.blocks ? blockchainDB.blocks.filter(b => 
+            (now - b.timestamp) < 60000
+        ) : [];
+        const blocksPerMin = recentBlocks.length;
+
+        const timeLabel = new Date().toLocaleTimeString();
+        
+        chartDataPoints.labels.push(timeLabel);
+        chartDataPoints.transactions.push(pendingTX);
+        chartDataPoints.blocks.push(blocksPerMin);
+        chartDataPoints.timestamps.push(now);
+
+        if (chartDataPoints.labels.length > 6) {
+            chartDataPoints.labels.shift();
+            chartDataPoints.transactions.shift();
+            chartDataPoints.blocks.shift();
+            chartDataPoints.timestamps.shift();
+        }
+
+        networkChart.data.labels = chartDataPoints.labels;
+        networkChart.data.datasets[0].data = chartDataPoints.transactions;
+        networkChart.data.datasets[1].data = chartDataPoints.blocks;
+        networkChart.update('none');
+
+        document.getElementById('statPendingTX').textContent = pendingTX || 0;
+        document.getElementById('statBlocksPerMin').textContent = blocksPerMin || 0;
+        document.getElementById('statTotalBlocks').textContent = totalBlocks || 0;
+        document.getElementById('statTotalTX').textContent = totalTX || 0;
+
+        const el = document.getElementById('chartLastUpdate');
+        if (el) {
+            el.textContent = '⚡ ' + new Date().toLocaleTimeString();
+        }
+
+    } catch (error) {
+        console.error('❌ Erro ao atualizar gráfico:', error);
+    }
+}
+
+// ============================================
+// 5. INICIAR ATUALIZAÇÃO AUTOMÁTICA
+// ============================================
+function startChartUpdates() {
+    if (chartUpdateInterval) {
+        clearInterval(chartUpdateInterval);
+    }
+    
+    chartUpdateInterval = setInterval(updateNetworkChart, 5000);
+    setTimeout(updateNetworkChart, 500);
+    
+    console.log('🔄 Atualização automática do gráfico iniciada (5s)');
+}
+
+// ============================================
+// 6. INICIALIZAR SISTEMA COMPLETO
+// ============================================
+async function initChartSystem() {
+    console.log('📊 Inicializando sistema de gráficos Cyberpunk...');
+    
+    const canvas = document.getElementById('networkChart');
+    if (!canvas) {
+        console.warn('⚠️ Canvas não encontrado');
+        return false;
+    }
+
+    try {
+        await loadChartJS();
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        if (!initNetworkChart()) {
+            console.warn('⚠️ Falha ao inicializar gráfico');
+            return false;
+        }
+
+        startChartUpdates();
+        
+        console.log('✅ Sistema de gráficos Cyberpunk inicializado com sucesso!');
+        return true;
+        
+    } catch (error) {
+        console.error('❌ Erro ao inicializar gráficos:', error);
+        return false;
+    }
+}
+
 // ==================== EXPORT GLOBALS ====================
 window.searchWallet = searchWallet;
 window.clearSearch = clearSearch;
@@ -4341,6 +5319,11 @@ window.viewSecurityStatus = viewSecurityStatus;
 window.generateZKProof = generateZKProof;
 window.searchExplorer = searchExplorer;
 window.openExplorer = openExplorer;
+window.initNetworkChart = initNetworkChart;
+window.updateNetworkChart = updateNetworkChart;
+window.initChartSystem = initChartSystem;
+window.startChartUpdates = startChartUpdates;
+window.loadChartJS = loadChartJS;
 
 // Start the app
 init();

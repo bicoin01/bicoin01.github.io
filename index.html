@@ -4239,17 +4239,26 @@ function getCurrentTotalSupply() {
 }
 
 function getLocalChain() {
+    // Se o blockchainDB já existe, use ele
+    if (window.blockchainDB) {
+        return {
+            balances: window.blockchainDB.balances || {},
+            transactions: window.blockchainDB.transactions || [],
+            staking: window.blockchainDB.stakingPositions || {},
+            validators: window.blockchainDB.validators || [],
+            blocks: window.blockchainDB.blocks || [],
+            totalSupply: window.blockchainDB.totalSupply || BASE_SUPPLY,
+            securityLogs: window.blockchainDB.securityLogs || []
+        };
+    }
+    
+    // Fallback para localStorage
     try {
         const data = localStorage.getItem(LOCAL_BLOCKCHAIN_KEY);
         if (data) return JSON.parse(data);
     } catch (e) {}
+    
     return { balances: {}, transactions: [], staking: {}, validators: [], blocks: [], totalSupply: BASE_SUPPLY, securityLogs: [] };
-}
-
-function saveLocalChain(chain) {
-    try {
-        localStorage.setItem(LOCAL_BLOCKCHAIN_KEY, JSON.stringify(chain));
-    } catch (e) {}
 }
 
 function generateWalletHash(address) {
@@ -5228,8 +5237,8 @@ async function loadBlockchainData() {
 
 // ==================== LOAD REAL TRANSACTIONS ====================
 async function loadRealTransactions() {
-    const chain = getLocalChain();
-    const transactions = chain.transactions || [];
+    // Use o blockchainDB que já foi inicializado
+    const transactions = blockchainDB.transactions || [];
     const t = translations[currentLang] || translations.en;
     
     if (transactions.length === 0) {

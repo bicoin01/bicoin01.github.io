@@ -2056,6 +2056,7 @@ const translations = {
     // 🇬🇧 ENGLISH
     // ==========================================
     en: {
+        
         pageTitle: 'Bradicoin Blockchain',
         apiChecking: 'Checking API connection...',
         apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
@@ -2500,6 +2501,7 @@ const translations = {
     // 🇧🇷 PORTUGUÊS
     // ==========================================
     pt: {
+        
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexão com a API...',
         apiOnline: '✅ API Online - Conectado à Blockchain Bradicoin',
@@ -2940,6 +2942,7 @@ const translations = {
     // 🇪🇸 ESPAÑOL
     // ==========================================
     es: {
+        
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexión con la API...',
         apiOnline: '✅ API En Línea - Conectado a la Blockchain Bradicoin',
@@ -5043,7 +5046,7 @@ async function checkAPIStatus() {
 
 // ==================== SEARCH WALLET - COM TRADUÇÃO COMPLETA ====================
 // ============================================================
-// 🔍 FUNÇÃO DE BUSCA COM VALIDAÇÃO REAL
+// 🔍 FUNÇÃO DE BUSCA COM VALIDAÇÃO REAL - VERSÃO ESTÁVEL
 // ============================================================
 function searchWallet() {
     const input = document.getElementById('searchInput');
@@ -5051,25 +5054,6 @@ function searchWallet() {
     
     const query = input.value.trim();
     const resultDiv = document.getElementById('searchResult');
-    
-    // --- VALIDAÇÃO: CAMPO VAZIO ---
-    if (!query) {
-        resultDiv.className = 'result-box error';
-        resultDiv.innerHTML = `
-            <div style="text-align:center; padding:20px;">
-                <div class="error-icon">⌨️</div>
-                <h3 class="error-title" style="color:#ffc800;">⚠️ Digite um endereço ou token</h3>
-                <p class="error-message">Digite uma carteira começando com <strong style="color:#ffc800;">"Br"</strong> ou um símbolo de token (ex: BTC, ETH).</p>
-                <p class="error-tip">💡 Exemplo: BrDemo123, BTC, ETH</p>
-                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
-            </div>
-        `;
-        resultDiv.classList.add('show');
-        input.classList.add('error');
-        return;
-    }
-    
-    input.classList.remove('error');
     
     // --- BANCO DE DADOS DE CARTEIRAS ---
     const WALLET_DB = {
@@ -5093,6 +5077,25 @@ function searchWallet() {
         { symbol: 'ADA', name: 'Cardano', price: 0.65, supply: '45,000,000,000' }
     ];
     
+    // --- VALIDAÇÃO: CAMPO VAZIO ---
+    if (!query) {
+        resultDiv.className = 'result-box error';
+        resultDiv.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <div class="error-icon">⌨️</div>
+                <h3 class="error-title" style="color:#ffc800;">⚠️ Digite um endereço ou token</h3>
+                <p class="error-message">Digite uma carteira começando com <strong style="color:#ffc800;">"Br"</strong> ou um símbolo de token (ex: BTC, ETH).</p>
+                <p class="error-tip">💡 Exemplo: BrDemo123, BTC, ETH</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
+        return;
+    }
+    
+    input.classList.remove('error');
+    
     // --- VERIFICA SE É UM TOKEN ---
     const tokenMatch = TOKEN_DB.find(t => t.symbol.toUpperCase() === query.toUpperCase());
     if (tokenMatch) {
@@ -5114,6 +5117,74 @@ function searchWallet() {
         resultDiv.classList.add('show');
         return;
     }
+    
+    // --- VERIFICA SE COMEÇA COM "Br" ---
+    if (!query.startsWith('Br')) {
+        resultDiv.className = 'result-box not-found';
+        resultDiv.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <div class="error-icon">⚠️</div>
+                <h3 class="error-title" style="color:#ffaa66;">❌ Wallet não encontrada</h3>
+                <p class="error-message">O endereço <strong style="color:#ffaa66;">"${query}"</strong> não existe na Bradicoin.</p>
+                <p class="error-tip">💡 Endereços devem começar com <strong style="color:#ffc800;">"Br"</strong> (ex: BrDemo123).</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
+        return;
+    }
+    
+    // --- BUSCA CARTEIRA NO BANCO DE DADOS ---
+    const wallet = WALLET_DB[query];
+    if (!wallet) {
+        // 🚨 WALLET NÃO ENCONTRADA
+        resultDiv.className = 'result-box not-found';
+        resultDiv.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <div class="error-icon">🔍</div>
+                <h3 class="error-title" style="color:#ffaa66;">❌ Wallet não encontrada</h3>
+                <p class="error-message">A wallet <strong style="color:#ffaa66;">"${query}"</strong> não foi encontrada na Bradicoin.</p>
+                <p class="error-tip">💡 Tente uma wallet conhecida: BrDemo123, BrStaker001, BrDevMaster</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
+        return;
+    }
+    
+    // ✅ WALLET ENCONTRADA
+    const balance = wallet.balance || 0;
+    const staked = wallet.staked || 0;
+    const rewards = wallet.rewards || 0;
+    const usdValue = (balance * 10).toFixed(2);
+    
+    resultDiv.className = 'result-box';
+    resultDiv.innerHTML = `
+        <div style="border-left:4px solid #00ff66; padding-left:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:18px;">💰 <strong style="color:#00ff66;">${wallet.name || 'Wallet'}</strong></span>
+                <span style="background:rgba(0,255,100,0.15); padding:4px 14px; border-radius:20px; color:#00ff66; font-size:12px;">✅ Ativa</span>
+            </div>
+            <div class="result-grid">
+                <div class="result-item"><div class="result-item-label">Endereço</div><div class="result-item-value" style="font-size:13px; font-family:monospace;">${query}</div></div>
+                <div class="result-item"><div class="result-item-label">Saldo</div><div class="result-item-value green">${balance.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">USD</div><div class="result-item-value cyan">$${usdValue}</div></div>
+                <div class="result-item"><div class="result-item-label">Staked</div><div class="result-item-value yellow">${staked.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">Recompensas</div><div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">APY</div><div class="result-item-value magenta">18%</div></div>
+            </div>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button onclick="copyToClipboard('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #a855f7; background:transparent; color:#e0e5ff; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">📋 Copiar</button>
+                <button onclick="handleStake('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #ffc800; background:rgba(255,200,0,0.1); color:#ffc800; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">🔒 Stake</button>
+                <button onclick="handleTransfer('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #00ccff; background:rgba(0,200,255,0.1); color:#00ccff; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">💸 Transfer</button>
+            </div>
+            <div style="margin-top:8px; font-size:10px; color:#666;">🟢 Última atualização: ${new Date().toLocaleTimeString()}</div>
+        </div>
+    `;
+    resultDiv.classList.add('show');
+}
     
     // --- VERIFICA SE COMEÇA COM "Br" ---
     if (!query.startsWith('Br')) {

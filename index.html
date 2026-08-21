@@ -5042,53 +5042,147 @@ async function checkAPIStatus() {
 }
 
 // ==================== SEARCH WALLET - COM TRADUÇÃO COMPLETA ====================
-async function searchWallet() {
+// ============================================================
+// 🔍 FUNÇÃO DE BUSCA COM VALIDAÇÃO REAL
+// ============================================================
+function searchWallet() {
     const input = document.getElementById('searchInput');
     if (!input) return;
     
-    const address = input.value.trim();
+    const query = input.value.trim();
     const resultDiv = document.getElementById('searchResult');
-    const t = translations[currentLang] || translations.en;
-
-    // Validação do endereço - SEM ENDEREÇO
-    if (!address) {
+    
+    // --- VALIDAÇÃO: CAMPO VAZIO ---
+    if (!query) {
         resultDiv.className = 'result-box error';
         resultDiv.innerHTML = `
-            <div style="position: relative; text-align: center; padding: 20px;">
-                <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-                    ✕
-                </button>
+            <div style="text-align:center; padding:20px;">
                 <div class="error-icon">⌨️</div>
-                <h3 class="error-title" style="color: #ffc800;">⚠️ ${t.invalidAddress || 'Please enter an address'}</h3>
-                <p class="error-message" style="color: #aaa;">${t.searchHint || 'Enter a Bradicoin wallet address to search'}</p>
-                <p class="error-tip" style="color: #666; font-size: 12px;">💡 ${t.searchExample || 'Example: BrDemo123, BrStaker001'}</p>
+                <h3 class="error-title" style="color:#ffc800;">⚠️ Digite um endereço ou token</h3>
+                <p class="error-message">Digite uma carteira começando com <strong style="color:#ffc800;">"Br"</strong> ou um símbolo de token (ex: BTC, ETH).</p>
+                <p class="error-tip">💡 Exemplo: BrDemo123, BTC, ETH</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
             </div>
         `;
         resultDiv.classList.add('show');
         input.classList.add('error');
         return;
     }
-
-    // Verifica se começa com "Br" - ENDEREÇO INVÁLIDO
-    if (!address.startsWith('Br')) {
-        resultDiv.className = 'result-box error';
+    
+    input.classList.remove('error');
+    
+    // --- BANCO DE DADOS DE CARTEIRAS ---
+    const WALLET_DB = {
+        'BrDemo123': { balance: 1000, staked: 0, rewards: 0, name: 'Demo User' },
+        'BrStaker001': { balance: 5000, staked: 2000, rewards: 360, name: 'Staker Prime' },
+        'BrDevMaster': { balance: 10000, staked: 0, rewards: 0, name: 'Dev Master' },
+        'BrAlpha': { balance: 7500, staked: 1500, rewards: 270, name: 'Alpha Whale' },
+        'BrBeta': { balance: 3200, staked: 800, rewards: 144, name: 'Beta Holder' },
+        'BrGamma': { balance: 8800, staked: 2200, rewards: 396, name: 'Gamma Trader' },
+        'BrDelta': { balance: 4200, staked: 0, rewards: 0, name: 'Delta Investor' },
+        'BrEpsilon': { balance: 15000, staked: 5000, rewards: 900, name: 'Epsilon Validator' },
+        'BrZeta': { balance: 2500, staked: 500, rewards: 90, name: 'Zeta Miner' },
+        'BrEta': { balance: 6000, staked: 1000, rewards: 180, name: 'Eta DeFi' }
+    };
+    
+    const TOKEN_DB = [
+        { symbol: 'BRD', name: 'Bradicoin', price: 10.00, supply: '100,000,000,000,000,000' },
+        { symbol: 'BTC', name: 'Bitcoin', price: 67500, supply: '21,000,000' },
+        { symbol: 'ETH', name: 'Ethereum', price: 3500, supply: '120,000,000' },
+        { symbol: 'SOL', name: 'Solana', price: 180, supply: '560,000,000' },
+        { symbol: 'ADA', name: 'Cardano', price: 0.65, supply: '45,000,000,000' }
+    ];
+    
+    // --- VERIFICA SE É UM TOKEN ---
+    const tokenMatch = TOKEN_DB.find(t => t.symbol.toUpperCase() === query.toUpperCase());
+    if (tokenMatch) {
+        resultDiv.className = 'result-box';
         resultDiv.innerHTML = `
-            <div style="position: relative; text-align: center; padding: 20px;">
-                <button onclick="clearSearch()" style="position: absolute; top: 5px; right: 10px; background: transparent; border: none; color: #ff6464; font-size: 20px; cursor: pointer; font-family: 'Orbitron', monospace; transition: all 0.3s ease;"
-                    onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
-                    ✕
-                </button>
+            <div style="border-left:4px solid #ffc800; padding-left:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <span style="font-size:20px;">🪙 <strong style="color:#ffc800;">${tokenMatch.symbol}</strong> — ${tokenMatch.name}</span>
+                    <span style="background:rgba(255,200,0,0.15); padding:4px 14px; border-radius:20px; color:#ffc800; font-size:12px;">✅ Token encontrado</span>
+                </div>
+                <div class="result-grid">
+                    <div class="result-item"><div class="result-item-label">Preço</div><div class="result-item-value green">$${tokenMatch.price.toFixed(2)}</div></div>
+                    <div class="result-item"><div class="result-item-label">Supply Total</div><div class="result-item-value cyan">${tokenMatch.supply}</div></div>
+                    <div class="result-item"><div class="result-item-label">Market Cap</div><div class="result-item-value magenta">$${(tokenMatch.price * parseFloat(tokenMatch.supply.replace(/,/g,''))).toLocaleString()}</div></div>
+                </div>
+                <div style="margin-top:12px; font-size:11px; color:#666;">🔍 Token encontrado na Blockchain Bradicoin</div>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        return;
+    }
+    
+    // --- VERIFICA SE COMEÇA COM "Br" ---
+    if (!query.startsWith('Br')) {
+        resultDiv.className = 'result-box not-found';
+        resultDiv.innerHTML = `
+            <div style="text-align:center; padding:20px;">
                 <div class="error-icon">⚠️</div>
-                <h3 class="error-title" style="color: #ff6464;">❌ ${t.invalidAddressTitle || 'Invalid Address'}</h3>
-                <p class="error-message" style="color: #aaa;">${t.invalidAddressMessage || 'The address must start with'}<strong style="color: #ffc800;">"Br"</strong></p>
-                <p class="error-tip" style="color: #666; font-size: 12px;">💡 ${t.searchExample || 'Example: BrWallet123, BrTest456'}</p>
+                <h3 class="error-title" style="color:#ffaa66;">❌ Wallet não encontrada</h3>
+                <p class="error-message">O endereço <strong style="color:#ffaa66;">"${query}"</strong> não existe na Bradicoin.</p>
+                <p class="error-tip">💡 Endereços devem começar com <strong style="color:#ffc800;">"Br"</strong> (ex: BrDemo123).</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
             </div>
         `;
         resultDiv.classList.add('show');
         input.classList.add('error');
         return;
     }
+    
+    // --- BUSCA CARTEIRA NO BANCO DE DADOS ---
+    const wallet = WALLET_DB[query];
+    if (!wallet) {
+        // 🚨 WALLET NÃO ENCONTRADA
+        resultDiv.className = 'result-box not-found';
+        resultDiv.innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <div class="error-icon">🔍</div>
+                <h3 class="error-title" style="color:#ffaa66;">❌ Wallet não encontrada</h3>
+                <p class="error-message">A wallet <strong style="color:#ffaa66;">"${query}"</strong> não foi encontrada na Bradicoin.</p>
+                <p class="error-tip">💡 Tente uma wallet conhecida: BrDemo123, BrStaker001, BrDevMaster</p>
+                <button class="error-clear-btn" onclick="clearSearch()">🧹 Limpar Busca</button>
+            </div>
+        `;
+        resultDiv.classList.add('show');
+        input.classList.add('error');
+        return;
+    }
+    
+    // ✅ WALLET ENCONTRADA
+    const balance = wallet.balance || 0;
+    const staked = wallet.staked || 0;
+    const rewards = wallet.rewards || 0;
+    const usdValue = (balance * 10).toFixed(2);
+    
+    resultDiv.className = 'result-box';
+    resultDiv.innerHTML = `
+        <div style="border-left:4px solid #00ff66; padding-left:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:18px;">💰 <strong style="color:#00ff66;">${wallet.name || 'Wallet'}</strong></span>
+                <span style="background:rgba(0,255,100,0.15); padding:4px 14px; border-radius:20px; color:#00ff66; font-size:12px;">✅ Ativa</span>
+            </div>
+            <div class="result-grid">
+                <div class="result-item"><div class="result-item-label">Endereço</div><div class="result-item-value" style="font-size:13px; font-family:monospace;">${query}</div></div>
+                <div class="result-item"><div class="result-item-label">Saldo</div><div class="result-item-value green">${balance.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">USD</div><div class="result-item-value cyan">$${usdValue}</div></div>
+                <div class="result-item"><div class="result-item-label">Staked</div><div class="result-item-value yellow">${staked.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">Recompensas</div><div class="result-item-value magenta">${rewards.toFixed(2)} BRD</div></div>
+                <div class="result-item"><div class="result-item-label">APY</div><div class="result-item-value magenta">18%</div></div>
+            </div>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                <button onclick="copyToClipboard('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #a855f7; background:transparent; color:#e0e5ff; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">📋 Copiar</button>
+                <button onclick="handleStake('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #ffc800; background:rgba(255,200,0,0.1); color:#ffc800; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">🔒 Stake</button>
+                <button onclick="handleTransfer('${query}')" style="padding:6px 14px; border-radius:20px; border:1px solid #00ccff; background:rgba(0,200,255,0.1); color:#00ccff; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">💸 Transfer</button>
+                <button onclick="openBradichainExplorer('${query}')" style="padding:6px 14px; border-radius:20px; background:linear-gradient(135deg, #ff6b35, #f7931a); border:none; color:#fff; cursor:pointer; font-family:'Orbitron',monospace; font-size:10px;">🔗 Explorer</button>
+            </div>
+            <div style="margin-top:8px; font-size:10px; color:#666;">🟢 Última atualização: ${new Date().toLocaleTimeString()}</div>
+        </div>
+    `;
+    resultDiv.classList.add('show');
+}
 
     input.classList.remove('error');
 

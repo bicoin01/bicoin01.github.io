@@ -3802,6 +3802,7 @@ const translations = {
         areYouSure: 'هل أنت متأكد أنك تريد الإغلاق؟',
         closeConfirm: 'إغلاق',
         stayHere: 'البقاء هنا'
+    }
 };
         
 // ============================================
@@ -4942,6 +4943,20 @@ function copyToClipboard(text) {
         textarea.remove();
         showNotification('✅ Copied!', '#00ff66');
     });
+}
+
+// ==================== EXPLORER FUNCTIONS ====================
+function searchExplorer() {
+    const input = document.getElementById('searchInput');
+    const address = input ? input.value.trim() : '';
+    const t = translations[currentLang] || translations.en;
+    showNotification('🔍 ' + (t.explorerSearch || 'Blockchain') + ' search: ' + (address || 'All'), '#c864ff');
+}
+
+function openExplorer() {
+    const t = translations[currentLang] || translations.en;
+    showNotification('🔍 ' + (t.explorerSearch || 'Blockchain') + ' view', '#c864ff');
+    window.open('https://bradicoin-api.onrender.com/explorer', '_blank');
 }
 
 // ==================== GET STAKING INFO ====================

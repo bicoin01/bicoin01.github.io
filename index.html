@@ -3486,28 +3486,39 @@ const translations = {
 // 🌐 FUNÇÃO DE ATUALIZAÇÃO DE IDIOMA - CORRIGIDA
 // ============================================
 
-let currentLang = 'en';
+// ============================================
+// 🌐 SISTEMA DE TRADUÇÃO - CORRIGIDO
+// ============================================
 
+let currentLang = 'en'; // <--- APENAS UMA DECLARAÇÃO
+
+// ============================================
+// 1. FUNÇÃO PARA ATUALIZAR IDIOMA
+// ============================================
 function updateLanguage() {
     console.log('🌐 Atualizando idioma para:', currentLang);
     
     const t = translations[currentLang] || translations.en;
+    if (!t) {
+        console.error('❌ Tradução não encontrada para:', currentLang);
+        return;
+    }
     
-    // 1. ATUALIZA TÍTULO DA PÁGINA
+    // 1. TÍTULO DA PÁGINA
     document.title = t.pageTitle || 'Bradicoin Blockchain';
     
-    // 2. ATUALIZA TÍTULO PRINCIPAL (H1)
+    // 2. TÍTULO PRINCIPAL (H1)
     const pageTitle = document.getElementById('pageTitle');
     if (pageTitle) {
         pageTitle.textContent = t.pageTitle || 'Bradicoin Blockchain';
     }
     
-    // 3. ATUALIZA TODOS OS ELEMENTOS COM data-i18n
+    // 3. TODOS OS ELEMENTOS COM data-i18n
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) {
-            // Mantém emojis se existirem (detecta emojis Unicode)
-            const text = el.textContent;
+        if (t[key] !== undefined && t[key] !== null) {
+            // Preserva emojis no início
+            const text = el.textContent || '';
             const emojiMatch = text.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
             
             if (emojiMatch) {
@@ -3515,48 +3526,42 @@ function updateLanguage() {
             } else {
                 el.textContent = t[key];
             }
-            
-            // Log para debug
-            console.log(`✅ Traduzido: ${key} -> ${t[key]}`);
         } else {
             console.warn(`⚠️ Chave não encontrada: ${key}`);
         }
     });
 
-    // 4. ATUALIZA PLACEHOLDERS
+    // 4. PLACEHOLDERS
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
-        if (t[key] !== undefined) {
+        if (t[key] !== undefined && t[key] !== null) {
             el.placeholder = t[key];
-            console.log(`✅ Placeholder: ${key} -> ${t[key]}`);
         }
     });
 
-    // 5. ATUALIZA STATUS DA API
+    // 5. STATUS DA API
     const apiStatusText = document.getElementById('apiStatusText');
-    if (apiStatusText) {
-        const statusEl = document.getElementById('apiStatus');
-        if (statusEl) {
-            if (statusEl.classList.contains('online')) {
-                apiStatusText.textContent = t.apiOnline || '✅ API Online';
-            } else if (statusEl.classList.contains('offline')) {
-                apiStatusText.textContent = t.apiOffline || '⚠️ API Offline';
-            } else {
-                apiStatusText.textContent = t.apiChecking || 'Checking API connection...';
-            }
+    const apiStatus = document.getElementById('apiStatus');
+    if (apiStatusText && apiStatus) {
+        if (apiStatus.classList.contains('online')) {
+            apiStatusText.textContent = t.apiOnline || '✅ API Online';
+        } else if (apiStatus.classList.contains('offline')) {
+            apiStatusText.textContent = t.apiOffline || '⚠️ API Offline';
+        } else {
+            apiStatusText.textContent = t.apiChecking || 'Checking API connection...';
         }
     }
 
-    // 6. ADICIONA CLASSE PARA RTL (ÁRABE)
+    // 6. RTL PARA ÁRABE
     document.body.classList.toggle('arabic', currentLang === 'ar');
     
-    // 7. ATUALIZA O SELECT PARA REFLETIR O IDIOMA ATUAL
+    // 7. ATUALIZA O SELECT
     const langSelect = document.getElementById('languageSelect');
     if (langSelect) {
         langSelect.value = currentLang;
     }
     
-    console.log(`✅ Idioma atualizado para: ${currentLang} (${translations[currentLang]?.pageTitle || 'Unknown'})`);
+    console.log(`✅ Idioma atualizado para: ${currentLang}`);
 }
 
 // ==================== LANGUAGE MANAGER ====================

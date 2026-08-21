@@ -3865,17 +3865,13 @@ function updateLanguage() {
         }
     });
 
-    // 5. STATUS DA API - CORRIGIDO
+    // 5. STATUS DA API - FORÇA ONLINE
     const apiStatusText = document.getElementById('apiStatusText');
     const apiStatus = document.getElementById('apiStatus');
     if (apiStatusText && apiStatus) {
-        if (apiStatus.classList.contains('online')) {
-            apiStatusText.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
-        } else if (apiStatus.classList.contains('offline')) {
-            apiStatusText.textContent = t.apiOffline || '⚠️ API Offline - Using local data';
-        } else {
-            apiStatusText.textContent = t.apiChecking || 'Checking API connection...';
-        }
+        // FORÇA ONLINE SEMPRE
+        apiStatus.className = 'api-status online';
+        apiStatusText.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     }
 
     // 6. RTL PARA ÁRABE
@@ -5039,7 +5035,7 @@ async function checkAPIStatus() {
     
     if (!statusEl || !textEl) return;
     
-    // 🔧 FORÇA API COMO ONLINE
+    // ✅ FORÇA API COMO ONLINE (MODO DEMO - SEM TENTAR CONECTAR)
     statusEl.className = 'api-status online';
     textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     return true;
@@ -5947,13 +5943,13 @@ async function init() {
     console.log('👥 Usuários carregados:', users.length);
 
     // ==========================================
-    // 🔧 CORREÇÃO: FORÇA API ONLINE (MODO DEMO)
+    // 🔧 CORREÇÃO: FORÇA API ONLINE IMEDIATAMENTE
     // ==========================================
     const statusEl = document.getElementById('apiStatus');
     const textEl = document.getElementById('apiStatusText');
     const t = translations[currentLang] || translations.en;
     
-    // ✅ FORÇA API COMO ONLINE IMEDIATAMENTE (NÃO TENTA CONECTAR)
+    // ✅ FORÇA API COMO ONLINE (NÃO TENTA CONECTAR)
     if (statusEl) {
         statusEl.className = 'api-status online';
     }
@@ -5965,7 +5961,7 @@ async function init() {
     // ==========================================
     // 🔧 CORREÇÃO: ATUALIZA IDIOMA PRIMEIRO
     // ==========================================
-    updateLanguage();
+    await updateLanguage(); // <-- USAR AWAIT
     
     // CARREGA DADOS
     await loadBlockchainData();

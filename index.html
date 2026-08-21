@@ -3313,6 +3313,32 @@ function updateLanguage() {
     console.log(`✅ Idioma atualizado para: ${currentLang}`);
 }
 
+// ==================== MODAL FUNCTIONS ====================
+function closeModalAndGoHome() {
+    const modal = document.getElementById('featureModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    goHome();
+}
+
+function goHome() {
+    const featureModal = document.getElementById('featureModal');
+    if (featureModal) {
+        featureModal.style.display = 'none';
+    }
+    const pageModal = document.getElementById('pageModal');
+    if (pageModal) {
+        pageModal.style.display = 'none';
+    }
+    const tokenModal = document.getElementById('tokenModal');
+    if (tokenModal) {
+        tokenModal.style.display = 'none';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    clearSearch();
+}
+
 // ==================== PAGE FUNCTIONS ====================
 function openPage(page) {
     const modal = document.getElementById('pageModal');

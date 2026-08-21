@@ -3425,6 +3425,36 @@ function sendContact(e) {
     e.target.reset();
 }
 
+// ==================== MODAL FUNCTIONS ====================
+function closeModalAndGoHome() {
+    const modal = document.getElementById('featureModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+    // Volta para a página principal
+    goHome();
+}
+
+function goHome() {
+    // Fecha modais abertos
+    const featureModal = document.getElementById('featureModal');
+    if (featureModal) {
+        featureModal.style.display = 'none';
+    }
+    const pageModal = document.getElementById('pageModal');
+    if (pageModal) {
+        pageModal.style.display = 'none';
+    }
+    const tokenModal = document.getElementById('tokenModal');
+    if (tokenModal) {
+        tokenModal.style.display = 'none';
+    }
+    // Rola para o topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Limpa a busca se houver
+    clearSearch();
+}
+
 // ==================== FEATURE FUNCTIONS ====================
 function openFeature(featureId) {
     const modal = document.getElementById('featureModal');

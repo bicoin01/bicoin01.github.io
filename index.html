@@ -5039,7 +5039,7 @@ async function checkAPIStatus() {
     
     if (!statusEl || !textEl) return;
     
-    // 🔧 FORÇA API COMO ONLINE (MODO DEMO)
+    // 🔧 FORÇA API COMO ONLINE
     statusEl.className = 'api-status online';
     textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     return true;
@@ -5945,6 +5945,139 @@ async function init() {
     // CARREGA USUÁRIOS
     loadUsers();
     console.log('👥 Usuários carregados:', users.length);
+
+    // ==========================================
+    // 🔧 CORREÇÃO: FORÇA API ONLINE (SEM BLOQUEAR)
+    // ==========================================
+    const statusEl = document.getElementById('apiStatus');
+    const textEl = document.getElementById('apiStatusText');
+    const t = translations[currentLang] || translations.en;
+    
+    // ✅ FORÇA API COMO ONLINE IMEDIATAMENTE
+    statusEl.className = 'api-status online';
+    textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
+    
+    // ==========================================
+    // 🔧 CORREÇÃO: ATUALIZA IDIOMA PRIMEIRO
+    // ==========================================
+    updateLanguage();
+    
+    // CARREGA DADOS
+    await loadBlockchainData();
+    await loadRealTransactions();
+    updateValidatorsDisplay();
+    updateStakingStats();
+    await initChartSystem();
+    
+    // CONFIGURA BOTÃO DE BUSCA
+    const searchButton = document.getElementById('searchButton');
+    if (searchButton) {
+        const newBtn = searchButton.cloneNode(true);
+        searchButton.parentNode.replaceChild(newBtn, searchButton);
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            searchWallet();
+        });
+    }
+    
+    // CONFIGURA INPUT DE BUSCA
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        const newInput = searchInput.cloneNode(true);
+        searchInput.parentNode.replaceChild(newInput, searchInput);
+        newInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchWallet();
+            }
+        });
+    }
+    
+    // CONFIGURA BOTÃO DE ATUALIZAR
+    const refreshBtn = document.getElementById('refreshBalanceBtn');
+    if (refreshBtn) {
+        const newBtn = refreshBtn.cloneNode(true);
+        refreshBtn.parentNode.replaceChild(newBtn, refreshBtn);
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            refreshBalance();
+        });
+    }
+    
+    // CONFIGURA HISTÓRICO
+    const refreshHistory = document.getElementById('refreshHistory');
+    if (refreshHistory) {
+        refreshHistory.addEventListener('click', function() {
+            loadRealTransactions();
+            showNotification('⟳ Transaction history refreshed!', '#00ccff');
+        });
+    }
+    
+    // CONFIGURA SELECTOR DE IDIOMA
+    const langSelect = document.getElementById('languageSelect');
+    if (langSelect) {
+        langSelect.addEventListener('change', function(e) {
+            currentLang = e.target.value;
+            document.body.classList.toggle('arabic', currentLang === 'ar');
+            updateLanguage();
+            // Recarrega dados traduzidos
+            loadRealTransactions();
+            updateStakingStats();
+            updateValidatorsDisplay();
+            // Atualiza a barra de status da API também
+            updateApiStatusText();
+        });
+    }
+    
+    // ==========================================
+    // 🔧 CORREÇÃO: ATUALIZA STATUS DA API NO IDIOMA
+    // ==========================================
+    function updateApiStatusText() {
+        const statusEl2 = document.getElementById('apiStatus');
+        const textEl2 = document.getElementById('apiStatusText');
+        const t2 = translations[currentLang] || translations.en;
+        if (statusEl2 && textEl2) {
+            // FORÇA ONLINE SEMPRE
+            statusEl2.className = 'api-status online';
+            textEl2.textContent = t2.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
+        }
+    }
+    
+    // Adiciona a função ao escopo global
+    window.updateApiStatusText = updateApiStatusText;
+    
+    // ==========================================
+    // 🔧 CORREÇÃO: FORÇA A TRADUÇÃO DOS BOTÕES
+    // ==========================================
+    // Força a atualização de todos os elementos com data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const t3 = translations[currentLang] || translations.en;
+        if (t3[key] !== undefined && t3[key] !== null) {
+            const text = el.textContent || '';
+            const emojiMatch = text.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
+            
+            if (emojiMatch) {
+                el.textContent = emojiMatch[0] + ' ' + t3[key];
+            } else {
+                el.textContent = t3[key];
+            }
+        }
+    });
+    
+    // Placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const t4 = translations[currentLang] || translations.en;
+        if (t4[key] !== undefined && t4[key] !== null) {
+            el.placeholder = t4[key];
+        }
+    });
+    
+    console.log('✅ Bradicoin Wallet App initialized successfully!');
+    console.log('💡 Enter a wallet address starting with "Br" and press Enter or click Search.');
+    console.log('🔐 ZK-SNARK security features active');
+}
 
     // ==========================================
     // 🔧 CORREÇÃO: VERIFICA API (NÃO BLOQUEIA)

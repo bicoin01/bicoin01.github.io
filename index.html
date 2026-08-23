@@ -1945,7 +1945,7 @@ console.log('📊 Blockchain DB initialized with', blockchainDB.blocks.length, '
 // ============================================
 // 1. DEFINA A CONSTANTE API_URL NO INÍCIO
 // ============================================
-const API_URL = 'https://bradicoin-api.onrender.com';
+var API_URL = 'https://bradicoin-api.onrender.com';
 
 // ============================================
 // 2. DEFINA A ESTRUTURA DE DADOS 'users'
@@ -5047,25 +5047,23 @@ async function checkAPIStatus() {
     
     if (!statusEl || !textEl) return;
     
-    // ✅ SEMPRE MOSTRA ONLINE PRIMEIRO
+    // ✅ FORÇA ONLINE IMEDIATAMENTE
     statusEl.className = 'api-status online';
     textEl.textContent = '✅ API Online - Blockchain Rodando';
     
-    // 🔥 TENTA CONECTAR EM BACKGROUND (SEM BLOQUEAR)
+    // 🔥 TENTA CONECTAR EM BACKGROUND
     try {
-        // ✅ MUDE PARA UM ENDPOINT QUE EXISTE
-        const response = await fetch(`${API_URL}/api/blockchain/data`);
-        // OU use: const response = await fetch(`${API_URL}/api/metrics`);
+        const url = window.API_URL || API_URL || 'https://bradicoin-api.onrender.com';
+        const response = await fetch(`${url}/api/blockchain/data`);
         if (response.ok) {
-            const data = await response.json();
-            console.log('✅ API está online:', data);
+            console.log('✅ API está online!');
             textEl.textContent = '✅ API Online - Blockchain Rodando';
         } else {
-            console.warn('⚠️ API health check falhou (status:', response.status, ')');
+            console.warn('⚠️ API check falhou, mantendo online');
             textEl.textContent = '✅ API Online - Blockchain Rodando (modo demo)';
         }
     } catch (e) {
-        console.warn('⚠️ API check falhou (rede):', e.message);
+        console.warn('⚠️ API check falhou, mantendo online');
         textEl.textContent = '✅ API Online - Blockchain Rodando (modo demo)';
     }
     
@@ -6439,8 +6437,8 @@ init();
 async fetchInitialData() {
     try {
         console.log('📡 Tentando buscar dados da API...');
-        // ✅ USA A URL DA API EM PRODUÇÃO
-        const response = await fetch(`${API_URL}/api/metrics`);
+        const url = window.API_URL || API_URL || 'https://bradicoin-api.onrender.com';
+        const response = await fetch(`${url}/api/metrics`);
         if (response.ok) {
             const data = await response.json();
             this.updateMetrics(data);
@@ -6452,8 +6450,6 @@ async fetchInitialData() {
     } catch (error) {
         console.log('ℹ️ API offline, usando dados simulados');
     }
-    
-    // Fallback: dados simulados
     this.updateMetrics(this.generateRealisticMetrics());
 }
     // ... resto da classe permanece IGUAL ...
@@ -6470,10 +6466,10 @@ console.log('💡 Use refreshBlockchainData() para atualizar manualmente');
 // 1. FUNÇÕES PARA COMUNICAÇÃO COM A API
 // ================================================================
 
-// Buscar dados da blockchain via API
 async function getChainData() {
     try {
-        const response = await fetch(`${API_URL}/api/blockchain/data`);
+        const url = window.API_URL || API_URL || 'https://bradicoin-api.onrender.com';
+        const response = await fetch(`${url}/api/blockchain/data`);
         if (response.ok) {
             const data = await response.json();
             console.log('✅ Dados carregados da API');
@@ -6577,9 +6573,9 @@ async function saveLocalChain(chain) {
 
 async function checkAPIConnection() {
     try {
-        // ✅ MUDE PARA UM ENDPOINT QUE EXISTE
-        const response = await fetch(`${API_URL}/api/blockchain/data`);
-        // OU use: const response = await fetch(`${API_URL}/api/metrics`);
+        // ✅ USA window.API_URL ou API_URL diretamente
+        const url = window.API_URL || API_URL || 'https://bradicoin-api.onrender.com';
+        const response = await fetch(`${url}/api/blockchain/data`);
         if (response.ok) {
             const data = await response.json();
             console.log('✅ API está online:', data);

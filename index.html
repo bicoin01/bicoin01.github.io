@@ -4856,6 +4856,7 @@ let tokenData = [
 ];
 
 // ==================== CONSTANTS ====================
+const API_URL = 'https://bradicoin-api.onrender.com';
 const BASE_SUPPLY = 79000000000000;
 const LOCAL_BLOCKCHAIN_KEY = 'bradicoin_local_chain';
 
@@ -5238,9 +5239,8 @@ async function syncWalletWithAPI(address) {
 
 // ==================== FUNÇÃO PARA ABRIR EXPLORER ====================
 function openBradichainExplorer(address) {
-    const url = `https://www.bradichain.com/address/${address}`;
+    const url = `https://bradicoin-api.onrender.com/explorer/address/${address}`;
     window.open(url, '_blank');
-    showNotification(`🔍 Abrindo ${url}`, '#00ccff');
 }
 
 // ==================== FUNÇÃO DE STATUS ====================
@@ -6479,6 +6479,7 @@ async function saveLocalChain(chain) {
 
 async function checkAPIConnection() {
     try {
+        const API_URL = window.API_URL || 'https://bradicoin-api.onrender.com';  // ✅ FALLBACK
         const response = await fetch(`${API_URL}/api/health`);
         if (response.ok) {
             const data = await response.json();

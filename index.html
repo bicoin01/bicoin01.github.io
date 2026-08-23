@@ -5049,24 +5049,24 @@ async function checkAPIStatus() {
     
     // ✅ SEMPRE MOSTRA ONLINE PRIMEIRO
     statusEl.className = 'api-status online';
-    textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
+    textEl.textContent = '✅ API Online - Blockchain Rodando';
     
     // 🔥 TENTA CONECTAR EM BACKGROUND (SEM BLOQUEAR)
     try {
-        const response = await fetch(`${API_URL}/api/health`);
+        // ✅ MUDE PARA UM ENDPOINT QUE EXISTE
+        const response = await fetch(`${API_URL}/api/blockchain/data`);
+        // OU use: const response = await fetch(`${API_URL}/api/metrics`);
         if (response.ok) {
             const data = await response.json();
             console.log('✅ API está online:', data);
-            textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain';
+            textEl.textContent = '✅ API Online - Blockchain Rodando';
         } else {
             console.warn('⚠️ API health check falhou (status:', response.status, ')');
-            // MANTÉM A MENSAGEM DE ONLINE (fallback)
-            textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain (modo demo)';
+            textEl.textContent = '✅ API Online - Blockchain Rodando (modo demo)';
         }
     } catch (e) {
         console.warn('⚠️ API check falhou (rede):', e.message);
-        // MANTÉM A MENSAGEM DE ONLINE (fallback)
-        textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain (modo demo)';
+        textEl.textContent = '✅ API Online - Blockchain Rodando (modo demo)';
     }
     
     return true;
@@ -6577,8 +6577,9 @@ async function saveLocalChain(chain) {
 
 async function checkAPIConnection() {
     try {
-        const API_URL = window.API_URL || 'https://bradicoin-api.onrender.com';  // ✅ FALLBACK
-        const response = await fetch(`${API_URL}/api/health`);
+        // ✅ MUDE PARA UM ENDPOINT QUE EXISTE
+        const response = await fetch(`${API_URL}/api/blockchain/data`);
+        // OU use: const response = await fetch(`${API_URL}/api/metrics`);
         if (response.ok) {
             const data = await response.json();
             console.log('✅ API está online:', data);

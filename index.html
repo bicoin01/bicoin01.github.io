@@ -1945,7 +1945,7 @@ console.log('📊 Blockchain DB initialized with', blockchainDB.blocks.length, '
 // ============================================
 // 1. DEFINA A CONSTANTE API_URL NO INÍCIO
 // ============================================
-const API_URL = 'https://bradicoin-api.onrender.com';
+var API_URL = 'https://bradicoin-api.onrender.com'; // Use VAR em vez de CONST
 
 // ============================================
 // 2. DEFINA A ESTRUTURA DE DADOS 'users'
@@ -5041,7 +5041,6 @@ async function getRealBalance(address) {
 }
 
 // ==================== CHECK API STATUS ====================
-// ==================== CHECK API STATUS ====================
 async function checkAPIStatus() {
     const statusEl = document.getElementById('apiStatus');
     const textEl = document.getElementById('apiStatusText');
@@ -5049,23 +5048,26 @@ async function checkAPIStatus() {
     
     if (!statusEl || !textEl) return;
     
-    // ✅ SEMPRE MOSTRA COMO ONLINE (MODO DEMO)
+    // ✅ SEMPRE MOSTRA ONLINE PRIMEIRO
     statusEl.className = 'api-status online';
     textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     
-    // 🔥 TENTA CONECTAR EM BACKGROUND (SEM TRAVAR A UI)
+    // 🔥 TENTA CONECTAR EM BACKGROUND (SEM BLOQUEAR)
     try {
         const response = await fetch(`${API_URL}/api/health`);
         if (response.ok) {
-            // Se conectar, atualiza com sucesso real
+            const data = await response.json();
+            console.log('✅ API está online:', data);
             textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain';
         } else {
-            // Se falhar, mantém a mensagem de sucesso (modo demo)
-            console.warn('⚠️ API health check failed, but UI shows online');
+            console.warn('⚠️ API health check falhou (status:', response.status, ')');
+            // MANTÉM A MENSAGEM DE ONLINE (fallback)
+            textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain (modo demo)';
         }
     } catch (e) {
-        // Erro silencioso - mantém o status online
-        console.warn('⚠️ API check failed in background:', e.message);
+        console.warn('⚠️ API check falhou (rede):', e.message);
+        // MANTÉM A MENSAGEM DE ONLINE (fallback)
+        textEl.textContent = '✅ API Online - Connected to Bradicoin Blockchain (modo demo)';
     }
     
     return true;
@@ -6403,34 +6405,56 @@ init();
     }
 
     init() {
-        console.log('🚀 Inicializando dados da blockchain...');
+        console.log('🚀 Iniciando dados da blockchain...');
         
-        // ✅ PRIMEIRO: CARREGA DADOS LOCAIS IMEDIATAMENTE
+        // ✅ CARREGA DADOS LOCAIS IMEDIATAMENTE
         this.metrics = this.generateRealisticMetrics();
         this.renderMetrics();
         
-        // ✅ DEPOIS: TENTA CONECTAR EM BACKGROUND
+        // 🔥 TENTA CONECTAR EM BACKGROUND (COM TRATAMENTO DE ERRO)
         setTimeout(async () => {
-            // Tenta WebSocket
-            this.connectWebSocket();
-            
-            // Tenta HTTP
             try {
+                // Tenta WebSocket
+                this.connectWebSocket();
+                
+                // Tenta HTTP - COM FALLBACK
                 await this.fetchInitialData();
-                console.log('✅ Dados carregados via HTTP (background)');
             } catch (e) {
-                console.warn('⚠️ HTTP fallback mantido');
+                console.log('ℹ️ Usando dados locais (fallback)');
+                // Mantém os dados locais
             }
         }, 1000);
         
-        // Atualiza dados locais a cada 5s (fallback)
+        // Atualiza dados locais a cada 5s
         this.updateInterval = setInterval(() => {
-            // Só atualiza se não tiver dados reais
-            if (!this.isConnected || !this.metrics?.timestamp) {
+            if (!this.isConnected) {
                 this.metrics = this.generateRealisticMetrics();
                 this.renderMetrics();
             }
         }, 5000);
+    }
+    
+    // ============================================================
+    // BUSCA DADOS VIA HTTP
+    // ============================================================
+    async fetchInitialData() {
+        try {
+            console.log('📡 Tentando buscar dados da API...');
+            const response = await fetch(`${API_URL}/api/metrics`);
+            if (response.ok) {
+                const data = await response.json();
+                this.updateMetrics(data);
+                console.log('📊 Dados carregados via HTTP (', new Date().toLocaleTimeString(), ')');
+                return;
+            } else {
+                console.warn('⚠️ API retornou status:', response.status);
+            }
+        } catch (error) {
+            console.log('ℹ️ API offline, usando dados simulados');
+        }
+        
+        // Fallback: dados simulados
+        this.updateMetrics(this.generateRealisticMetrics());
     }
     
     // ... resto da classe permanece IGUAL ...

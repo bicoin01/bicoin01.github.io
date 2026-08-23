@@ -4868,27 +4868,16 @@ function getCurrentTotalSupply() {
     return chain.totalSupply || BASE_SUPPLY;
 }
 
-function getLocalChain() {
-    // Se o blockchainDB já existe, use ele
-    if (window.blockchainDB) {
-        return {
-            balances: window.blockchainDB.balances || {},
-            transactions: window.blockchainDB.transactions || [],
-            staking: window.blockchainDB.stakingPositions || {},
-            validators: window.blockchainDB.validators || [],
-            blocks: window.blockchainDB.blocks || [],
-            totalSupply: window.blockchainDB.totalSupply || BASE_SUPPLY,
-            securityLogs: window.blockchainDB.securityLogs || []
-        };
-    }
-    
-    // Fallback para localStorage
+async function getChainData() {
     try {
-        const data = localStorage.getItem(LOCAL_BLOCKCHAIN_KEY);
-        if (data) return JSON.parse(data);
-    } catch (e) {}
-    
-    return { balances: {}, transactions: [], staking: {}, validators: [], blocks: [], totalSupply: BASE_SUPPLY, securityLogs: [] };
+        const response = await fetch(`${API_URL}/api/blockchain/data`);
+        if (response.ok) {
+            return await response.json();
+        }
+    } catch (error) {
+        console.error('Erro ao buscar dados da blockchain:', error);
+    }
+    return null;
 }
 
 function generateWalletHash(address) {
@@ -4999,26 +4988,20 @@ function isValidBradicoinAddress(address) {
 // ============================================
 // FUNÇÃO PARA SALVAR A CHAIN LOCAL
 // ============================================
-function saveLocalChain(chain) {
+async function saveChainData(chainData) {
     try {
-        // Salva no localStorage
-        localStorage.setItem(LOCAL_BLOCKCHAIN_KEY, JSON.stringify(chain));
-        
-        // Também atualiza o blockchainDB se existir
-        if (window.blockchainDB) {
-            window.blockchainDB.balances = chain.balances || {};
-            window.blockchainDB.transactions = chain.transactions || [];
-            window.blockchainDB.stakingPositions = chain.staking || {};
-            window.blockchainDB.validators = chain.validators || [];
-            window.blockchainDB.blocks = chain.blocks || [];
-            window.blockchainDB.totalSupply = chain.totalSupply || BASE_SUPPLY;
-            // Salva no storage do blockchainDB
-            window.blockchainDB.saveToStorage();
-        }
-        
-        console.log('✅ Chain salva com sucesso!');
-    } catch (e) {
-        console.warn('⚠️ Erro ao salvar chain:', e.message);
+        const response = await fetch(`${API_URL}/api/blockchain/save`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(chainData)
+        });
+        return response.ok;
+    } catch (error) {
+        console.error('Erro ao salvar dados:', error);
+        return false;
     }
 }
 
@@ -6376,6 +6359,222 @@ window.loadChartJS = loadChartJS;
 init();
 </script>
 <!-- ============================================================ --> <!-- 🚀 CONEXÃO COM BACKEND - DADOS REAIS EM TEMPO REAL           --> <!-- ============================================================ --> 
-<script> // ================================================================ // 1. CONEXÃO WEBSOCKET E DADOS REAIS // ================================================================ class BlockchainRealData { constructor() { this.metrics = {}; this.ws = null; this.isConnected = false; this.lastUpdate = null; this.updateInterval = null; this.init(); } init() { console.log('🚀 Iniciando conexão com dados reais da blockchain...'); // Tenta conectar via WebSocket this.connectWebSocket(); // Busca dados iniciais via HTTP this.fetchInitialData(); // Fallback: atualiza via HTTP a cada 10 segundos se WebSocket falhar this.updateInterval = setInterval(() => { if (!this.isConnected) { this.fetchInitialData(); } }, 10000); // Também força atualização a cada 5 segundos mesmo com WebSocket // para garantir que os dados estejam sempre atualizados setInterval(() => { if (this.isConnected) { // Dados já vêm via WebSocket, mas podemos complementar this.simulateRealtimeVariation(); } }, 5000); } // ============================================================ // CONEXÃO WEBSOCKET // ============================================================ connectWebSocket() { try { // Tenta conectar ao backend const wsUrl = `ws://${window.location.hostname}:3001`; this.ws = new WebSocket(wsUrl); this.ws.onopen = () => { console.log('✅ Conectado ao servidor WebSocket (dados reais)'); this.isConnected = true; this.updateConnectionStatus(true); }; this.ws.onmessage = (event) => { try { const data = JSON.parse(event.data); if (data.type === 'update' || data.type === 'initial') { this.updateMetrics(data.data); } } catch (error) { console.error('Erro ao processar mensagem WebSocket:', error); } }; this.ws.onclose = () => { console.log('⚠️ WebSocket desconectado, usando fallback HTTP'); this.isConnected = false; this.updateConnectionStatus(false); // Tenta reconectar após 5 segundos setTimeout(() => this.connectWebSocket(), 5000); }; this.ws.onerror = (error) => { console.warn('⚠️ Erro no WebSocket:', error); this.isConnected = false; }; } catch (error) { console.warn('⚠️ WebSocket não disponível, usando HTTP polling'); this.isConnected = false; this.updateConnectionStatus(false); } } // ============================================================ // BUSCA DADOS VIA HTTP // ============================================================ async fetchInitialData() { try { const response = await fetch('http://localhost:3001/api/metrics'); if (response.ok) { const data = await response.json(); this.updateMetrics(data); console.log('📊 Dados carregados via HTTP (', new Date().toLocaleTimeString(), ')'); return; } } catch (error) { // Backend offline, usar dados simulados realistas console.warn('⚠️ Backend offline, usando dados simulados'); } // Fallback: dados simulados realistas this.updateMetrics(this.generateRealisticMetrics()); } // ============================================================ // GERAR DADOS REALISTAS (FALLBACK) // ============================================================ generateRealisticMetrics() { // Base de dados com variação realista const blockHeight = 1234 + Math.floor(Math.random() * 100); const timestamp = Date.now(); return { blockHeight: blockHeight, blocksPerMin: 2.3 + Math.random() * 0.8, avgBlockTime: 10 + Math.random() * 6, nodesOnline: 42 + Math.floor(Math.random() * 16), validators: 10 + Math.floor(Math.random() * 6), networkHealth: 94 + Math.random() * 5.5, decentralization: 78 + Math.random() * 14, tps: 0.3 + Math.random() * 0.6, avgConfirmation: 9 + Math.random() * 7, avgFee: 0.08 + Math.random() * 0.20, volume24h: 38 + Math.random() * 18, feesToday: 90 + Math.random() * 60, pending: Math.floor(Math.random() * 15), activeWallets: 11500 + Math.floor(Math.random() * 2500), newToday: 180 + Math.floor(Math.random() * 130), inStaking: 42 + Math.random() * 18, topHolders: 10 + Math.random() * 5, total: 100000000000000000, circulating: 100000000000000000, locked: 0, staked: Math.floor(Math.random() * 5000), burned: 0, deflation: (Math.random() * 2).toFixed(1) + '%', basePrice: 10.00, currentPrice: 9.85 + Math.random() * 0.45, realMarketCap: '$790T', dilutedMC: '$790T', targetMC: '$790T', stabilityFund: '$2.5B', boughtToday: (10 + Math.random() * 10).toFixed(1) + 'M BRD', burnedToday: (5 + Math.random() * 8).toFixed(1) + 'M BRD', timestamp: timestamp }; } // ============================================================ // SIMULAR VARIAÇÃO EM TEMPO REAL // ============================================================ simulateRealtimeVariation() { if (!this.metrics || Object.keys(this.metrics).length === 0) return; // Pequenas variações para dar sensação de tempo real this.metrics.blockHeight += Math.floor(Math.random() * 2); this.metrics.blocksPerMin = 2.3 + Math.random() * 0.8; this.metrics.tps = 0.3 + Math.random() * 0.6; this.metrics.pending = Math.floor(Math.random() * 15); this.metrics.nodesOnline = 42 + Math.floor(Math.random() * 16); this.metrics.networkHealth = 94 + Math.random() * 5.5; this.metrics.avgFee = 0.08 + Math.random() * 0.20; this.renderMetrics(); } // ============================================================ // ATUALIZAR MÉTRICAS NA UI // ============================================================ updateMetrics(data) { this.metrics = { ...this.metrics, ...data }; this.lastUpdate = Date.now(); this.renderMetrics(); } // ============================================================ // RENDERIZAR MÉTRICAS NA UI // ============================================================ renderMetrics() { const d = this.metrics; if (!d || Object.keys(d).length === 0) return; // ========================================================== // NETWORK METRICS // ========================================================== this.updateElement('blockHeightValue', this.formatNumber(d.blockHeight)); this.updateElement('blocksPerMinValue', d.blocksPerMin?.toFixed(1) || '0'); this.updateElement('avgBlockTimeValue', (d.avgBlockTime?.toFixed(0) || 0) + 's'); this.updateElement('nodesOnlineValue', this.formatNumber(d.nodesOnline)); this.updateElement('validatorsValue', this.formatNumber(d.validators)); this.updateElement('networkHealthValue', (d.networkHealth?.toFixed(1) || 0) + '%'); this.updateElement('decentralizationValue', (d.decentralization?.toFixed(0) || 0) + '%'); // ========================================================== // TRANSACTIONS // ========================================================== this.updateElement('tpsValue', d.tps?.toFixed(1) || '0'); this.updateElement('avgConfirmationValue', (d.avgConfirmation?.toFixed(0) || 0) + 's'); this.updateElement('avgFeeValue', '$' + (d.avgFee?.toFixed(2) || '0.00')); this.updateElement('volume24hValue', '$' + this.formatNumber(d.volume24h) + 'M'); this.updateElement('feesTodayValue', '$' + this.formatNumber(d.feesToday) + 'K'); this.updateElement('pendingValue', this.formatNumber(d.pending)); // ========================================================== // WALLETS // ========================================================== this.updateElement('activeWalletsValue', this.formatNumber(d.activeWallets)); this.updateElement('newTodayValue', this.formatNumber(d.newToday)); this.updateElement('inStakingValue', (d.inStaking?.toFixed(1) || 0) + ' BRD'); this.updateElement('topHoldersValue', (d.topHolders?.toFixed(1) || 0) + '%'); // ========================================================== // SUPPLY // ========================================================== this.updateElement('totalValue', this.formatNumber(d.total || d.circulating || 100000000000000000) + ' BRD'); this.updateElement('circulatingValue', this.formatNumber(d.circulating || d.total || 100000000000000000) + ' BRD'); this.updateElement('lockedValue', this.formatNumber(d.locked || 0)); this.updateElement('stakedValue', this.formatNumber(d.staked || 0)); this.updateElement('burnedValue', this.formatNumber(d.burned || 0)); this.updateElement('deflationValue', d.deflation || '0%'); // ========================================================== // PRICE ECONOMICS // ========================================================== this.updateElement('basePriceValue', '$' + (d.basePrice || 10.00).toFixed(2)); this.updateElement('currentPriceValue', '$' + (d.currentPrice || 10.00).toFixed(2)); this.updateElement('realMarketCapValue', d.realMarketCap || '$790T'); this.updateElement('dilutedMCValue', d.dilutedMC || '$790T'); this.updateElement('targetMCValue', d.targetMC || '$790T'); this.updateElement('stabilityFundValue', d.stabilityFund || '$2.5B'); this.updateElement('boughtTodayValue', d.boughtToday || '15M BRD'); this.updateElement('burnedTodayValue', d.burnedToday || '8.5M BRD'); // ========================================================== // ATUALIZAR TIMESTAMP // ========================================================== const timeEl = document.getElementById('chartLastUpdate'); if (timeEl) { timeEl.textContent = '⚡ ' + new Date().toLocaleTimeString(); } // Atualizar status badge const badge = document.getElementById('blockchainValid'); if (badge) { badge.textContent = '🟢 Blockchain Valid'; badge.style.color = '#00ff66'; } } // ============================================================ // UTILITÁRIOS // ============================================================ updateElement(id, value) { const el = document.getElementById(id); if (el) { el.textContent = value !== undefined && value !== null ? value : '--'; } } formatNumber(num) { if (!num && num !== 0) return '0'; if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'; if (num >= 1000) return (num / 1000).toFixed(1) + 'K'; return num.toString(); } updateConnectionStatus(connected) { const statusEl = document.getElementById('apiStatus'); const textEl = document.getElementById('apiStatusText'); const t = translations[currentLang] || translations.en; if (statusEl && textEl) { if (connected) { statusEl.className = 'api-status online'; textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain'; } else { statusEl.className = 'api-status offline'; textEl.textContent = t.apiOffline || '⚠️ API Offline - Using local data'; } } } } // ================================================================ // 2. INICIALIZAR QUANDO A PÁGINA CARREGAR // ================================================================ let blockchainRealData = null; // Adiciona ao evento DOMContentLoaded existente document.addEventListener('DOMContentLoaded', function() { // Inicializa o sistema de dados reais setTimeout(() => { blockchainRealData = new BlockchainRealData(); console.log('✅ Sistema de dados reais inicializado!'); }, 500); }); // ================================================================ // 3. FUNÇÃO PARA ATUALIZAR MANUALMENTE // ================================================================ function refreshBlockchainData() { if (blockchainRealData) { blockchainRealData.fetchInitialData(); showNotification('🔄 Dados da blockchain atualizados!', '#00ccff'); } else { showNotification('⚠️ Sistema não inicializado', '#ffc800'); } } // Adiciona ao escopo global window.refreshBlockchainData = refreshBlockchainData; window.blockchainRealData = blockchainRealData; // ================================================================ // 4. SUBSTITUIR O loadBlockchainData EXISTENTE // ================================================================ // Guarda a função original const originalLoadBlockchainData = window.loadBlockchainData; // Substitui para usar dados reais window.loadBlockchainData = function() { // Se o sistema de dados reais já está rodando, ele vai atualizar if (blockchainRealData && blockchainRealData.metrics && Object.keys(blockchainRealData.metrics).length > 0) { blockchainRealData.renderMetrics(); return; } // Fallback para dados estáticos se o sistema real não estiver pronto if (originalLoadBlockchainData) { originalLoadBlockchainData(); } }; console.log('✅ Script de dados reais carregado!'); console.log('💡 Use refreshBlockchainData() para atualizar manualmente'); </script>
+<script> // ================================================================ // 1. CONEXÃO WEBSOCKET E DADOS REAIS // ================================================================ class BlockchainRealData { constructor() { this.metrics = {}; this.ws = null; this.isConnected = false; this.lastUpdate = null; this.updateInterval = null; this.init(); } init() { console.log('🚀 Iniciando conexão com dados reais da blockchain...'); // Tenta conectar via WebSocket this.connectWebSocket(); // Busca dados iniciais via HTTP this.fetchInitialData(); // Fallback: atualiza via HTTP a cada 10 segundos se WebSocket falhar this.updateInterval = setInterval(() => { if (!this.isConnected) { this.fetchInitialData(); } }, 10000); // Também força atualização a cada 5 segundos mesmo com WebSocket // para garantir que os dados estejam sempre atualizados setInterval(() => { if (this.isConnected) { // Dados já vêm via WebSocket, mas podemos complementar this.simulateRealtimeVariation(); } }, 5000); } // ============================================================ // CONEXÃO WEBSOCKET // ============================================================ connectWebSocket() { try { // Tenta conectar ao backend const wsUrl = `ws://${window.location.hostname}:3001`; this.ws = new WebSocket(wsUrl); this.ws.onopen = () => { console.log('✅ Conectado ao servidor WebSocket (dados reais)'); this.isConnected = true; this.updateConnectionStatus(true); }; this.ws.onmessage = (event) => { try { const data = JSON.parse(event.data); if (data.type === 'update' || data.type === 'initial') { this.updateMetrics(data.data); } } catch (error) { console.error('Erro ao processar mensagem WebSocket:', error); } }; this.ws.onclose = () => { console.log('⚠️ WebSocket desconectado, usando fallback HTTP'); this.isConnected = false; this.updateConnectionStatus(false); // Tenta reconectar após 5 segundos setTimeout(() => this.connectWebSocket(), 5000); }; this.ws.onerror = (error) => { console.warn('⚠️ Erro no WebSocket:', error); this.isConnected = false; }; } catch (error) { console.warn('⚠️ WebSocket não disponível, usando HTTP polling'); this.isConnected = false; this.updateConnectionStatus(false); } } // ============================================================ // BUSCA DADOS VIA HTTP // ============================================================ async fetchInitialData() { try { const response = await fetch('http://localhost:3001/api/metrics'); if (response.ok) { const data = await response.json(); this.updateMetrics(data); console.log('📊 Dados carregados via HTTP (', new Date().toLocaleTimeString(), ')'); return; } } catch (error) { // Backend offline, usar dados simulados realistas console.warn('⚠️ Backend offline, usando dados simulados'); } // Fallback: dados simulados realistas this.updateMetrics(this.generateRealisticMetrics()); } // ============================================================ // GERAR DADOS REALISTAS (FALLBACK) // ============================================================ generateRealisticMetrics() { // Base de dados com variação realista const blockHeight = 1234 + Math.floor(Math.random() * 100); const timestamp = Date.now(); return { blockHeight: blockHeight, blocksPerMin: 2.3 + Math.random() * 0.8, avgBlockTime: 10 + Math.random() * 6, nodesOnline: 42 + Math.floor(Math.random() * 16), validators: 10 + Math.floor(Math.random() * 6), networkHealth: 94 + Math.random() * 5.5, decentralization: 78 + Math.random() * 14, tps: 0.3 + Math.random() * 0.6, avgConfirmation: 9 + Math.random() * 7, avgFee: 0.08 + Math.random() * 0.20, volume24h: 38 + Math.random() * 18, feesToday: 90 + Math.random() * 60, pending: Math.floor(Math.random() * 15), activeWallets: 11500 + Math.floor(Math.random() * 2500), newToday: 180 + Math.floor(Math.random() * 130), inStaking: 42 + Math.random() * 18, topHolders: 10 + Math.random() * 5, total: 100000000000000000, circulating: 100000000000000000, locked: 0, staked: Math.floor(Math.random() * 5000), burned: 0, deflation: (Math.random() * 2).toFixed(1) + '%', basePrice: 10.00, currentPrice: 9.85 + Math.random() * 0.45, realMarketCap: '$790T', dilutedMC: '$790T', targetMC: '$790T', stabilityFund: '$2.5B', boughtToday: (10 + Math.random() * 10).toFixed(1) + 'M BRD', burnedToday: (5 + Math.random() * 8).toFixed(1) + 'M BRD', timestamp: timestamp }; } // ============================================================ // SIMULAR VARIAÇÃO EM TEMPO REAL // ============================================================ simulateRealtimeVariation() { if (!this.metrics || Object.keys(this.metrics).length === 0) return; // Pequenas variações para dar sensação de tempo real this.metrics.blockHeight += Math.floor(Math.random() * 2); this.metrics.blocksPerMin = 2.3 + Math.random() * 0.8; this.metrics.tps = 0.3 + Math.random() * 0.6; this.metrics.pending = Math.floor(Math.random() * 15); this.metrics.nodesOnline = 42 + Math.floor(Math.random() * 16); this.metrics.networkHealth = 94 + Math.random() * 5.5; this.metrics.avgFee = 0.08 + Math.random() * 0.20; this.renderMetrics(); } // ============================================================ // ATUALIZAR MÉTRICAS NA UI // ============================================================ updateMetrics(data) { this.metrics = { ...this.metrics, ...data }; this.lastUpdate = Date.now(); this.renderMetrics(); } // ============================================================ // RENDERIZAR MÉTRICAS NA UI // ============================================================ renderMetrics() { const d = this.metrics; if (!d || Object.keys(d).length === 0) return; // ========================================================== // NETWORK METRICS // ========================================================== this.updateElement('blockHeightValue', this.formatNumber(d.blockHeight)); this.updateElement('blocksPerMinValue', d.blocksPerMin?.toFixed(1) || '0'); this.updateElement('avgBlockTimeValue', (d.avgBlockTime?.toFixed(0) || 0) + 's'); this.updateElement('nodesOnlineValue', this.formatNumber(d.nodesOnline)); this.updateElement('validatorsValue', this.formatNumber(d.validators)); this.updateElement('networkHealthValue', (d.networkHealth?.toFixed(1) || 0) + '%'); this.updateElement('decentralizationValue', (d.decentralization?.toFixed(0) || 0) + '%'); // ========================================================== // TRANSACTIONS // ========================================================== this.updateElement('tpsValue', d.tps?.toFixed(1) || '0'); this.updateElement('avgConfirmationValue', (d.avgConfirmation?.toFixed(0) || 0) + 's'); this.updateElement('avgFeeValue', '$' + (d.avgFee?.toFixed(2) || '0.00')); this.updateElement('volume24hValue', '$' + this.formatNumber(d.volume24h) + 'M'); this.updateElement('feesTodayValue', '$' + this.formatNumber(d.feesToday) + 'K'); this.updateElement('pendingValue', this.formatNumber(d.pending)); // ========================================================== // WALLETS // ========================================================== this.updateElement('activeWalletsValue', this.formatNumber(d.activeWallets)); this.updateElement('newTodayValue', this.formatNumber(d.newToday)); this.updateElement('inStakingValue', (d.inStaking?.toFixed(1) || 0) + ' BRD'); this.updateElement('topHoldersValue', (d.topHolders?.toFixed(1) || 0) + '%'); // ========================================================== // SUPPLY // ========================================================== this.updateElement('totalValue', this.formatNumber(d.total || d.circulating || 100000000000000000) + ' BRD'); this.updateElement('circulatingValue', this.formatNumber(d.circulating || d.total || 100000000000000000) + ' BRD'); this.updateElement('lockedValue', this.formatNumber(d.locked || 0)); this.updateElement('stakedValue', this.formatNumber(d.staked || 0)); this.updateElement('burnedValue', this.formatNumber(d.burned || 0)); this.updateElement('deflationValue', d.deflation || '0%'); // ========================================================== // PRICE ECONOMICS // ========================================================== this.updateElement('basePriceValue', '$' + (d.basePrice || 10.00).toFixed(2)); this.updateElement('currentPriceValue', '$' + (d.currentPrice || 10.00).toFixed(2)); this.updateElement('realMarketCapValue', d.realMarketCap || '$790T'); this.updateElement('dilutedMCValue', d.dilutedMC || '$790T'); this.updateElement('targetMCValue', d.targetMC || '$790T'); this.updateElement('stabilityFundValue', d.stabilityFund || '$2.5B'); this.updateElement('boughtTodayValue', d.boughtToday || '15M BRD'); this.updateElement('burnedTodayValue', d.burnedToday || '8.5M BRD'); // ========================================================== // ATUALIZAR TIMESTAMP // ========================================================== const timeEl = document.getElementById('chartLastUpdate'); if (timeEl) { timeEl.textContent = '⚡ ' + new Date().toLocaleTimeString(); } // Atualizar status badge const badge = document.getElementById('blockchainValid'); if (badge) { badge.textContent = '🟢 Blockchain Valid'; badge.style.color = '#00ff66'; } } // ============================================================ // UTILITÁRIOS // ============================================================ updateElement(id, value) { const el = document.getElementById(id); if (el) { el.textContent = value !== undefined && value !== null ? value : '--'; } } formatNumber(num) { if (!num && num !== 0) return '0'; if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M'; if (num >= 1000) return (num / 1000).toFixed(1) + 'K'; return num.toString(); } updateConnectionStatus(connected) { const statusEl = document.getElementById('apiStatus'); const textEl = document.getElementById('apiStatusText'); const t = translations[currentLang] || translations.en; if (statusEl && textEl) { if (connected) { statusEl.className = 'api-status online'; textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain'; } else { statusEl.className = 'api-status offline'; textEl.textContent = t.apiOffline || '⚠️ API Offline - Using local data'; } } } } // ================================================================ // 2. INICIALIZAR QUANDO A PÁGINA CARREGAR // ================================================================ let blockchainRealData = null; // Adiciona ao evento DOMContentLoaded existente document.addEventListener('DOMContentLoaded', function() { // Inicializa o sistema de dados reais setTimeout(() => { blockchainRealData = new BlockchainRealData(); console.log('✅ Sistema de dados reais inicializado!'); }, 500); }); // ================================================================ // 3. FUNÇÃO PARA ATUALIZAR MANUALMENTE // ================================================================ function refreshBlockchainData() { if (blockchainRealData) { blockchainRealData.fetchInitialData(); showNotification('🔄 Dados da blockchain atualizados!', '#00ccff'); } else { showNotification('⚠️ Sistema não inicializado', '#ffc800'); } } // Adiciona ao escopo global window.refreshBlockchainData = refreshBlockchainData; window.blockchainRealData = blockchainRealData; // ================================================================ // 4. SUBSTITUIR O loadBlockchainData EXISTENTE // ================================================================ // Guarda a função original const originalLoadBlockchainData = window.loadBlockchainData; // Substitui para usar dados reais window.loadBlockchainData = function() { // Se o sistema de dados reais já está rodando, ele vai atualizar if (blockchainRealData && blockchainRealData.metrics && Object.keys(blockchainRealData.metrics).length > 0) { blockchainRealData.renderMetrics(); return; } // Fallback para dados estáticos se o sistema real não estiver pronto if (originalLoadBlockchainData) { originalLoadBlockchainData(); } }; console.log('✅ Script de dados reais carregado!'); console.log('💡 Use refreshBlockchainData() para atualizar manualmente'); 
+console.log('✅ Script de dados reais carregado!');
+console.log('💡 Use refreshBlockchainData() para atualizar manualmente');
+</script>
+
+<!-- ================================================================ -->
+<!-- 🗄️ INTEGRAÇÃO COM MONGODB E ALPHAVPS                           -->
+<!-- ================================================================ -->
+<script>
+// ================================================================
+// 1. FUNÇÕES PARA COMUNICAÇÃO COM A API
+// ================================================================
+
+// Buscar dados da blockchain via API
+async function getChainData() {
+    try {
+        const response = await fetch(`${API_URL}/api/blockchain/data`);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ Dados carregados da API');
+            return data;
+        }
+    } catch (error) {
+        console.error('❌ Erro ao buscar dados da blockchain:', error);
+    }
+    return null;
+}
+
+// Salvar dados da blockchain via API
+async function saveChainData(chainData) {
+    try {
+        const response = await fetch(`${API_URL}/api/blockchain/save`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token') || 'dev-token'}`
+            },
+            body: JSON.stringify(chainData)
+        });
+        if (response.ok) {
+            console.log('✅ Dados salvos na API');
+            return true;
+        }
+    } catch (error) {
+        console.error('❌ Erro ao salvar dados:', error);
+    }
+    return false;
+}
+
+// ================================================================
+// 2. SUBSTITUIR FUNÇÕES LOCAIS PARA USAR API
+// ================================================================
+
+// Substituir getLocalChain para usar API primeiro
+async function getLocalChain() {
+    try {
+        const data = await getChainData();
+        if (data) {
+            return {
+                balances: data.balances || {},
+                transactions: data.transactions || [],
+                staking: data.staking || {},
+                validators: data.validators || [],
+                blocks: data.blocks || [],
+                totalSupply: data.totalSupply || BASE_SUPPLY,
+                securityLogs: data.securityLogs || []
+            };
+        }
+    } catch (e) {
+        console.warn('⚠️ API offline, usando cache local');
+    }
+    
+    return { 
+        balances: {}, 
+        transactions: [], 
+        staking: {}, 
+        validators: [], 
+        blocks: [], 
+        totalSupply: BASE_SUPPLY, 
+        securityLogs: [] 
+    };
+}
+
+// Substituir saveLocalChain para usar API
+async function saveLocalChain(chain) {
+    try {
+        const saved = await saveChainData({
+            balances: chain.balances || {},
+            transactions: chain.transactions || [],
+            staking: chain.staking || {},
+            validators: chain.validators || [],
+            blocks: chain.blocks || [],
+            totalSupply: chain.totalSupply || BASE_SUPPLY,
+            securityLogs: chain.securityLogs || []
+        });
+        
+        if (saved) {
+            console.log('✅ Dados salvos na API');
+        } else {
+            console.warn('⚠️ Falha ao salvar na API');
+        }
+        
+        try {
+            localStorage.setItem(LOCAL_BLOCKCHAIN_KEY, JSON.stringify(chain));
+        } catch (e) {}
+        
+    } catch (e) {
+        console.warn('⚠️ Erro ao salvar dados:', e.message);
+        try {
+            localStorage.setItem(LOCAL_BLOCKCHAIN_KEY, JSON.stringify(chain));
+        } catch (e) {}
+    }
+}
+
+// ================================================================
+// 3. FUNÇÃO PARA VERIFICAR STATUS DA API
+// ================================================================
+
+async function checkAPIConnection() {
+    try {
+        const response = await fetch(`${API_URL}/api/health`);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ API está online:', data);
+            return true;
+        }
+    } catch (error) {
+        console.warn('⚠️ API offline:', error.message);
+    }
+    return false;
+}
+
+// ================================================================
+// 4. FUNÇÃO PARA MIGRAR DADOS DO LOCALSTORAGE PARA O MONGODB
+// ================================================================
+
+async function migrateLocalDataToMongoDB() {
+    console.log('🔄 Iniciando migração de dados para MongoDB...');
+    
+    try {
+        const localData = localStorage.getItem('bradicoin_blockchain_db');
+        if (!localData) {
+            console.log('ℹ️ Nenhum dado local para migrar');
+            return;
+        }
+        
+        const chain = JSON.parse(localData);
+        console.log(`📊 ${chain.blocks?.length || 0} blocos encontrados`);
+        console.log(`📊 ${chain.transactions?.length || 0} transações encontradas`);
+        
+        const saved = await saveChainData({
+            blocks: chain.blocks || [],
+            transactions: chain.transactions || [],
+            balances: chain.balances || {},
+            staking: chain.staking || {},
+            validators: chain.validators || [],
+            totalSupply: chain.totalSupply || BASE_SUPPLY,
+            securityLogs: chain.securityLogs || []
+        });
+        
+        if (saved) {
+            console.log('✅ Dados migrados com sucesso para o MongoDB!');
+            showNotification('✅ Dados migrados para o MongoDB com sucesso!', '#00ff66');
+        } else {
+            console.warn('⚠️ Falha ao migrar dados para o MongoDB');
+            showNotification('⚠️ Falha ao migrar dados para o MongoDB', '#ffc800');
+        }
+        
+    } catch (error) {
+        console.error('❌ Erro ao migrar dados:', error);
+        showNotification('❌ Erro ao migrar dados', '#ff6464');
+    }
+}
+
+// ================================================================
+// 5. SOBRESCREVER FUNÇÕES EXISTENTES
+// ================================================================
+
+// Substitui pelas novas versões
+window.getLocalChain = getLocalChain;
+window.saveLocalChain = saveLocalChain;
+
+// ================================================================
+// 6. INICIALIZAR
+// ================================================================
+
+document.addEventListener('DOMContentLoaded', async function() {
+    console.log('🔌 Verificando conexão com a API...');
+    
+    const isOnline = await checkAPIConnection();
+    
+    if (isOnline) {
+        console.log('✅ API online - usando MongoDB');
+        const localData = localStorage.getItem('bradicoin_blockchain_db');
+        if (localData) {
+            console.log('📦 Dados locais encontrados. Migrando...');
+            setTimeout(async () => {
+                await migrateLocalDataToMongoDB();
+            }, 2000);
+        }
+    } else {
+        console.warn('⚠️ API offline - usando localStorage como fallback');
+    }
+    
+    window.migrateLocalDataToMongoDB = migrateLocalDataToMongoDB;
+    window.checkAPIConnection = checkAPIConnection;
+    
+    console.log('💡 Comandos disponíveis:');
+    console.log('  - checkAPIConnection() - Verificar status da API');
+    console.log('  - migrateLocalDataToMongoDB() - Migrar dados para MongoDB');
+    console.log('  - refreshBlockchainData() - Atualizar dados');
+});
+
+console.log('✅ Integração com MongoDB via API carregada!');
+console.log('📌 Para migrar: migrateLocalDataToMongoDB()');
+
+</script>
 </body>
 </html>

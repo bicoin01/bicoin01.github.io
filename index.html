@@ -3816,7 +3816,7 @@ const translations = {
 let currentLang = 'en';
 
 // ============================================
-// 🌐 FUNÇÃO PARA ATUALIZAR IDIOMA - CORRIGIDA
+// 🌐 FUNÇÃO DE IDIOMA CORRIGIDA
 // ============================================
 function updateLanguage() {
     console.log('🌐 Atualizando idioma para:', currentLang);
@@ -3830,18 +3830,18 @@ function updateLanguage() {
     // 1. TÍTULO DA PÁGINA
     document.title = t.pageTitle || 'Bradicoin Blockchain';
     
-    // 2. TÍTULO PRINCIPAL (H1)
+    // 2. TÍTULO PRINCIPAL
     const pageTitle = document.getElementById('pageTitle');
     if (pageTitle) {
         pageTitle.textContent = t.pageTitle || 'Bradicoin Blockchain';
     }
     
-    // 3. TODOS OS ELEMENTOS COM data-i18n
+    // 3. TODOS OS ELEMENTOS COM data-i18n (CORRIGIDO)
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (t[key] !== undefined && t[key] !== null) {
-            const text = el.textContent || '';
-            const emojiMatch = text.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
+            // Mantém emojis separados
+            const emojiMatch = el.textContent.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
             
             if (emojiMatch) {
                 el.textContent = emojiMatch[0] + ' ' + t[key];
@@ -3859,23 +3859,27 @@ function updateLanguage() {
         }
     });
 
-    // 5. ✅ STATUS DA API - USA A TRADUÇÃO CORRETA
-    const apiStatusText = document.getElementById('apiStatusText');
-    const apiStatus = document.getElementById('apiStatus');
-    if (apiStatusText && apiStatus) {
-        apiStatus.className = 'api-status online';
-        // ✅ USA A TRADUÇÃO DO IDIOMA ATUAL
-        apiStatusText.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
-    }
+    // 5. STATUS DA API (CORRIGIDO - CHAMA A FUNÇÃO ESPECÍFICA)
+    updateApiStatusText();
 
     // 6. RTL PARA ÁRABE
     document.body.classList.toggle('arabic', currentLang === 'ar');
     
     // 7. ATUALIZA O SELECT
     const langSelect = document.getElementById('languageSelect');
-    if (langSelect) {
-        langSelect.value = currentLang;
-    }
+if (langSelect) {
+    langSelect.addEventListener('change', function(e) {
+        currentLang = e.target.value;
+        document.body.classList.toggle('arabic', currentLang === 'ar');
+        updateLanguage();
+        // ⚠️ NÃO PRECISA RECARREGAR A PÁGINA - O updateLanguage() já faz tudo
+    });
+}
+    
+    // 8. ATUALIZA O HISTÓRICO E OUTROS COMPONENTES DINÂMICOS
+    loadRealTransactions();
+    updateStakingStats();
+    updateValidatorsDisplay();
     
     console.log(`✅ Idioma atualizado para: ${currentLang}`);
 }
@@ -5976,15 +5980,16 @@ console.log('✅ API Status: INICIALIZADO (modo híbrido)');
     // 🔧 CORREÇÃO: ATUALIZA STATUS DA API NO IDIOMA
     // ==========================================
 function updateApiStatusText() {
-    const statusEl2 = document.getElementById('apiStatus');
-    const textEl2 = document.getElementById('apiStatusText');
-    const t2 = translations[currentLang] || translations.en;
-    if (statusEl2 && textEl2) {
-        statusEl2.className = 'api-status online';
-        // ✅ USA A TRADUÇÃO DO IDIOMA ATUAL
-        textEl2.textContent = t2.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
+    const statusEl = document.getElementById('apiStatus');
+    const textEl = document.getElementById('apiStatusText');
+    const t = translations[currentLang] || translations.en;
+    
+    if (statusEl && textEl) {
+        statusEl.className = 'api-status online';
+        textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     }
 }
+
     // ==========================================
     // 🔧 CORREÇÃO: FORÇA A TRADUÇÃO DOS BOTÕES
     // ==========================================

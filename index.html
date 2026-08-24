@@ -4941,6 +4941,49 @@ function copyToClipboard(text) {
     });
 }
 
+// ============================================
+// 📦 FUNÇÕES DE ACESSO AO BANCO DE DADOS LOCAL
+// ============================================
+
+function getLocalChain() {
+    try {
+        const data = localStorage.getItem('bradicoin_blockchain_db');
+        if (data) {
+            const parsed = JSON.parse(data);
+            return {
+                balances: parsed.balances || {},
+                transactions: parsed.transactions || [],
+                staking: parsed.staking || {},
+                validators: parsed.validators || [],
+                blocks: parsed.blocks || [],
+                totalSupply: parsed.totalSupply || 79000000000000,
+                lastUpdated: parsed.lastUpdated || Date.now()
+            };
+        }
+    } catch (e) {
+        console.warn('⚠️ Erro ao carregar dados locais:', e);
+    }
+    
+    return {
+        balances: {},
+        transactions: [],
+        staking: {},
+        validators: [],
+        blocks: [],
+        totalSupply: 79000000000000,
+        lastUpdated: Date.now()
+    };
+}
+
+function saveLocalChain(chain) {
+    try {
+        localStorage.setItem('bradicoin_blockchain_db', JSON.stringify(chain));
+        console.log('✅ Dados locais salvos');
+    } catch (e) {
+        console.warn('⚠️ Erro ao salvar dados locais:', e);
+    }
+}
+
 // ==================== EXPLORER FUNCTIONS ====================
 function searchExplorer() {
     const input = document.getElementById('searchInput');
@@ -5452,14 +5495,14 @@ function updateValidatorsDisplay() {
     const t = translations[currentLang] || translations.en;
     const countElement = document.getElementById('validatorCount');
     if (countElement) {
-        countElement.textContent = `${validators.length} ${t.validatorCount}`;
+        countElement.textContent = `${validators.length} ${t.validatorCount || 'Active'}`;
     }
     
     if (validators.length === 0) {
         container.innerHTML = `
             <div style="text-align:center;padding:20px;color:#888;">
-                <p>${t.noValidators}</p>
-                <p style="font-size:11px;">${t.becomeValidatorText}</p>
+                <p>${t.noValidators || 'No validators active'}</p>
+                <p style="font-size:11px;">${t.becomeValidatorText || 'Become a validator by staking 1000+ BRD'}</p>
             </div>
         `;
         return;
@@ -5477,35 +5520,6 @@ function updateValidatorsDisplay() {
     container.innerHTML = html;
 }
 
-function becomeValidator() {
-    const address = document.getElementById('searchInput').value.trim();
-    if (!address) {
-        showNotification('⚠️ Please enter a wallet address first!', '#ffc800');
-        return;
-    }
-    showNotification('⚡ Validator feature coming soon!', '#c864ff');
-}
-
-function viewValidatorStats() {
-    const chain = getLocalChain();
-    const validators = chain.validators || [];
-    if (validators.length === 0) {
-        showNotification('📊 No validators active yet', '#ffc800');
-        return;
-    }
-    let stats = '📊 VALIDATOR STATS\n\n';
-    stats += `Total Validators: ${validators.length}\n`;
-    stats += `Total Staked: ${validators.reduce((sum, v) => sum + v.stake, 0).toFixed(0)} BRD\n\n`;
-    validators.forEach((v, i) => {
-        stats += `${i+1}. ${v.address.substring(0, 16)}...\n`;
-        stats += `   Stake: ${v.stake.toFixed(0)} BRD\n`;
-        stats += `   Blocks: ${v.blocksProposed || 0}\n`;
-        stats += `   Rewards: ${(v.rewards || 0).toFixed(2)} BRD\n`;
-        stats += `   Joined: ${new Date(v.joined).toLocaleDateString()}\n\n`;
-    });
-    alert(stats);
-}
-
 // ==================== STAKING STATS UI ====================
 function updateStakingStats() {
     const chain = getLocalChain();
@@ -5513,26 +5527,27 @@ function updateStakingStats() {
     if (!container) return;
     
     const t = translations[currentLang] || translations.en;
-    const totalStaked = Object.values(chain.staking).reduce((sum, s) => sum + (s.staked || 0), 0);
-    const totalRewards = Object.values(chain.staking).reduce((sum, s) => sum + (s.rewards || 0), 0);
-    const stakers = Object.keys(chain.staking).length;
+    const staking = chain.staking || {};
+    const totalStaked = Object.values(staking).reduce((sum, s) => sum + (s.staked || 0), 0);
+    const totalRewards = Object.values(staking).reduce((sum, s) => sum + (s.rewards || 0), 0);
+    const stakers = Object.keys(staking).length;
     
     container.innerHTML = `
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
             <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
-                <div style="font-size:10px;color:#888;">${t.totalStaked}</div>
+                <div style="font-size:10px;color:#888;">${t.totalStaked || 'Total Staked'}</div>
                 <div style="color:#ffc800;font-size:20px;font-weight:bold;">${totalStaked.toFixed(2)} BRD</div>
             </div>
             <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
-                <div style="font-size:10px;color:#888;">${t.totalRewards}</div>
+                <div style="font-size:10px;color:#888;">${t.totalRewards || 'Total Rewards'}</div>
                 <div style="color:#00ff66;font-size:20px;font-weight:bold;">${totalRewards.toFixed(2)} BRD</div>
             </div>
             <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
-                <div style="font-size:10px;color:#888;">${t.activeStakers}</div>
+                <div style="font-size:10px;color:#888;">${t.activeStakers || 'Active Stakers'}</div>
                 <div style="color:#00ccff;font-size:20px;font-weight:bold;">${stakers}</div>
             </div>
             <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
-                <div style="font-size:10px;color:#888;">${t.apy}</div>
+                <div style="font-size:10px;color:#888;">${t.apy || 'APY'}</div>
                 <div style="color:#c864ff;font-size:20px;font-weight:bold;">18%</div>
             </div>
         </div>
@@ -5809,19 +5824,24 @@ function formatNumber(num) {
 
 // ==================== LOAD REAL TRANSACTIONS ====================
 async function loadRealTransactions() {
-    // Use o blockchainDB que já foi inicializado
-    const transactions = blockchainDB.transactions || [];
+    const chain = getLocalChain();
+    const transactions = chain.transactions || [];
     const t = translations[currentLang] || translations.en;
     
+    const listContainer = document.getElementById('transactionList');
+    const countContainer = document.getElementById('totalCount');
+    
+    if (!listContainer) return;
+    
     if (transactions.length === 0) {
-        document.getElementById('transactionList').innerHTML = `
+        listContainer.innerHTML = `
             <div class="transaction-card" style="text-align: center; padding: 40px;">
-                <h3 style="color: #ffc800;">📊 ${t.transactionHistoryTitle}</h3>
-                <p class="text-gray">${t.searchHint}</p>
-                <p style="font-size: 11px; color: #666; margin-top: 10px;">${t.searchHint2}</p>
+                <h3 style="color: #ffc800;">📊 ${t.transactionHistoryTitle || 'Transaction History'}</h3>
+                <p class="text-gray">${t.searchHint || 'Use the search above to find wallet transactions'}</p>
+                <p style="font-size: 11px; color: #666; margin-top: 10px;">${t.searchHint2 || '💡 Search for a wallet to see its transaction history'}</p>
             </div>
         `;
-        document.getElementById('totalCount').textContent = '0';
+        if (countContainer) countContainer.textContent = '0';
         return;
     }
     
@@ -5834,7 +5854,7 @@ async function loadRealTransactions() {
         const amount = tx.amount || 0;
         const address = tx.address || tx.sender || tx.recipient || 'Unknown';
         const date = new Date(tx.timestamp || Date.now()).toLocaleString();
-        const hash = tx.txHash || generateWalletHash(address + tx.timestamp);
+        const hash = tx.txHash || '0x' + Math.random().toString(36).substring(2, 15);
         
         html += `
             <div class="transaction-card">
@@ -5858,8 +5878,8 @@ async function loadRealTransactions() {
         `;
     });
     
-    document.getElementById('transactionList').innerHTML = html;
-    document.getElementById('totalCount').textContent = transactions.length;
+    listContainer.innerHTML = html;
+    if (countContainer) countContainer.textContent = transactions.length;
 }
 
 // ============================================

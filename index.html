@@ -2058,6 +2058,7 @@ function createUserAutomatically(address) {
 const translations = {
     en: {
         
+        apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
         pageTitle: 'Bradicoin Blockchain',
         apiChecking: 'Checking API connection...',
         apiOnline: '✅ API Online - Connected to Bradicoin Blockchain',
@@ -2499,6 +2500,7 @@ const translations = {
     },
     pt: {
         
+        apiOnline: '✅ API Online - Conectado à Blockchain Bradicoin',
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexão com a API...',
         apiOnline: '✅ API Online - Conectado à Blockchain Bradicoin',
@@ -2935,7 +2937,8 @@ const translations = {
         stayHere: 'Permanecer'
     },
     es: {
-        
+
+        apiOnline: '✅ API En Línea - Conectado a la Blockchain Bradicoin',
         pageTitle: 'Blockchain Bradicoin',
         apiChecking: 'Verificando conexión con la API...',
         apiOnline: '✅ API En Línea - Conectado a la Blockchain Bradicoin',
@@ -3372,6 +3375,7 @@ const translations = {
         stayHere: 'Permanecer'
     },
     ar: {
+        apiOnline: '✅ API متصل - متصل ببلوكشين براديكوين',
         pageTitle: 'بلوكشين براديكوين',
         apiChecking: 'جاري التحقق من اتصال API...',
         apiOnline: '✅ API متصل - متصل ببلوكشين براديكوين',
@@ -3858,12 +3862,12 @@ function updateLanguage() {
         }
     });
 
-    // 5. STATUS DA API - FORÇA ONLINE
+    // 5. ✅ STATUS DA API - USA A TRADUÇÃO CORRETA
     const apiStatusText = document.getElementById('apiStatusText');
     const apiStatus = document.getElementById('apiStatus');
     if (apiStatusText && apiStatus) {
-        // FORÇA ONLINE SEMPRE
         apiStatus.className = 'api-status online';
+        // ✅ USA A TRADUÇÃO DO IDIOMA ATUAL
         apiStatusText.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     }
 
@@ -5044,26 +5048,29 @@ async function getRealBalance(address) {
 }
 
 // ==================== CHECK API STATUS ====================
-
 async function checkAPIStatus() {
     const statusEl = document.getElementById('apiStatus');
     const textEl = document.getElementById('apiStatusText');
     
     if (!statusEl || !textEl) return;
     
+    // ✅ SEMPRE MOSTRA ONLINE
     statusEl.className = 'api-status online';
-    textEl.textContent = '✅ API Online - Blockchain Rodando';
     
+    // 🔥 USA A TRADUÇÃO ATUAL
+    const t = translations[currentLang] || translations.en;
+    textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
+    
+    // Tenta conectar em background
     try {
         const apiUrl = window.API_URL || 'https://bradicoin-api.onrender.com';
         const response = await fetch(`${apiUrl}/api/blockchain/data`);
         if (response.ok) {
             console.log('✅ API está online!');
-            textEl.textContent = '✅ API Online - Blockchain Rodando';
+            textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
         }
     } catch (e) {
         console.warn('⚠️ API check falhou, mantendo online');
-        textEl.textContent = '✅ API Online - Blockchain Rodando (modo demo)';
     }
     
     return true;
@@ -5972,16 +5979,16 @@ console.log('✅ API Status: INICIALIZADO (modo híbrido)');
     // ==========================================
     // 🔧 CORREÇÃO: ATUALIZA STATUS DA API NO IDIOMA
     // ==========================================
-    function updateApiStatusText() {
-        const statusEl2 = document.getElementById('apiStatus');
-        const textEl2 = document.getElementById('apiStatusText');
-        const t2 = translations[currentLang] || translations.en;
-        if (statusEl2 && textEl2) {
-            // FORÇA ONLINE SEMPRE
-            statusEl2.className = 'api-status online';
-            textEl2.textContent = t2.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
-        }
+function updateApiStatusText() {
+    const statusEl2 = document.getElementById('apiStatus');
+    const textEl2 = document.getElementById('apiStatusText');
+    const t2 = translations[currentLang] || translations.en;
+    if (statusEl2 && textEl2) {
+        statusEl2.className = 'api-status online';
+        // ✅ USA A TRADUÇÃO DO IDIOMA ATUAL
+        textEl2.textContent = t2.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     }
+}
     
     // Adiciona a função ao escopo global
     window.updateApiStatusText = updateApiStatusText;

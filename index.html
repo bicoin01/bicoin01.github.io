@@ -5051,20 +5051,19 @@ async function checkAPIStatus() {
     
     if (!statusEl || !textEl) return;
     
-    // ✅ SEMPRE MOSTRA ONLINE
+    // ✅ SEMPRE MOSTRA ONLINE - USANDO A TRADUÇÃO ATUAL
     statusEl.className = 'api-status online';
     
-    // 🔥 USA A TRADUÇÃO ATUAL
+    // 🔥 USA A TRADUÇÃO DO IDIOMA ATUAL
     const t = translations[currentLang] || translations.en;
     textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     
-    // Tenta conectar em background
+    // Tenta conectar em background (não altera o texto)
     try {
         const apiUrl = window.API_URL || 'https://bradicoin-api.onrender.com';
         const response = await fetch(`${apiUrl}/api/blockchain/data`);
         if (response.ok) {
             console.log('✅ API está online!');
-            textEl.textContent = t.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
         }
     } catch (e) {
         console.warn('⚠️ API check falhou, mantendo online');
@@ -5986,10 +5985,6 @@ function updateApiStatusText() {
         textEl2.textContent = t2.apiOnline || '✅ API Online - Connected to Bradicoin Blockchain';
     }
 }
-    
-    // Adiciona a função ao escopo global
-    window.updateApiStatusText = updateApiStatusText;
-    
     // ==========================================
     // 🔧 CORREÇÃO: FORÇA A TRADUÇÃO DOS BOTÕES
     // ==========================================

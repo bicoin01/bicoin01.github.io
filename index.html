@@ -1092,12 +1092,6 @@
             </select>
         </div>
 
-        <!-- BOTÃO VOLTAR PARA O SITE PRINCIPAL -->
-        <a href="https://bradicoin.com" target="_blank" class="back-to-bradicoin" id="backToBradicoinBtn">
-            <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            <span data-i18n="backToBradicoin">← Bradicoin.com</span>
-        </a>
-
         <div class="main-content" id="mainContent">
             <h1 class="title animate-glow" id="pageTitle" data-i18n="pageTitle">Bradicoin Blockchain</h1>
 
@@ -2787,7 +2781,7 @@ const payment = await client.createPayment({
                     staking: parsed.staking || {},
                     validators: parsed.validators || [],
                     blocks: parsed.blocks || [],
-                    totalSupply: parsed.totalSupply || 79000000000000,
+                    totalSupply: parsed.totalSupply || 100000000000000000,
                     lastUpdated: parsed.lastUpdated || Date.now()
                 };
             }
@@ -2801,7 +2795,7 @@ const payment = await client.createPayment({
             staking: {},
             validators: [],
             blocks: [],
-            totalSupply: 79000000000000,
+            totalSupply: 100000000000000000,
             lastUpdated: Date.now()
         };
     }
@@ -4257,8 +4251,8 @@ const payment = await client.createPayment({
             newToday: 180 + Math.floor(Math.random() * 130),
             inStaking: (42 + Math.random() * 18).toFixed(1),
             topHolders: (10 + Math.random() * 5).toFixed(1),
-            total: 79000000000000,
-            circulating: 79000000000000,
+            total: 100000000000000000,
+            circulating: 100000000000000000,
             locked: 0,
             staked: Math.floor(Math.random() * 5000),
             burned: 0,

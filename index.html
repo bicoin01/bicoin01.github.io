@@ -2146,6 +2146,7 @@ const translations = {
         explorerSearch: 'Blockchain',
         loading: 'Searching blockchain...',
         searchExample: 'Example: BrDemo123, BTC, ETH',
+        initializing: 'Initializing...',
         invalidAddress: 'Please enter an address or token symbol',
         invalidAddressTitle: 'Invalid Address or Token',
         invalidAddressMessage: 'The address must start with ',
@@ -2281,6 +2282,7 @@ const translations = {
         proofVerified: 'Proof verified successfully!',
         exported: 'Proof exported successfully!',
         generatingProof: 'Generating ZK-SNARK proof...',
+        zkActive: '🟢 Active - ',
         zkProofTitle: '🔐 Generating ZK-SNARK Proof',
         zkProofDesc: 'Zero-Knowledge Succinct Non-Interactive Argument of Knowledge',
         zkProofGenerated: '✅ ZK-SNARK proof generated and verified!',
@@ -2584,6 +2586,7 @@ const translations = {
         explorerSearch: 'Blockchain',
         loading: 'Buscando na blockchain...',
         searchExample: 'Exemplo: BrDemo123, BTC, ETH',
+        initializing: 'Inicializando...',
         invalidAddress: 'Por favor, insira um endereço ou símbolo de token',
         invalidAddressTitle: 'Endereço ou Token Inválido',
         invalidAddressMessage: 'O endereço deve começar com ',
@@ -2812,6 +2815,7 @@ const translations = {
         stealthMode: 'Modo Furtivo',
         multiSig: 'Multi-Sig',
         supported: '✅ Suportado',
+        zkActive: '🟢 Ativo
         zkVerifier: '🔐 VERIFICADOR ZK-SNARK',
         verification: 'Verificação',
         zkTX: 'ZK TX',
@@ -3022,6 +3026,7 @@ const translations = {
         explorerSearch: 'Blockchain',
         loading: 'Buscando en la blockchain...',
         searchExample: 'Ejemplo: BrDemo123, BTC, ETH',
+        initializing: 'Inicializando...',
         invalidAddress: 'Por favor ingresa una dirección o símbolo de token',
         invalidAddressTitle: 'Dirección o Token Inválido',
         invalidAddressMessage: 'La dirección debe comenzar con ',
@@ -3157,6 +3162,7 @@ const translations = {
         proofVerified: '¡Prueba verificada con éxito!',
         exported: '¡Prueba exportada con éxito!',
         generatingProof: 'Generando prueba ZK-SNARK...',
+        zkActive: '🟢 Activo - ',
         zkProofTitle: '🔐 Generando Prueba ZK-SNARK',
         zkProofDesc: 'Argumento de Conocimiento Sucinto No Interactivo de Conocimiento Cero',
         zkProofGenerated: '✅ ¡Prueba ZK-SNARK generada y verificada!',
@@ -3454,6 +3460,7 @@ const translations = {
         explorerSearch: 'بلوكشين',
         loading: 'جاري البحث في البلوكشين...',
         searchExample: 'مثال: BrDemo123, BTC, ETH',
+        initializing: 'جاري التهيئة...',
         invalidAddress: 'الرجاء إدخال عنوان أو رمز توكن',
         invalidAddressTitle: 'عنوان أو رمز غير صالح',
         invalidAddressMessage: 'يجب أن يبدأ العنوان بـ ',
@@ -3589,6 +3596,7 @@ const translations = {
         proofVerified: 'تم التحقق من الإثبات بنجاح!',
         exported: 'تم تصدير الإثبات بنجاح!',
         generatingProof: 'جاري إنشاء إثبات ZK-SNARK...',
+        zkActive: '🟢 نشط - ',
         zkProofTitle: '🔐 جاري إنشاء إثبات ZK-SNARK',
         zkProofDesc: 'حجة معرفية موجزة غير تفاعلية مع معرفة صفرية',
         zkProofGenerated: '✅ تم إنشاء والتحقق من إثبات ZK-SNARK!',
@@ -3955,6 +3963,34 @@ function updateLanguage() {
     console.log(`✅ Idioma atualizado para: ${currentLang}`);
 }
 
+    // ===== ADICIONE ESTAS LINHAS =====
+    
+    // Traduz o texto "initializing..." do gráfico
+    const chartUpdateEl = document.getElementById('chartLastUpdate');
+    if (chartUpdateEl) {
+        chartUpdateEl.textContent = '⏳ ' + (t.initializing || 'initializing...');
+    }
+    
+    // Traduz o título "Quantum Governance" do modal
+    const quantumTitle = document.getElementById('quantumModalTitle');
+    if (quantumTitle) {
+        quantumTitle.textContent = '⚛️ ' + (t.quantumGovernance || 'Quantum Governance');
+    }
+    
+    // Traduz os botões "Create Proposal", "View Proposals", "Quantum Stats" no painel quantum
+    document.querySelectorAll('#quantumGovernancePanel .panel-header + div + div button').forEach(btn => {
+        const text = btn.textContent.trim();
+        if (text.includes('Create Proposal')) {
+            btn.textContent = '⚛️ ' + (t.createProposal || 'Create Proposal');
+        } else if (text.includes('View Proposals')) {
+            btn.textContent = '📋 ' + (t.viewProposals || 'View Proposals');
+        } else if (text.includes('Quantum Stats')) {
+            btn.textContent = '📊 ' + (t.quantumStats || 'Quantum Stats');
+        }
+    });
+    
+    console.log(`✅ Idioma atualizado para: ${currentLang}`);
+}
 
     // ============================================
     // FUNÇÕES DE USUÁRIO

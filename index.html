@@ -1926,7 +1926,7 @@ const payment = await client.createPayment({
             this.validators = [];
             this.governanceProposals = [];
             this.daoVotes = {};
-            this.totalSupply = 100000000000000000;
+            this.totalSupply = 79000000000000;
             this.difficulty = 4;
             this.genesisBlock = null;
             this.lastBlockTime = Date.now();
@@ -2781,7 +2781,7 @@ const payment = await client.createPayment({
                     staking: parsed.staking || {},
                     validators: parsed.validators || [],
                     blocks: parsed.blocks || [],
-                    totalSupply: parsed.totalSupply || 100000000000000000,
+                    totalSupply: parsed.totalSupply || 79000000000000,
                     lastUpdated: parsed.lastUpdated || Date.now()
                 };
             }
@@ -2795,7 +2795,7 @@ const payment = await client.createPayment({
             staking: {},
             validators: [],
             blocks: [],
-            totalSupply: 100000000000000000,
+            totalSupply: 79000000000000,
             lastUpdated: Date.now()
         };
     }
@@ -4251,8 +4251,8 @@ const payment = await client.createPayment({
             newToday: 180 + Math.floor(Math.random() * 130),
             inStaking: (42 + Math.random() * 18).toFixed(1),
             topHolders: (10 + Math.random() * 5).toFixed(1),
-            total: 100000000000000000,
-            circulating: 100000000000000000,
+            total: 79000000000000,
+            circulating: 79000000000000,
             locked: 0,
             staked: Math.floor(Math.random() * 5000),
             burned: 0,

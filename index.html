@@ -6,8 +6,8 @@
     <title>Bradicoin Blockchain - Complete Platform</title>
     <meta name="description" content="Complete Bradicoin blockchain platform with 50+ integrated features" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <style>
         /* ===== RESET E BASE ===== */
         * {
@@ -7543,6 +7543,284 @@ ko: {
                     this.style.display = 'none';
                 }
             });
+        });
+
+
+        // ============================================
+        // 🚀 INTEGRAÇÃO COM A API REAL DO BRADICOIN
+        // ============================================
+
+        const API_BASE = ''; // mesma origem
+
+        // Cliente HTTP simples
+        async function apiCall(path, options = {}) {
+            const res = await fetch(API_BASE + path, {
+                headers: { 'Content-Type': 'application/json' },
+                ...options
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+            return data;
+        }
+
+        // Status da API
+        function updateApiStatus(status, text) {
+            const el = document.getElementById('apiStatus');
+            const txt = document.getElementById('apiStatusText');
+            if (!el || !txt) return;
+            el.className = 'api-status ' + status;
+            txt.textContent = text;
+        }
+
+        // ============================================
+        // 🔌 WEBSOCKET
+        // ============================================
+        let socket = null;
+        function initWebSocket() {
+            if (typeof io === 'undefined') {
+                console.warn('⚠️ Socket.IO não carregado');
+                return;
+            }
+            socket = io();
+
+            socket.on('connect', () => {
+                console.log('🔌 WebSocket conectado');
+                updateApiStatus('online', '✅ API Online - Real-time conectado');
+            });
+
+            socket.on('disconnect', () => {
+                console.warn('🔌 WebSocket desconectado');
+                updateApiStatus('offline', '❌ API Offline');
+            });
+
+            socket.on('blockchain:init', (data) => {
+                console.log('📦 Estado inicial:', data);
+                if (data.blocks !== undefined) {
+                    document.getElementById('blockHeightValue').textContent = data.blocks.toLocaleString();
+                    document.getElementById('statTotalBlocks').textContent = data.blocks.toLocaleString();
+                }
+                if (data.transactions !== undefined) {
+                    document.getElementById('pendingValue').textContent = data.transactions;
+                    document.getElementById('statPendingTX').textContent = data.transactions;
+                }
+                if (data.validators !== undefined) {
+                    document.getElementById('validatorsValue').textContent = data.validators;
+                    document.getElementById('validatorCount').textContent = data.validators + ' Active';
+                }
+            });
+
+            socket.on('block:mined', (block) => {
+                console.log('⛏️ Bloco minerado:', block.index);
+                document.getElementById('blockHeightValue').textContent = block.index.toLocaleString();
+                document.getElementById('statTotalBlocks').textContent = block.index.toLocaleString();
+                showNotification('⛏️ Bloco #' + block.index + ' minerado!', '#00ff66');
+            });
+
+            socket.on('staking:reward', (data) => {
+                console.log('💰 Reward:', data);
+                showNotification('💰 +' + data.reward.toFixed(2) + ' BRD de reward!', '#ffc800');
+            });
+        }
+
+        // ============================================
+        // 📊 CARREGAR DADOS REAIS DA API
+        // ============================================
+        async function loadRealData() {
+            try {
+                // 1. HEALTH
+                const health = await apiCall('/health');
+                console.log('✅ Health:', health);
+
+                document.getElementById('blockHeightValue').textContent =
+                    health.blockchain.blocks.toLocaleString();
+                document.getElementById('statTotalBlocks').textContent =
+                    health.blockchain.blocks.toLocaleString();
+                document.getElementById('pendingValue').textContent =
+                    health.blockchain.pending;
+                document.getElementById('statPendingTX').textContent =
+                    health.blockchain.pending;
+                document.getElementById('blockchainValid').textContent =
+                    health.blockchain.isValid ? 'Blockchain Valid' : '⚠️ Inválida';
+
+                // 2. PREÇO
+                const price = await apiCall('/api/market/price');
+                const p = price.data.price;
+                document.getElementById('currentPriceValue').textContent = '$' + p.toFixed(2);
+                document.getElementById('basePriceValue').textContent = '$' + p.toFixed(2);
+                document.getElementById('realMarketCapValue').textContent = '$790T';
+
+                // 3. BLOCOS
+                const blocks = await apiCall('/api/explorer/blocks?limit=5');
+                if (blocks.data && blocks.data.totalBlocks !== undefined) {
+                    document.getElementById('statTotalBlocks').textContent =
+                        blocks.data.totalBlocks.toLocaleString();
+                }
+
+                // 4. VALIDADORES
+                try {
+                    const validators = await apiCall('/api/validator/list');
+                    const count = Array.isArray(validators.data) ? validators.data.length : 0;
+                    document.getElementById('validatorsValue').textContent = count;
+                    document.getElementById('validatorCount').textContent = count + ' Active';
+                } catch (_) {}
+
+                updateApiStatus('online', '✅ API Online - Conectado à Bradicoin Blockchain');
+                console.log('✅ Dados reais carregados com sucesso!');
+            } catch (err) {
+                console.error('❌ Erro ao carregar dados:', err.message);
+                updateApiStatus('offline', '⚠️ API Offline - Usando dados de demonstração');
+            }
+        }
+
+        // ============================================
+        // 🔍 BUSCA REAL NA API (sobrescreve searchWallet)
+        // ============================================
+        async function searchWallet() {
+            const input = document.getElementById('searchInput');
+            const query = input.value.trim();
+            const result = document.getElementById('searchResult');
+            const t = translations[currentLang] || translations.en;
+
+            if (!query) {
+                showNotification('⚠️ Digite um endereço', '#ff6464');
+                return;
+            }
+
+            result.className = 'result-box show';
+            result.style.display = 'block';
+            result.innerHTML = '<div style="text-align:center;padding:20px;">⏳ Consultando blockchain...</div>';
+
+            const isAddress = query.startsWith('Br');
+
+            if (isAddress) {
+                try {
+                    const data = await apiCall('/api/wallet/balance/' + query);
+                    const w = data.data;
+
+                    result.className = 'result-box show found';
+                    result.innerHTML = `
+                        <div class="result-header">
+                            <span class="result-address">${w.address}</span>
+                            <button class="result-copy-btn" onclick="copyToClipboard('${w.address}')">📋 Copiar</button>
+                        </div>
+                        <div style="color:#00ff66;font-size:14px;margin-bottom:8px;">✅ CARTEIRA ENCONTRADA</div>
+                        <div class="result-grid">
+                            <div class="result-item">
+                                <div class="result-item-label">Saldo</div>
+                                <div class="result-item-value green">${w.balance} BRD</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-item-label">Pendente</div>
+                                <div class="result-item-value yellow">${w.pending} BRD</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-item-label">Total</div>
+                                <div class="result-item-value cyan">${w.total} BRD</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-item-label">Username</div>
+                                <div class="result-item-value magenta">${w.username || '--'}</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-item-label">Transações</div>
+                                <div class="result-item-value cyan">${w.transactions}</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-item-label">Status</div>
+                                <div class="result-item-value ${w.exists ? 'green' : 'red'}">${w.exists ? '✅ Ativa' : '⚠️ Não registrada'}</div>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="result-action-btn" onclick="promptStake('${w.address}')">💰 Fazer Stake</button>
+                            <button class="result-action-btn" onclick="promptTransfer('${w.address}')">📤 Transferir</button>
+                            <button class="result-action-btn" onclick="viewHistory('${w.address}')">📜 Histórico</button>
+                        </div>
+                        <div class="last-updated"><span>Atualizado: ${new Date().toLocaleString()}</span></div>
+                    `;
+                } catch (err) {
+                    result.className = 'result-box show not-found';
+                    result.innerHTML = `
+                        <div style="text-align:center;padding:20px;">
+                            <div class="error-icon">🔍</div>
+                            <div class="error-title">Não encontrada</div>
+                            <div class="error-message">${err.message}</div>
+                            <div class="error-tip">💡 Verifique se o endereço está correto</div>
+                            <button class="error-clear-btn" onclick="clearSearch()">✕ Limpar</button>
+                        </div>
+                    `;
+                }
+            } else {
+                try {
+                    const data = await apiCall('/api/transaction/' + query);
+                    const tx = data.data;
+                    result.className = 'result-box show found';
+                    result.innerHTML = `
+                        <div class="result-header">
+                            <span class="result-address">${tx.hash || query}</span>
+                        </div>
+                        <div style="color:#00ff66;">✅ Transação encontrada</div>
+                        <div class="result-grid">
+                            <div class="result-item"><div class="result-item-label">De</div><div class="result-item-value cyan">${tx.fromAddress || 'COINBASE'}</div></div>
+                            <div class="result-item"><div class="result-item-label">Para</div><div class="result-item-value magenta">${tx.toAddress}</div></div>
+                            <div class="result-item"><div class="result-item-label">Valor</div><div class="result-item-value green">${tx.amount} BRD</div></div>
+                            <div class="result-item"><div class="result-item-label">Status</div><div class="result-item-value">${tx.confirmed ? '✅ Confirmada' : '⏳ Pendente'}</div></div>
+                        </div>
+                    `;
+                } catch (err) {
+                    result.className = 'result-box show not-found';
+                    result.innerHTML = `
+                        <div style="text-align:center;padding:20px;">
+                            <div class="error-icon">🔍</div>
+                            <div class="error-title">Não encontrado</div>
+                            <div class="error-message">${err.message}</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ============================================
+        // 📜 HISTÓRICO REAL
+        // ============================================
+        async function viewHistory(address) {
+            try {
+                const data = await apiCall('/api/wallet/history/' + address + '?limit=10');
+                const txs = data.data || [];
+                if (txs.length === 0) {
+                    showNotification('Nenhuma transação encontrada', '#ffc800');
+                    return;
+                }
+                const list = txs.slice(0, 5).map((tx) =>
+                    (tx.fromAddress === address ? '📤' : '📥') + ' ' + tx.amount + ' BRD (' + new Date(tx.timestamp).toLocaleDateString() + ')'
+                ).join('\n');
+                alert('Últimas transações de ' + address + ':\n\n' + list);
+            } catch (err) {
+                showNotification('❌ ' + err.message, '#ff6464');
+            }
+        }
+
+        // ============================================
+        // 🚀 INICIALIZAÇÃO FINAL
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carrega dados reais
+            loadRealData();
+            setInterval(loadRealData, 30000);
+
+            // Inicia WebSocket
+            initWebSocket();
+
+            // Se tiver carteira salva, mostra
+            const saved = localStorage.getItem('bradicoin_last_wallet');
+            if (saved) {
+                try {
+                    const w = JSON.parse(saved);
+                    setTimeout(function() {
+                        document.getElementById('searchInput').value = w.address;
+                        showNotification('👛 Bem-vindo de volta, ' + w.username + '!', '#00ccff');
+                    }, 1500);
+                } catch (_) {}
+            }
         });
 
         console.log('✅ Bradicoin Blockchain Platform carregada com sucesso!');

@@ -2270,6 +2270,238 @@
         .quantum-empty p {
             margin: 5px 0;
         }
+    /* ===== TOKENS & NFTs PANEL ===== */
+.assets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 30px auto;
+}
+
+@media (max-width: 768px) {
+    .assets-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.asset-panel {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    max-height: 520px;
+}
+
+.asset-panel.tokens-panel {
+    border: 2px solid #ffc800;
+    box-shadow: 0 0 30px rgba(255, 200, 0, 0.2), inset 0 0 60px rgba(255, 200, 0, 0.03);
+}
+
+.asset-panel.nfts-panel {
+    border: 2px solid #ff00ff;
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.2), inset 0 0 60px rgba(255, 0, 255, 0.03);
+}
+
+.asset-panel .panel-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.asset-panel .panel-title h2 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.asset-panel.tokens-panel .panel-title h2 {
+    color: #ffc800;
+}
+
+.asset-panel.nfts-panel .panel-title h2 {
+    color: #ff00ff;
+}
+
+.asset-count-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.tokens-panel .asset-count-badge {
+    background: rgba(255, 200, 0, 0.15);
+    border: 1px solid #ffc800;
+    color: #ffc800;
+}
+
+.nfts-panel .asset-count-badge {
+    background: rgba(255, 0, 255, 0.15);
+    border: 1px solid #ff00ff;
+    color: #ff00ff;
+}
+
+.asset-list {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 16px;
+    padding-right: 6px;
+    min-height: 320px;
+    max-height: 420px;
+}
+
+.asset-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.asset-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.tokens-panel .asset-list::-webkit-scrollbar-thumb {
+    background: #ffc800;
+    border-radius: 4px;
+}
+
+.nfts-panel .asset-list::-webkit-scrollbar-thumb {
+    background: #ff00ff;
+    border-radius: 4px;
+}
+
+.asset-card {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tokens-panel .asset-card {
+    border: 1px solid rgba(255, 200, 0, 0.2);
+}
+
+.tokens-panel .asset-card:hover {
+    border-color: #ffc800;
+    box-shadow: 0 0 20px rgba(255, 200, 0, 0.15);
+    transform: translateX(3px);
+}
+
+.nfts-panel .asset-card {
+    border: 1px solid rgba(255, 0, 255, 0.2);
+}
+
+.nfts-panel .asset-card:hover {
+    border-color: #ff00ff;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.15);
+    transform: translateX(3px);
+}
+
+.asset-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.tokens-panel .asset-icon {
+    background: linear-gradient(135deg, #ffc800, #ff6b00);
+    border: 2px solid #ffc800;
+}
+
+.nfts-panel .asset-icon {
+    background: linear-gradient(135deg, #ff00ff, #c864ff);
+    border: 2px solid #ff00ff;
+}
+
+.asset-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.asset-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.asset-symbol {
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.tokens-panel .asset-symbol {
+    color: #ffc800;
+}
+
+.nfts-panel .asset-symbol {
+    color: #ff00ff;
+}
+
+.asset-meta {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.asset-price {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.asset-price-value {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+}
+
+.tokens-panel .asset-price-value {
+    color: #00ff66;
+}
+
+.nfts-panel .asset-price-value {
+    color: #00ff66;
+}
+
+.asset-price-label {
+    font-size: 9px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.asset-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.asset-empty .icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.asset-empty p {
+    font-size: 12px;
+    margin: 4px 0;
+}
+
     </style>
 </head>
 <body>
@@ -2618,6 +2850,52 @@
                 </div>
             </div>
 
+                        <!-- TOKENS & NFTs -->
+            <div class="assets-grid">
+
+                <!-- 🪙 TOKENS -->
+                <div class="asset-panel tokens-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffc800" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <h2 data-i18n="tokensPanelTitle">🪙 Tokens</h2>
+                        </div>
+                        <span class="asset-count-badge" id="tokenCount">0</span>
+                    </div>
+                    <div class="asset-list" id="tokenListPanel">
+                        <div class="asset-empty">
+                            <div class="icon">🪙</div>
+                            <p data-i18n="loadingTokens">Loading tokens...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🎨 NFTs -->
+                <div class="asset-panel nfts-panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ff00ff" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <path d="m21 15-5-5L5 21"/>
+                            </svg>
+                            <h2 data-i18n="nftsPanelTitle">🎨 NFTs</h2>
+                        </div>
+                        <span class="asset-count-badge" id="nftCount">0</span>
+                    </div>
+                    <div class="asset-list" id="nftListPanel">
+                        <div class="asset-empty">
+                            <div class="icon">🎨</div>
+                            <p data-i18n="loadingNFTs">Loading NFTs...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
             <!-- VALIDATORS -->
             <div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
                 <div class="panel-header">
@@ -8025,7 +8303,202 @@ function onLoadMoreTx() {
     txHistoryCache.page++;
     loadTransactionHistory(true);
 }
-        
+
+        // ============================================
+// 🪙 TOKENS & 🎨 NFTs — Listas reais
+// ============================================
+
+let tokensCache = { data: [], lastFetch: 0, ttl: 30000 };
+let nftsCache   = { data: [], lastFetch: 0, ttl: 30000 };
+
+async function loadTokenList(forceRefresh = false) {
+    const container = document.getElementById('tokenListPanel');
+    const countEl   = document.getElementById('tokenCount');
+    if (!container) return;
+
+    const now = Date.now();
+    if (!forceRefresh && tokensCache.data.length > 0 &&
+        (now - tokensCache.lastFetch) < tokensCache.ttl) {
+        renderTokenList(tokensCache.data);
+        return;
+    }
+
+    if (tokensCache.data.length === 0) {
+        container.innerHTML = `
+            <div class="asset-empty">
+                <div class="icon">⏳</div>
+                <p>${(translations[currentLang]||translations.en).loadingTokens || 'Loading tokens...'}</p>
+            </div>
+        `;
+    }
+
+    try {
+        const data = await apiCall('/api/v1/token/list');
+        let list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+        if (list.length === 0) list = getFallbackTokens();
+
+        tokensCache.data = list;
+        tokensCache.lastFetch = now;
+
+        if (countEl) countEl.textContent = list.length + ' ' +
+            ((translations[currentLang]||translations.en).tokensCount || 'Tokens');
+
+        renderTokenList(list);
+    } catch (e) {
+        console.warn('⚠️ Tokens fallback:', e.message);
+        const list = getFallbackTokens();
+        tokensCache.data = list;
+        tokensCache.lastFetch = now;
+        if (countEl) countEl.textContent = list.length + ' Tokens';
+        renderTokenList(list);
+    }
+}
+
+function renderTokenList(list) {
+    const container = document.getElementById('tokenListPanel');
+    if (!container) return;
+
+    if (!list || list.length === 0) {
+        container.innerHTML = `
+            <div class="asset-empty">
+                <div class="icon">🪙</div>
+                <p>${(translations[currentLang]||translations.en).noTokens || 'No tokens yet'}</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = list.map(tk => {
+        const name    = tk.name || 'Unknown Token';
+        const symbol  = tk.symbol || '???';
+        const supply  = tk.supply || tk.totalSupply || '--';
+        const price   = Number(tk.price || 0).toFixed(2);
+        const emoji   = tk.emoji || '🪙';
+        const creator = tk.creator || tk.owner || '';
+
+        return `
+            <div class="asset-card" onclick="copyToClipboard('${symbol}')" title="Click to copy symbol">
+                <div class="asset-icon">${emoji}</div>
+                <div class="asset-info">
+                    <div class="asset-name">${name}</div>
+                    <div class="asset-symbol">${symbol}</div>
+                    <div class="asset-meta">
+                        <span>💠 ${Number(supply).toLocaleString('en-US')}</span>
+                        ${creator ? `<span>👤 ${String(creator).slice(0,10)}...</span>` : ''}
+                    </div>
+                </div>
+                <div class="asset-price">
+                    <div class="asset-price-value">$${price}</div>
+                    <div class="asset-price-label">Price</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+async function loadNFTList(forceRefresh = false) {
+    const container = document.getElementById('nftListPanel');
+    const countEl   = document.getElementById('nftCount');
+    if (!container) return;
+
+    const now = Date.now();
+    if (!forceRefresh && nftsCache.data.length > 0 &&
+        (now - nftsCache.lastFetch) < nftsCache.ttl) {
+        renderNFTList(nftsCache.data);
+        return;
+    }
+
+    if (nftsCache.data.length === 0) {
+        container.innerHTML = `
+            <div class="asset-empty">
+                <div class="icon">⏳</div>
+                <p>${(translations[currentLang]||translations.en).loadingNFTs || 'Loading NFTs...'}</p>
+            </div>
+        `;
+    }
+
+    try {
+        const data = await apiCall('/api/v1/nft/list');
+        let list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+        if (list.length === 0) list = getFallbackNFTs();
+
+        nftsCache.data = list;
+        nftsCache.lastFetch = now;
+
+        if (countEl) countEl.textContent = list.length + ' NFTs';
+
+        renderNFTList(list);
+    } catch (e) {
+        console.warn('⚠️ NFTs fallback:', e.message);
+        const list = getFallbackNFTs();
+        nftsCache.data = list;
+        nftsCache.lastFetch = now;
+        if (countEl) countEl.textContent = list.length + ' NFTs';
+        renderNFTList(list);
+    }
+}
+
+function renderNFTList(list) {
+    const container = document.getElementById('nftListPanel');
+    if (!container) return;
+
+    if (!list || list.length === 0) {
+        container.innerHTML = `
+            <div class="asset-empty">
+                <div class="icon">🎨</div>
+                <p>${(translations[currentLang]||translations.en).noNFTs || 'No NFTs yet'}</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = list.map(nft => {
+        const name       = nft.name || 'Untitled NFT';
+        const collection = nft.collection || 'Bradicoin Collection';
+        const price      = Number(nft.price || 0).toFixed(2);
+        const emoji      = nft.emoji || '🎨';
+        const owner      = nft.owner || nft.creator || '';
+        const tokenId    = nft.tokenId || nft.id || '';
+
+        return `
+            <div class="asset-card" onclick="copyToClipboard('${owner || tokenId}')" title="Click to copy owner">
+                <div class="asset-icon">${emoji}</div>
+                <div class="asset-info">
+                    <div class="asset-name">${name}</div>
+                    <div class="asset-symbol">${collection}</div>
+                    <div class="asset-meta">
+                        ${tokenId ? `<span>#${tokenId}</span>` : ''}
+                        ${owner ? `<span>👤 ${String(owner).slice(0,10)}...</span>` : ''}
+                    </div>
+                </div>
+                <div class="asset-price">
+                    <div class="asset-price-value">$${price}</div>
+                    <div class="asset-price-label">Price</div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ===== FALLBACKS =====
+function getFallbackTokens() {
+    return [
+        { name: 'Bradicoin',     symbol: 'BRD', supply: '1000000000', price: '12.47', emoji: '⚡', creator: 'BrA1B2C3D4E5' },
+        { name: 'Quantum Token', symbol: 'QTM', supply: '500000000',  price: '2.50',  emoji: '⚛️', creator: 'BrQ9T8M7K6L5' },
+        { name: 'ZK-SNARK',      symbol: 'ZKT', supply: '100000000',  price: '5.00',  emoji: '🔐', creator: 'BrZ1K2S3N4R5' },
+        { name: 'AI Protocol',   symbol: 'AIP', supply: '250000000',  price: '1.20',  emoji: '🤖', creator: 'BrA9I8P7R6O5' }
+    ];
+}
+
+function getFallbackNFTs() {
+    return [
+        { name: 'Cyber Ape #001',   collection: 'Cyber Apes',   price: '250.00', emoji: '🐒', owner: 'BrA1B2C3D4E5', tokenId: '001' },
+        { name: 'Neon Skull #042',  collection: 'Neon Skulls',  price: '120.50', emoji: '💀', owner: 'BrN9E8O7S6K5', tokenId: '042' },
+        { name: 'Quantum Gem #777', collection: 'Quantum Gems', price: '500.00', emoji: '💎', owner: 'BrQ7G6E5M4S3', tokenId: '777' },
+        { name: 'Space Bot #128',   collection: 'Space Bots',   price: '80.25',  emoji: '🤖', owner: 'BrS1P2A3C4E5', tokenId: '128' }
+    ];
+}
+
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
@@ -8390,6 +8863,11 @@ console.log(`💰 Preço: $${p.price.toFixed(2)} | Base: $${p.basePrice.toFixed(
             // ⚛️ Quantum Governance — auto-refresh
             loadQuantumProposals();
             setInterval(() => loadQuantumProposals(true), 30000);
+
+                        // 🪙 Tokens & 🎨 NFTs
+            loadTokenList();
+            loadNFTList();
+            setInterval(() => { loadTokenList(true); loadNFTList(true); }, 60000);
             
              // 🔍 Search no histórico  ← COLA AQUI
             document.getElementById('txSearch')?.addEventListener('input', (e) => {

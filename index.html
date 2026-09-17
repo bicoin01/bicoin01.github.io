@@ -2658,26 +2658,9 @@
                         <span style="color: #ffc800;" data-i18n="stakingLive">Live</span>
                     </div>
                 </div>
-                <div id="stakingStats">
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
-                        <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
-                            <div style="font-size:10px;color:#888;" data-i18n="totalStaked">Total Staked</div>
-                            <div style="font-size:24px;font-weight:bold;color:#ffc800;">24.6M BRD</div>
-                        </div>
-                        <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
-                            <div style="font-size:10px;color:#888;" data-i18n="totalRewards">Total Rewards</div>
-                            <div style="font-size:24px;font-weight:bold;color:#00ff66;">4.3M BRD</div>
-                        </div>
-                        <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
-                            <div style="font-size:10px;color:#888;" data-i18n="activeStakers">Active Stakers</div>
-                            <div style="font-size:24px;font-weight:bold;color:#c864ff;">8,432</div>
-                        </div>
-                        <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
-                            <div style="font-size:10px;color:#888;" data-i18n="apy">APY</div>
-                            <div style="font-size:24px;font-weight:bold;color:#00ff66;">18.5%</div>
-                        </div>
-                    </div>
-                </div>
+            <div id="stakingStats">
+    <div style="text-align:center;padding:20px;color:#888;">⏳ Carregando staking stats...</div>
+</div>
             </div>
 
             <!-- SECURITY DASHBOARD -->
@@ -7495,6 +7478,61 @@ ko: {
             }
         }
 
+// ============================================
+// 💰 STAKING STATS REAIS
+// ============================================
+async function loadStakingStats() {
+    const container = document.getElementById('stakingStats');
+    if (!container) return;
+
+    try {
+        const data = await apiCall('/api/staking/stats');
+        const s = data.data || data;
+
+        const totalStaked = Number(s.totalStaked || 0);
+        const totalRewards = Number(s.totalRewards || 0);
+        const activeStakers = Number(s.activeStakers || 0);
+        const apy = Number(s.apy || 0);
+
+        container.innerHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
+                <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
+                    <div style="font-size:10px;color:#888;">Total Staked</div>
+                    <div style="font-size:24px;font-weight:bold;color:#ffc800;">
+                        ${(totalStaked / 1e6).toFixed(1)}M BRD
+                    </div>
+                </div>
+                <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
+                    <div style="font-size:10px;color:#888;">Total Rewards</div>
+                    <div style="font-size:24px;font-weight:bold;color:#00ff66;">
+                        ${(totalRewards / 1e6).toFixed(1)}M BRD
+                    </div>
+                </div>
+                <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
+                    <div style="font-size:10px;color:#888;">Active Stakers</div>
+                    <div style="font-size:24px;font-weight:bold;color:#c864ff;">
+                        ${activeStakers.toLocaleString('pt-BR')}
+                    </div>
+                </div>
+                <div style="background:rgba(255,200,0,0.05);padding:15px;border-radius:8px;text-align:center;border:1px solid rgba(255,200,0,0.15);">
+                    <div style="font-size:10px;color:#888;">APY</div>
+                    <div style="font-size:24px;font-weight:bold;color:#00ff66;">
+                        ${apy}%
+                    </div>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        console.warn('⚠️ Staking stats não carregados:', e.message);
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px;color:#ff6464;">
+                ⚠️ Não foi possível carregar os dados de staking
+                <br><button onclick="loadStakingStats()" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;">🔄 Tentar novamente</button>
+            </div>
+        `;
+    }
+}
+
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
@@ -7810,6 +7848,10 @@ ko: {
             // Inicia WebSocket
             initWebSocket();
 
+            // 💰 Staking stats  ← COLA AQUI
+            loadStakingStats();
+            setInterval(loadStakingStats, 30000); // atualiza a cada 50s
+            
             // Se tiver carteira salva, mostra
             const saved = localStorage.getItem('bradicoin_last_wallet');
             if (saved) {

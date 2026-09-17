@@ -7463,17 +7463,141 @@ function renderQuantumProposals() {
             showNotification('🔐 ' + (t.zkProofGenerated || 'ZK-SNARK proof generated and verified!'), '#c864ff');
         }
 
-        function becomeValidator() {
-            const t = translations[currentLang] || translations.en;
-            const address = prompt(t.enterValidatorAddress || 'Enter your wallet address to become a validator');
-            if (address && address.trim()) {
-                showNotification('⚡ ' + (t.validatorSuccess || 'You are now a validator!'), '#00ff66');
-            }
+        async function becomeValidator() {
+    const t = translations[currentLang] || translations.en;
+    const address = prompt(t.enterValidatorAddress || 'Enter your wallet address to become a validator');
+
+    if (!address || !address.trim()) return;
+
+    const addr = address.trim();
+
+    if (!addr.startsWith('Br')) {
+        showNotification('⚠️ Address must start with "Br"', '#ff6464');
+        return;
+    }
+
+    const MIN_STAKE = 1000;
+
+    try {
+        let wallet = { balance: 0, staked: 0 };
+        try {
+            const balData = await apiCall('/api/wallet/balance/' + addr);
+            wallet = balData.data || wallet;
+        } catch (_) {}
+
+        const balance = Number(wallet.balance || 0);
+        const staked  = Number(wallet.staked || 0);
+        const total   = Math.max(balance, staked);
+
+        if (total < MIN_STAKE) {
+            showNotification(
+                `⚠️ Need at least ${MIN_STAKE} BRD. You have ${total.toFixed(2)} BRD.`,
+                '#ff6464'
+            );
+            return;
         }
 
-        function viewValidatorStats() {
-            showNotification('📊 Validator stats: 128 validators, 24.6M BRD staked', '#c864ff');
+        const result = await apiCall('/api/validator/register', {
+            method: 'POST',
+            body: JSON.stringify({
+                address: addr,
+                stake: total
+            })
+        });
+
+        showNotification(
+            `⚡ Success! You are now a validator with ${result.data.stake} BRD staked.`,
+            '#00ff66'
+        );
+
+        loadValidators(true);
+
+    } catch (err) {
+        showNotification('❌ ' + err.message, '#ff6464');
+    }
+}
+
+        async function viewValidatorStats() {
+    try {
+        const data = await apiCall('/api/validator/list');
+        const list = Array.isArray(data.data) ? data.data : [];
+
+        if (list.length === 0) {
+            showNotification('📊 No validators registered yet', '#ffc800');
+            return;
         }
+
+        const totalStake  = list.reduce((s, v) => s + (Number(v.stake) || 0), 0);
+        const totalBlocks = list.reduce((s, v) => s + (Number(v.blocksMined) || 0), 0);
+        const avgUptime   = list.reduce((s, v) => s + (Number(v.uptime) || 0), 0) / list.length;
+        const avgComm     = list.reduce((s, v) => s + (Number(v.commission) || 0), 0) / list.length;
+        const activeCount = list.filter(v => v.status === 'active').length;
+        const top         = list[0];
+
+        const modal = document.getElementById('featureModal');
+        const title = document.getElementById('modalTitle');
+        const body  = document.getElementById('modalBody');
+
+        title.textContent = '🛡️ Validator Stats';
+        body.innerHTML = `
+            <h2 style="color:#c864ff;">🛡️ Validator Statistics</h2>
+            <p style="color:#aaa;">Live data from the Bradicoin blockchain</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;margin:20px 0;">
+                <div style="background:rgba(200,100,255,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(200,100,255,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Total Validators</div>
+                    <div style="font-size:28px;font-weight:bold;color:#c864ff;margin-top:6px;">${list.length}</div>
+                </div>
+                <div style="background:rgba(0,255,100,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(0,255,100,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Active</div>
+                    <div style="font-size:28px;font-weight:bold;color:#00ff66;margin-top:6px;">${activeCount}</div>
+                </div>
+                <div style="background:rgba(255,200,0,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Total Staked</div>
+                    <div style="font-size:22px;font-weight:bold;color:#ffc800;margin-top:6px;">${(totalStake / 1e6).toFixed(2)}M BRD</div>
+                </div>
+                <div style="background:rgba(0,200,255,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(0,200,255,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Blocks Mined</div>
+                    <div style="font-size:22px;font-weight:bold;color:#00ccff;margin-top:6px;">${totalBlocks.toLocaleString()}</div>
+                </div>
+                <div style="background:rgba(0,255,100,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(0,255,100,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Avg Uptime</div>
+                    <div style="font-size:22px;font-weight:bold;color:#00ff66;margin-top:6px;">${avgUptime.toFixed(2)}%</div>
+                </div>
+                <div style="background:rgba(255,0,255,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(255,0,255,0.2);">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Avg Commission</div>
+                    <div style="font-size:22px;font-weight:bold;color:#ff00ff;margin-top:6px;">${avgComm.toFixed(1)}%</div>
+                </div>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(200,100,255,0.2);border-radius:10px;padding:20px;margin-top:15px;">
+                <h3 style="color:#ffc800;margin-top:0;">🥇 Top Validator</h3>
+                <div style="font-family:monospace;color:#c864ff;font-size:13px;word-break:break-all;margin-bottom:8px;">
+                    ${top.address}
+                </div>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:#aaa;">
+                    <span>💰 Stake: <span style="color:#00ff66;font-weight:bold;">${Number(top.stake || 0).toLocaleString()} BRD</span></span>
+                    <span>📦 Blocks: <span style="color:#00ccff;font-weight:bold;">${Number(top.blocksMined || 0).toLocaleString()}</span></span>
+                    <span>⏱️ Uptime: <span style="color:#00ff66;font-weight:bold;">${top.uptime}%</span></span>
+                    <span>💼 Commission: <span style="color:#ffc800;font-weight:bold;">${top.commission}%</span></span>
+                </div>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                <button class="feature-btn" onclick="loadValidators(true); closeModalAndGoHome(); showNotification('🔄 Refreshed!', '#00ccff');">
+                    🔄 Refresh
+                </button>
+                <button class="feature-btn green" onclick="closeModalAndGoHome(); becomeValidator();">
+                    ⚡ Become Validator
+                </button>
+            </div>
+        `;
+        modal.style.display = 'block';
+
+    } catch (err) {
+        showNotification('❌ Could not load validator stats: ' + err.message, '#ff6464');
+    }
+}
 
         function registerDeveloperApp() {
             const name = document.getElementById('devAppName')?.value.trim();

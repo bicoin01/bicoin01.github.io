@@ -8048,12 +8048,47 @@ function onLoadMoreTx() {
                 document.getElementById('blockchainValid').textContent =
                     health.blockchain.isValid ? 'Blockchain Valid' : '⚠️ Inválida';
 
-                // 2. PREÇO
-                const price = await apiCall('/api/market/price');
-                const p = price.data.price;
-                document.getElementById('currentPriceValue').textContent = '$' + p.toFixed(2);
-                document.getElementById('basePriceValue').textContent = '$' + p.toFixed(2);
-                document.getElementById('realMarketCapValue').textContent = '$790T';
+                // 2. PREÇO — Preço Dinâmico (consome priceEngine)
+const priceData = await apiCall('/api/market/price');
+const p = priceData.data;
+
+// Preço atual e base
+document.getElementById('currentPriceValue').textContent = '$' + p.price.toFixed(2);
+document.getElementById('basePriceValue').textContent    = '$' + p.basePrice.toFixed(2);
+
+// Estatísticas do motor
+const maxPrice   = p.maxPrice || p.price * 1.5;
+const variation  = p.variation24h || 0;
+
+// Market Cap real = preço × supply em circulação
+const circulating = 847392000; // 847.392M BRD (vem do /api/explorer/stats)
+const realMC      = p.price * circulating;
+const dilutedMC   = p.price * 79000000000000; // 79T (max supply)
+const targetMC    = maxPrice * 79000000000000;
+
+// Formata valores grandes (T, Q)
+function formatMC(value) {
+    if (value >= 1e15) return '$' + (value / 1e15).toFixed(2) + 'Q';
+    if (value >= 1e12) return '$' + (value / 1e12).toFixed(2) + 'T';
+    if (value >= 1e9)  return '$' + (value / 1e9).toFixed(2)  + 'B';
+    if (value >= 1e6)  return '$' + (value / 1e6).toFixed(2)  + 'M';
+    return '$' + value.toFixed(2);
+}
+
+document.getElementById('realMarketCapValue').textContent = formatMC(realMC);
+document.getElementById('dilutedMCValue').textContent     = formatMC(dilutedMC);
+document.getElementById('targetMCValue').textContent      = formatMC(targetMC);
+
+// Mostra a variação 24h no preço atual (se quiser)
+const priceEl = document.getElementById('currentPriceValue');
+if (priceEl && variation !== 0) {
+    const arrow = variation >= 0 ? '▲' : '▼';
+    const color = variation >= 0 ? '#00ff66' : '#ff6464';
+    priceEl.innerHTML = `$${p.price.toFixed(2)} <span style="font-size:11px;color:${color};">${arrow} ${Math.abs(variation).toFixed(2)}%</span>`;
+}
+
+// Log pra debug
+console.log(`💰 Preço: $${p.price.toFixed(2)} | Base: $${p.basePrice.toFixed(2)} | Var24h: ${variation}%`);
 
                 // 3. BLOCOS
                 const blocks = await apiCall('/api/explorer/blocks?limit=5');

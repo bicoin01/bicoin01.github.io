@@ -2633,11 +2633,8 @@
                     </div>
                 </div>
                 <div id="validatorsContainer" style="max-height:300px;overflow-y:auto;">
-                    <div style="text-align:center;padding:20px;color:#888;">
-                        <p data-i18n="noValidators">128 validators active</p>
-                        <p style="font-size:11px;" data-i18n="becomeValidatorText">Become a validator by staking 1000+ BRD</p>
-                    </div>
-                </div>
+                     <div style="text-align:center;padding:20px;color:#888;">⏳ Loading validators...</div>
+                 </div>
                 <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
                     <button onclick="becomeValidator()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnBecomeValidator">⚡ Become Validator</button>
                     <button onclick="viewValidatorStats()" style="background:transparent;border:1px solid #555;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnViewStats">📊 View Stats</button>
@@ -2729,18 +2726,38 @@
 
             <!-- TRANSACTION HISTORY -->
             <div class="transaction-history">
-                <div class="transaction-header">
-                    <h2 id="transactionHistoryTitle" style="color: cyan;" data-i18n="transactionHistoryTitle">Transaction History</h2>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                        <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
-                    </div>
-                </div>
-                <div id="transactionList"></div>
-                <div id="transactionCount" style="text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(0, 200, 255, 0.2);">
-                    <span class="text-gray" data-i18n="totalTransactions">Total transactions: </span>
-                    <span id="totalCount" class="font-bold" style="color: cyan;">0</span>
-                </div>
-            </div>
+    <div class="transaction-header">
+        <h2 id="transactionHistoryTitle" style="color: cyan;" data-i18n="transactionHistoryTitle">📜 Transaction History</h2>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="refreshHistory" class="refresh-btn" data-i18n="refresh">⟳ Refresh</button>
+        </div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;">
+        <div id="txFilters" style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="tx-filter active" data-filter="all" onclick="filterTransactions('all')">📋 All</button>
+            <button class="tx-filter" data-filter="sent" onclick="filterTransactions('sent')">📤 Sent</button>
+            <button class="tx-filter" data-filter="received" onclick="filterTransactions('received')">📥 Received</button>
+            <button class="tx-filter" data-filter="mining" onclick="filterTransactions('mining')">⛏️ Mining</button>
+        </div>
+        <input type="text" id="txSearch" placeholder="🔍 Search by hash or address..."
+            style="flex:1;min-width:200px;padding:8px 14px;background:rgba(0,0,0,0.5);border:1px solid rgba(0,200,255,0.3);border-radius:6px;color:cyan;font-family:'Orbitron',monospace;font-size:12px;outline:none;">
+    </div>
+
+    <div id="transactionList"></div>
+
+    <div style="text-align:center;margin-top:16px;">
+        <button id="loadMoreTx" onclick="onLoadMoreTx()"
+            style="display:none;background:rgba(0,200,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:10px 24px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;">
+            ⬇️ Load more
+        </button>
+    </div>
+
+    <div id="transactionCount" style="text-align: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(0, 200, 255, 0.2);">
+        <span class="text-gray" data-i18n="totalTransactions">Total transactions: </span>
+        <span id="totalCount" class="font-bold" style="color: cyan;">0</span>
+    </div>
+</div>
 
             <!-- QUANTUM GOVERNANCE PANEL -->
             <div class="quantum-panel" id="quantumPanel">
@@ -7526,13 +7543,355 @@ async function loadStakingStats() {
         console.warn('⚠️ Staking stats não carregados:', e.message);
         container.innerHTML = `
             <div style="text-align:center;padding:20px;color:#ff6464;">
-                ⚠️ Não foi possível carregar os dados de staking
-                <br><button onclick="loadStakingStats()" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;">🔄 Tentar novamente</button>
+                ⚠️ Could not load staking data
+                <br><button onclick="loadStakingStats()" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;">🔄 Try again</button>
             </div>
         `;
     }
 }
 
+// ============================================
+// 🛡️ VALIDATORS — Pronto para Produção
+// ============================================
+let validatorsCache = {
+    data: [],
+    lastFetch: 0,
+    ttl: 30000 // 30s de cache
+};
+
+async function loadValidators(forceRefresh = false) {
+    const container = document.getElementById('validatorsContainer');
+    if (!container) return;
+
+    // Cache: evita chamar a API a cada render
+    const now = Date.now();
+    if (!forceRefresh && validatorsCache.data.length > 0 &&
+        (now - validatorsCache.lastFetch) < validatorsCache.ttl) {
+        renderValidators(validatorsCache.data);
+        return;
+    }
+
+    // Loading só na primeira vez
+    if (validatorsCache.data.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:#888;">⏳ Loading validators...</div>';
+    }
+
+    try {
+        const data = await apiCall('/api/validator/list');
+        const list = Array.isArray(data.data) ? data.data : [];
+
+        // Ordena por stake (maior primeiro)
+        list.sort((a, b) => (b.stake || 0) - (a.stake || 0));
+
+        validatorsCache.data = list;
+        validatorsCache.lastFetch = now;
+
+        renderValidators(list);
+    } catch (e) {
+        console.warn('⚠️ Validators não carregados:', e.message);
+        container.innerHTML = `
+            <div style="text-align:center;padding:20px;color:#ff6464;">
+                ⚠️ Could not load validators
+                <br>
+                <button onclick="loadValidators(true)" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;">
+                    🔄 Try again
+                </button>
+            </div>
+        `;
+    }
+}
+
+function renderValidators(list) {
+    const container = document.getElementById('validatorsContainer');
+    if (!container) return;
+
+    // Empty state
+    if (!list || list.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:30px 20px;color:#888;">
+                <div style="font-size:32px;margin-bottom:10px;">🛡️</div>
+                <p style="color:#c864ff;font-size:14px;margin-bottom:6px;">No validators active</p>
+                <p style="font-size:11px;color:#666;">Become a validator by staking 1000+ BRD</p>
+            </div>
+        `;
+        return;
+    }
+
+    const totalStake = list.reduce((sum, v) => sum + (Number(v.stake) || 0), 0);
+
+    container.innerHTML = `
+        <!-- Header com total -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(200,100,255,0.08);border-radius:8px;margin-bottom:12px;border:1px solid rgba(200,100,255,0.15);">
+            <span style="font-size:11px;color:#c864ff;font-weight:bold;">
+                🏆 TOP ${list.length} VALIDATORS
+            </span>
+            <span style="font-size:11px;color:#888;">
+                Total staked: <span style="color:#00ff66;font-weight:bold;">${(totalStake / 1e6).toFixed(1)}M BRD</span>
+            </span>
+        </div>
+
+        <!-- Lista -->
+        ${list.map((v, index) => {
+            const status = (v.status || 'active').toLowerCase();
+            const isActive = status === 'active' || status === 'online';
+            const statusColor = isActive ? '#00ff66' : '#ff6464';
+            const statusText = isActive ? 'Active' : 'Inactive';
+            const rank = index + 1;
+            const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+
+            const address = v.address || v.publicKey || 'Unknown';
+            const shortAddr = address.length > 20
+                ? address.slice(0, 10) + '...' + address.slice(-6)
+                : address;
+
+            return `
+                <div class="validator-card" style="
+                    background:rgba(200,100,255,0.05);
+                    border:1px solid rgba(200,100,255,0.2);
+                    border-radius:10px;
+                    padding:14px;
+                    margin-bottom:10px;
+                    transition:all 0.3s ease;
+                    cursor:pointer;
+                "
+                onclick="copyToClipboard('${address}')"
+                title="Click to copy address"
+                onmouseover="this.style.borderColor='#c864ff';this.style.boxShadow='0 0 20px rgba(200,100,255,0.2)';"
+                onmouseout="this.style.borderColor='rgba(200,100,255,0.2)';this.style.boxShadow='none';">
+
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+
+                        <!-- Info esquerda -->
+                        <div style="flex:1;min-width:200px;">
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                                <span style="font-size:14px;">${rankIcon}</span>
+                                <span style="color:#c864ff;font-weight:bold;font-size:13px;font-family:monospace;word-break:break-all;">
+                                    ${shortAddr}
+                                </span>
+                            </div>
+                            <div style="font-size:11px;color:#888;display:flex;gap:14px;flex-wrap:wrap;">
+                                <span>⏱️ <span style="color:#00ccff;">${(Number(v.uptime) || 99.9).toFixed(2)}%</span></span>
+                                <span>💼 <span style="color:#ffc800;">${Number(v.commission) || 5}%</span></span>
+                                <span>📦 <span style="color:#00ff66;">${Number(v.blocksMined) || 0}</span></span>
+                            </div>
+                        </div>
+
+                        <!-- Stake direita -->
+                        <div style="text-align:right;min-width:130px;">
+                            <div style="color:#00ff66;font-size:16px;font-weight:bold;font-family:'Orbitron',monospace;">
+                                ${Number(v.stake || 0).toLocaleString('pt-BR')} BRD
+                            </div>
+                            <div style="font-size:10px;color:${statusColor};margin-top:4px;display:flex;align-items:center;justify-content:flex-end;gap:4px;">
+                                <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${statusColor};${isActive ? 'animation:pulse 2s infinite;' : ''}"></span>
+                                ${statusText}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+        }).join('')}
+    `;
+}
+
+ // ============================================
+// 📜 TRANSACTION HISTORY — Pronto para Produção
+// ============================================
+let txHistoryCache = {
+    data: [],
+    lastFetch: 0,
+    ttl: 10000,          // 10s
+    filter: 'all',
+    search: '',
+    page: 0,
+    pageSize: 20,
+    hasMore: true,
+    loading: false,
+    total: 0
+};
+
+async function loadTransactionHistory(forceRefresh = false) {
+    const container = document.getElementById('transactionList');
+    const loadMoreBtn = document.getElementById('loadMoreTx');
+    if (!container || txHistoryCache.loading) return;
+
+    const now = Date.now();
+    if (!forceRefresh && txHistoryCache.data.length > 0 &&
+        (now - txHistoryCache.lastFetch) < txHistoryCache.ttl) {
+        return;
+    }
+
+    txHistoryCache.loading = true;
+
+    if (txHistoryCache.data.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:30px;color:#888;">⏳ Loading transactions...</div>';
+    }
+
+    try {
+        const limit = txHistoryCache.pageSize;
+        const offset = txHistoryCache.page * txHistoryCache.pageSize;
+        const data = await apiCall(`/api/explorer/transactions?limit=${limit}&offset=${offset}`);
+
+        const newTxs = Array.isArray(data.data) ? data.data : [];
+        txHistoryCache.total = data.total || newTxs.length;
+        txHistoryCache.hasMore = newTxs.length === txHistoryCache.pageSize;
+
+        if (txHistoryCache.page === 0) {
+            txHistoryCache.data = newTxs;
+        } else {
+            txHistoryCache.data = txHistoryCache.data.concat(newTxs);
+        }
+        txHistoryCache.lastFetch = now;
+
+        renderTransactionHistory();
+
+        if (loadMoreBtn) {
+            loadMoreBtn.style.display = txHistoryCache.hasMore ? 'inline-block' : 'none';
+        }
+    } catch (e) {
+        console.warn('⚠️ Transaction history não carregado:', e.message);
+        container.innerHTML = `
+            <div style="text-align:center;padding:30px;color:#ff6464;">
+                ⚠️ Could not load transactions
+                <br>
+                <button onclick="loadTransactionHistory(true)" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;">
+                    🔄 Try again
+                </button>
+            </div>
+        `;
+    } finally {
+        txHistoryCache.loading = false;
+    }
+}
+
+function renderTransactionHistory() {
+    const container = document.getElementById('transactionList');
+    const totalEl = document.getElementById('totalCount');
+    if (!container) return;
+
+    let list = txHistoryCache.data;
+
+    // Filtros
+    if (txHistoryCache.filter === 'sent') {
+        list = list.filter(tx => tx.fromAddress && tx.fromAddress !== 'COINBASE');
+    } else if (txHistoryCache.filter === 'received') {
+        list = list.filter(tx => tx.toAddress);
+    } else if (txHistoryCache.filter === 'mining') {
+        list = list.filter(tx => tx.fromAddress === 'COINBASE' || !tx.fromAddress);
+    }
+
+    if (txHistoryCache.search) {
+        const q = txHistoryCache.search;
+        list = list.filter(tx =>
+            (tx.hash || '').toLowerCase().includes(q) ||
+            (tx.fromAddress || '').toLowerCase().includes(q) ||
+            (tx.toAddress || '').toLowerCase().includes(q)
+        );
+    }
+
+    if (totalEl) totalEl.textContent = txHistoryCache.total.toLocaleString('pt-BR');
+
+    if (list.length === 0) {
+        container.innerHTML = `
+            <div style="text-align:center;padding:40px 20px;color:#888;">
+                <div style="font-size:32px;margin-bottom:10px;">📜</div>
+                <p style="color:#00ccff;font-size:14px;margin-bottom:6px;">No transactions found</p>
+                <p style="font-size:11px;color:#666;">
+                    ${txHistoryCache.search ? 'Try a different search term' : 'Transactions will appear here'}
+                </p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = list.map(tx => {
+        const isMining = tx.fromAddress === 'COINBASE' || !tx.fromAddress;
+        const icon = isMining ? '⛏️' : '💸';
+        const iconBg = isMining ? 'rgba(255,200,0,0.2)' : 'rgba(0,255,100,0.2)';
+        const iconBorder = isMining ? '#ffc800' : '#00ff66';
+        const confirmed = tx.confirmed !== false;
+        const statusColor = confirmed ? '#00ff66' : '#ffc800';
+        const statusText = confirmed ? '✅ Confirmed' : '⏳ Pending';
+
+        const from = tx.fromAddress || 'COINBASE';
+        const to = tx.toAddress || 'N/A';
+        const amount = Number(tx.amount || 0).toFixed(2);
+        const ts = tx.timestamp ? new Date(tx.timestamp).toLocaleString() : '--';
+        const hash = tx.hash || tx.signature || '--';
+        const shortHash = hash.length > 20 ? hash.slice(0, 10) + '...' + hash.slice(-8) : hash;
+        const fee = tx.fee || 0;
+
+        return `
+            <div class="transaction-card" style="cursor:pointer;"
+                onclick="onTxClick('${hash}')"
+                onmouseover="this.style.borderColor='#00ccff';this.style.boxShadow='0 0 20px rgba(0,200,255,0.15)';"
+                onmouseout="this.style.borderColor='rgba(0,200,255,0.3)';this.style.boxShadow='none';">
+
+                <div class="transaction-row">
+                    <div class="transaction-info">
+                        <div class="transaction-icon" style="background:${iconBg};border-color:${iconBorder};">
+                            ${icon}
+                        </div>
+                        <div style="flex:1;min-width:200px;">
+                            <div style="font-size:18px;font-weight:bold;color:#c864ff;">
+                                ${isMining ? '+' : ''}${amount} BRD
+                            </div>
+                            <div style="font-size:11px;color:#888;margin-top:4px;">
+                                ${isMining
+                                    ? `🎁 <span style="color:#ffc800;">Block reward</span>`
+                                    : `From <span style="color:#00ccff;font-family:monospace;">${from.slice(0, 12)}...</span>`}
+                            </div>
+                            ${!isMining ? `
+                            <div style="font-size:11px;color:#888;margin-top:2px;">
+                                To <span style="color:#00ff66;font-family:monospace;">${to.slice(0, 12)}...</span>
+                            </div>` : ''}
+                        </div>
+                    </div>
+
+                    <div style="text-align:right;min-width:140px;">
+                        <div style="font-size:11px;color:${statusColor};font-weight:bold;">
+                            ${statusText}
+                        </div>
+                        <div style="font-size:10px;color:#666;margin-top:6px;">
+                            🕐 ${ts}
+                        </div>
+                        <div style="font-size:10px;color:#555;margin-top:4px;font-family:monospace;">
+                            ${shortHash}
+                        </div>
+                        ${fee > 0 ? `<div style="font-size:10px;color:#888;margin-top:4px;">Fee: ${fee} BRD</div>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function onTxClick(hash) {
+    if (!hash || hash === '--') return;
+    const input = document.getElementById('searchInput');
+    if (input) {
+        input.value = hash;
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        searchWallet();
+    }
+}
+
+// ============================================
+// 📜 FILTROS DO HISTÓRICO  ← COLA AQUI
+// ============================================
+function filterTransactions(filter) {
+    txHistoryCache.filter = filter;
+    document.querySelectorAll('.tx-filter').forEach(el => {
+        el.classList.toggle('active', el.dataset.filter === filter);
+    });
+    renderTransactionHistory();
+}
+
+function onLoadMoreTx() {
+    txHistoryCache.page++;
+    loadTransactionHistory(true);
+}
+        
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
@@ -7848,10 +8207,32 @@ async function loadStakingStats() {
             // Inicia WebSocket
             initWebSocket();
 
-            // 💰 Staking stats  ← COLA AQUI
+            // 💰 Staking stats
             loadStakingStats();
             setInterval(loadStakingStats, 30000); // atualiza a cada 50s
-            
+
+            // 🛡️ Validators
+            loadValidators();
+            setInterval(() => loadValidators(true), 60000);
+
+            // 📜 Transaction History
+            loadTransactionHistory();
+            setInterval(() => loadTransactionHistory(true), 15000);
+
+             // 🔍 Search no histórico  ← COLA AQUI
+            document.getElementById('txSearch')?.addEventListener('input', (e) => {
+                txHistoryCache.search = (e.target.value || '').toLowerCase().trim();
+                renderTransactionHistory();
+            });
+
+            // 🔄 Refresh manual  ← COLA AQUI
+            document.getElementById('refreshHistory')?.addEventListener('click', () => {
+                txHistoryCache.page = 0;
+                txHistoryCache.data = [];
+                loadTransactionHistory(true);
+                showNotification('🔄 Transactions updated!', '#00ccff');
+            });
+
             // Se tiver carteira salva, mostra
             const saved = localStorage.getItem('bradicoin_last_wallet');
             if (saved) {

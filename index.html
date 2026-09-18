@@ -2507,22 +2507,23 @@
 </head>
 <body>
     <div class="container">
+        
         <!-- HEADER -->
-        <div class="header" onclick="goHome()">
+<div class="header" onclick="goHome()">
+    <svg class="logo-image" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="height:40px;width:40px;">
+        <defs>
+            <linearGradient id="brdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00ffff"/>
+                <stop offset="100%" stop-color="#ff00ff"/>
+            </linearGradient>
+        </defs>
+        <circle cx="30" cy="30" r="28" fill="none" stroke="url(#brdGrad)" stroke-width="3"/>
+        <text x="30" y="40" text-anchor="middle" font-family="Orbitron, monospace" font-size="26" font-weight="900" fill="#00ffff">⚡</text>
+    </svg>
+    <div class="logo-fallback">⚡₿</div>
+    <div class="logo-text">BRADICOIN<span class="logo-badge">BLOCKCHAIN</span></div>
+</div>
 
-            <div class="logo-fallback">⚡₿</div>
-            <div class="logo-text">BRADICOIN<span class="logo-badge">BLOCKCHAIN</span></div>
-        </div>
-        <svg class="logo-image" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="height:40px;width:40px;">
-  <defs>
-    <linearGradient id="brdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00ffff"/>
-      <stop offset="100%" stop-color="#ff00ff"/>
-    </linearGradient>
-  </defs>
-  <circle cx="30" cy="30" r="28" fill="none" stroke="url(#brdGrad)" stroke-width="3"/>
-  <text x="30" y="40" text-anchor="middle" font-family="Orbitron, monospace" font-size="26" font-weight="900" fill="#00ffff">⚡</text>
-</svg>
         <!-- LANGUAGE SELECTOR + DOWNLOAD -->
         <div class="language-selector">
             <a href="https://bradicoin.com/download/bradicoin-wallet.apk" class="btn-download-topo" title="Baixar Bradicoin Wallet">
@@ -8575,35 +8576,80 @@ function getFallbackNFTs() {
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
-
         document.addEventListener('DOMContentLoaded', function() {
-            const savedLang = localStorage.getItem('bradicoin_language');
-            if (savedLang && translations[savedLang]) {
-                currentLang = savedLang;
-                document.getElementById('languageSelect').value = savedLang;
-            }
-            document.body.classList.toggle('arabic', currentLang === 'ar');
+    // ===== 1. IDIOMA =====
+    const savedLang = localStorage.getItem('bradicoin_language');
+    if (savedLang && translations[savedLang]) {
+        currentLang = savedLang;
+        const sel = document.getElementById('languageSelect');
+        if (sel) sel.value = savedLang;
+    }
+    document.body.classList.toggle('arabic', currentLang === 'ar');
+    updateLanguage();
 
-            updateLanguage();
+    // ===== 2. UI EVENTS =====
+    document.getElementById('searchButton')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchWallet();
+    });
+    document.getElementById('searchInput')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); searchWallet(); }
+    });
+    document.getElementById('refreshHistory')?.addEventListener('click', () => {
+        txHistoryCache.page = 0;
+        txHistoryCache.data = [];
+        loadTransactionHistory(true);
+        showNotification('🔄 Transactions updated!', '#00ccff');
+    });
+    document.getElementById('txSearch')?.addEventListener('input', (e) => {
+        txHistoryCache.search = (e.target.value || '').toLowerCase().trim();
+        renderTransactionHistory();
+    });
 
-            document.getElementById('searchButton')?.addEventListener('click', function(e) { e.preventDefault();
-                searchWallet(); });
-            document.getElementById('searchInput')?.addEventListener('keypress', function(e) { if (e.key === 'Enter') { e
-                        .preventDefault();
-                    searchWallet(); } });
-            document.getElementById('refreshHistory')?.addEventListener('click', function() {
-                showNotification('⟳ Refreshed!', '#00ccff');
-            });
+    // ===== 3. RELÓGIO ZK =====
+    setInterval(() => {
+        const el = document.getElementById('zkTimeDisplay');
+        if (el) el.textContent = new Date().toLocaleTimeString();
+    }, 1000);
 
-            setInterval(() => {
-                const el = document.getElementById('zkTimeDisplay');
-                if (el) el.textContent = new Date().toLocaleTimeString();
-            }, 1000);
+    // ===== 4. DADOS REAIS =====
+    loadRealData();
+    setInterval(loadRealData, 30000);
 
-            console.log('✅ Bradicoin Blockchain Platform inicializado com sucesso!');
-            console.log('⚛️ Quantum Governance ativado com ' + quantumProposals.length + ' propostas');
-            console.log('📊 Todos os dados do painel estão visíveis e atualizados!');
-        });
+    initWebSocket();
+
+    loadStakingStats();
+    setInterval(loadStakingStats, 30000);
+
+    loadValidators();
+    setInterval(() => loadValidators(true), 60000);
+
+    loadTransactionHistory();
+    setInterval(() => loadTransactionHistory(true), 15000);
+
+    loadQuantumProposals();
+    setInterval(() => loadQuantumProposals(true), 30000);
+
+    loadTokenList();
+    loadNFTList();
+    setInterval(() => { loadTokenList(true); loadNFTList(true); }, 60000);
+
+    // ===== 5. CARTEIRA SALVA =====
+    const saved = localStorage.getItem('bradicoin_last_wallet');
+    if (saved) {
+        try {
+            const w = JSON.parse(saved);
+            setTimeout(() => {
+                const inp = document.getElementById('searchInput');
+                if (inp) inp.value = w.address;
+                showNotification('👛 Bem-vindo de volta, ' + w.username + '!', '#00ccff');
+            }, 1500);
+        } catch (_) {}
+    }
+
+    // ===== 6. LOG FINAL (SEM quantumProposals!) =====
+    console.log('✅ Bradicoin Blockchain Platform inicializado com sucesso!');
+});
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
@@ -8626,18 +8672,28 @@ function getFallbackNFTs() {
         // 🚀 INTEGRAÇÃO COM A API REAL DO BRADICOIN
         // ============================================
 
-        const API_BASE = 'https://bradicoin-api.onrender.com'; // mesma origem
+        const API_BASE = 'https://bradicoin-api.onrender.com';
 
         // Cliente HTTP simples
-        async function apiCall(path, options = {}) {
-            const res = await fetch(API_BASE + path, {
-                headers: { 'Content-Type': 'application/json' },
-                ...options
-            });
-            const data = await res.json().catch(() => ({}));
-            if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
-            return data;
-        }
+       async function apiCall(path, options = {}) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+        const res = await fetch(API_BASE + path, {
+            headers: { 'Content-Type': 'application/json' },
+            signal: controller.signal,
+            ...options
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || 'HTTP ' + res.status);
+        return data;
+    } catch (e) {
+        if (e.name === 'AbortError') throw new Error('Timeout');
+        throw e;
+    } finally {
+        clearTimeout(timeout);
+    }
+}
 
         // Status da API
         function updateApiStatus(status, text) {
@@ -8657,7 +8713,17 @@ function getFallbackNFTs() {
                 console.warn('⚠️ Socket.IO não carregado');
                 return;
             }
-            socket = io();
+
+            try {
+    socket = io('https://bradicoin-api.onrender.com', {
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionAttempts: 5,
+        timeout: 10000
+    });
+} catch (e) {
+    console.warn('⚠️ WebSocket falhou:', e.message);
+}
 
             socket.on('connect', () => {
                 console.log('🔌 WebSocket conectado');
@@ -8909,6 +8975,46 @@ console.log(`💰 Preço: $${p.price.toFixed(2)} | Base: $${p.basePrice.toFixed(
                 showNotification('❌ ' + err.message, '#ff6464');
             }
         }
+
+        // ============================================
+// 💰 STAKE / 📤 TRANSFER — Funções que faltavam
+// ============================================
+async function promptStake(address) {
+    const amount = prompt('💰 Quantos BRD deseja fazer staking?');
+    if (!amount || isNaN(amount) || Number(amount) <= 0) return;
+
+    try {
+        await apiCall('/api/staking/stake', {
+            method: 'POST',
+            body: JSON.stringify({ address, amount: Number(amount) })
+        });
+        showNotification(`✅ ${amount} BRD em staking!`, '#ffc800');
+        searchWallet();
+    } catch (err) {
+        showNotification('❌ ' + err.message, '#ff6464');
+    }
+}
+
+async function promptTransfer(fromAddress) {
+    const to = prompt('📤 Endereço do destinatário (deve começar com "Br"):');
+    if (!to || !to.startsWith('Br')) {
+        showNotification('⚠️ Endereço inválido', '#ff6464');
+        return;
+    }
+    const amount = prompt('💸 Quantos BRD deseja transferir?');
+    if (!amount || isNaN(amount) || Number(amount) <= 0) return;
+
+    try {
+        await apiCall('/api/send', {
+            method: 'POST',
+            body: JSON.stringify({ from: fromAddress, to, amount: Number(amount) })
+        });
+        showNotification(`✅ ${amount} BRD enviado!`, '#00ff66');
+        searchWallet();
+    } catch (err) {
+        showNotification('❌ ' + err.message, '#ff6464');
+    }
+}
 
         // ============================================
         // 🚀 INICIALIZAÇÃO FINAL

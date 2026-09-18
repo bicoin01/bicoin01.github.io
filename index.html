@@ -2083,6 +2083,52 @@
             font-size: 12px;
             margin: 4px 0;
         }
+
+                /* ===== DEVELOPER API — REAL ===== */
+        .endpoint-row {
+            display: grid;
+            grid-template-columns: 50px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 0;
+        }
+        .endpoint-row .metric-value {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .endpoint-test-btn:hover {
+            background: #ffc800 !important;
+            color: #000 !important;
+        }
+        .endpoint-row.testing {
+            opacity: 0.6;
+        }
+        .endpoint-row.ok .metric-value { color: #00ff66 !important; }
+        .endpoint-row.fail .metric-value { color: #ff6464 !important; }
+        .sdk-copy-btn:hover {
+            background: #00ccff !important;
+            color: #000 !important;
+        }
+        #apiKeysResult {
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        #apiKeysResult code {
+            display: block;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 11px;
+            background: #111;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+        #apiKeysResult.show { display: block; }
+        #apiKeysEmptyState.hide { display: none; }
+        
     </style>
 </head>
 <body>
@@ -2685,7 +2731,7 @@
             </div>
 
             <!-- DEVELOPER API -->
-            <div class="developer-card">
+            <div class="developer-card" id="devApiCard">
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
@@ -2693,12 +2739,14 @@
                         </svg>
                         <h2 id="devApiTitle" style="color: magenta;" data-i18n="devApiTitle">👨‍💻 DEVELOPER API</h2>
                     </div>
-                    <div class="status-badge" style="border-color: magenta;">
-                        <span style="color: magenta;" data-i18n="devApiAvailable">🟢 Available</span>
+                    <div class="status-badge" id="devApiStatusBadge" style="border-color: magenta;">
+                        <span class="dot" id="devApiStatusDot" style="width:8px;height:8px;border-radius:50%;background:#ffc800;display:inline-block;animation:pulse 1s infinite;"></span>
+                        <span style="color: #ffc800;" id="devApiStatusText" data-i18n="devApiChecking">⏳ Checking...</span>
                     </div>
                 </div>
 
                 <div class="metrics-grid">
+                    <!-- SDK INSTALLATION -->
                     <div class="metric-card metric-card-purple">
                         <div class="metric-header">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
@@ -2709,13 +2757,27 @@
                             <span style="color: magenta;" data-i18n="devSdkTitle">📦 SDK Installation</span>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <div style="color: #00ff66; margin-bottom: 10px;" data-i18n="devJsLabel">JavaScript / Node.js:</div>
-                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">npm install bradicoin-sdk</code>
-                            <div style="color: #00ff66; margin: 15px 0 10px 0;" data-i18n="devPythonLabel">Python:</div>
-                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all;">pip install bradicoin-sdk</code>
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+                                <span style="color: #00ff66; font-size:12px;" data-i18n="devJsLabel">JavaScript / Node.js:</span>
+                                <button class="sdk-copy-btn" onclick="copySdkCmd('npm install bradicoin-sdk')" title="Copy command" style="background:rgba(0,255,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:2px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:'Orbitron',monospace;">📋 Copy</button>
+                            </div>
+                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all; color:#00ff66;">npm install bradicoin-sdk</code>
+
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin:15px 0 8px 0;">
+                                <span style="color: #00ff66; font-size:12px;" data-i18n="devPythonLabel">Python:</span>
+                                <button class="sdk-copy-btn" onclick="copySdkCmd('pip install bradicoin-sdk')" title="Copy command" style="background:rgba(0,255,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:2px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:'Orbitron',monospace;">📋 Copy</button>
+                            </div>
+                            <code style="display: block; background: #000; padding: 10px; border-radius: 5px; font-size: 12px; word-break: break-all; color:#00ff66;">pip install bradicoin-sdk</code>
+
+                            <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,0,255,0.15);display:flex;gap:8px;flex-wrap:wrap;">
+                                <a href="https://www.npmjs.com/package/bradicoin-sdk" target="_blank" rel="noopener" style="font-size:10px;color:#00ccff;text-decoration:none;">📦 npm</a>
+                                <a href="https://pypi.org/project/bradicoin-sdk/" target="_blank" rel="noopener" style="font-size:10px;color:#00ccff;text-decoration:none;">🐍 PyPI</a>
+                                <a href="https://bradicoin-api.onrender.com/docs" target="_blank" rel="noopener" style="font-size:10px;color:#00ccff;text-decoration:none;">📚 API Docs</a>
+                            </div>
                         </div>
                     </div>
 
+                    <!-- QUICK START -->
                     <div class="metric-card metric-card-purple">
                         <div class="metric-header">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
@@ -2723,15 +2785,16 @@
                                 <path d="M8 8h8v8H8z" />
                             </svg>
                             <span style="color: magenta;" data-i18n="devQuickStart">🚀 Quick Start</span>
+                            <button onclick="copyQuickStart()" title="Copy code" style="margin-left:auto;background:rgba(0,255,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:2px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:'Orbitron',monospace;">📋 Copy</button>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <pre style="color: cyan; font-size: 11px; margin: 0; overflow-x: auto;">
-<span style="color: #ffc800;">// Initialize SDK</span>
+                            <pre id="quickStartCode" style="color: cyan; font-size: 11px; margin: 0; overflow-x: auto; line-height:1.5;"><span style="color: #ffc800;">// Initialize SDK</span>
 const Bradicoin = require('bradicoin-sdk');
 
 const client = new Bradicoin({
     apiKey: 'your_api_key',
-    apiSecret: 'your_api_secret'
+    apiSecret: 'your_api_secret',
+    network: 'mainnet'
 });
 
 <span style="color: #ffc800;">// Create payment</span>
@@ -2739,10 +2802,15 @@ const payment = await client.createPayment({
     amount: 100,
     toAddress: 'BRD-XXXX...',
     callbackUrl: 'https://yoursite.com/webhook'
-});</pre>
+});
+
+<span style="color: #ffc800;">// Check balance</span>
+const balance = await client.getBalance('BrYourAddress');
+console.log(balance);</pre>
                         </div>
                     </div>
 
+                    <!-- API ENDPOINTS -->
                     <div class="metric-card metric-card-purple">
                         <div class="metric-header">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
@@ -2750,44 +2818,108 @@ const payment = await client.createPayment({
                                 <path d="M12 6v6l4 2" />
                             </svg>
                             <span style="color: magenta;" data-i18n="devEndpoints">⚡ API Endpoints</span>
+                            <button onclick="testAllEndpoints()" title="Test all" style="margin-left:auto;background:rgba(0,255,102,0.1);border:1px solid #00ff66;color:#00ff66;padding:2px 10px;border-radius:4px;cursor:pointer;font-size:10px;font-family:'Orbitron',monospace;">🧪 Test All</button>
                         </div>
                         <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color: cyan;">/api/balance/:address</span></div>
-                            <div class="metric-row"><span class="metric-label">POST</span><span class="metric-value" style="color: cyan;">/api/register</span></div>
-                            <div class="metric-row"><span class="metric-label">POST</span><span class="metric-value" style="color: cyan;">/api/send</span></div>
-                            <div class="metric-row"><span class="metric-label">GET</span><span class="metric-value" style="color: cyan;">/api/health</span></div>
+                            <div class="metric-row endpoint-row" data-endpoint="/api/wallet/balance/BrDemo123" data-method="GET">
+                                <span class="metric-label" style="color:#00ff66;font-weight:bold;">GET</span>
+                                <span class="metric-value" style="color: cyan;font-family:monospace;font-size:11px;">/api/wallet/balance/:address</span>
+                                <button class="endpoint-test-btn" onclick="testEndpoint(this)" style="background:rgba(255,200,0,0.1);border:1px solid #ffc800;color:#ffc800;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">Test</button>
+                            </div>
+                            <div class="metric-row endpoint-row" data-endpoint="/health" data-method="GET">
+                                <span class="metric-label" style="color:#00ff66;font-weight:bold;">GET</span>
+                                <span class="metric-value" style="color: cyan;font-family:monospace;font-size:11px;">/health</span>
+                                <button class="endpoint-test-btn" onclick="testEndpoint(this)" style="background:rgba(255,200,0,0.1);border:1px solid #ffc800;color:#ffc800;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">Test</button>
+                            </div>
+                            <div class="metric-row endpoint-row" data-endpoint="/api/validator/list" data-method="GET">
+                                <span class="metric-label" style="color:#00ff66;font-weight:bold;">GET</span>
+                                <span class="metric-value" style="color: cyan;font-family:monospace;font-size:11px;">/api/validator/list</span>
+                                <button class="endpoint-test-btn" onclick="testEndpoint(this)" style="background:rgba(255,200,0,0.1);border:1px solid #ffc800;color:#ffc800;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">Test</button>
+                            </div>
+                            <div class="metric-row endpoint-row" data-endpoint="/api/market/price" data-method="GET">
+                                <span class="metric-label" style="color:#00ff66;font-weight:bold;">GET</span>
+                                <span class="metric-value" style="color: cyan;font-family:monospace;font-size:11px;">/api/market/price</span>
+                                <button class="endpoint-test-btn" onclick="testEndpoint(this)" style="background:rgba(255,200,0,0.1);border:1px solid #ffc800;color:#ffc800;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">Test</button>
+                            </div>
+                            <div class="metric-row endpoint-row" data-endpoint="/api/v1/governance/proposals" data-method="GET">
+                                <span class="metric-label" style="color:#00ff66;font-weight:bold;">GET</span>
+                                <span class="metric-value" style="color: cyan;font-family:monospace;font-size:11px;">/api/v1/governance/proposals</span>
+                                <button class="endpoint-test-btn" onclick="testEndpoint(this)" style="background:rgba(255,200,0,0.1);border:1px solid #ffc800;color:#ffc800;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">Test</button>
+                            </div>
                         </div>
+                        <div id="endpointTestResult" style="margin-top:10px;padding:10px;background:#000;border-radius:6px;font-family:monospace;font-size:10px;color:#00ff66;display:none;max-height:150px;overflow:auto;"></div>
                     </div>
                 </div>
 
+                <!-- REGISTER APPLICATION -->
                 <div style="margin-top: 20px; padding: 20px; background: rgba(255,0,255,0.1); border-radius: 12px;">
                     <h3 style="color: magenta; margin-bottom: 15px;" data-i18n="devRegister">🔑 Get Your API Keys</h3>
                     <div class="price-box" style="grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div>
-                            <input type="text" id="devAppName" placeholder="Your App Name" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devAppName" />
-                            <input type="email" id="devEmail" placeholder="Your Email (optional)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devEmail" />
-                            <input type="url" id="devWebhook" placeholder="Webhook URL (optional)" style="width: 100%; padding: 12px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;" data-i18n-placeholder="devWebhook" />
+                            <input type="text" id="devAppName" placeholder="Your App Name" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;font-family:'Orbitron',monospace;" data-i18n-placeholder="devAppName" />
+                            <input type="email" id="devEmail" placeholder="Your Email (optional)" style="width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;font-family:'Orbitron',monospace;" data-i18n-placeholder="devEmail" />
+                            <input type="url" id="devWebhook" placeholder="Webhook URL (optional)" style="width: 100%; padding: 12px; background: #000; border: 1px solid magenta; color: cyan; border-radius: 5px;font-family:'Orbitron',monospace;" data-i18n-placeholder="devWebhook" />
+                            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                                <button id="devRegisterBtn" onclick="registerDeveloperApp()" style="flex:1;background:magenta;padding:12px;border:none;border-radius:5px;color:white;font-weight:bold;cursor:pointer;font-family:'Orbitron',monospace;" data-i18n="devRegisterBtn">🚀 Register Application</button>
+                                <button onclick="viewMyApps()" title="View registered apps" style="background:rgba(0,255,255,0.15);border:1px solid #00ccff;color:#00ccff;padding:12px 16px;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;">📂 My Apps</button>
+                            </div>
                         </div>
                         <div>
-                            <button onclick="registerDeveloperApp()" style="width: 100%; background: magenta; padding: 12px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer;" data-i18n="devRegisterBtn">🚀 Register Application</button>
                             <div id="apiKeysResult" class="api-keys-result">
-                                <div style="color: #00ff66;" data-i18n="apiKeyLabel">API Key:</div>
-                                <code id="apiKeyDisplay"></code>
-                                <div style="color: #00ff66; margin-top: 10px;" data-i18n="apiSecretLabel">API Secret:</div>
-                                <code id="apiSecretDisplay"></code>
-                                <button onclick="copyApiKeys()" style="margin-top: 10px; background: cyan; color: #000; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;" data-i18n="copyKeys">📋 Copy Keys</button>
+                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                                    <span style="color: #00ff66;font-size:12px;" data-i18n="apiKeyLabel">API Key:</span>
+                                    <button onclick="copyToClipboard(document.getElementById('apiKeyDisplay').textContent)" style="background:transparent;border:1px solid #00ccff;color:#00ccff;padding:1px 8px;border-radius:4px;cursor:pointer;font-size:9px;">📋</button>
+                                </div>
+                                <code id="apiKeyDisplay" style="color:#00ccff;"></code>
+
+                                <div style="display:flex;justify-content:space-between;align-items:center;margin:10px 0 4px 0;">
+                                    <span style="color: #00ff66;font-size:12px;" data-i18n="apiSecretLabel">API Secret:</span>
+                                    <button onclick="copyToClipboard(document.getElementById('apiSecretDisplay').textContent)" style="background:transparent;border:1px solid #00ccff;color:#00ccff;padding:1px 8px;border-radius:4px;cursor:pointer;font-size:9px;">📋</button>
+                                </div>
+                                <code id="apiSecretDisplay" style="color:#ff6464;"></code>
+
+                                <div id="apiAppIdRow" style="margin:10px 0 4px 0;display:none;">
+                                    <span style="color: #00ff66;font-size:12px;">App ID:</span>
+                                    <code id="apiAppIdDisplay" style="color:#ffc800;"></code>
+                                </div>
+
+                                <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;">
+                                    <button onclick="copyApiKeys()" style="flex:1;background:cyan;color:#000;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="copyKeys">📋 Copy Keys</button>
+                                    <button onclick="downloadApiKeys()" style="flex:1;background:rgba(0,255,102,0.2);color:#00ff66;border:1px solid #00ff66;padding:8px 12px;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">⬇️ .env</button>
+                                    <button onclick="showApiKeyQR()" style="flex:1;background:rgba(200,100,255,0.2);color:#c864ff;border:1px solid #c864ff;padding:8px 12px;border-radius:5px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">📱 QR</button>
+                                </div>
+                            </div>
+
+                            <div id="apiKeysEmptyState" style="text-align:center;padding:30px 15px;color:#666;font-size:11px;border:1px dashed rgba(255,0,255,0.2);border-radius:8px;">
+                                <div style="font-size:32px;margin-bottom:8px;">🔑</div>
+                                <p>Your API keys will appear here</p>
+                                <p style="color:#555;font-size:10px;margin-top:4px;">Fill the form and click Register</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; justify-content: center;">
-                    <a href="https://bradicoin-api.onrender.com/" target="_blank" style="color: cyan;" data-i18n="docsLink">📚 API Documentation</a>
-                    <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" style="color: cyan;" data-i18n="statusLink">🩺 API Status</a>
+                    <a href="https://bradicoin-api.onrender.com/" target="_blank" rel="noopener" style="color: cyan;" data-i18n="docsLink">📚 API Documentation</a>
+                    <a href="https://bradicoin-api.onrender.com/api/health" target="_blank" rel="noopener" style="color: cyan;" data-i18n="statusLink">🩺 API Status</a>
+                    <a onclick="openSwaggerUI()" style="color: #ffc800;cursor:pointer;" data-i18n="devSwagger">🧪 Swagger UI</a>
                 </div>
             </div>
-        </div>
 
+            <!-- QR MODAL -->
+            <div id="qrModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:10002;overflow:auto;">
+                <div style="max-width:420px;margin:60px auto;padding:20px;">
+                    <div style="background:#000;border:2px solid #c864ff;border-radius:15px;padding:25px;text-align:center;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+                            <h3 style="color:#c864ff;font-size:16px;">📱 API Keys QR</h3>
+                            <button onclick="document.getElementById('qrModal').style.display='none'" style="background:rgba(255,100,100,0.2);border:1px solid #ff6464;color:#ff6464;padding:4px 12px;border-radius:6px;cursor:pointer;">✕</button>
+                        </div>
+                        <canvas id="qrCanvas" width="280" height="280" style="background:#fff;border-radius:8px;padding:10px;"></canvas>
+                        <p style="color:#888;font-size:11px;margin-top:15px;">Scan to import keys into your mobile app</p>
+                    </div>
+                </div>
+            </div>
+        
         <!-- FEATURE MODAL -->
         <div id="featureModal" class="modal">
             <div class="modal-content">
@@ -7497,39 +7629,470 @@ const payment = await client.createPayment({
             }
         }
 
+                // ============================================
+        // 👨‍💻 DEVELOPER API — FUNÇÕES REAIS
         // ============================================
-        // DEVELOPER API
-        // ============================================
-        function registerDeveloperApp() {
-            const name = document.getElementById('devAppName')?.value.trim();
-            const result = document.getElementById('apiKeysResult');
-            const keyDisplay = document.getElementById('apiKeyDisplay');
-            const secretDisplay = document.getElementById('apiSecretDisplay');
+
+        const DEV_STORAGE_KEY = 'bradicoin_dev_apps';
+        const DEV_ACTIVE_KEY = 'bradicoin_dev_active';
+
+        async function checkDevApiStatus() {
+            const dot = document.getElementById('devApiStatusDot');
+            const txt = document.getElementById('devApiStatusText');
+            const badge = document.getElementById('devApiStatusBadge');
+            if (!dot || !txt) return;
+
+            dot.style.background = '#ffc800';
+            dot.style.animation = 'pulse 1s infinite';
+            txt.textContent = '⏳ Checking...';
+            txt.style.color = '#ffc800';
+            if (badge) badge.style.borderColor = '#ffc800';
+
+            try {
+                const start = performance.now();
+                const res = await fetch(API_BASE + '/health', {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(8000)
+                });
+                const latency = Math.round(performance.now() - start);
+
+                if (res.ok) {
+                    dot.style.background = '#00ff66';
+                    dot.style.animation = 'pulse 2s infinite';
+                    txt.textContent = `🟢 Online · ${latency}ms`;
+                    txt.style.color = '#00ff66';
+                    if (badge) badge.style.borderColor = '#00ff66';
+                } else {
+                    throw new Error('HTTP ' + res.status);
+                }
+            } catch (e) {
+                dot.style.background = '#ff6464';
+                dot.style.animation = 'none';
+                txt.textContent = '🔴 Offline';
+                txt.style.color = '#ff6464';
+                if (badge) badge.style.borderColor = '#ff6464';
+            }
+        }
+
+        function copySdkCmd(cmd) {
+            copyToClipboard(cmd);
+            showNotification('📋 Copied: ' + cmd, '#00ccff');
+        }
+
+        function copyQuickStart() {
+            const code = `// Initialize SDK
+const Bradicoin = require('bradicoin-sdk');
+
+const client = new Bradicoin({
+    apiKey: 'your_api_key',
+    apiSecret: 'your_api_secret',
+    network: 'mainnet'
+});
+
+// Create payment
+const payment = await client.createPayment({
+    amount: 100,
+    toAddress: 'BRD-XXXX...',
+    callbackUrl: 'https://yoursite.com/webhook'
+});
+
+// Check balance
+const balance = await client.getBalance('BrYourAddress');
+console.log(balance);`;
+            copyToClipboard(code);
+            showNotification('📋 Quick Start copied!', '#00ccff');
+        }
+
+        async function testEndpoint(btn) {
+            const row = btn.closest('.endpoint-row');
+            if (!row) return;
+
+            const endpoint = row.dataset.endpoint;
+            const method = row.dataset.method || 'GET';
+            const resultBox = document.getElementById('endpointTestResult');
+
+            row.classList.add('testing');
+            btn.textContent = '⏳';
+            btn.disabled = true;
+
+            const start = performance.now();
+            try {
+                const res = await fetch(API_BASE + endpoint, {
+                    method,
+                    signal: AbortSignal.timeout(10000)
+                });
+                const latency = Math.round(performance.now() - start);
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok) {
+                    row.classList.remove('fail');
+                    row.classList.add('ok');
+                    btn.textContent = '✅';
+                    btn.style.background = 'rgba(0,255,102,0.2)';
+                    btn.style.color = '#00ff66';
+                    btn.style.borderColor = '#00ff66';
+
+                    if (resultBox) {
+                        resultBox.style.display = 'block';
+                        resultBox.innerHTML = `<div style="color:#00ff66;">✅ ${method} ${endpoint} — ${res.status} (${latency}ms)</div>
+<pre style="color:#00ccff;margin:6px 0 0 0;font-size:9px;max-height:100px;overflow:auto;">${JSON.stringify(data, null, 2).slice(0, 800)}</pre>`;
+                    }
+                    showNotification(`✅ ${endpoint} (${latency}ms)`, '#00ff66');
+                } else {
+                    throw new Error('HTTP ' + res.status);
+                }
+            } catch (e) {
+                row.classList.remove('ok');
+                row.classList.add('fail');
+                btn.textContent = '❌';
+                btn.style.background = 'rgba(255,100,100,0.2)';
+                btn.style.color = '#ff6464';
+                btn.style.borderColor = '#ff6464';
+
+                if (resultBox) {
+                    resultBox.style.display = 'block';
+                    resultBox.innerHTML = `<div style="color:#ff6464;">❌ ${method} ${endpoint} — ${e.message}</div>`;
+                }
+                showNotification(`❌ ${endpoint}: ${e.message}`, '#ff6464');
+            } finally {
+                row.classList.remove('testing');
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = 'Test';
+                    btn.style.background = 'rgba(255,200,0,0.1)';
+                    btn.style.color = '#ffc800';
+                    btn.style.borderColor = '#ffc800';
+                }, 3000);
+            }
+        }
+
+        async function testAllEndpoints() {
+            const rows = document.querySelectorAll('.endpoint-row');
+            if (rows.length === 0) return;
+
+            showNotification(`🧪 Testing ${rows.length} endpoints...`, '#ffc800');
+
+            for (const row of rows) {
+                const btn = row.querySelector('.endpoint-test-btn');
+                if (btn) await testEndpoint(btn);
+                await new Promise(r => setTimeout(r, 300));
+            }
+
+            showNotification('✅ All endpoints tested!', '#00ff66');
+        }
+
+        async function registerDeveloperApp() {
+            const nameInput = document.getElementById('devAppName');
+            const emailInput = document.getElementById('devEmail');
+            const webhookInput = document.getElementById('devWebhook');
+            const btn = document.getElementById('devRegisterBtn');
+
+            const name = nameInput?.value.trim();
+            const email = emailInput?.value.trim() || null;
+            const webhook = webhookInput?.value.trim() || null;
 
             if (!name) {
-                showNotification('Please enter an app name', '#ff6464');
+                showNotification('⚠️ Please enter an app name', '#ff6464');
+                nameInput?.focus();
                 return;
             }
 
-            const apiKey = 'brad_' + Math.random().toString(36).substring(2, 15);
-            const apiSecret = 'sec_' + Math.random().toString(36).substring(2, 20);
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = '⏳ Registering...';
+            }
 
-            if (keyDisplay) keyDisplay.textContent = apiKey;
-            if (secretDisplay) secretDisplay.textContent = apiSecret;
-            if (result) result.style.display = 'block';
+            let result = null;
+            let source = 'local';
 
-            showNotification('🚀 API keys generated for: ' + name, '#00ff66');
+            try {
+                const res = await fetch(API_BASE + '/api/v1/developers/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, webhook }),
+                    signal: AbortSignal.timeout(15000)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && (data.apiKey || data.api_key)) {
+                        result = {
+                            appId: data.appId || data.app_id || data.id,
+                            apiKey: data.apiKey || data.api_key,
+                            apiSecret: data.apiSecret || data.api_secret,
+                            name, email, webhook,
+                            createdAt: new Date().toISOString(),
+                            source: 'server'
+                        };
+                        source = 'server';
+                    }
+                }
+            } catch (e) {
+                console.warn('⚠️ Server registration unavailable, using local fallback:', e.message);
+            }
+
+            if (!result) {
+                const rand = () => Math.random().toString(36).substring(2, 12);
+                result = {
+                    appId: 'app_' + rand(),
+                    apiKey: 'brad_pk_' + rand() + rand(),
+                    apiSecret: 'brad_sk_' + rand() + rand() + rand(),
+                    name, email, webhook,
+                    createdAt: new Date().toISOString(),
+                    source: 'local'
+                };
+            }
+
+            try {
+                const apps = JSON.parse(localStorage.getItem(DEV_STORAGE_KEY) || '[]');
+                apps.push(result);
+                localStorage.setItem(DEV_STORAGE_KEY, JSON.stringify(apps));
+                localStorage.setItem(DEV_ACTIVE_KEY, JSON.stringify(result));
+            } catch (_) {}
+
+            displayApiKeys(result);
+
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = '🚀 Register Application';
+            }
+
+            showNotification(
+                source === 'server'
+                    ? '✅ App registered on server!'
+                    : '✅ App registered locally (offline mode)',
+                '#00ff66'
+            );
+        }
+
+        function displayApiKeys(data) {
+            const box = document.getElementById('apiKeysResult');
+            const empty = document.getElementById('apiKeysEmptyState');
+            const keyEl = document.getElementById('apiKeyDisplay');
+            const secretEl = document.getElementById('apiSecretDisplay');
+            const appIdEl = document.getElementById('apiAppIdDisplay');
+            const appIdRow = document.getElementById('apiAppIdRow');
+
+            if (!box || !keyEl || !secretEl) return;
+
+            keyEl.textContent = data.apiKey || '—';
+            secretEl.textContent = data.apiSecret || '—';
+            if (appIdEl) appIdEl.textContent = data.appId || '—';
+            if (appIdRow) appIdRow.style.display = data.appId ? 'block' : 'none';
+
+            box.classList.add('show');
+            box.style.display = 'block';
+            if (empty) {
+                empty.classList.add('hide');
+                empty.style.display = 'none';
+            }
         }
 
         function copyApiKeys() {
             const key = document.getElementById('apiKeyDisplay')?.textContent;
             const secret = document.getElementById('apiSecretDisplay')?.textContent;
-            if (key && secret) {
-                const text = 'API Key: ' + key + '\nAPI Secret: ' + secret;
-                copyToClipboard(text);
+            const appId = document.getElementById('apiAppIdDisplay')?.textContent;
+
+            if (!key || key === '—') {
+                showNotification('⚠️ No API keys yet. Register first.', '#ff6464');
+                return;
+            }
+
+            const text = `# Bradicoin API Keys
+APP_ID=${appId || ''}
+API_KEY=${key}
+API_SECRET=${secret}
+
+# Keep these secret! Never commit to git.`;
+
+            copyToClipboard(text);
+            showNotification('📋 All keys copied!', '#00ccff');
+        }
+
+        function downloadApiKeys() {
+            const key = document.getElementById('apiKeyDisplay')?.textContent;
+            const secret = document.getElementById('apiSecretDisplay')?.textContent;
+            const appId = document.getElementById('apiAppIdDisplay')?.textContent;
+
+            if (!key || key === '—') {
+                showNotification('⚠️ No API keys to download', '#ff6464');
+                return;
+            }
+
+            const env = `# Bradicoin API Credentials
+# Generated: ${new Date().toISOString()}
+# ⚠️ KEEP THIS FILE SECRET
+
+BRADICOIN_API_KEY=${key}
+BRADICOIN_API_SECRET=${secret}
+BRADICOIN_APP_ID=${appId || ''}
+BRADICOIN_NETWORK=mainnet
+BRADICOIN_API_URL=https://bradicoin-api.onrender.com
+`;
+
+            const blob = new Blob([env], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '.env.bradicoin';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+            showNotification('⬇️ .env downloaded', '#00ff66');
+        }
+
+        function showApiKeyQR() {
+            const key = document.getElementById('apiKeyDisplay')?.textContent;
+            const secret = document.getElementById('apiSecretDisplay')?.textContent;
+
+            if (!key || key === '—') {
+                showNotification('⚠️ Register first to generate QR', '#ff6464');
+                return;
+            }
+
+            const modal = document.getElementById('qrModal');
+            const canvas = document.getElementById('qrCanvas');
+            if (!modal || !canvas) return;
+
+            modal.style.display = 'block';
+
+            const data = JSON.stringify({ apiKey: key, apiSecret: secret });
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = () => {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.onerror = () => {
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ff6464';
+                ctx.font = '14px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('QR unavailable', canvas.width / 2, canvas.height / 2);
+                ctx.fillText('Copy keys manually', canvas.width / 2, canvas.height / 2 + 20);
+            };
+            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=' + encodeURIComponent(data);
+        }
+
+        function viewMyApps() {
+            let apps = [];
+            try {
+                apps = JSON.parse(localStorage.getItem(DEV_STORAGE_KEY) || '[]');
+            } catch (_) {}
+
+            const modal = document.getElementById('featureModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+
+            if (!modal || !title || !body) return;
+
+            title.textContent = '📂 My Developer Apps';
+
+            if (apps.length === 0) {
+                body.innerHTML = `
+                    <div style="text-align:center;padding:40px 20px;">
+                        <div style="font-size:48px;margin-bottom:12px;">📭</div>
+                        <h3 style="color:#888;margin-bottom:8px;">No apps registered yet</h3>
+                        <p style="color:#666;font-size:12px;">Register your first app to get API keys</p>
+                    </div>
+                `;
+            } else {
+                body.innerHTML = `
+                    <h2 style="color:magenta;margin-bottom:16px;">📂 Registered Apps (${apps.length})</h2>
+                    ${apps.map((app, i) => `
+                        <div style="background:rgba(255,0,255,0.05);border:1px solid rgba(255,0,255,0.2);border-radius:10px;padding:16px;margin-bottom:12px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <div style="color:#fff;font-weight:bold;font-size:15px;">${app.name || 'Untitled App'}</div>
+                                    <div style="color:#888;font-size:11px;margin-top:4px;">
+                                        🆔 ${app.appId || '—'} · 📅 ${new Date(app.createdAt).toLocaleDateString()}
+                                        ${app.source === 'server' ? ' · <span style="color:#00ff66;">Server</span>' : ' · <span style="color:#ffc800;">Local</span>'}
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:6px;">
+                                    <button onclick="activateApp(${i})" style="background:rgba(0,255,102,0.15);border:1px solid #00ff66;color:#00ff66;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:10px;">▶️ Activate</button>
+                                    <button onclick="deleteApp(${i})" style="background:rgba(255,100,100,0.15);border:1px solid #ff6464;color:#ff6464;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:10px;">🗑️</button>
+                                </div>
+                            </div>
+                            <div style="margin-top:10px;font-family:monospace;font-size:10px;color:#666;">
+                                <div>Key: <span style="color:#00ccff;">${(app.apiKey || '').slice(0, 20)}...</span></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div style="text-align:center;margin-top:20px;">
+                        <button onclick="clearAllApps()" style="background:rgba(255,100,100,0.15);border:1px solid #ff6464;color:#ff6464;padding:8px 20px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">🗑️ Clear All</button>
+                    </div>
+                `;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        function activateApp(index) {
+            try {
+                const apps = JSON.parse(localStorage.getItem(DEV_STORAGE_KEY) || '[]');
+                const app = apps[index];
+                if (!app) return;
+
+                localStorage.setItem(DEV_ACTIVE_KEY, JSON.stringify(app));
+                displayApiKeys(app);
+
+                const n = document.getElementById('devAppName');
+                if (n) n.value = app.name || '';
+                const e = document.getElementById('devEmail');
+                if (e) e.value = app.email || '';
+                const w = document.getElementById('devWebhook');
+                if (w) w.value = app.webhook || '';
+
+                closeModalAndGoHome();
+                showNotification('✅ Activated: ' + app.name, '#00ff66');
+            } catch (e) {
+                showNotification('❌ ' + e.message, '#ff6464');
             }
         }
 
+        function deleteApp(index) {
+            if (!confirm('Delete this app? This cannot be undone.')) return;
+            try {
+                const apps = JSON.parse(localStorage.getItem(DEV_STORAGE_KEY) || '[]');
+                apps.splice(index, 1);
+                localStorage.setItem(DEV_STORAGE_KEY, JSON.stringify(apps));
+                viewMyApps();
+                showNotification('🗑️ App deleted', '#ffc800');
+            } catch (e) {
+                showNotification('❌ ' + e.message, '#ff6464');
+            }
+        }
+
+        function clearAllApps() {
+            if (!confirm('Delete ALL registered apps?')) return;
+            localStorage.removeItem(DEV_STORAGE_KEY);
+            localStorage.removeItem(DEV_ACTIVE_KEY);
+            viewMyApps();
+            showNotification('🗑️ All apps cleared', '#ffc800');
+        }
+
+        function openSwaggerUI() {
+            window.open(API_BASE + '/docs', '_blank', 'noopener');
+        }
+
+        function restoreActiveApp() {
+            try {
+                const active = JSON.parse(localStorage.getItem(DEV_ACTIVE_KEY) || 'null');
+                if (active && active.apiKey) {
+                    displayApiKeys(active);
+                    const nameInput = document.getElementById('devAppName');
+                    if (nameInput && active.name) nameInput.value = active.name;
+                }
+            } catch (_) {}
+        }
+    
         // ============================================
         // STAKING STATS
         // ============================================
@@ -8459,6 +9022,15 @@ function initWebSocket() {
                     }, 1500);
                 } catch (_) {}
             }
+
+                        // DEVELOPER API — status real + restaurar app salvo
+            setTimeout(() => {
+                checkDevApiStatus();
+                restoreActiveApp();
+            }, 1500);
+
+            // Re-checar status da API a cada 60s
+            setInterval(checkDevApiStatus, 60000);
 
             console.log('✅ Bradicoin Platform inicializado!');
         });

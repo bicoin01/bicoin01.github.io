@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Bradicoin Blockchain - Complete Platform</title>
     <meta name="description" content="Complete Bradicoin blockchain platform with 50+ integrated features" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -2508,11 +2509,20 @@
     <div class="container">
         <!-- HEADER -->
         <div class="header" onclick="goHome()">
-            <img class="logo-image" src="https://bradicoin.com/wp-content/uploads/2025/02/Screenshot_20250212-014710.png" alt="Bradicoin Logo" onerror="this.classList.add('error')" />
+
             <div class="logo-fallback">⚡₿</div>
             <div class="logo-text">BRADICOIN<span class="logo-badge">BLOCKCHAIN</span></div>
         </div>
-
+        <svg class="logo-image" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" style="height:40px;width:40px;">
+  <defs>
+    <linearGradient id="brdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00ffff"/>
+      <stop offset="100%" stop-color="#ff00ff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="30" cy="30" r="28" fill="none" stroke="url(#brdGrad)" stroke-width="3"/>
+  <text x="30" y="40" text-anchor="middle" font-family="Orbitron, monospace" font-size="26" font-weight="900" fill="#00ffff">⚡</text>
+</svg>
         <!-- LANGUAGE SELECTOR + DOWNLOAD -->
         <div class="language-selector">
             <a href="https://bradicoin.com/download/bradicoin-wallet.apk" class="btn-download-topo" title="Baixar Bradicoin Wallet">
@@ -7108,7 +7118,7 @@ ko: {
     tokenSymbolPlaceholder: '심볼 입력 (예: BTC)',
     tokenSupplyPlaceholder: '총 공급량 입력',
     tokenPricePlaceholder: 'USD 가격 입력',
-    tokenCreated: '✅ 토큰이 성공적으로 생성되었습니다!,
+    tokenCreated: '✅ 토큰이 성공적으로 생성되었습니다!',
     tokensPanelTitle: '🪙 토큰',
     nftsPanelTitle: '🎨 NFT',
     loadingTokens: '토큰 로딩 중...',

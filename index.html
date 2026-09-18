@@ -2128,7 +2128,518 @@
         }
         #apiKeysResult.show { display: block; }
         #apiKeysEmptyState.hide { display: none; }
-        
+
+        /* ===== QUANTUM GOVERNANCE — REAL ===== */
+.qg-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 15px 0;
+}
+.qg-stat-card {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    transition: all 0.2s;
+}
+.qg-stat-card:hover {
+    border-color: cyan;
+    transform: translateY(-2px);
+}
+.qg-stat-label {
+    font-size: 10px;
+    color: #888;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', monospace;
+}
+.qg-stat-value {
+    font-size: 26px;
+    font-weight: bold;
+    color: cyan;
+    margin-top: 6px;
+    font-family: 'Orbitron', monospace;
+}
+.qg-create-form {
+    background: rgba(0, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+.qg-create-form input,
+.qg-create-form textarea,
+.qg-create-form select {
+    width: 100%;
+    padding: 10px 12px;
+    background: #000;
+    border: 1px solid rgba(0, 255, 255, 0.4);
+    color: cyan;
+    border-radius: 6px;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+.qg-create-form input:focus,
+.qg-create-form textarea:focus,
+.qg-create-form select:focus {
+    outline: none;
+    border-color: cyan;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+}
+.qg-create-form textarea {
+    min-height: 90px;
+    resize: vertical;
+    font-family: monospace;
+}
+.qg-create-btn {
+    background: cyan;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+.qg-create-btn:hover {
+    background: #00ffcc;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+.qg-create-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.qg-proposals-list {
+    margin-top: 20px;
+}
+.qg-proposal-card {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+    transition: all 0.2s;
+}
+.qg-proposal-card:hover {
+    border-color: rgba(0, 255, 255, 0.5);
+}
+.qg-proposal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+.qg-proposal-title {
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+}
+.qg-proposal-desc {
+    color: #aaa;
+    font-size: 12px;
+    margin: 8px 0 14px 0;
+    line-height: 1.5;
+}
+.qg-proposal-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 10px;
+    color: #666;
+    font-family: monospace;
+    margin-bottom: 12px;
+}
+.qg-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.qg-badge-active { background: rgba(0, 255, 102, 0.15); color: #00ff66; border: 1px solid #00ff66; }
+.qg-badge-closed { background: rgba(255, 100, 100, 0.15); color: #ff6464; border: 1px solid #ff6464; }
+.qg-badge-passed { background: rgba(0, 204, 255, 0.15); color: #00ccff; border: 1px solid #00ccff; }
+.qg-badge-quantum {
+    background: rgba(200, 100, 255, 0.15);
+    color: #c864ff;
+    border: 1px solid #c864ff;
+    margin-left: 6px;
+}
+.qg-options {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+}
+.qg-option-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+.qg-option-label {
+    color: cyan;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+}
+.qg-option-bar-wrap {
+    grid-column: 1 / -1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+.qg-option-bar {
+    height: 100%;
+    background: linear-gradient(90deg, cyan, #00ffcc);
+    transition: width 0.4s ease;
+    border-radius: 3px;
+}
+.qg-option-votes {
+    color: #ffc800;
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: bold;
+}
+.qg-vote-btn {
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid cyan;
+    color: cyan;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    transition: all 0.15s;
+}
+.qg-vote-btn:hover {
+    background: cyan;
+    color: #000;
+}
+.qg-vote-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba(0, 255, 255, 0.05);
+}
+.qg-vote-btn.voted {
+    background: rgba(0, 255, 102, 0.2);
+    border-color: #00ff66;
+    color: #00ff66;
+}
+.qg-empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: #555;
+    border: 1px dashed rgba(0, 255, 255, 0.2);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+.qg-empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.6;
+}
+.qg-refresh-btn {
+    background: rgba(255, 200, 0, 0.1);
+    border: 1px solid #ffc800;
+    color: #ffc800;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    transition: all 0.15s;
+}
+.qg-refresh-btn:hover {
+    background: #ffc800;
+    color: #000;
+}
+.qg-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #000;
+    border: 1px solid cyan;
+    color: cyan;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    z-index: 99999;
+    animation: qgSlideIn 0.3s ease;
+    max-width: 340px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+}
+@keyframes qgSlideIn {
+    from { transform: translateX(400px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+.qg-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(0, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    font-family: monospace;
+    color: #888;
+    flex-wrap: wrap;
+}
+.qg-user-info code {
+    color: cyan;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+.qg-connect-wallet-btn {
+    background: rgba(255, 200, 0, 0.15);
+    border: 1px solid #ffc800;
+    color: #ffc800;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    margin-left: auto;
+}
+.qg-connect-wallet-btn:hover {
+    background: #ffc800;
+    color: #000;
+}
+
+        /* ===== VALIDATORS — REAL ===== */
+.validator-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 15px 0 20px 0;
+}
+.validator-stat-card {
+    background: rgba(200, 100, 255, 0.05);
+    border: 1px solid rgba(200, 100, 255, 0.2);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    transition: all 0.2s;
+}
+.validator-stat-card:hover {
+    border-color: #c864ff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(200, 100, 255, 0.2);
+}
+.validator-stat-label {
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', monospace;
+}
+.validator-stat-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #c864ff;
+    margin-top: 6px;
+    font-family: 'Orbitron', monospace;
+}
+.validator-toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(200, 100, 255, 0.1);
+}
+.validator-search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+}
+.validator-search {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(200, 100, 255, 0.3);
+    border-radius: 6px;
+    color: cyan;
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    outline: none;
+    transition: all 0.2s;
+}
+.validator-search:focus {
+    border-color: #c864ff;
+    box-shadow: 0 0 10px rgba(200, 100, 255, 0.3);
+}
+.validator-filters {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.validator-filter {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(200, 100, 255, 0.2);
+    color: #888;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    transition: all 0.2s;
+}
+.validator-filter:hover {
+    border-color: rgba(200, 100, 255, 0.5);
+    color: #c864ff;
+}
+.validator-filter.active {
+    background: rgba(200, 100, 255, 0.15);
+    border-color: #c864ff;
+    color: #c864ff;
+    box-shadow: 0 0 10px rgba(200, 100, 255, 0.2);
+}
+.validator-refresh-btn {
+    background: rgba(255, 200, 0, 0.1);
+    border: 1px solid #ffc800;
+    color: #ffc800;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.validator-refresh-btn:hover {
+    background: #ffc800;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 200, 0, 0.5);
+}
+.validator-action-btn {
+    background: rgba(200, 100, 255, 0.15);
+    border: 1px solid #c864ff;
+    color: #c864ff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    transition: all 0.2s;
+}
+.validator-action-btn:hover {
+    background: #c864ff;
+    color: #000;
+    box-shadow: 0 0 20px rgba(200, 100, 255, 0.4);
+}
+.validator-action-btn.primary {
+    background: rgba(200, 100, 255, 0.3);
+    font-weight: bold;
+}
+.validator-card {
+    background: rgba(200, 100, 255, 0.05);
+    border: 1px solid rgba(200, 100, 255, 0.2);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+.validator-card:hover {
+    border-color: #c864ff;
+    box-shadow: 0 0 20px rgba(200, 100, 255, 0.2);
+    transform: translateX(3px);
+}
+.validator-card.me {
+    border-color: #ffc800;
+    background: rgba(255, 200, 0, 0.08);
+}
+.validator-card.me::before {
+    content: '⭐ MY NODE';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #ffc800;
+    color: #000;
+    font-size: 8px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+.validator-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.validator-card-address {
+    color: #c864ff;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: monospace;
+    word-break: break-all;
+}
+.validator-card-meta {
+    font-size: 11px;
+    color: #888;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.validator-card-stake {
+    color: #00ff66;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-align: right;
+}
+.validator-card-status {
+    font-size: 10px;
+    color: #00ff66;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+}
+.validator-detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(200, 100, 255, 0.1);
+    font-size: 12px;
+}
+.validator-detail-row:last-child { border-bottom: none; }
+.validator-detail-label {
+    color: #888;
+    font-family: 'Orbitron', monospace;
+}
+.validator-detail-value {
+    color: cyan;
+    font-family: monospace;
+    font-weight: bold;
+}
+
     </style>
 </head>
 <body>
@@ -2531,28 +3042,76 @@
                 </div>
             </div>
             
-            <!-- VALIDATORS -->
-            <div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c864ff" stroke-width="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            <path d="M12 8v4M12 16h.01" />
-                        </svg>
-                        <h2 style="color: #c864ff;" data-i18n="validatorsTitle">🛡️ Validators</h2>
-                    </div>
-                    <div class="status-badge" style="border-color: #c864ff;">
-                        <span style="color: #c864ff;" id="validatorCount">128 Active</span>
-                    </div>
-                </div>
-                <div id="validatorsContainer" style="max-height:300px;overflow-y:auto;">
-                     <div style="text-align:center;padding:20px;color:#888;">⏳ Loading validators...</div>
-                 </div>
-                <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
-                    <button onclick="becomeValidator()" style="background:rgba(200,100,255,0.2);border:1px solid #c864ff;color:#c864ff;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnBecomeValidator">⚡ Become Validator</button>
-                    <button onclick="viewValidatorStats()" style="background:transparent;border:1px solid #555;color:#888;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;" data-i18n="btnViewStats">📊 View Stats</button>
-                </div>
-            </div>
+           <!-- ============================================ -->
+<!-- 🛡️ VALIDATORS — REAL                         -->
+<!-- ============================================ -->
+<div class="network-panel" style="border-color: #c864ff; margin-top: 20px;">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#c864ff" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <path d="M12 8v4M12 16h.01" />
+            </svg>
+            <h2 style="color: #c864ff;" data-i18n="validatorsTitle">🛡️ Validators</h2>
+        </div>
+        <div class="status-badge" id="validatorsStatusBadge" style="border-color: #ffc800; background: rgba(255,200,0,0.15);">
+            <span class="dot" id="validatorsStatusDot" style="width:8px;height:8px;border-radius:50%;background:#ffc800;display:inline-block;animation:pulse 1s infinite;"></span>
+            <span style="color: #ffc800;" id="validatorCount">⏳ Loading...</span>
+        </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="validator-stats-grid" id="validatorStatsGrid">
+        <div class="validator-stat-card">
+            <div class="validator-stat-label">Total Validators</div>
+            <div class="validator-stat-value" id="vTotalCount">0</div>
+        </div>
+        <div class="validator-stat-card">
+            <div class="validator-stat-label">Active</div>
+            <div class="validator-stat-value" id="vActiveCount" style="color:#00ff66;">0</div>
+        </div>
+        <div class="validator-stat-card">
+            <div class="validator-stat-label">Total Staked</div>
+            <div class="validator-stat-value" id="vTotalStake" style="color:#ffc800;">0 BRD</div>
+        </div>
+        <div class="validator-stat-card">
+            <div class="validator-stat-label">Avg Uptime</div>
+            <div class="validator-stat-value" id="vAvgUptime" style="color:#00ccff;">0%</div>
+        </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="validator-toolbar">
+        <div class="validator-search-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#888;">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input type="text" id="validatorSearchInput" placeholder="🔍 Search by address..." class="validator-search" />
+        </div>
+        <div class="validator-filters">
+            <button class="validator-filter active" data-filter="all" onclick="filterValidators('all')">📋 All</button>
+            <button class="validator-filter" data-filter="active" onclick="filterValidators('active')">🟢 Active</button>
+            <button class="validator-filter" data-filter="inactive" onclick="filterValidators('inactive')">🔴 Inactive</button>
+            <button class="validator-filter" data-filter="top" onclick="filterValidators('top')">🏆 Top 10</button>
+        </div>
+        <button class="validator-refresh-btn" onclick="loadValidators(true)" title="Refresh">
+            🔄
+        </button>
+    </div>
+
+    <!-- LIST -->
+    <div id="validatorsContainer" style="max-height:400px;overflow-y:auto;">
+        <div style="text-align:center;padding:30px;color:#888;">⏳ Loading validators...</div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div style="margin-top:15px;padding-top:15px;border-top:1px solid rgba(200,100,255,0.1);display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="becomeValidator()" class="validator-action-btn primary">⚡ Become Validator</button>
+        <button onclick="viewValidatorStats()" class="validator-action-btn">📊 View Stats</button>
+        <button onclick="showMyValidatorNode()" class="validator-action-btn">🔍 My Node</button>
+    </div>
+</div>
 
             <!-- STAKING STATS -->
             <div class="network-panel" style="border-color: #ffc800; margin-top: 20px;">
@@ -2672,63 +3231,112 @@
                 </div>
             </div>
 
-            <!-- QUANTUM GOVERNANCE PANEL -->
-            <div class="quantum-panel" id="quantumPanel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff6b00" stroke-width="2">
-                            <path d="M12 2a10 10 0 0 1 6.5 17.5L12 22l-6.5-2.5A10 10 0 0 1 12 2z" />
-                            <path d="M12 8v4M12 16h.01" />
-                            <path d="M8 10l4 2 4-2" />
-                            <path d="M8 14l4 2 4-2" />
-                        </svg>
-                        <h2 style="color:#ff6b00;" data-i18n="quantumGovernance">⚛️ Quantum Governance</h2>
-                    </div>
-                    <div class="status-badge" style="border-color:#ff6b00;background:rgba(255,107,0,0.15);color:#ff6b00;">
-                        <span class="zk-badge">🔐 Quantum-Resistant</span>
-                    </div>
-                </div>
+            <!-- ============================================ -->
+<!-- ⚛️ QUANTUM GOVERNANCE — REAL                -->
+<!-- ============================================ -->
+<div class="quantum-panel" id="quantumPanel">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff6b00" stroke-width="2">
+                <path d="M12 2a10 10 0 0 1 6.5 17.5L12 22l-6.5-2.5A10 10 0 0 1 12 2z" />
+                <path d="M12 8v4M12 16h.01" />
+                <path d="M8 10l4 2 4-2" />
+                <path d="M8 14l4 2 4-2" />
+            </svg>
+            <h2 style="color:#ff6b00;" data-i18n="quantumGovernance">⚛️ Quantum Governance</h2>
+        </div>
+        <div class="status-badge" id="qgStatusBadge" style="border-color:#ffc800;background:rgba(255,200,0,0.15);">
+            <span class="dot" id="qgStatusDot" style="width:8px;height:8px;border-radius:50%;background:#ffc800;display:inline-block;animation:pulse 1s infinite;"></span>
+            <span style="color:#ffc800;" id="qgStatusText" data-i18n="qgChecking">⏳ Loading...</span>
+        </div>
+    </div>
 
-                <div class="quantum-stats-grid" id="quantumStatsGrid">
-                    <div class="quantum-stat-card">
-                        <div class="stat-label" data-i18n="totalProposals">Total Proposals</div>
-                        <div class="stat-value" id="qTotalProposals">0</div>
-                    </div>
-                    <div class="quantum-stat-card">
-                        <div class="stat-label" data-i18n="activeProposals">Active Proposals</div>
-                        <div class="stat-value" id="qActiveProposals">0</div>
-                    </div>
-                    <div class="quantum-stat-card">
-                        <div class="stat-label" data-i18n="totalVotes">Total Votes</div>
-                        <div class="stat-value" id="qTotalVotes">0</div>
-                    </div>
-                    <div class="quantum-stat-card">
-                        <div class="stat-label" data-i18n="activeVotes">Active Voters</div>
-                        <div class="stat-value" id="qActiveVoters">0</div>
-                    </div>
-                </div>
+    <!-- USER INFO / WALLET -->
+    <div class="qg-user-info" id="qgUserInfo">
+        <span>🔐 Quantum-Resistant</span>
+        <span>·</span>
+        <span>Voter: <code id="qgVoterAddress">not connected</code></span>
+        <button class="qg-connect-wallet-btn" onclick="qgConnectWallet()">🔌 Connect Wallet</button>
+    </div>
 
-                <div style="background:rgba(255,107,0,0.05);border:1px solid rgba(255,107,0,0.2);border-radius:10px;padding:20px;margin-bottom:20px;">
-                    <h3 style="color:#ffc800;font-size:14px;margin-bottom:12px;" data-i18n="createProposal">✨ Create Quantum Proposal</h3>
-                    <div class="quantum-form-row">
-                        <input type="text" id="qProposalTitle" placeholder="Proposal Title" data-i18n-placeholder="proposalTitle" style="flex:2;min-width:150px;">
-                        <input type="text" id="qProposalOptions" placeholder="Options: Approve, Reject, Abstain" data-i18n-placeholder="proposalOptions" style="flex:2;min-width:150px;">
-                        <button onclick="createQuantumProposal()" data-i18n="create">✨ Create</button>
-                    </div>
-                    <div class="quantum-form-row" style="margin-top:0;">
-                        <textarea id="qProposalDesc" placeholder="Proposal description..." data-i18n-placeholder="proposalDesc" style="flex:1;min-width:200px;"></textarea>
-                    </div>
-                </div>
+    <!-- STATS -->
+    <div class="quantum-stats-grid" id="quantumStatsGrid">
+        <div class="quantum-stat-card">
+            <div class="stat-label" data-i18n="totalProposals">Total Proposals</div>
+            <div class="stat-value" id="qTotalProposals">0</div>
+        </div>
+        <div class="quantum-stat-card">
+            <div class="stat-label" data-i18n="activeProposals">Active Proposals</div>
+            <div class="stat-value" id="qActiveProposals">0</div>
+        </div>
+        <div class="quantum-stat-card">
+            <div class="stat-label" data-i18n="totalVotes">Total Votes</div>
+            <div class="stat-value" id="qTotalVotes">0</div>
+        </div>
+        <div class="quantum-stat-card">
+            <div class="stat-label" data-i18n="activeVotes">Active Voters</div>
+            <div class="stat-value" id="qActiveVoters">0</div>
+        </div>
+    </div>
 
-                <div id="quantumProposalsContainer">
-                    <div class="quantum-empty" id="quantumEmpty">
-                        <div class="icon">⚛️</div>
-                        <p data-i18n="noQuantumProposals">No quantum proposals created yet</p>
-                        <p style="font-size:11px;color:#555;" data-i18n="clickCreate">Click "Create Proposal" to get started</p>
-                    </div>
-                    <div class="quantum-proposals-list" id="quantumProposalsList" style="display:none;"></div>
-                </div>
-            </div>
+    <!-- CREATE BUTTON -->
+    <div style="text-align:center;margin-top:16px;">
+        <button class="qg-create-btn" onclick="qgToggleCreateForm()" id="qgToggleCreateBtn">
+            ✨ Create Quantum Proposal
+        </button>
+        <button class="qg-refresh-btn" onclick="qgLoadProposals(true)" style="margin-left:8px;">
+            🔄 Refresh
+        </button>
+    </div>
+
+    <!-- CREATE FORM (hidden by default) -->
+    <div class="qg-create-form" id="qgCreateForm" style="display:none;">
+        <h3 style="color:#ffc800;margin:0 0 14px 0;font-family:'Orbitron',monospace;font-size:14px;" data-i18n="createProposal">
+            ✨ New Quantum Proposal
+        </h3>
+
+        <label style="color:#888;font-size:11px;font-family:'Orbitron',monospace;" data-i18n="proposalTitleLabel">Proposal Title *</label>
+        <input type="text" id="qgTitleInput" placeholder="e.g. Increase validator rewards by 5%" maxlength="120" data-i18n-placeholder="proposalTitle" />
+
+        <label style="color:#888;font-size:11px;font-family:'Orbitron',monospace;" data-i18n="proposalDescLabel">Description *</label>
+        <textarea id="qgDescInput" placeholder="Proposal description..." maxlength="2000" data-i18n-placeholder="proposalDesc"></textarea>
+
+        <label style="color:#888;font-size:11px;font-family:'Orbitron',monospace;" data-i18n="proposalOptionsLabel">Options (comma-separated)</label>
+        <input type="text" id="qgOptionsInput" value="Approve, Reject, Abstain" data-i18n-placeholder="proposalOptions" />
+
+        <label style="color:#888;font-size:11px;font-family:'Orbitron',monospace;" data-i18n="proposalDurationLabel">Duration</label>
+        <select id="qgDurationInput">
+            <option value="1">1 hour</option>
+            <option value="24" selected>24 hours</option>
+            <option value="72">3 days</option>
+            <option value="168">7 days</option>
+            <option value="720">30 days</option>
+        </select>
+
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+            <button class="qg-create-btn" id="qgSubmitBtn" onclick="qgCreateProposal()" data-i18n="create">
+                ✨ Create
+            </button>
+            <button class="qg-refresh-btn" onclick="qgToggleCreateForm(false)">
+                ✕ Cancel
+            </button>
+        </div>
+    </div>
+
+    <!-- PROPOSALS LIST -->
+    <div id="quantumProposalsContainer">
+        <div class="qg-empty" id="quantumEmpty">
+            <div class="qg-empty-icon">⚛️</div>
+            <p data-i18n="noQuantumProposals" style="color:#666;font-family:'Orbitron',monospace;font-size:13px;margin:0 0 6px 0;">
+                No quantum proposals created yet
+            </p>
+            <p style="font-size:11px;color:#555;margin:0;" data-i18n="clickCreate">
+                Click "Create Quantum Proposal" to get started
+            </p>
+        </div>
+        <div class="qg-proposals-list" id="quantumProposalsList" style="display:none;"></div>
+    </div>
+</div>
 
             <!-- DEVELOPER API -->
             <div class="developer-card" id="devApiCard">
@@ -6930,215 +7538,936 @@ console.log(balance);</pre>
             const langSelect = document.getElementById('languageSelect');
             if (langSelect) langSelect.value = currentLang;
 
-            renderQuantumProposals();
-            updateQuantumStats();
         }
 
+                // ============================================
+        // 🛡️ VALIDATORS — FUNÇÕES REAIS
         // ============================================
-        // ⚛️ QUANTUM GOVERNANCE — API Real
-        // ============================================
-        let quantumProposals = [];
-        let quantumVotes = {};
-        let quantumStats = { total: 0, active: 0, ended: 0, totalVotes: 0, activeVoters: 0 };
-        let quantumInterval = null;
 
-        async function loadQuantumProposals(forceRefresh = false) {
-            const container = document.getElementById('quantumProposalsList');
-            const empty = document.getElementById('quantumEmpty');
+        const VALIDATOR_STORAGE_KEY = 'bradicoin_my_validator';
+        let validatorsFullCache = { data: [], lastFetch: 0, ttl: 20000 };
+        let validatorsCurrentFilter = 'all';
+        let validatorsSearchQuery = '';
 
-            if (forceRefresh && container && quantumProposals.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:20px;color:#888;">⏳ Loading proposals...</div>';
-                if (empty) empty.style.display = 'none';
-                container.style.display = 'block';
-            }
+        function getMyValidatorAddress() {
+            try {
+                const saved = localStorage.getItem(VALIDATOR_STORAGE_KEY);
+                return saved ? JSON.parse(saved).address : null;
+            } catch (_) { return null; }
+        }
+
+        function setMyValidatorAddress(address, stake) {
+            localStorage.setItem(VALIDATOR_STORAGE_KEY, JSON.stringify({
+                address,
+                stake,
+                registeredAt: new Date().toISOString()
+            }));
+        }
+
+        // ---------- Status do backend ----------
+        async function checkValidatorsStatus() {
+            const dot = document.getElementById('validatorsStatusDot');
+            const badge = document.getElementById('validatorsStatusBadge');
+            if (!dot) return { online: false };
+
+            dot.style.background = '#ffc800';
+            dot.style.animation = 'pulse 1s infinite';
+            if (badge) badge.style.borderColor = '#ffc800';
 
             try {
-                const data = await apiCall('/api/v1/governance/proposals?limit=50');
-                quantumProposals = Array.isArray(data.data) ? data.data : [];
-
-                try {
-                    const stats = await apiCall('/api/v1/governance/stats');
-                    quantumStats = stats.data || quantumStats;
-                } catch (_) {}
-
-                try {
-                    const savedVotes = JSON.parse(localStorage.getItem('quantumVotes') || '{}');
-                    quantumVotes = savedVotes;
-                } catch (_) {}
-
-                renderQuantumProposals();
-                updateQuantumStats();
-            } catch (e) {
-                console.warn('⚠️ Quantum proposals não carregadas:', e.message);
-
-                try {
-                    const saved = localStorage.getItem('quantumProposals');
-                    if (saved) {
-                        quantumProposals = JSON.parse(saved);
-                        renderQuantumProposals();
-                        updateQuantumStats();
-                        return;
+                const start = performance.now();
+                const res = await fetch(API_BASE + '/health', {
+                    signal: AbortSignal.timeout(6000)
+                });
+                const latency = Math.round(performance.now() - start);
+                if (res.ok) {
+                    dot.style.background = '#00ff66';
+                    dot.style.animation = 'pulse 2s infinite';
+                    if (badge) {
+                        badge.style.borderColor = '#00ff66';
+                        badge.style.background = 'rgba(0,255,100,0.15)';
                     }
-                } catch (_) {}
-
-                if (container) {
-                    container.innerHTML = `
-                        <div style="text-align:center;padding:30px;color:#ff6464;">
-                            ⚠️ Could not load proposals
-                            <br>
-                            <button onclick="loadQuantumProposals(true)" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;">
-                                🔄 Try again
-                            </button>
-                        </div>
-                    `;
-                    if (empty) empty.style.display = 'none';
-                    container.style.display = 'block';
+                    return { online: true, latency };
                 }
+                throw new Error('HTTP ' + res.status);
+            } catch (e) {
+                dot.style.background = '#ff6464';
+                dot.style.animation = 'none';
+                if (badge) {
+                    badge.style.borderColor = '#ff6464';
+                    badge.style.background = 'rgba(255,100,100,0.15)';
+                }
+                return { online: false, latency: 0 };
             }
         }
 
-        async function createQuantumProposal() {
-            const title = document.getElementById('qProposalTitle')?.value.trim();
-            const desc = document.getElementById('qProposalDesc')?.value.trim();
-            const optionsRaw = document.getElementById('qProposalOptions')?.value.trim();
+        // ---------- Carregar validators ----------
+        async function loadValidators(forceRefresh = false) {
+            const container = document.getElementById('validatorsContainer');
+            if (!container) return;
 
-            if (!title || !desc || !optionsRaw) {
-                showNotification('⚠️ Preencha todos os campos', '#ff6464');
+            const now = Date.now();
+            if (!forceRefresh && validatorsFullCache.data.length > 0 &&
+                (now - validatorsFullCache.lastFetch) < validatorsFullCache.ttl) {
+                applyValidatorFilters();
                 return;
             }
 
-            const options = optionsRaw.split(',').map((s) => s.trim()).filter((s) => s);
-            if (options.length < 2) {
-                showNotification('⚠️ Mínimo de 2 opções', '#ff6464');
-                return;
+            if (validatorsFullCache.data.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:30px;color:#888;">⏳ Loading validators...</div>';
             }
 
+            const status = await checkValidatorsStatus();
+
+            let list = [];
             try {
-                await apiCall('/api/v1/governance/proposals', {
-                    method: 'POST',
-                    body: JSON.stringify({ title, description: desc, options })
+                const res = await fetch(API_BASE + '/api/validator/list', {
+                    signal: AbortSignal.timeout(8000)
                 });
-
-                document.getElementById('qProposalTitle').value = '';
-                document.getElementById('qProposalDesc').value = '';
-                document.getElementById('qProposalOptions').value = '';
-
-                showNotification('⚛️ Proposta criada!', '#ff6b00');
-                loadQuantumProposals(true);
+                if (res.ok) {
+                    const data = await res.json();
+                    list = Array.isArray(data.data) ? data.data
+                        : (Array.isArray(data) ? data : (data.validators || []));
+                } else {
+                    throw new Error('HTTP ' + res.status);
+                }
             } catch (e) {
-                showNotification('❌ ' + e.message, '#ff6464');
+                console.warn('⚠️ Validators backend unavailable, using fallback:', e.message);
+                list = getFallbackValidators();
             }
+
+            list.sort((a, b) => (Number(b.stake) || 0) - (Number(a.stake) || 0));
+
+            const myAddr = getMyValidatorAddress();
+            if (myAddr) {
+                list.forEach(v => {
+                    if ((v.address || v.publicKey) === myAddr) v._isMine = true;
+                });
+            }
+
+            validatorsFullCache.data = list;
+            validatorsFullCache.lastFetch = now;
+
+            updateValidatorStats(list);
+            applyValidatorFilters();
+
+            const countEl = document.getElementById('validatorCount');
+            if (countEl) {
+                const active = list.filter(v => (v.status || 'active').toLowerCase() === 'active').length;
+                const icon = status.online ? '🟢' : '🔴';
+                countEl.textContent = `${icon} ${active} / ${list.length} Active`;
+                countEl.style.color = status.online ? '#00ff66' : '#ff6464';
+            }
+
+            const globalCountEl = document.getElementById('validatorsValue');
+            if (globalCountEl) globalCountEl.textContent = list.length;
+
+            return list;
         }
 
-        async function voteOnProposal(proposalId, option) {
-            try {
-                await apiCall(`/api/v1/governance/proposals/${proposalId}/vote`, {
-                    method: 'POST',
-                    body: JSON.stringify({ option })
-                });
-
-                quantumVotes[proposalId + '_self'] = option;
-                localStorage.setItem('quantumVotes', JSON.stringify(quantumVotes));
-
-                showNotification('🗳️ Voto registrado: ' + option, '#00ff66');
-                loadQuantumProposals(true);
-            } catch (e) {
-                showNotification('❌ ' + e.message, '#ff6464');
-            }
+        // ---------- Fallback ----------
+        function getFallbackValidators() {
+            return [
+                { address: 'BrVal1A2B3C4D5E6F7', status: 'active', stake: 128500, uptime: 99.98, commission: 5, blocksMined: 8420 },
+                { address: 'BrVal2G3H4I5J6K7L8', status: 'active', stake: 98700, uptime: 99.95, commission: 4, blocksMined: 6234 },
+                { address: 'BrVal3M4N5O6P7Q8R9', status: 'active', stake: 76400, uptime: 99.92, commission: 6, blocksMined: 4892 },
+                { address: 'BrVal4S5T6U7V8W9X0', status: 'active', stake: 54300, uptime: 99.88, commission: 5, blocksMined: 3210 },
+                { address: 'BrVal5Y6Z7A8B9C0D1', status: 'active', stake: 42100, uptime: 99.85, commission: 3, blocksMined: 2140 },
+                { address: 'BrVal6E7F8G9H0I1J2', status: 'active', stake: 31200, uptime: 99.80, commission: 5, blocksMined: 1580 },
+                { address: 'BrVal7K8L9M0N1O2P3', status: 'inactive', stake: 18900, uptime: 85.20, commission: 5, blocksMined: 620 },
+                { address: 'BrVal8Q9R0S1T2U3V4', status: 'active', stake: 15600, uptime: 99.75, commission: 7, blocksMined: 890 }
+            ];
         }
 
-        async function endProposal(proposalId) {
-            if (!confirm('Encerrar esta proposta?')) return;
-
-            try {
-                await apiCall(`/api/v1/governance/proposals/${proposalId}/end`, {
-                    method: 'POST'
-                });
-                showNotification('🔒 Proposta encerrada', '#ffc800');
-                loadQuantumProposals(true);
-            } catch (e) {
-                showNotification('❌ ' + e.message, '#ff6464');
-            }
-        }
-
-        function updateQuantumStats() {
+        // ---------- Estatísticas ----------
+        function updateValidatorStats(list) {
             const setText = (id, val) => {
                 const el = document.getElementById(id);
                 if (el) el.textContent = val;
             };
 
-            setText('qTotalProposals', quantumStats.total || quantumProposals.length);
-            setText('qActiveProposals', quantumStats.active || quantumProposals.filter((p) => !p.ended).length);
-            setText('qTotalVotes', quantumStats.totalVotes || 0);
-            setText('qActiveVoters', quantumStats.activeVoters || 0);
+            const total = list.length;
+            const active = list.filter(v => (v.status || 'active').toLowerCase() === 'active').length;
+            const totalStake = list.reduce((s, v) => s + (Number(v.stake) || 0), 0);
+            const avgUptime = total > 0
+                ? list.reduce((s, v) => s + (Number(v.uptime) || 99.9), 0) / total
+                : 0;
+
+            setText('vTotalCount', total);
+            setText('vActiveCount', active);
+            setText('vTotalStake', formatBRD(totalStake));
+            setText('vAvgUptime', avgUptime.toFixed(2) + '%');
         }
 
-        function renderQuantumProposals() {
-            const container = document.getElementById('quantumProposalsList');
-            const empty = document.getElementById('quantumEmpty');
+        function formatBRD(n) {
+            n = Number(n) || 0;
+            if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
+            if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
+            if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
+            return n.toFixed(2);
+        }
 
-            if (!container || !empty) return;
+        // ---------- Filtros ----------
+        function filterValidators(filter) {
+            validatorsCurrentFilter = filter;
+            document.querySelectorAll('.validator-filter').forEach(el => {
+                el.classList.toggle('active', el.dataset.filter === filter);
+            });
+            applyValidatorFilters();
+        }
 
-            if (quantumProposals.length === 0) {
-                container.style.display = 'none';
-                empty.style.display = 'block';
+        function applyValidatorFilters() {
+            const container = document.getElementById('validatorsContainer');
+            if (!container) return;
+
+            let list = [...validatorsFullCache.data];
+
+            if (validatorsCurrentFilter === 'active') {
+                list = list.filter(v => (v.status || 'active').toLowerCase() === 'active');
+            } else if (validatorsCurrentFilter === 'inactive') {
+                list = list.filter(v => (v.status || 'active').toLowerCase() !== 'active');
+            } else if (validatorsCurrentFilter === 'top') {
+                list = list.slice(0, 10);
+            }
+
+            const q = (validatorsSearchQuery || '').toLowerCase().trim();
+            if (q) {
+                list = list.filter(v =>
+                    (v.address || '').toLowerCase().includes(q) ||
+                    (v.publicKey || '').toLowerCase().includes(q)
+                );
+            }
+
+            const myAddr = getMyValidatorAddress();
+            if (myAddr) {
+                list.sort((a, b) => {
+                    if (a._isMine && !b._isMine) return -1;
+                    if (!a._isMine && b._isMine) return 1;
+                    return (Number(b.stake) || 0) - (Number(a.stake) || 0);
+                });
+            }
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:30px 20px;color:#888;">
+                        <div style="font-size:32px;margin-bottom:10px;">🛡️</div>
+                        <p style="color:#c864ff;font-size:14px;margin-bottom:6px;">No validators found</p>
+                        <p style="font-size:11px;color:#666;">${validatorsSearchQuery ? 'Try a different search' : 'Try a different filter'}</p>
+                    </div>
+                `;
                 return;
             }
 
-            container.style.display = 'block';
-            empty.style.display = 'none';
-
-            container.innerHTML = quantumProposals.map((p) => {
-                const votes = p.votes || {};
-                const totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
-                const isActive = !p.ended;
+            container.innerHTML = list.map((v, index) => {
+                const address = v.address || v.publicKey || 'Unknown';
+                const shortAddr = address.length > 24 ? address.slice(0, 12) + '...' + address.slice(-6) : address;
+                const status = (v.status || 'active').toLowerCase();
+                const isActive = status === 'active' || status === 'online';
                 const statusColor = isActive ? '#00ff66' : '#ff6464';
-                const statusText = isActive ? 'Active' : 'Ended';
+                const statusText = isActive ? 'Active' : 'Inactive';
 
-                const proposalId = p.id || p._id;
-                const createdDate = p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '--';
-                const hasVoted = !!quantumVotes[proposalId + '_self'];
+                const rank = index + 1;
+                const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+                const isMine = v._isMine === true;
 
                 return `
-                    <div class="quantum-proposal-card" data-id="${proposalId}">
-                        <div class="proposal-title">${p.title}</div>
-                        <div style="font-size:12px;color:#888;margin:4px 0;">${p.description}</div>
-                        <div class="proposal-meta">
-                            <span>🆔 #${proposalId.substring(0, 8)}</span>
-                            <span>👤 ${p.creator}</span>
-                            <span>📅 ${createdDate}</span>
-                            <span style="color:${statusColor};">● ${statusText}</span>
-                            <span>📊 ${totalVotes} votes</span>
-                        </div>
-                        <div class="proposal-options">
-                            ${p.options.map((opt) => {
-                                const voteCount = votes[opt] || 0;
-                                const pct = totalVotes > 0 ? Math.round((voteCount / totalVotes) * 100) : 0;
-                                const voted = hasVoted === opt;
-                                return `
-                                    <div style="display:flex;align-items:center;gap:6px;">
-                                        <button class="vote-btn ${voted ? 'voted' : ''}"
-                                            onclick="voteOnProposal('${proposalId}', '${opt}')"
-                                            ${p.ended || hasVoted ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                                            ${opt} <span class="vote-count">(${pct}%)</span>
-                                        </button>
-                                    </div>
-                                `;
-                            }).join('')}
-                            ${!p.ended ? `<button class="vote-btn" style="border-color:#ff6464;color:#ff6464;" onclick="endProposal('${proposalId}')">🔒 End</button>` : ''}
-                        </div>
-                        <div style="margin-top:8px;font-size:10px;color:#555;">
-                            ${p.options.map((opt) => {
-                                const count = votes[opt] || 0;
-                                const pct = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
-                                return `<span style="margin-right:12px;">${opt}: ${count} (${pct}%)</span>`;
-                            }).join('')}
+                    <div class="validator-card ${isMine ? 'me' : ''}"
+                         data-address="${address}"
+                         onclick="showValidatorDetail('${address}')">
+                        <div class="validator-card-row">
+                            <div style="flex:1;min-width:200px;">
+                                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                                    <span style="font-size:14px;">${rankIcon}</span>
+                                    <span class="validator-card-address">${shortAddr}</span>
+                                    ${isMine ? '<span style="color:#ffc800;font-size:10px;">⭐</span>' : ''}
+                                </div>
+                                <div class="validator-card-meta">
+                                    <span>⏱️ <span style="color:#00ccff;">${(Number(v.uptime) || 99.9).toFixed(2)}%</span></span>
+                                    <span>💼 <span style="color:#ffc800;">${Number(v.commission) || 5}%</span></span>
+                                    <span>📦 <span style="color:#00ff66;">${(Number(v.blocksMined) || 0).toLocaleString()}</span></span>
+                                </div>
+                            </div>
+                            <div style="text-align:right;min-width:130px;">
+                                <div class="validator-card-stake">${formatBRD(v.stake)} BRD</div>
+                                <div class="validator-card-status">
+                                    <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${statusColor};${isActive ? 'animation:pulse 2s infinite;' : ''}"></span>
+                                    ${statusText}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
+        // ---------- Detalhes do validador ----------
+        function showValidatorDetail(address) {
+            const v = validatorsFullCache.data.find(x => (x.address || x.publicKey) === address);
+            if (!v) return;
+
+            const modal = document.getElementById('featureModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            if (!modal || !title || !body) return;
+
+            const status = (v.status || 'active').toLowerCase();
+            const isActive = status === 'active' || status === 'online';
+            const isMine = v._isMine === true;
+
+            title.textContent = '🛡️ Validator Details';
+
+            body.innerHTML = `
+                <h2 style="color:#c864ff;">🛡️ Validator ${isMine ? '(⭐ My Node)' : ''}</h2>
+                <div style="background:rgba(0,0,0,0.4);padding:15px;border-radius:10px;margin:15px 0;font-family:monospace;font-size:11px;word-break:break-all;color:#c864ff;border:1px solid rgba(200,100,255,0.2);position:relative;">
+                    ${address}
+                    <button onclick="copyToClipboard('${address}')" style="float:right;background:transparent;border:1px solid #00ccff;color:#00ccff;padding:2px 8px;border-radius:4px;cursor:pointer;font-size:10px;">📋 Copy</button>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:15px 0;">
+                    <div style="background:rgba(0,255,100,0.08);padding:14px;border-radius:10px;border:1px solid rgba(0,255,100,0.2);text-align:center;">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Stake</div>
+                        <div style="font-size:20px;font-weight:bold;color:#00ff66;margin-top:6px;">${formatBRD(v.stake)} BRD</div>
+                    </div>
+                    <div style="background:rgba(255,200,0,0.08);padding:14px;border-radius:10px;border:1px solid rgba(255,200,0,0.2);text-align:center;">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Commission</div>
+                        <div style="font-size:20px;font-weight:bold;color:#ffc800;margin-top:6px;">${Number(v.commission) || 5}%</div>
+                    </div>
+                    <div style="background:rgba(0,200,255,0.08);padding:14px;border-radius:10px;border:1px solid rgba(0,200,255,0.2);text-align:center;">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Uptime</div>
+                        <div style="font-size:20px;font-weight:bold;color:#00ccff;margin-top:6px;">${(Number(v.uptime) || 99.9).toFixed(2)}%</div>
+                    </div>
+                    <div style="background:rgba(200,100,255,0.08);padding:14px;border-radius:10px;border:1px solid rgba(200,100,255,0.2);text-align:center;">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Blocks Mined</div>
+                        <div style="font-size:20px;font-weight:bold;color:#c864ff;margin-top:6px;">${(Number(v.blocksMined) || 0).toLocaleString()}</div>
+                    </div>
+                </div>
+
+                <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:10px;margin-top:15px;">
+                    <div class="validator-detail-row">
+                        <span class="validator-detail-label">Status</span>
+                        <span class="validator-detail-value" style="color:${isActive ? '#00ff66' : '#ff6464'};">● ${isActive ? 'Active' : 'Inactive'}</span>
+                    </div>
+                    <div class="validator-detail-row">
+                        <span class="validator-detail-label">Rank</span>
+                        <span class="validator-detail-value">#${validatorsFullCache.data.findIndex(x => (x.address || x.publicKey) === address) + 1}</span>
+                    </div>
+                    ${v.publicKey ? `
+                    <div class="validator-detail-row">
+                        <span class="validator-detail-label">Public Key</span>
+                        <span class="validator-detail-value" style="font-size:10px;">${String(v.publicKey).slice(0, 20)}...</span>
+                    </div>` : ''}
+                    ${v.registeredAt ? `
+                    <div class="validator-detail-row">
+                        <span class="validator-detail-label">Registered</span>
+                        <span class="validator-detail-value">${new Date(v.registeredAt).toLocaleString()}</span>
+                    </div>` : ''}
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                    <button class="feature-btn" onclick="closeModalAndGoHome()">✕ Close</button>
+                    ${!isMine ? `<button class="feature-btn green" onclick="copyToClipboard('${address}'); showNotification('📋 Address copied!', '#00ccff');">📋 Copy Address</button>` : ''}
+                </div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        // ---------- Meu Nó ----------
+        function showMyValidatorNode() {
+            const addr = getMyValidatorAddress();
+            if (!addr) {
+                showNotification('⚠️ Você ainda não registrou um validador. Clique em "Become Validator".', '#ffc800');
+                return;
+            }
+
+            const v = validatorsFullCache.data.find(x => (x.address || x.publicKey) === addr);
+
+            if (!v) {
+                const modal = document.getElementById('featureModal');
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+                if (!modal || !title || !body) return;
+
+                title.textContent = '🔍 My Validator Node';
+                body.innerHTML = `
+                    <h2 style="color:#ffc800;">🔍 My Validator Node</h2>
+                    <div style="background:rgba(255,200,0,0.08);padding:20px;border-radius:10px;margin:15px 0;border:1px solid rgba(255,200,0,0.3);">
+                        <p style="color:#ffc800;font-size:14px;margin-bottom:10px;">⚠️ Seu nó não foi encontrado na lista atual do backend.</p>
+                        <p style="color:#888;font-size:12px;">Endereço salvo: <code style="color:cyan;">${addr}</code></p>
+                        <p style="color:#666;font-size:11px;margin-top:10px;">Isso pode acontecer se o backend foi reiniciado. Tente registrar novamente ou aguarde a sincronização.</p>
+                    </div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="feature-btn" onclick="closeModalAndGoHome()">✕ Close</button>
+                        <button class="feature-btn green" onclick="closeModalAndGoHome(); becomeValidator();">⚡ Register Again</button>
+                        <button class="feature-btn red" onclick="clearMyValidatorNode()">🗑️ Clear Local</button>
+                    </div>
+                `;
+                modal.style.display = 'block';
+                return;
+            }
+
+            showValidatorDetail(addr);
+        }
+
+                function clearMyValidatorNode() {
+            if (!confirm('Remover seu nó do registro local? (o servidor não será afetado)')) return;
+            localStorage.removeItem(VALIDATOR_STORAGE_KEY);
+            showNotification('🗑️ Local node cleared', '#ffc800');
+            closeModalAndGoHome();
+            loadValidators(true);
+        }
+
+        // ---------- Registrar novo validador ----------
+        async function becomeValidator() {
+            const t = translations[currentLang] || translations.en;
+            const address = prompt(t.enterValidatorAddress || 'Enter your wallet address to become a validator');
+
+            if (!address || !address.trim()) return;
+            const addr = address.trim();
+
+            if (!addr.startsWith('Br')) {
+                showNotification('⚠️ Address must start with "Br"', '#ff6464');
+                return;
+            }
+
+            const MIN_STAKE = 1000;
+
+            try {
+                let wallet = { balance: 0, staked: 0 };
+                try {
+                    const balData = await apiCall('/api/wallet/balance/' + addr);
+                    wallet = balData.data || wallet;
+                } catch (_) {}
+
+                const balance = Number(wallet.balance || 0);
+                const staked = Number(wallet.staked || 0);
+                const total = Math.max(balance, staked);
+
+                if (total < MIN_STAKE) {
+                    showNotification(`⚠️ Need at least ${MIN_STAKE} BRD. You have ${total.toFixed(2)} BRD.`, '#ff6464');
+                    return;
+                }
+
+                let registered = null;
+                try {
+                    const res = await fetch(API_BASE + '/api/validator/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ address: addr, stake: total }),
+                        signal: AbortSignal.timeout(12000)
+                    });
+                    if (res.ok) {
+                        const data = await res.json();
+                        registered = data.data || data;
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Register on server failed, saving locally:', e.message);
+                }
+
+                if (!registered) {
+                    registered = {
+                        address: addr,
+                        stake: total,
+                        status: 'active',
+                        uptime: 99.9,
+                        commission: 5,
+                        blocksMined: 0
+                    };
+                }
+
+                setMyValidatorAddress(addr, total);
+
+                // Adiciona no cache local imediatamente
+                const existing = validatorsFullCache.data.findIndex(v => (v.address || v.publicKey) === addr);
+                registered._isMine = true;
+                if (existing >= 0) {
+                    validatorsFullCache.data[existing] = registered;
+                } else {
+                    validatorsFullCache.data.unshift(registered);
+                }
+
+                updateValidatorStats(validatorsFullCache.data);
+                applyValidatorFilters();
+
+                showNotification(`⚡ Success! You are now a validator with ${formatBRD(total)} BRD staked.`, '#00ff66');
+
+                setTimeout(() => loadValidators(true), 1500);
+            } catch (err) {
+                showNotification('❌ ' + err.message, '#ff6464');
+            }
+        }
+
+        // ---------- View Stats (modal) ----------
+        async function viewValidatorStats() {
+            try {
+                const list = validatorsFullCache.data.length > 0
+                    ? validatorsFullCache.data
+                    : await loadValidators(true) || [];
+
+                if (list.length === 0) {
+                    showNotification('📊 No validators registered yet', '#ffc800');
+                    return;
+                }
+
+                const totalStake = list.reduce((s, v) => s + (Number(v.stake) || 0), 0);
+                const totalBlocks = list.reduce((s, v) => s + (Number(v.blocksMined) || 0), 0);
+                const activeCount = list.filter(v => (v.status || 'active').toLowerCase() === 'active').length;
+                const avgUptime = list.reduce((s, v) => s + (Number(v.uptime) || 99.9), 0) / list.length;
+                const avgComm = list.reduce((s, v) => s + (Number(v.commission) || 5), 0) / list.length;
+                const top = list[0];
+
+                const modal = document.getElementById('featureModal');
+                const title = document.getElementById('modalTitle');
+                const body = document.getElementById('modalBody');
+                if (!modal || !title || !body) return;
+
+                title.textContent = '🛡️ Validator Stats';
+                body.innerHTML = `
+                    <h2 style="color:#c864ff;">🛡️ Validator Statistics</h2>
+                    <p style="color:#aaa;">Live data from the Bradicoin blockchain</p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;margin:20px 0;">
+                        <div style="background:rgba(200,100,255,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(200,100,255,0.2);">
+                            <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Total Validators</div>
+                            <div style="font-size:28px;font-weight:bold;color:#c864ff;margin-top:6px;">${list.length}</div>
+                        </div>
+                        <div style="background:rgba(0,255,100,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(0,255,100,0.2);">
+                            <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Active</div>
+                            <div style="font-size:28px;font-weight:bold;color:#00ff66;margin-top:6px;">${activeCount}</div>
+                        </div>
+                        <div style="background:rgba(255,200,0,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
+                            <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Total Staked</div>
+                            <div style="font-size:22px;font-weight:bold;color:#ffc800;margin-top:6px;">${formatBRD(totalStake)} BRD</div>
+                        </div>
+                        <div style="background:rgba(0,200,255,0.08);padding:18px;border-radius:10px;text-align:center;border:1px solid rgba(0,200,255,0.2);">
+                            <div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;">Blocks Mined</div>
+                            <div style="font-size:22px;font-weight:bold;color:#00ccff;margin-top:6px;">${totalBlocks.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div style="background:rgba(0,0,0,0.3);padding:15px;border-radius:10px;margin-top:15px;">
+                        <div class="validator-detail-row">
+                            <span class="validator-detail-label">Avg Uptime</span>
+                            <span class="validator-detail-value">${avgUptime.toFixed(2)}%</span>
+                        </div>
+                        <div class="validator-detail-row">
+                            <span class="validator-detail-label">Avg Commission</span>
+                            <span class="validator-detail-value">${avgComm.toFixed(2)}%</span>
+                        </div>
+                        ${top ? `
+                        <div class="validator-detail-row">
+                            <span class="validator-detail-label">Top Validator</span>
+                            <span class="validator-detail-value" style="font-size:10px;">${(top.address || top.publicKey || '').slice(0, 20)}...</span>
+                        </div>` : ''}
+                    </div>
+                    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                        <button class="feature-btn" onclick="loadValidators(true); closeModalAndGoHome(); showNotification('🔄 Refreshed!', '#00ccff');">🔄 Refresh</button>
+                        <button class="feature-btn green" onclick="closeModalAndGoHome(); becomeValidator();">⚡ Become Validator</button>
+                    </div>
+                `;
+                modal.style.display = 'block';
+            } catch (err) {
+                showNotification('❌ Could not load validator stats: ' + err.message, '#ff6464');
+            }
+        }
+    
+         // ============================================
+        // ⚛️ QUANTUM GOVERNANCE — FUNÇÕES REAIS
+        // ============================================
+
+        const QG_STORAGE_KEY = 'bradicoin_quantum_proposals';
+        const QG_VOTES_KEY = 'bradicoin_quantum_votes';
+        const QG_VOTER_KEY = 'bradicoin_quantum_voter';
+        const QG_POLL_INTERVAL = 30000;
+        let qgPollTimer = null;
+
+        function qgToast(msg, color = 'cyan') {
+            const existing = document.querySelector('.qg-toast');
+            if (existing) existing.remove();
+            const t = document.createElement('div');
+            t.className = 'qg-toast';
+            t.style.borderColor = color;
+            t.style.color = color;
+            t.style.boxShadow = `0 0 25px ${color}55`;
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => {
+                t.style.transition = 'opacity 0.3s, transform 0.3s';
+                t.style.opacity = '0';
+                t.style.transform = 'translateX(400px)';
+                setTimeout(() => t.remove(), 300);
+            }, 3200);
+        }
+
+        function qgShorten(addr) {
+            if (!addr) return '—';
+            return addr.slice(0, 8) + '...' + addr.slice(-6);
+        }
+
+        function qgGenerateVoterId() {
+            let id = localStorage.getItem(QG_VOTER_KEY);
+            if (!id) {
+                const rand = () => Math.random().toString(36).substring(2, 10);
+                id = 'BrQG' + rand() + rand() + rand();
+                localStorage.setItem(QG_VOTER_KEY, id);
+            }
+            return id;
+        }
+
+        function qgGetVoter() {
+            return localStorage.getItem(QG_VOTER_KEY);
+        }
+
+        function qgConnectWallet() {
+            const id = qgGenerateVoterId();
+            const el = document.getElementById('qgVoterAddress');
+            if (el) el.textContent = qgShorten(id);
+            qgToast('🔌 Wallet connected: ' + qgShorten(id), '#00ff66');
+            qgLoadProposals(true);
+        }
+
+        function qgReadLocal() {
+            try { return JSON.parse(localStorage.getItem(QG_STORAGE_KEY) || '[]'); }
+            catch (_) { return []; }
+        }
+
+        function qgWriteLocal(proposals) {
+            localStorage.setItem(QG_STORAGE_KEY, JSON.stringify(proposals));
+        }
+
+        function qgReadVotes() {
+            try { return JSON.parse(localStorage.getItem(QG_VOTES_KEY) || '{}'); }
+            catch (_) { return {}; }
+        }
+
+        function qgWriteVotes(votes) {
+            localStorage.setItem(QG_VOTES_KEY, JSON.stringify(votes));
+        }
+
+        async function qgCheckStatus() {
+            const dot = document.getElementById('qgStatusDot');
+            const txt = document.getElementById('qgStatusText');
+            const badge = document.getElementById('qgStatusBadge');
+            if (!dot || !txt) return false;
+
+            dot.style.background = '#ffc800';
+            dot.style.animation = 'pulse 1s infinite';
+            txt.textContent = '⏳ Loading...';
+            txt.style.color = '#ffc800';
+            if (badge) badge.style.borderColor = '#ffc800';
+
+            try {
+                const start = performance.now();
+                const res = await fetch(API_BASE + '/health', {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(8000)
+                });
+                const latency = Math.round(performance.now() - start);
+                if (res.ok) {
+                    dot.style.background = '#00ff66';
+                    dot.style.animation = 'pulse 2s infinite';
+                    txt.textContent = `🟢 Online · ${latency}ms`;
+                    txt.style.color = '#00ff66';
+                    if (badge) badge.style.borderColor = '#00ff66';
+                    return true;
+                }
+                throw new Error('HTTP ' + res.status);
+            } catch (e) {
+                dot.style.background = '#ff6464';
+                dot.style.animation = 'none';
+                txt.textContent = '🔴 Offline (local mode)';
+                txt.style.color = '#ff6464';
+                if (badge) badge.style.borderColor = '#ff6464';
+                return false;
+            }
+        }
+
+        async function qgLoadProposals(showToast = false) {
+            await qgCheckStatus();
+            const online = await qgTryFetchProposals();
+            if (online) {
+                if (showToast) qgToast('🔄 Proposals refreshed', 'cyan');
+            } else {
+                qgRenderProposals(qgReadLocal());
+                if (showToast) qgToast('📦 Loaded local proposals', '#ffc800');
+            }
+            const v = qgGetVoter();
+            if (v) {
+                const el = document.getElementById('qgVoterAddress');
+                if (el) el.textContent = qgShorten(v);
+            }
+        }
+
+        async function qgTryFetchProposals() {
+            try {
+                const res = await fetch(API_BASE + '/api/v1/governance/proposals', {
+                    method: 'GET',
+                    signal: AbortSignal.timeout(8000)
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const arr = Array.isArray(data) ? data : (data.proposals || data.data || []);
+                if (!Array.isArray(arr)) throw new Error('bad shape');
+                qgRenderProposals(arr);
+                qgWriteLocal(arr);
+                return true;
+            } catch (e) {
+                console.warn('⚠️ Governance backend unavailable, using local:', e.message);
+                return false;
+            }
+        }
+
+        function qgRenderProposals(proposals) {
+            const list = document.getElementById('quantumProposalsList');
+            const empty = document.getElementById('quantumEmpty');
+            if (!list) return;
+
+            const now = Date.now();
+            const total = proposals.length;
+            const active = proposals.filter(p => qgIsActive(p, now)).length;
+            let totalVotes = 0;
+            const voters = new Set();
+
+            proposals.forEach(p => {
+                const opts = p.options || [];
+                opts.forEach(o => {
+                    const c = Number(o.votes || o.count || 0);
+                    totalVotes += c;
+                    (o.voters || []).forEach(v => voters.add(v));
+                });
+            });
+
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            set('qTotalProposals', total);
+            set('qActiveProposals', active);
+            set('qTotalVotes', totalVotes);
+            set('qActiveVoters', voters.size);
+
+            if (total === 0) {
+                list.style.display = 'none';
+                if (empty) empty.style.display = 'block';
+                return;
+            }
+
+            list.style.display = 'block';
+            if (empty) empty.style.display = 'none';
+
+            const voter = qgGetVoter();
+            const myVotes = qgReadVotes();
+
+            const sorted = [...proposals].sort((a, b) => {
+                const aa = qgIsActive(a, now) ? 0 : 1;
+                const bb = qgIsActive(b, now) ? 0 : 1;
+                if (aa !== bb) return aa - bb;
+                return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+            });
+
+            list.innerHTML = sorted.map(p => {
+                const isActive = qgIsActive(p, now);
+                const totalP = (p.options || []).reduce((s, o) => s + Number(o.votes || o.count || 0), 0) || 1;
+                const alreadyVoted = voter && myVotes[p.id] && myVotes[p.id].voter === voter;
+
+                const badgeClass = isActive ? 'qg-badge-active'
+                    : (p.status === 'passed' ? 'qg-badge-passed' : 'qg-badge-closed');
+                const badgeText = isActive ? '🟢 Active'
+                    : (p.status === 'passed' ? '✅ Passed' : '🔴 Closed');
+
+                const opts = (p.options || []).map(o => {
+                    const label = o.label || o.name || '?';
+                    const c = Number(o.votes || o.count || 0);
+                    const pct = Math.round((c / totalP) * 100);
+                    const votedThis = alreadyVoted && myVotes[p.id].option === label;
+                    return `
+                        <div class="qg-option-row">
+                            <span class="qg-option-label">${qgEscape(label)}</span>
+                            <span class="qg-option-votes">${c} (${pct}%)</span>
+                            <button class="qg-vote-btn ${votedThis ? 'voted' : ''}"
+                                    ${!isActive || alreadyVoted ? 'disabled' : ''}
+                                    onclick="qgVote('${p.id}', '${label.replace(/'/g, "\\'")}')">
+                                ${votedThis ? '✅ Voted' : (alreadyVoted ? '—' : '🗳️ Vote')}
+                            </button>
+                            <div class="qg-option-bar-wrap">
+                                <div class="qg-option-bar" style="width:${pct}%;"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="qg-proposal-card" data-id="${p.id}">
+                        <div class="qg-proposal-header">
+                            <div>
+                                <div class="qg-proposal-title">
+                                    ${qgEscape(p.title || 'Untitled')}
+                                    <span class="qg-badge qg-badge-quantum">⚛️ Quantum</span>
+                                </div>
+                            </div>
+                            <span class="qg-badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="qg-proposal-desc">${qgEscape(p.description || '')}</div>
+                        <div class="qg-proposal-meta">
+                            <span>🆔 ${p.id || '—'}</span>
+                            <span>👤 ${qgShorten(p.author || 'unknown')}</span>
+                            <span>📅 ${new Date(p.createdAt || Date.now()).toLocaleString()}</span>
+                            ${p.endsAt ? `<span>⏰ Ends: ${new Date(p.endsAt).toLocaleString()}</span>` : ''}
+                        </div>
+                        <div class="qg-options">${opts}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function qgIsActive(p, now = Date.now()) {
+            if (p.status === 'closed' || p.status === 'passed' || p.status === 'rejected') return false;
+            if (!p.endsAt) return p.status !== 'closed';
+            return new Date(p.endsAt).getTime() > now;
+        }
+
+        function qgEscape(s) {
+            const d = document.createElement('div');
+            d.textContent = String(s || '');
+            return d.innerHTML;
+        }
+
+        function qgToggleCreateForm(force) {
+            const f = document.getElementById('qgCreateForm');
+            if (!f) return;
+            const show = typeof force === 'boolean' ? force : f.style.display === 'none';
+            f.style.display = show ? 'block' : 'none';
+            if (show) {
+                const t = document.getElementById('qgTitleInput');
+                if (t) t.focus();
+            }
+        }
+
+        async function qgCreateProposal() {
+            const title = document.getElementById('qgTitleInput')?.value.trim();
+            const description = document.getElementById('qgDescInput')?.value.trim();
+            const optionsRaw = document.getElementById('qgOptionsInput')?.value.trim() || 'Approve, Reject, Abstain';
+            const durationH = parseInt(document.getElementById('qgDurationInput')?.value || '24', 10);
+
+            if (!title) { qgToast('⚠️ Please enter a proposal title', '#ff6464'); return; }
+            if (!description) { qgToast('⚠️ Please enter a description', '#ff6464'); return; }
+
+            const options = optionsRaw.split(',').map(s => s.trim()).filter(Boolean);
+            if (options.length < 2) { qgToast('⚠️ Need at least 2 options', '#ff6464'); return; }
+
+            const btn = document.getElementById('qgSubmitBtn');
+            if (btn) { btn.disabled = true; btn.textContent = '⏳ Creating...'; }
+
+            const voter = qgGenerateVoterId();
+            const now = Date.now();
+            const endsAt = new Date(now + durationH * 3600 * 1000).toISOString();
+
+            const proposal = {
+                id: 'qg_' + Math.random().toString(36).substring(2, 12),
+                title, description,
+                options: options.map(label => ({ label, votes: 0, voters: [] })),
+                author: voter,
+                createdAt: new Date(now).toISOString(),
+                endsAt,
+                status: 'active',
+                quantum: true,
+                source: 'local'
+            };
+
+            let saved = false;
+            try {
+                const res = await fetch(API_BASE + '/api/v1/governance/proposals', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, description, options, durationHours: durationH, author: voter }),
+                    signal: AbortSignal.timeout(12000)
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && (data.id || data.proposal)) {
+                        const serverProposal = data.proposal || data;
+                        Object.assign(proposal, serverProposal);
+                        proposal.source = 'server';
+                        saved = true;
+                    }
+                }
+            } catch (e) {
+                console.warn('⚠️ Server create failed, using local:', e.message);
+            }
+
+            const local = qgReadLocal();
+            local.push(proposal);
+            qgWriteLocal(local);
+
+            if (btn) { btn.disabled = false; btn.textContent = '✨ Create'; }
+
+            const tInput = document.getElementById('qgTitleInput');
+            if (tInput) tInput.value = '';
+            const dInput = document.getElementById('qgDescInput');
+            if (dInput) dInput.value = '';
+            const oInput = document.getElementById('qgOptionsInput');
+            if (oInput) oInput.value = 'Approve, Reject, Abstain';
+            qgToggleCreateForm(false);
+
+            qgRenderProposals(qgReadLocal());
+            qgToast(saved ? '✅ Proposal created on server!' : '✅ Proposal created locally', '#00ff66');
+        }
+
+        async function qgVote(proposalId, optionLabel) {
+            const voter = qgGenerateVoterId();
+            const votes = qgReadVotes();
+            if (votes[proposalId] && votes[proposalId].voter === voter) {
+                qgToast('⚠️ You already voted on this proposal', '#ff6464');
+                return;
+            }
+            let ok = false;
+            try {
+                const res = await fetch(API_BASE + `/api/v1/governance/proposals/${proposalId}/vote`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ voter, option: optionLabel }),
+                    signal: AbortSignal.timeout(10000)
+                });
+                ok = res.ok;
+            } catch (e) {
+                console.warn('⚠️ Vote server failed, saving locally:', e.message);
+            }
+            const local = qgReadLocal();
+            const p = local.find(x => x.id === proposalId);
+            if (p && Array.isArray(p.options)) {
+                const opt = p.options.find(o => (o.label || o.name) === optionLabel);
+                if (opt) {
+                    opt.votes = Number(opt.votes || 0) + 1;
+                    opt.voters = opt.voters || [];
+                    opt.voters.push(voter);
+                }
+            }
+            qgWriteLocal(local);
+            votes[proposalId] = { voter, option: optionLabel, at: new Date().toISOString() };
+            qgWriteVotes(votes);
+            qgRenderProposals(local);
+            qgToast(ok ? `✅ Vote registered on server: ${optionLabel}` : `✅ Vote saved locally: ${optionLabel}`, '#00ff66');
+        }
+
+        function qgInit() {
+            qgLoadProposals(false);
+            if (qgPollTimer) clearInterval(qgPollTimer);
+            qgPollTimer = setInterval(() => {
+                const local = qgReadLocal();
+                if (local.length > 0) qgRenderProposals(local);
+            }, QG_POLL_INTERVAL);
+            setInterval(() => {
+                const local = qgReadLocal();
+                let changed = false;
+                const now = Date.now();
+                local.forEach(p => {
+                    if (p.status === 'active' && p.endsAt && new Date(p.endsAt).getTime() <= now) {
+                        p.status = 'closed';
+                        changed = true;
+                    }
+                });
+                if (changed) {
+                    qgWriteLocal(local);
+                    qgRenderProposals(local);
+                }
+            }, 60000);
+        }
+        
         // ============================================
         // NOTIFICAÇÕES
         // ============================================
@@ -7252,13 +8581,12 @@ console.log(balance);</pre>
             modal.style.display = 'block';
         }
 
-        function openQuantumModal() {
+               function openQuantumModal() {
             const modal = document.getElementById('quantumModal');
             if (modal) modal.style.display = 'block';
-            renderQuantumProposals();
-            updateQuantumStats();
+            qgLoadProposals(false);
         }
-
+    
         function closeQuantumModal() {
             const modal = document.getElementById('quantumModal');
             if (modal) modal.style.display = 'none';
@@ -8141,117 +9469,6 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         // ============================================
-        // VALIDATORS - LOAD & RENDER
-        // ============================================
-        let validatorsCache = {
-            data: [],
-            lastFetch: 0,
-            ttl: 30000
-        };
-
-        async function loadValidators(forceRefresh = false) {
-            const container = document.getElementById('validatorsContainer');
-            if (!container) return;
-
-            const now = Date.now();
-            if (!forceRefresh && validatorsCache.data.length > 0 &&
-                (now - validatorsCache.lastFetch) < validatorsCache.ttl) {
-                renderValidators(validatorsCache.data);
-                return;
-            }
-
-            if (validatorsCache.data.length === 0) {
-                container.innerHTML = '<div style="text-align:center;padding:20px;color:#888;">⏳ Loading validators...</div>';
-            }
-
-            try {
-                const data = await apiCall('/api/validator/list');
-                const list = Array.isArray(data.data) ? data.data : [];
-
-                list.sort((a, b) => (b.stake || 0) - (a.stake || 0));
-
-                validatorsCache.data = list;
-                validatorsCache.lastFetch = now;
-
-                renderValidators(list);
-            } catch (e) {
-                console.warn('⚠️ Validators não carregados:', e.message);
-                container.innerHTML = `
-                    <div style="text-align:center;padding:20px;color:#ff6464;">
-                        ⚠️ Could not load validators
-                        <br>
-                        <button onclick="loadValidators(true)" style="margin-top:10px;background:transparent;border:1px solid #ff6464;color:#ff6464;padding:6px 16px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;">
-                            🔄 Try again
-                        </button>
-                    </div>
-                `;
-            }
-        }
-
-        function renderValidators(list) {
-            const container = document.getElementById('validatorsContainer');
-            if (!container) return;
-
-            if (!list || list.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center;padding:30px 20px;color:#888;">
-                        <div style="font-size:32px;margin-bottom:10px;">🛡️</div>
-                        <p style="color:#c864ff;font-size:14px;margin-bottom:6px;">No validators active</p>
-                        <p style="font-size:11px;color:#666;">Become a validator by staking 1000+ BRD</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const totalStake = list.reduce((sum, v) => sum + (Number(v.stake) || 0), 0);
-
-            container.innerHTML = `
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(200,100,255,0.08);border-radius:8px;margin-bottom:12px;border:1px solid rgba(200,100,255,0.15);">
-                    <span style="font-size:11px;color:#c864ff;font-weight:bold;">🏆 TOP ${list.length} VALIDATORS</span>
-                    <span style="font-size:11px;color:#888;">Total staked: <span style="color:#00ff66;font-weight:bold;">${(totalStake / 1e6).toFixed(1)}M BRD</span></span>
-                </div>
-                ${list.map((v, index) => {
-                    const status = (v.status || 'active').toLowerCase();
-                    const isActive = status === 'active' || status === 'online';
-                    const statusColor = isActive ? '#00ff66' : '#ff6464';
-                    const statusText = isActive ? 'Active' : 'Inactive';
-                    const rank = index + 1;
-                    const rankIcon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
-                    const address = v.address || v.publicKey || 'Unknown';
-                    const shortAddr = address.length > 20 ? address.slice(0, 10) + '...' + address.slice(-6) : address;
-
-                    return `
-                        <div class="validator-card" style="background:rgba(200,100,255,0.05);border:1px solid rgba(200,100,255,0.2);border-radius:10px;padding:14px;margin-bottom:10px;transition:all 0.3s ease;cursor:pointer;"
-                            onclick="copyToClipboard('${address}')" title="Click to copy address"
-                            onmouseover="this.style.borderColor='#c864ff';this.style.boxShadow='0 0 20px rgba(200,100,255,0.2)';"
-                            onmouseout="this.style.borderColor='rgba(200,100,255,0.2)';this.style.boxShadow='none';">
-                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-                                <div style="flex:1;min-width:200px;">
-                                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                                        <span style="font-size:14px;">${rankIcon}</span>
-                                        <span style="color:#c864ff;font-weight:bold;font-size:13px;font-family:monospace;word-break:break-all;">${shortAddr}</span>
-                                    </div>
-                                    <div style="font-size:11px;color:#888;display:flex;gap:14px;flex-wrap:wrap;">
-                                        <span>⏱️ <span style="color:#00ccff;">${(Number(v.uptime) || 99.9).toFixed(2)}%</span></span>
-                                        <span>💼 <span style="color:#ffc800;">${Number(v.commission) || 5}%</span></span>
-                                        <span>📦 <span style="color:#00ff66;">${Number(v.blocksMined) || 0}</span></span>
-                                    </div>
-                                </div>
-                                <div style="text-align:right;min-width:130px;">
-                                    <div style="color:#00ff66;font-size:16px;font-weight:bold;font-family:'Orbitron',monospace;">${Number(v.stake || 0).toLocaleString('pt-BR')} BRD</div>
-                                    <div style="font-size:10px;color:${statusColor};margin-top:4px;display:flex;align-items:center;justify-content:flex-end;gap:4px;">
-                                        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${statusColor};${isActive ? 'animation:pulse 2s infinite;' : ''}"></span>
-                                        ${statusText}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('')}
-            `;
-        }
-
-        // ============================================
         // TRANSACTION HISTORY
         // ============================================
         let txHistoryCache = {
@@ -8999,7 +10216,6 @@ function initWebSocket() {
 
             setTimeout(() => {
                 loadTransactionHistory();
-                loadQuantumProposals();
             }, 3000);
 
             // REFRESH AUTOMÁTICO
@@ -9007,7 +10223,6 @@ function initWebSocket() {
             setInterval(loadStakingStats, 30000);
             setInterval(() => loadValidators(true), 60000);
             setInterval(() => loadTransactionHistory(true), 15000);
-            setInterval(() => loadQuantumProposals(true), 30000);
             setInterval(() => { loadTokenList(true); loadNFTList(true); }, 60000);
 
             // CARTEIRA SALVA
@@ -9032,6 +10247,20 @@ function initWebSocket() {
             // Re-checar status da API a cada 60s
             setInterval(checkDevApiStatus, 60000);
 
+             // ⚛️ QUANTUM GOVERNANCE — init
+            setTimeout(() => {
+                qgInit();
+            }, 1800);
+
+                        // Validators — busca
+            const validatorSearchInput = document.getElementById('validatorSearchInput');
+            if (validatorSearchInput) {
+                validatorSearchInput.addEventListener('input', (e) => {
+                    validatorsSearchQuery = (e.target.value || '').toLowerCase().trim();
+                    applyValidatorFilters();
+                });
+            }
+            
             console.log('✅ Bradicoin Platform inicializado!');
         });
     </script>

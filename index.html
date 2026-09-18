@@ -8,6 +8,7 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://bradicoin-api.onrender.com/socket.io/socket.io.js" defer></script>
     <style>
         /* ===== RESET E BASE ===== */
@@ -2640,6 +2641,333 @@
     font-weight: bold;
 }
 
+   /* ============================================
+   🪙🎨 ASSET PANELS — FUTURISTIC NEON (sem animações)
+   ============================================ */
+
+/* Painel base */
+.asset-panel {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at top left, rgba(255,200,0,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(0,255,255,0.04) 0%, transparent 60%),
+        rgba(0, 0, 0, 0.92) !important;
+    backdrop-filter: blur(10px);
+}
+.asset-panel.nfts-panel {
+    background:
+        radial-gradient(ellipse at top left, rgba(255,0,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom right, rgba(200,100,255,0.04) 0%, transparent 60%),
+        rgba(0, 0, 0, 0.92) !important;
+}
+
+/* Linha estática no topo do painel (sem animação) */
+.asset-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffc800, transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+.asset-panel.nfts-panel::before {
+    background: linear-gradient(90deg, transparent, #ff00ff, transparent);
+}
+
+/* Header do painel */
+.asset-panel .panel-header {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,200,0,0.15);
+}
+.asset-panel.nfts-panel .panel-header {
+    border-bottom-color: rgba(255,0,255,0.15);
+}
+
+/* Badge de contagem (sem pulse) */
+.asset-count-badge {
+    position: relative;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* Lista */
+.asset-list {
+    position: relative;
+    z-index: 1;
+    padding-right: 10px;
+}
+.asset-list::-webkit-scrollbar { width: 6px; }
+.asset-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.4);
+    border-radius: 4px;
+}
+.tokens-panel .asset-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffc800, #ff6b00);
+    border-radius: 4px;
+}
+.nfts-panel .asset-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff00ff, #c864ff);
+    border-radius: 4px;
+}
+
+/* ===== CARD DO ASSET ===== */
+.asset-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease !important;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+
+/* Borda lateral (tokens) */
+.tokens-panel .asset-card {
+    border: 1px solid rgba(255,200,0,0.25) !important;
+}
+.tokens-panel .asset-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffc800, #ff6b00);
+    box-shadow: 0 0 12px rgba(255,200,0,0.8);
+}
+.tokens-panel .asset-card:hover {
+    border-color: #ffc800 !important;
+    box-shadow:
+        0 0 25px rgba(255,200,0,0.35),
+        0 0 50px rgba(255,200,0,0.12),
+        inset 0 0 30px rgba(255,200,0,0.06) !important;
+}
+
+/* Borda lateral (nfts) */
+.nfts-panel .asset-card {
+    border: 1px solid rgba(255,0,255,0.25) !important;
+}
+.nfts-panel .asset-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, #ff00ff, #c864ff);
+    box-shadow: 0 0 12px rgba(255,0,255,0.8);
+}
+.nfts-panel .asset-card:hover {
+    border-color: #ff00ff !important;
+    box-shadow:
+        0 0 25px rgba(255,0,255,0.35),
+        0 0 50px rgba(255,0,255,0.12),
+        inset 0 0 30px rgba(255,0,255,0.06) !important;
+}
+
+/* Ícone do asset */
+.asset-icon {
+    position: relative;
+    font-size: 24px !important;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+.tokens-panel .asset-icon {
+    background: linear-gradient(135deg, #ffc800, #ff6b00) !important;
+    border: 2px solid #ffc800 !important;
+    box-shadow:
+        0 0 15px rgba(255,200,0,0.4),
+        inset 0 0 15px rgba(255,255,255,0.2);
+}
+.nfts-panel .asset-icon {
+    background: linear-gradient(135deg, #ff00ff, #c864ff) !important;
+    border: 2px solid #ff00ff !important;
+    box-shadow:
+        0 0 15px rgba(255,0,255,0.4),
+        inset 0 0 15px rgba(255,255,255,0.2);
+}
+
+/* Nome e símbolo */
+.asset-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.15);
+}
+.tokens-panel .asset-symbol {
+    color: #ffc800 !important;
+    text-shadow: 0 0 8px rgba(255,200,0,0.5);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.nfts-panel .asset-symbol {
+    color: #ff00ff !important;
+    text-shadow: 0 0 8px rgba(255,0,255,0.5);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Metadata */
+.asset-meta {
+    color: #999 !important;
+    font-family: 'Orbitron', monospace !important;
+    font-size: 10px !important;
+    letter-spacing: 0.5px;
+}
+
+/* Preço */
+.asset-price-value {
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 700 !important;
+}
+.tokens-panel .asset-price-value {
+    color: #00ff66 !important;
+    text-shadow: 0 0 12px rgba(0,255,100,0.5);
+}
+.nfts-panel .asset-price-value {
+    color: #00ff66 !important;
+    text-shadow: 0 0 12px rgba(0,255,100,0.5);
+}
+
+.asset-price-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 9px;
+    color: #666 !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ===== BADGES (local/server) ===== */
+.asset-badge {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 8px !important;
+    padding: 2px 8px !important;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    position: relative;
+}
+.asset-badge.local {
+    background: rgba(255,200,0,0.15) !important;
+    color: #ffc800 !important;
+    border: 1px solid #ffc800 !important;
+    box-shadow: 0 0 8px rgba(255,200,0,0.3);
+}
+.asset-badge.server {
+    background: rgba(0,255,100,0.15) !important;
+    color: #00ff66 !important;
+    border: 1px solid #00ff66 !important;
+    box-shadow: 0 0 8px rgba(0,255,100,0.3);
+}
+
+/* ===== INPUT DE BUSCA ===== */
+#tokenSearchInput,
+#nftSearchInput {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+    font-family: 'Orbitron', monospace !important;
+}
+#tokenSearchInput:focus {
+    border-color: #ffc800 !important;
+    box-shadow:
+        0 0 15px rgba(255,200,0,0.35),
+        inset 0 0 10px rgba(255,200,0,0.05) !important;
+    background: rgba(255,200,0,0.03) !important;
+}
+#nftSearchInput:focus {
+    border-color: #ff00ff !important;
+    box-shadow:
+        0 0 15px rgba(255,0,255,0.35),
+        inset 0 0 10px rgba(255,0,255,0.05) !important;
+    background: rgba(255,0,255,0.03) !important;
+}
+
+/* ===== BOTÃO REFRESH (sem rotação) ===== */
+.asset-panel button[onclick*="loadTokenList"],
+.asset-panel button[onclick*="loadNFTList"] {
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease !important;
+}
+.asset-panel button[onclick*="loadTokenList"]:hover {
+    background: #ffc800 !important;
+    color: #000 !important;
+    box-shadow: 0 0 20px rgba(255,200,0,0.5) !important;
+}
+.asset-panel button[onclick*="loadNFTList"]:hover {
+    background: #ff00ff !important;
+    color: #000 !important;
+    box-shadow: 0 0 20px rgba(255,0,255,0.5) !important;
+}
+
+/* ===== EMPTY STATE (sem flutuação) ===== */
+.asset-empty {
+    padding: 50px 20px !important;
+    color: #555;
+}
+.asset-empty .icon {
+    font-size: 52px !important;
+    margin-bottom: 14px !important;
+    opacity: 0.5;
+}
+.tokens-panel .asset-empty .icon {
+    color: #ffc800;
+    filter: drop-shadow(0 0 12px rgba(255,200,0,0.4));
+}
+.nfts-panel .asset-empty .icon {
+    color: #ff00ff;
+    filter: drop-shadow(0 0 12px rgba(255,0,255,0.4));
+}
+.asset-empty p {
+    font-family: 'Orbitron', monospace !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px;
+}
+
+/* ===== TÍTULO DO PAINEL ===== */
+.asset-panel .panel-title h2 {
+    font-family: 'Orbitron', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+}
+.tokens-panel .panel-title h2 {
+    color: #ffc800 !important;
+    text-shadow: 0 0 15px rgba(255,200,0,0.5);
+}
+.nfts-panel .panel-title h2 {
+    color: #ff00ff !important;
+    text-shadow: 0 0 15px rgba(255,0,255,0.5);
+}
+
+/* Ícone SVG do título (sem pulse) */
+.tokens-panel .panel-title svg {
+    filter: drop-shadow(0 0 8px rgba(255,200,0,0.5));
+}
+.nfts-panel .panel-title svg {
+    filter: drop-shadow(0 0 8px rgba(255,0,255,0.5));
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 640px) {
+    .asset-card {
+        padding: 12px !important;
+    }
+    .asset-icon {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 20px !important;
+    }
+    .asset-name { font-size: 12px !important; }
+    .asset-price-value { font-size: 13px !important; }
+}
+
     </style>
 </head>
 <body>
@@ -2975,7 +3303,7 @@
                     <span data-i18n="chartTitle">⚡ NETWORK ACTIVITY</span>
                     <span style="font-size:9px;color:#666;letter-spacing:1px;font-weight:400;" id="chartLastUpdate">⏳ initializing...</span>
                 </div>
-                <div class="chart-wrapper">
+                <div class="chart-wrapper" style="position:relative;">
                     <canvas id="networkChart"></canvas>
                 </div>
                 <div class="chart-stats">
@@ -2998,7 +3326,7 @@
                 </div>
             </div>
 
-            <!-- TOKENS & NFTs -->
+                        <!-- TOKENS & NFTs (read-only explorer) -->
             <div class="assets-grid">
                 <!-- 🪙 TOKENS -->
                 <div class="asset-panel tokens-panel">
@@ -3010,11 +3338,17 @@
                             </svg>
                             <h2 data-i18n="tokensPanelTitle">🪙 Tokens</h2>
                         </div>
-                        <span class="asset-count-badge" id="tokenCount">0</span>
+                        <div style="display:flex;gap:6px;align-items:center;">
+                            <span class="asset-count-badge" id="tokenCount">0</span>
+                            <button onclick="loadTokenList(true)" title="Refresh" style="background:rgba(0,200,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;">🔄</button>
+                        </div>
+                    </div>
+                    <div style="position:relative;margin-top:10px;">
+                        <input type="text" id="tokenSearchInput" placeholder="🔍 Search tokens by name or symbol..." style="width:100%;padding:8px 12px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,200,0,0.3);border-radius:6px;color:#ffc800;font-family:'Orbitron',monospace;font-size:11px;outline:none;" />
                     </div>
                     <div class="asset-list" id="tokenListPanel">
                         <div class="asset-empty">
-                            <div class="icon">🪙</div>
+                            <div class="icon">⏳</div>
                             <p data-i18n="loadingTokens">Loading tokens...</p>
                         </div>
                     </div>
@@ -3031,11 +3365,17 @@
                             </svg>
                             <h2 data-i18n="nftsPanelTitle">🎨 NFTs</h2>
                         </div>
-                        <span class="asset-count-badge" id="nftCount">0</span>
+                        <div style="display:flex;gap:6px;align-items:center;">
+                            <span class="asset-count-badge" id="nftCount">0</span>
+                            <button onclick="loadNFTList(true)" title="Refresh" style="background:rgba(0,200,255,0.1);border:1px solid #00ccff;color:#00ccff;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;">🔄</button>
+                        </div>
+                    </div>
+                    <div style="position:relative;margin-top:10px;">
+                        <input type="text" id="nftSearchInput" placeholder="🔍 Search NFTs by name or collection..." style="width:100%;padding:8px 12px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,0,255,0.3);border-radius:6px;color:#ff00ff;font-family:'Orbitron',monospace;font-size:11px;outline:none;" />
                     </div>
                     <div class="asset-list" id="nftListPanel">
                         <div class="asset-empty">
-                            <div class="icon">🎨</div>
+                            <div class="icon">⏳</div>
                             <p data-i18n="loadingNFTs">Loading NFTs...</p>
                         </div>
                     </div>
@@ -9642,12 +9982,33 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             loadTransactionHistory(true);
         }
 
+               // ============================================
+        // 🪙 TOKENS & 🎨 NFTs — EXPLORER (READ-ONLY)
         // ============================================
-        // TOKENS & NFTs
-        // ============================================
-        let tokensCache = { data: [], lastFetch: 0, ttl: 30000 };
-        let nftsCache = { data: [], lastFetch: 0, ttl: 30000 };
 
+        let tokensCache = { data: [], lastFetch: 0, ttl: 15000, search: '' };
+        let nftsCache = { data: [], lastFetch: 0, ttl: 15000, search: '' };
+
+        // ---------- Fallbacks (visualização) ----------
+        function getFallbackTokens() {
+            return [
+                { name: 'Bradicoin', symbol: 'BRD', supply: 1000000000, price: 12.47, emoji: '⚡', creator: 'BrBradicoin0000' },
+                { name: 'Quantum Token', symbol: 'QTM', supply: 500000000, price: 2.50, emoji: '⚛️', creator: 'BrQuantum0000' },
+                { name: 'ZK-SNARK', symbol: 'ZKT', supply: 100000000, price: 5.00, emoji: '🔐', creator: 'BrZKSNARK0000' },
+                { name: 'AI Protocol', symbol: 'AIP', supply: 250000000, price: 1.20, emoji: '🤖', creator: 'BrAIProtocol00' }
+            ];
+        }
+
+        function getFallbackNFTs() {
+            return [
+                { name: 'Cyber Ape #001', collection: 'Cyber Apes', price: 250, emoji: '🐒', owner: 'BrA1B2C3D4E5', tokenId: '001' },
+                { name: 'Neon Skull #042', collection: 'Neon Skulls', price: 120.5, emoji: '💀', owner: 'BrN9E8O7S6K5', tokenId: '042' },
+                { name: 'Quantum Gem #777', collection: 'Quantum Gems', price: 500, emoji: '💎', owner: 'BrQ7G6E5M4S3', tokenId: '777' },
+                { name: 'Space Bot #128', collection: 'Space Bots', price: 80.25, emoji: '🤖', owner: 'BrS1P2A3C4E5', tokenId: '128' }
+            ];
+        }
+
+        // ---------- Carregar Tokens ----------
         async function loadTokenList(forceRefresh = false) {
             const container = document.getElementById('tokenListPanel');
             const countEl = document.getElementById('tokenCount');
@@ -9669,36 +10030,42 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                 `;
             }
 
+            let list = [];
             try {
                 const data = await apiCall('/api/v1/token/list');
-                let list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
-                if (list.length === 0) list = getFallbackTokens();
-
-                tokensCache.data = list;
-                tokensCache.lastFetch = now;
-
-                if (countEl) countEl.textContent = list.length + ' ' + ((translations[currentLang] || translations.en).tokensCount || 'Tokens');
-
-                renderTokenList(list);
+                list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+                if (!list.length) throw new Error('empty');
             } catch (e) {
-                console.warn('⚠️ Tokens fallback:', e.message);
-                const list = getFallbackTokens();
-                tokensCache.data = list;
-                tokensCache.lastFetch = now;
-                if (countEl) countEl.textContent = list.length + ' Tokens';
-                renderTokenList(list);
+                console.warn('⚠️ Tokens backend indisponível, usando fallback:', e.message);
+                list = getFallbackTokens();
             }
+
+            tokensCache.data = list;
+            tokensCache.lastFetch = now;
+            if (countEl) countEl.textContent = list.length;
+            renderTokenList(list);
         }
 
+        // ---------- Renderizar Tokens ----------
         function renderTokenList(list) {
             const container = document.getElementById('tokenListPanel');
             if (!container) return;
+
+            const q = (tokensCache.search || '').toLowerCase().trim();
+            if (q) {
+                list = list.filter(t =>
+                    (t.name || '').toLowerCase().includes(q) ||
+                    (t.symbol || '').toLowerCase().includes(q) ||
+                    (t.creator || '').toLowerCase().includes(q)
+                );
+            }
 
             if (!list || list.length === 0) {
                 container.innerHTML = `
                     <div class="asset-empty">
                         <div class="icon">🪙</div>
-                        <p>${(translations[currentLang] || translations.en).noTokens || 'No tokens yet'}</p>
+                        <p>${q ? 'No tokens match your search' : ((translations[currentLang] || translations.en).noTokens || 'No tokens yet')}</p>
+                        <p style="font-size:11px;color:#555;margin-top:6px;">${q ? 'Try a different search term' : 'Tokens created in the app will appear here'}</p>
                     </div>
                 `;
                 return;
@@ -9707,24 +10074,24 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             container.innerHTML = list.map(tk => {
                 const name = tk.name || 'Unknown Token';
                 const symbol = tk.symbol || '???';
-                const supply = tk.supply || tk.totalSupply || '--';
-                const price = Number(tk.price || 0).toFixed(2);
+                const supply = Number(tk.supply || tk.totalSupply || 0);
+                const price = Number(tk.price || 0);
                 const emoji = tk.emoji || '🪙';
                 const creator = tk.creator || tk.owner || '';
 
                 return `
-                    <div class="asset-card" onclick="copyToClipboard('${symbol}')" title="Click to copy symbol">
+                    <div class="asset-card" onclick="showTokenDetails('${symbol.replace(/'/g, "\\'")}')" title="Click for details">
                         <div class="asset-icon">${emoji}</div>
                         <div class="asset-info">
                             <div class="asset-name">${name}</div>
                             <div class="asset-symbol">${symbol}</div>
                             <div class="asset-meta">
-                                <span>💠 ${Number(supply).toLocaleString('en-US')}</span>
+                                <span>💠 ${supply.toLocaleString('en-US')}</span>
                                 ${creator ? `<span>👤 ${String(creator).slice(0, 10)}...</span>` : ''}
                             </div>
                         </div>
                         <div class="asset-price">
-                            <div class="asset-price-value">$${price}</div>
+                            <div class="asset-price-value">$${price.toFixed(2)}</div>
                             <div class="asset-price-label">Price</div>
                         </div>
                     </div>
@@ -9732,6 +10099,7 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             }).join('');
         }
 
+        // ---------- Carregar NFTs ----------
         async function loadNFTList(forceRefresh = false) {
             const container = document.getElementById('nftListPanel');
             const countEl = document.getElementById('nftCount');
@@ -9753,36 +10121,42 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                 `;
             }
 
+            let list = [];
             try {
                 const data = await apiCall('/api/v1/nft/list');
-                let list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
-                if (list.length === 0) list = getFallbackNFTs();
-
-                nftsCache.data = list;
-                nftsCache.lastFetch = now;
-
-                if (countEl) countEl.textContent = list.length + ' NFTs';
-
-                renderNFTList(list);
+                list = Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []);
+                if (!list.length) throw new Error('empty');
             } catch (e) {
-                console.warn('⚠️ NFTs fallback:', e.message);
-                const list = getFallbackNFTs();
-                nftsCache.data = list;
-                nftsCache.lastFetch = now;
-                if (countEl) countEl.textContent = list.length + ' NFTs';
-                renderNFTList(list);
+                console.warn('⚠️ NFTs backend indisponível, usando fallback:', e.message);
+                list = getFallbackNFTs();
             }
+
+            nftsCache.data = list;
+            nftsCache.lastFetch = now;
+            if (countEl) countEl.textContent = list.length;
+            renderNFTList(list);
         }
 
+        // ---------- Renderizar NFTs ----------
         function renderNFTList(list) {
             const container = document.getElementById('nftListPanel');
             if (!container) return;
+
+            const q = (nftsCache.search || '').toLowerCase().trim();
+            if (q) {
+                list = list.filter(n =>
+                    (n.name || '').toLowerCase().includes(q) ||
+                    (n.collection || '').toLowerCase().includes(q) ||
+                    (n.owner || '').toLowerCase().includes(q)
+                );
+            }
 
             if (!list || list.length === 0) {
                 container.innerHTML = `
                     <div class="asset-empty">
                         <div class="icon">🎨</div>
-                        <p>${(translations[currentLang] || translations.en).noNFTs || 'No NFTs yet'}</p>
+                        <p>${q ? 'No NFTs match your search' : ((translations[currentLang] || translations.en).noNFTs || 'No NFTs yet')}</p>
+                        <p style="font-size:11px;color:#555;margin-top:6px;">${q ? 'Try a different search term' : 'NFTs minted in the app will appear here'}</p>
                     </div>
                 `;
                 return;
@@ -9791,13 +10165,13 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             container.innerHTML = list.map(nft => {
                 const name = nft.name || 'Untitled NFT';
                 const collection = nft.collection || 'Bradicoin Collection';
-                const price = Number(nft.price || 0).toFixed(2);
+                const price = Number(nft.price || 0);
                 const emoji = nft.emoji || '🎨';
                 const owner = nft.owner || nft.creator || '';
                 const tokenId = nft.tokenId || nft.id || '';
 
                 return `
-                    <div class="asset-card" onclick="copyToClipboard('${owner || tokenId}')" title="Click to copy owner">
+                    <div class="asset-card" onclick="showNFTDetails('${String(owner || tokenId).replace(/'/g, "\\'")}')" title="Click for details">
                         <div class="asset-icon">${emoji}</div>
                         <div class="asset-info">
                             <div class="asset-name">${name}</div>
@@ -9808,7 +10182,7 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                             </div>
                         </div>
                         <div class="asset-price">
-                            <div class="asset-price-value">$${price}</div>
+                            <div class="asset-price-value">$${price.toFixed(2)}</div>
                             <div class="asset-price-label">Price</div>
                         </div>
                     </div>
@@ -9816,22 +10190,118 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             }).join('');
         }
 
-        function getFallbackTokens() {
-            return [
-                { name: 'Bradicoin', symbol: 'BRD', supply: '1000000000', price: '12.47', emoji: '⚡', creator: 'BrA1B2C3D4E5' },
-                { name: 'Quantum Token', symbol: 'QTM', supply: '500000000', price: '2.50', emoji: '⚛️', creator: 'BrQ9T8M7K6L5' },
-                { name: 'ZK-SNARK', symbol: 'ZKT', supply: '100000000', price: '5.00', emoji: '🔐', creator: 'BrZ1K2S3N4R5' },
-                { name: 'AI Protocol', symbol: 'AIP', supply: '250000000', price: '1.20', emoji: '🤖', creator: 'BrA9I8P7R6O5' }
-            ];
+        // ---------- Detalhes do Token (modal) ----------
+        function showTokenDetails(symbol) {
+            const tk = tokensCache.data.find(t => (t.symbol || t.name) === symbol);
+            if (!tk) return;
+
+            const modal = document.getElementById('featureModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            if (!modal || !title || !body) return;
+
+            const supply = Number(tk.supply || tk.totalSupply || 0);
+            const price = Number(tk.price || 0);
+
+            title.textContent = '🪙 ' + (tk.name || 'Token');
+            body.innerHTML = `
+                <h2 style="color:#ffc800;">🪙 ${tk.name || 'Token'}</h2>
+                <div style="display:flex;align-items:center;gap:12px;margin:15px 0;">
+                    <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ffc800,#ff6b00);display:flex;align-items:center;justify-content:center;font-size:32px;border:2px solid #ffc800;">${tk.emoji || '🪙'}</div>
+                    <div>
+                        <div style="color:#ffc800;font-size:20px;font-weight:bold;">${tk.symbol || '???'}</div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:15px 0;">
+                    <div style="background:rgba(255,200,0,0.08);padding:14px;border-radius:10px;text-align:center;border:1px solid rgba(255,200,0,0.2);">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;">Total Supply</div>
+                        <div style="font-size:16px;font-weight:bold;color:#ffc800;margin-top:6px;">${supply.toLocaleString('en-US')}</div>
+                    </div>
+                    <div style="background:rgba(0,255,100,0.08);padding:14px;border-radius:10px;text-align:center;border:1px solid rgba(0,255,100,0.2);">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;">Price</div>
+                        <div style="font-size:16px;font-weight:bold;color:#00ff66;margin-top:6px;">$${price.toFixed(2)}</div>
+                    </div>
+                    <div style="background:rgba(0,200,255,0.08);padding:14px;border-radius:10px;text-align:center;border:1px solid rgba(0,200,255,0.2);">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;">Market Cap</div>
+                        <div style="font-size:16px;font-weight:bold;color:#00ccff;margin-top:6px;">$${(supply * price).toLocaleString('en-US', { maximumFractionDigits: 0 })}</div>
+                    </div>
+                </div>
+
+                ${tk.description ? `
+                <div style="background:rgba(0,0,0,0.4);padding:14px;border-radius:10px;margin-top:12px;border-left:3px solid #ffc800;">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;margin-bottom:6px;">Description</div>
+                    <div style="color:#ccc;font-size:13px;line-height:1.5;">${tk.description}</div>
+                </div>` : ''}
+
+                <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:10px;margin-top:12px;">
+                    <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                        <span style="color:#888;font-size:11px;">Creator</span>
+                        <span style="color:#00ccff;font-family:monospace;font-size:11px;word-break:break-all;">${tk.creator || tk.owner || '—'}</span>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                    <button class="feature-btn" onclick="closeModalAndGoHome()">✕ Close</button>
+                    <button class="feature-btn yellow" onclick="copyToClipboard('${tk.symbol || ''}'); showNotification('📋 Symbol copied!', '#00ccff');">📋 Copy Symbol</button>
+                </div>
+            `;
+            modal.style.display = 'block';
         }
 
-        function getFallbackNFTs() {
-            return [
-                { name: 'Cyber Ape #001', collection: 'Cyber Apes', price: '250.00', emoji: '🐒', owner: 'BrA1B2C3D4E5', tokenId: '001' },
-                { name: 'Neon Skull #042', collection: 'Neon Skulls', price: '120.50', emoji: '💀', owner: 'BrN9E8O7S6K5', tokenId: '042' },
-                { name: 'Quantum Gem #777', collection: 'Quantum Gems', price: '500.00', emoji: '💎', owner: 'BrQ7G6E5M4S3', tokenId: '777' },
-                { name: 'Space Bot #128', collection: 'Space Bots', price: '80.25', emoji: '🤖', owner: 'BrS1P2A3C4E5', tokenId: '128' }
-            ];
+        // ---------- Detalhes do NFT (modal) ----------
+        function showNFTDetails(ownerOrId) {
+            const nft = nftsCache.data.find(n => (n.owner || n.creator || n.tokenId || n.id) === ownerOrId);
+            if (!nft) return;
+
+            const modal = document.getElementById('featureModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            if (!modal || !title || !body) return;
+
+            const price = Number(nft.price || 0);
+
+            title.textContent = '🎨 ' + (nft.name || 'NFT');
+            body.innerHTML = `
+                <h2 style="color:#ff00ff;">🎨 ${nft.name || 'NFT'}</h2>
+                <div style="display:flex;align-items:center;gap:12px;margin:15px 0;">
+                    <div style="width:80px;height:80px;border-radius:12px;background:linear-gradient(135deg,#ff00ff,#c864ff);display:flex;align-items:center;justify-content:center;font-size:42px;border:2px solid #ff00ff;">${nft.emoji || '🎨'}</div>
+                    <div>
+                        <div style="color:#ff00ff;font-size:18px;font-weight:bold;">${nft.collection || 'Bradicoin Collection'}</div>
+                        <div style="color:#888;font-size:11px;margin-top:4px;">Token ID: #${nft.tokenId || nft.id || '—'}</div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:15px 0;">
+                    <div style="background:rgba(0,255,100,0.08);padding:14px;border-radius:10px;text-align:center;border:1px solid rgba(0,255,100,0.2);">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;">Price</div>
+                        <div style="font-size:16px;font-weight:bold;color:#00ff66;margin-top:6px;">$${price.toFixed(2)}</div>
+                    </div>
+                    <div style="background:rgba(255,0,255,0.08);padding:14px;border-radius:10px;text-align:center;border:1px solid rgba(255,0,255,0.2);">
+                        <div style="font-size:10px;color:#888;text-transform:uppercase;">Collection</div>
+                        <div style="font-size:14px;font-weight:bold;color:#ff00ff;margin-top:6px;">${nft.collection || '—'}</div>
+                    </div>
+                </div>
+
+                ${nft.description ? `
+                <div style="background:rgba(0,0,0,0.4);padding:14px;border-radius:10px;margin-top:12px;border-left:3px solid #ff00ff;">
+                    <div style="font-size:10px;color:#888;text-transform:uppercase;margin-bottom:6px;">Description</div>
+                    <div style="color:#ccc;font-size:13px;line-height:1.5;">${nft.description}</div>
+                </div>` : ''}
+
+                <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:10px;margin-top:12px;">
+                    <div style="display:flex;justify-content:space-between;padding:6px 0;">
+                        <span style="color:#888;font-size:11px;">Owner</span>
+                        <span style="color:#00ccff;font-family:monospace;font-size:11px;word-break:break-all;">${nft.owner || nft.creator || '—'}</span>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                    <button class="feature-btn" onclick="closeModalAndGoHome()">✕ Close</button>
+                    <button class="feature-btn magenta" onclick="copyToClipboard('${nft.owner || ''}'); showNotification('📋 Owner copied!', '#00ccff');">📋 Copy Owner</button>
+                </div>
+            `;
+            modal.style.display = 'block';
         }
 
         // ============================================
@@ -10261,8 +10731,219 @@ function initWebSocket() {
                 });
             }
             
-            console.log('✅ Bradicoin Platform inicializado!');
+                      console.log('✅ Bradicoin Platform inicializado!');
+
+            // ============================================
+            // 📊 CHART.JS — NETWORK ACTIVITY FUTURISTA
+            // ============================================
+            initNetworkChart();
         });
+
+        // ============================================
+        // 📊 NETWORK ACTIVITY — Chart.js
+        // ============================================
+        let networkChart = null;
+        const chartData = {
+            labels: [],
+            values: [],
+            maxPoints: 40
+        };
+
+        function initNetworkChart() {
+            const canvas = document.getElementById('networkChart');
+            if (!canvas || typeof Chart === 'undefined') {
+                console.warn('⚠️ Chart.js não carregado ou canvas ausente');
+                return;
+            }
+
+            // Gera dados iniciais (últimos 40 pontos)
+            const now = Date.now();
+            for (let i = chartData.maxPoints - 1; i >= 0; i--) {
+                const t = new Date(now - i * 3000);
+                chartData.labels.push(t.toLocaleTimeString('pt-BR', { hour12: false }));
+                chartData.values.push(900 + Math.random() * 700);
+            }
+
+            const ctx = canvas.getContext('2d');
+
+            // Gradiente da área
+            const areaGradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement.clientHeight || 220);
+            areaGradient.addColorStop(0, 'rgba(0, 255, 255, 0.45)');
+            areaGradient.addColorStop(0.4, 'rgba(0, 200, 255, 0.18)');
+            areaGradient.addColorStop(0.8, 'rgba(200, 100, 255, 0.06)');
+            areaGradient.addColorStop(1, 'rgba(255, 0, 255, 0)');
+
+            // Gradiente da linha
+            const lineGradient = ctx.createLinearGradient(0, 0, canvas.parentElement.clientWidth || 800, 0);
+            lineGradient.addColorStop(0, '#00ffff');
+            lineGradient.addColorStop(0.5, '#00ffcc');
+            lineGradient.addColorStop(1, '#c864ff');
+
+            networkChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'TPS',
+                        data: chartData.values,
+                        borderColor: lineGradient,
+                        backgroundColor: areaGradient,
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.45,
+                        pointRadius: 0,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#ffc800',
+                        pointHoverBorderColor: '#fff',
+                        pointHoverBorderWidth: 2,
+                        pointBackgroundColor: '#00ffff',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1,
+                        // Efeito de glow na linha
+                        shadowOffsetX: 0,
+                        shadowOffsetY: 0,
+                        shadowBlur: 15,
+                        shadowColor: 'rgba(0, 255, 255, 0.8)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 800,
+                        easing: 'easeOutQuart'
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.95)',
+                            borderColor: '#00ffff',
+                            borderWidth: 1,
+                            titleColor: '#00ff66',
+                            titleFont: {
+                                family: 'Orbitron, monospace',
+                                size: 10,
+                                weight: 'bold'
+                            },
+                            bodyColor: '#00ffff',
+                            bodyFont: {
+                                family: 'Orbitron, monospace',
+                                size: 12,
+                                weight: 'bold'
+                            },
+                            padding: 10,
+                            cornerRadius: 6,
+                            displayColors: false,
+                            callbacks: {
+                                title: (items) => '⏱️ ' + items[0].label,
+                                label: (item) => Math.round(item.parsed.y) + ' TPS'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(0, 255, 255, 0.4)',
+                                font: {
+                                    family: 'Orbitron, monospace',
+                                    size: 8
+                                },
+                                maxRotation: 0,
+                                autoSkip: true,
+                                maxTicksLimit: 6
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(0, 255, 255, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(0, 255, 255, 0.4)',
+                                font: {
+                                    family: 'Orbitron, monospace',
+                                    size: 8
+                                },
+                                callback: (v) => v + ' TPS'
+                            },
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            // Loop de atualização
+            setInterval(pushChartPoint, 3000);
+            updateChartTimestamp();
+            setInterval(updateChartTimestamp, 1000);
+
+            // Ajusta ao redimensionar
+            window.addEventListener('resize', () => {
+                if (networkChart) networkChart.resize();
+            });
+
+            console.log('✅ Network Activity Chart inicializado');
+        }
+
+        function pushChartPoint() {
+            if (!networkChart) return;
+
+            const base = 900 + Math.random() * 700;
+            const spike = Math.random() < 0.15 ? (300 + Math.random() * 500) : 0;
+            const value = base + spike;
+
+            const label = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+
+            chartData.labels.push(label);
+            chartData.values.push(value);
+
+            if (chartData.labels.length > chartData.maxPoints) {
+                chartData.labels.shift();
+                chartData.values.shift();
+            }
+
+            networkChart.data.labels = chartData.labels;
+            networkChart.data.datasets[0].data = chartData.values;
+            networkChart.update('none'); // sem animação para ficar fluido
+
+            updateChartTimestamp();
+
+            // Atualiza PENDING TX / BLOCKS/MIN com leve variação
+            const statPendingTX = document.getElementById('statPendingTX');
+            const statBlocksPerMin = document.getElementById('statBlocksPerMin');
+
+            if (statPendingTX) {
+                const cur = parseInt(statPendingTX.textContent.replace(/\D/g, '')) || 342;
+                const next = Math.max(50, cur + Math.floor((Math.random() - 0.5) * 30));
+                statPendingTX.textContent = next;
+            }
+            if (statBlocksPerMin) {
+                const cur = parseFloat(statBlocksPerMin.textContent) || 4.2;
+                const next = Math.max(1, cur + (Math.random() - 0.5) * 0.5);
+                statBlocksPerMin.textContent = next.toFixed(1);
+            }
+        }
+
+        function updateChartTimestamp() {
+            const el = document.getElementById('chartLastUpdate');
+            if (!el) return;
+            const d = new Date();
+            const hh = String(d.getHours()).padStart(2, '0');
+            const mm = String(d.getMinutes()).padStart(2, '0');
+            const ss = String(d.getSeconds()).padStart(2, '0');
+            el.textContent = `⏱️ ${hh}:${mm}:${ss}`;
+            el.style.color = '#00ff66';
+        }
+    
     </script>
 </body>
 </html>

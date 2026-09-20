@@ -3961,175 +3961,177 @@
             </div>
 
             <!-- PAINEL DE REDE -->
-            <div class="network-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2">
-                            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
-                        </svg>
-                        <h2 id="networkStatusTitle" style="color: cyan;" data-i18n="networkStatus">Network Status</h2>
-                    </div>
-                    <div class="status-badge" id="statusBadge">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
-                            <path d="M21.801 10A10 10 0 1 1 17 3.335" />
-                            <path d="m9 11 3 3L22 4" />
-                        </svg>
-                        <span id="blockchainValid" style="color: #00ff66;" data-i18n="blockchainValid">Blockchain Valid</span>
-                    </div>
+<div class="network-panel" id="networkStatusPanel">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2">
+                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" />
+            </svg>
+            <h2 style="color: cyan;" data-i18n="networkStatus">Network Status</h2>
+        </div>
+        <div class="status-badge" id="statusBadge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
+                <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+                <path d="m9 11 3 3L22 4" />
+            </svg>
+            <span id="blockchainValid" style="color: #00ff66;" data-i18n="blockchainValid">Blockchain Valid</span>
+        </div>
+    </div>
+
+    <!-- GRID 1: MÉTRICAS DE REDE -->
+    <div class="metrics-grid">
+        <div class="metric-card metric-card-cyan">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2">
+                    <rect width="7" height="7" x="14" y="3" rx="1" />
+                    <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
+                </svg>
+                <span style="color: cyan;" data-i18n="networkMetrics">Network Metrics</span>
+            </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="blockHeight">Block Height</span><span class="metric-value" id="blockHeightValue" style="color: #00ccff;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="blocksPerMin">Blocks/min</span><span class="metric-value" id="blocksPerMinValue" style="color: #00ccff;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="avgBlockTime">Avg Block Time</span><span class="metric-value" id="avgBlockTimeValue" style="color: #00ccff;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="nodesOnline">Nodes Online</span><span class="metric-value" id="nodesOnlineValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="validators">Validators</span><span class="metric-value" id="validatorsValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="networkHealth">Network Health</span><span class="metric-value" id="networkHealthValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="decentralization">Decentralization</span><span class="metric-value" id="decentralizationValue" style="color: #00ccff;">--</span></div>
+        </div>
+
+        <div class="metric-card metric-card-magenta">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
+                    <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
+                </svg>
+                <span style="color: magenta;" data-i18n="transactions">Transactions</span>
+            </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="tps">TPS</span><span class="metric-value" id="tpsValue" style="color: magenta;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="avgConfirmation">Avg Confirmation</span><span class="metric-value" id="avgConfirmationValue" style="color: magenta;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="avgFee">Avg Fee</span><span class="metric-value" id="avgFeeValue" style="color: magenta;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="volume24h">Volume 24h</span><span class="metric-value" id="volume24hValue" style="color: magenta;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="feesToday">Fees Today</span><span class="metric-value" id="feesTodayValue" style="color: magenta;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="pending">Pending</span><span class="metric-value" id="pendingValue" style="color: #ffc800;">--</span></div>
+        </div>
+
+        <div class="metric-card metric-card-green">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
+                    <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
+                    <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+                </svg>
+                <span style="color: #00ff66;" data-i18n="wallets">Wallets</span>
+            </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="activeWallets">Active Wallets</span><span class="metric-value" id="activeWalletsValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="newToday">New Today</span><span class="metric-value" id="newTodayValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="inStaking">In Staking</span><span class="metric-value" id="inStakingValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="topHolders">Top Holders</span><span class="metric-value" id="topHoldersValue" style="color: #ffc800;">--</span></div>
+        </div>
+
+        <div class="metric-card metric-card-blue">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6496ff" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+                    <path d="M3 12A9 3 0 0 0 21 12" />
+                </svg>
+                <span style="color: #6496ff;" data-i18n="supply">Supply</span>
+            </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="total">Total</span><span class="metric-value" id="totalValue" style="color: #6496ff;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="circulating">Circulating</span><span class="metric-value" id="circulatingValue" style="color: #6496ff;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="locked">Locked</span><span class="metric-value" id="lockedValue" style="color: #ffc800;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="staked">Staked</span><span class="metric-value" id="stakedValue" style="color: #00ff66;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="burned">Burned</span><span class="metric-value" id="burnedValue" style="color: #ff6464;">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="deflation">Deflation</span><span class="metric-value" id="deflationValue" style="color: #00ff66;">--</span></div>
+        </div>
+    </div>
+
+    <!-- GRID 2: PREÇO + ESTABILIDADE -->
+    <div class="metrics-grid">
+        <div class="metric-card metric-card-yellow">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffc800" stroke-width="2">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                    <polyline points="16 7 22 7 22 13" />
+                </svg>
+                <span style="color: #ffc800;" data-i18n="priceEconomics">Price Economics</span>
+            </div>
+            <div class="price-box">
+                <div class="price-item" style="background: rgba(0, 255, 100, 0.1); border-radius: 8px; padding: 12px; text-align: center;">
+                    <div style="font-size:11px;color:#888;" data-i18n="basePrice">Base Price</div>
+                    <div style="font-size:20px;font-weight:bold;color:#00ff66;margin-top:4px;" id="basePriceValue">--</div>
                 </div>
-
-                <div class="metrics-grid">
-                    <div class="metric-card metric-card-cyan">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="cyan" stroke-width="2">
-                                <rect width="7" height="7" x="14" y="3" rx="1" />
-                                <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
-                            </svg>
-                            <span id="networkMetricsTitle" style="color: cyan;" data-i18n="networkMetrics">Network Metrics</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="blockHeight">Block Height</span><span class="metric-value" id="blockHeightValue" style="color: #00ccff;">1,284,592</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="blocksPerMin">Blocks/min</span><span class="metric-value" id="blocksPerMinValue" style="color: #00ccff;">4.2</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="avgBlockTime">Avg Block Time</span><span class="metric-value" id="avgBlockTimeValue" style="color: #00ccff;">14.3s</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="nodesOnline">Nodes Online</span><span class="metric-value" id="nodesOnlineValue" style="color: #00ff66;">2,847</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="validators">Validators</span><span class="metric-value" id="validatorsValue" style="color: #00ff66;">128</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="networkHealth">Network Health</span><span class="metric-value" id="networkHealthValue" style="color: #00ff66;">99.8%</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="decentralization">Decentralization</span><span class="metric-value" id="decentralizationValue" style="color: #00ccff;">92.4%</span></div>
-                    </div>
-
-                    <div class="metric-card metric-card-magenta">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="magenta" stroke-width="2">
-                                <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z" />
-                            </svg>
-                            <span id="transactionsTitle" style="color: magenta;" data-i18n="transactions">Transactions</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="tps">TPS</span><span class="metric-value" id="tpsValue" style="color: magenta;">1,247</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="avgConfirmation">Avg Confirmation</span><span class="metric-value" id="avgConfirmationValue" style="color: magenta;">6.2s</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="avgFee">Avg Fee</span><span class="metric-value" id="avgFeeValue" style="color: magenta;">$0.15</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="volume24h">Volume 24h</span><span class="metric-value" id="volume24hValue" style="color: magenta;">$2.4B</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="feesToday">Fees Today</span><span class="metric-value" id="feesTodayValue" style="color: magenta;">$18.7M</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="pending">Pending</span><span class="metric-value" id="pendingValue" style="color: #ffc800;">342</span></div>
-                    </div>
-
-                    <div class="metric-card metric-card-green">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
-                                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" />
-                                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
-                            </svg>
-                            <span id="walletsTitle" style="color: #00ff66;" data-i18n="wallets">Wallets</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="activeWallets">Active Wallets</span><span class="metric-value" id="activeWalletsValue" style="color: #00ff66;">1,284,592</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="newToday">New Today</span><span class="metric-value" id="newTodayValue" style="color: #00ff66;">2,847</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="inStaking">In Staking</span><span class="metric-value" id="inStakingValue" style="color: #00ff66;">847,392</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="topHolders">Top Holders</span><span class="metric-value" id="topHoldersValue" style="color: #ffc800;">1,284</span></div>
-                    </div>
-
-                    <div class="metric-card metric-card-blue">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6496ff" stroke-width="2">
-                                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                                <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-                                <path d="M3 12A9 3 0 0 0 21 12" />
-                            </svg>
-                            <span id="supplyTitle" style="color: #6496ff;" data-i18n="supply">Supply</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="total">Total</span><span class="metric-value" id="totalValue" style="color: #6496ff;">79,000,000,000,000</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="circulating">Circulating</span><span class="metric-value" id="circulatingValue" style="color: #6496ff;">847,392,000</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="locked">Locked</span><span class="metric-value" id="lockedValue" style="color: #ffc800;">128,000,000</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="staked">Staked</span><span class="metric-value" id="stakedValue" style="color: #00ff66;">24,608,000</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="burned">Burned</span><span class="metric-value" id="burnedValue" style="color: #ff6464;">2,847,000</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="deflation">Deflation</span><span class="metric-value" id="deflationValue" style="color: #00ff66;">0.28%</span></div>
-                    </div>
-                </div>
-
-                <div class="metrics-grid">
-                    <div class="metric-card metric-card-yellow">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffc800" stroke-width="2">
-                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                <polyline points="16 7 22 7 22 13" />
-                            </svg>
-                            <span id="priceEconomicsTitle" style="color: #ffc800;" data-i18n="priceEconomics">Price Economics</span>
-                        </div>
-                        <div class="price-box">
-                            <div class="price-item" style="background: rgba(0, 255, 100, 0.1); border-radius: 8px;">
-                                <div class="text-gray text-sm" data-i18n="basePrice">Base Price</div>
-                                <div class="text-xl font-bold" style="color: #00ff66;" id="basePriceValue">$10.00</div>
-                            </div>
-                            <div class="price-item" style="background: rgba(0, 200, 255, 0.1); border-radius: 8px;">
-                                <div class="text-gray text-sm" data-i18n="currentPrice">Current Price</div>
-                                <div class="text-xl font-bold" style="color: cyan;" id="currentPriceValue">$12.47</div>
-                            </div>
-                        </div>
-                        <div class="support-badge">
-                            <div class="flex items-center gap-2">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
-                                    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                </svg>
-                                <span data-i18n="priceSupport">Price Support $10</span>
-                            </div>
-                            <span style="color: #00ff66;" data-i18n="active">Active</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="realMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">$790T</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="dilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">$790T</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="targetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">$1.2Q</span></div>
-                    </div>
-
-                    <div class="metric-card metric-card-purple">
-                        <div class="metric-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c864ff" stroke-width="2">
-                                <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                            <span id="stabilityTitle" style="color: #c864ff;" data-i18n="stabilityMechanisms">Stability Mechanisms</span>
-                        </div>
-                        <div class="support-badge" style="background: rgba(0, 255, 100, 0.1); margin-bottom: 12px;">
-                            <div class="flex items-center gap-2">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
-                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                                    <polyline points="16 7 22 7 22 13" />
-                                </svg>
-                                <span data-i18n="buybackActive">Buyback Active</span>
-                            </div>
-                            <span style="color: #00ff66;" data-i18n="yes">Yes</span>
-                        </div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="stabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">$2.5B</span></div>
-                        <div class="metric-row"><span class="metric-label" data-i18n="boughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">15.8M BRD</span></div>
-                        <div class="metric-row"><div class="flex items-center gap-1"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" /></svg><span class="metric-label" data-i18n="burnedToday">Burned Today</span></div><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">8.5M BRD</span></div>
-                    </div>
+                <div class="price-item" style="background: rgba(0, 200, 255, 0.1); border-radius: 8px; padding: 12px; text-align: center;">
+                    <div style="font-size:11px;color:#888;" data-i18n="currentPrice">Current Price</div>
+                    <div style="font-size:20px;font-weight:bold;color:cyan;margin-top:4px;" id="currentPriceValue">--</div>
                 </div>
             </div>
-
-            <!-- GRÁFICO -->
-            <div class="chart-container" id="chartContainer">
-                <div class="chart-title">
-                    <span class="live-dot"></span>
-                    <span data-i18n="chartTitle">⚡ NETWORK ACTIVITY</span>
-                    <span style="font-size:9px;color:#666;letter-spacing:1px;font-weight:400;" id="chartLastUpdate">⏳ initializing...</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:8px;background:rgba(0,255,100,0.1);margin:12px 0;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
+                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                    </svg>
+                    <span style="font-size:12px;color:#ccc;" data-i18n="priceSupport">Price Support</span>
                 </div>
-                <div class="chart-wrapper" style="position:relative;">
-                    <canvas id="networkChart"></canvas>
-                </div>
-                <div class="chart-stats">
-                    <div class="chart-stat-item">
-                        <div class="stat-label" data-i18n="pendingTX">⏳ PENDING TX</div>
-                        <div class="stat-value yellow" id="statPendingTX">342</div>
-                    </div>
-                    <div class="chart-stat-item">
-                        <div class="stat-label" data-i18n="blocksPerMin">⛏️ BLOCKS/MIN</div>
-                        <div class="stat-value cyan" id="statBlocksPerMin">4.2</div>
-                    </div>
-                    <div class="chart-stat-item">
-                        <div class="stat-label" data-i18n="totalBlocks">📦 TOTAL BLOCKS</div>
-                        <div class="stat-value magenta" id="statTotalBlocks">1,284,592</div>
-                    </div>
-                    <div class="chart-stat-item">
-                        <div class="stat-label" data-i18n="totalTX">📜 TOTAL TX</div>
-                        <div class="stat-value green" id="statTotalTX">47,392,184</div>
-                    </div>
-                </div>
+                <span style="color:#00ff66;font-size:13px;font-weight:bold;" id="priceSupportValue">--</span>
             </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="realMarketCap">Real Market Cap</span><span class="metric-value" style="color: #ffc800;" id="realMarketCapValue">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="dilutedMC">Diluted MC</span><span class="metric-value" style="color: #ffc800;" id="dilutedMCValue">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="targetMC">Target MC</span><span class="metric-value" style="color: #00ff66;" id="targetMCValue">--</span></div>
+        </div>
+
+        <div class="metric-card metric-card-purple">
+            <div class="metric-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c864ff" stroke-width="2">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <span style="color: #c864ff;" data-i18n="stabilityMechanisms">Stability Mechanisms</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:8px;background:rgba(0,255,100,0.1);margin-bottom:12px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00ff66" stroke-width="2">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                        <polyline points="16 7 22 7 22 13" />
+                    </svg>
+                    <span style="font-size:12px;color:#ccc;" data-i18n="buybackActive">Buyback Active</span>
+                </div>
+                <span style="color:#00ff66;font-size:13px;font-weight:bold;" id="buybackActiveValue">--</span>
+            </div>
+            <div class="metric-row"><span class="metric-label" data-i18n="stabilityFund">Stability Fund</span><span class="metric-value" style="color: #c864ff;" id="stabilityFundValue">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="boughtToday">Bought Today</span><span class="metric-value" style="color: #00ff66;" id="boughtTodayValue">--</span></div>
+            <div class="metric-row"><span class="metric-label" data-i18n="burnedToday">Burned Today</span><span class="metric-value" style="color: #ff6464;" id="burnedTodayValue">--</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- 📊 GRÁFICO DE ATIVIDADE DA REDE -->
+<div class="chart-container" id="chartContainer">
+    <div class="chart-title">
+        <span class="live-dot"></span>
+        <span data-i18n="chartTitle">⚡ NETWORK ACTIVITY</span>
+        <span style="font-size:9px;color:#666;letter-spacing:1px;font-weight:400;" id="chartLastUpdate">⏳ initializing...</span>
+    </div>
+    <div class="chart-wrapper" style="position:relative;">
+        <canvas id="networkChart"></canvas>
+    </div>
+    <div class="chart-stats">
+        <div class="chart-stat-item">
+            <div class="stat-label" data-i18n="pendingTX">⏳ PENDING TX</div>
+            <div class="stat-value yellow" id="statPendingTX">--</div>
+        </div>
+        <div class="chart-stat-item">
+            <div class="stat-label" data-i18n="blocksPerMin">⛏️ BLOCKS/MIN</div>
+            <div class="stat-value cyan" id="statBlocksPerMin">--</div>
+        </div>
+        <div class="chart-stat-item">
+            <div class="stat-label" data-i18n="totalBlocks">📦 TOTAL BLOCKS</div>
+            <div class="stat-value magenta" id="statTotalBlocks">--</div>
+        </div>
+        <div class="chart-stat-item">
+            <div class="stat-label" data-i18n="totalTX">📜 TOTAL TX</div>
+            <div class="stat-value green" id="statTotalTX">--</div>
+        </div>
+    </div>
+</div>
 
                         <!-- TOKENS & NFTs (read-only explorer) -->
             <div class="assets-grid">
@@ -4258,7 +4260,7 @@
     </div>
 </div>
   
-            <!-- ============================================ -->
+                        <!-- ============================================ -->
 <!-- 💰 STAKING & REWARDS — DASHBOARD INFORMATIVO -->
 <!-- ============================================ -->
 <div class="network-panel" style="border-color: #ffc800; margin-top: 20px;">
@@ -4278,7 +4280,7 @@
 
     <!-- STATS GLOBAIS -->
     <div id="stakingStats">
-        <div style="text-align:center;padding:20px;color:#888;">⏳ Carregando staking stats...</div>
+        <div style="text-align:center;padding:20px;color:#888;">⏳ Loading...</div>
     </div>
 
     <!-- CALCULADORA -->
@@ -4286,68 +4288,69 @@
         <h3 style="color:#ffc800;font-size:14px;font-family:'Orbitron',monospace;letter-spacing:2px;margin-bottom:6px;display:flex;align-items:center;gap:8px;">
             🧮 STAKING CALCULATOR
         </h3>
-        <p style="font-size:11px;color:#888;margin-bottom:16px;font-family:'Orbitron',monospace;">
-            ⓘ Simulation only — real staking happens in the <strong style="color:#ffc800;">Bradicoin App</strong>
+        <p data-i18n="stakingCalcHint" style="font-size:11px;color:#888;margin-bottom:16px;font-family:'Orbitron',monospace;">
+            ⓘ Simulation only — real staking happens in the Bradicoin App
         </p>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:16px;">
             <div>
-                <label style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Amount (BRD)</label>
+                <label data-i18n="stakingAmountLabel" style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Amount (BRD)</label>
                 <input type="number" id="calcAmount" placeholder="1000" min="0" step="100" value="1000"
                     style="width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,200,0,0.4);border-radius:6px;color:#ffc800;font-family:'Orbitron',monospace;font-size:14px;outline:none;" />
             </div>
             <div>
-                <label style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Duration</label>
+                <label data-i18n="stakingDurationLabel" style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Duration</label>
                 <select id="calcDuration"
                     style="width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,200,0,0.4);border-radius:6px;color:#ffc800;font-family:'Orbitron',monospace;font-size:14px;outline:none;cursor:pointer;">
-                    <option value="30">30 days</option>
-                    <option value="60">60 days</option>
-                    <option value="90" selected>90 days</option>
-                    <option value="180">180 days</option>
-                    <option value="365">1 year</option>
+                    <option value="30" data-i18n="stakingDays30">30 days</option>
+                    <option value="60" data-i18n="stakingDays60">60 days</option>
+                    <option value="90" selected data-i18n="stakingDays90">90 days</option>
+                    <option value="180" data-i18n="stakingDays180">180 days</option>
+                    <option value="365" data-i18n="stakingDays365">1 year</option>
                 </select>
             </div>
             <div>
-                <label style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Lock Period</label>
+                <label data-i18n="stakingLockLabel" style="display:block;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-family:'Orbitron',monospace;">Lock Period</label>
                 <select id="calcLock"
                     style="width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,200,0,0.4);border-radius:6px;color:#ffc800;font-family:'Orbitron',monospace;font-size:14px;outline:none;cursor:pointer;">
-                    <option value="0">Flexible (no lock)</option>
-                    <option value="0.5" selected>30-day lock (+0.5%)</option>
-                    <option value="1.5">90-day lock (+1.5%)</option>
-                    <option value="3">180-day lock (+3%)</option>
+                    <option value="0" data-i18n="stakingLockFlexible">Flexible (no lock)</option>
+                    <option value="0.5" selected data-i18n="stakingLock30">30-day lock (+0.5%)</option>
+                    <option value="1.5" data-i18n="stakingLock90">90-day lock (+1.5%)</option>
+                    <option value="3" data-i18n="stakingLock180">180-day lock (+3%)</option>
                 </select>
             </div>
         </div>
 
         <div id="calcResult" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:16px;background:rgba(0,0,0,0.4);border-radius:10px;border:1px solid rgba(255,200,0,0.15);">
             <div style="text-align:center;">
-                <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Base APY</div>
+                <div data-i18n="stakingBaseApy" style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Base APY</div>
                 <div style="font-size:20px;font-weight:bold;color:#00ff66;margin-top:4px;font-family:'Orbitron',monospace;" id="calcBaseApy">18.00%</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Effective APY</div>
+                <div data-i18n="stakingEffApy" style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Effective APY</div>
                 <div style="font-size:20px;font-weight:bold;color:#ffc800;margin-top:4px;font-family:'Orbitron',monospace;" id="calcEffApy">18.50%</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Daily Reward</div>
+                <div data-i18n="stakingDailyReward" style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Daily Reward</div>
                 <div style="font-size:20px;font-weight:bold;color:#00ccff;margin-top:4px;font-family:'Orbitron',monospace;" id="calcDaily">0.50 BRD</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Total Reward</div>
+                <div data-i18n="stakingTotalReward" style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Total Reward</div>
                 <div style="font-size:20px;font-weight:bold;color:#c864ff;margin-top:4px;font-family:'Orbitron',monospace;" id="calcTotal">45.62 BRD</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Final Balance</div>
+                <div data-i18n="stakingFinalBalance" style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:1px;font-family:'Orbitron',monospace;">Final Balance</div>
                 <div style="font-size:20px;font-weight:bold;color:#00ff66;margin-top:4px;font-family:'Orbitron',monospace;" id="calcFinal">1,045.62 BRD</div>
             </div>
         </div>
 
-               <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,200,0,0.15);">
-            <p style="color:#ffc800;font-size:12px;font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:12px;">
+        <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,200,0,0.15);">
+            <p data-i18n="stakingCtaTitle" style="color:#ffc800;font-size:12px;font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:12px;">
                 🚀 READY TO EARN? STAKE IN THE APP
             </p>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                 <a href="https://play.google.com/store/apps/details?id=com.bradicoin.wallet" target="_blank" rel="noopener"
+                    data-i18n="stakingCtaBtn"
                     style="background:linear-gradient(135deg,#ffc800,#ff8c00);color:#000;border:none;padding:12px 28px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;font-weight:bold;letter-spacing:1px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 20px rgba(255,200,0,0.3);transition:all 0.3s ease;"
                     onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 0 30px rgba(255,200,0,0.5)';"
                     onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 20px rgba(255,200,0,0.3)';">
@@ -4360,43 +4363,45 @@
     <!-- TOP STAKERS -->
     <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,200,0,0.2);border-radius:12px;padding:20px;margin-top:20px;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px;">
-            <h3 style="color:#ffc800;font-size:14px;font-family:'Orbitron',monospace;letter-spacing:2px;margin:0;">
+            <h3 data-i18n="stakingTopStakers" style="color:#ffc800;font-size:14px;font-family:'Orbitron',monospace;letter-spacing:2px;margin:0;">
                 🏆 TOP STAKERS
             </h3>
             <button onclick="loadTopStakers(true)"
+                data-i18n="stakingRefresh"
                 style="background:rgba(255,200,0,0.15);border:1px solid #ffc800;color:#ffc800;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:11px;">
                 🔄 Refresh
             </button>
         </div>
         <div id="topStakersList">
-            <div style="text-align:center;padding:30px;color:#888;font-size:11px;">⏳ Loading top stakers...</div>
+            <div data-i18n="stakingLoading" style="text-align:center;padding:30px;color:#888;font-size:11px;">⏳ Loading top stakers...</div>
         </div>
     </div>
 
     <!-- CHECK ADDRESS (leitura) -->
     <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(255,200,0,0.2);border-radius:12px;padding:20px;margin-top:20px;">
-        <h3 style="color:#ffc800;font-size:14px;font-family:'Orbitron',monospace;letter-spacing:2px;margin:0 0 16px 0;">
+        <h3 data-i18n="stakingCheckAddress" style="color:#ffc800;font-size:14px;font-family:'Orbitron',monospace;letter-spacing:2px;margin:0 0 16px 0;">
             🔍 CHECK ADDRESS STAKES
         </h3>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
             <input type="text" id="myStakesAddress" placeholder="Br... wallet address"
                 style="flex:1;min-width:220px;padding:10px 14px;background:#000;border:1px solid rgba(255,200,0,0.3);border-radius:6px;color:#ffc800;font-family:'Orbitron',monospace;font-size:12px;outline:none;" />
             <button onclick="loadMyStakes()"
+                data-i18n="stakingLoadBtn"
                 style="background:rgba(255,200,0,0.15);border:1px solid #ffc800;color:#ffc800;padding:10px 20px;border-radius:6px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;">
                 🔍 Load
             </button>
         </div>
         <div id="myStakesList">
-            <div style="text-align:center;padding:30px;color:#666;font-size:11px;">
+            <div data-i18n="stakingEnterAddress" style="text-align:center;padding:30px;color:#666;font-size:11px;">
                 💡 Enter a wallet address to view its stakes (read-only)
             </div>
         </div>
     </div>
 </div>
 
-            <!-- ============================================ -->
-<!-- ⛏️ CLOUD MINING — PAINEL INTERATIVO -->
-<!-- ============================================ -->
+                    <!-- ============================================ -->
+                    <!-- ⛏️ CLOUD MINING — PAINEL INTERATIVO -->
+                    <!-- ============================================ -->
 <div class="network-panel" style="border-color: #00ffcc; margin-top: 20px;">
     <div class="panel-header">
         <div class="panel-title">
@@ -4409,13 +4414,13 @@
         </div>
         <div class="status-badge" id="cmStatusBadge" style="border-color:#00ffcc;background:rgba(0,255,204,0.15);">
             <span class="dot" id="cmStatusDot" style="width:8px;height:8px;border-radius:50%;background:#00ffcc;display:inline-block;animation:pulse 1s infinite;"></span>
-            <span style="color:#00ffcc;" id="cmStatusText">Live</span>
+            <span style="color:#00ffcc;" id="cmStatusText" data-i18n="cloudMiningStatusLive">Live</span>
         </div>
     </div>
 
     <!-- AVISO DE SIMULAÇÃO -->
-    <div style="background:rgba(255,200,0,0.08);border-left:4px solid #ffc800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-family:'Orbitron',monospace;font-size:11px;color:#ffc800;line-height:1.6;">
-        ⚠️ <strong>Simulation panel.</strong> Real cloud mining contracts are created and executed only in the <strong>Bradicoin mobile app</strong>. Figures shown here are estimates for educational purposes.
+    <div data-i18n="cloudMiningSimulation" style="background:rgba(255,200,0,0.08);border-left:4px solid #ffc800;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-family:'Orbitron',monospace;font-size:11px;color:#ffc800;line-height:1.6;">
+        ⚠️ Simulation panel. Real cloud mining contracts are created and executed only in the Bradicoin mobile app. Figures shown here are estimates for educational purposes.
     </div>
 
     <!-- KPIs -->
@@ -4427,34 +4432,34 @@
     <div class="cm-sim-grid">
         <!-- Simulador -->
         <div class="cm-sim-card">
-            <h3 class="cm-section-title">⚡ HASHRATE SIMULATOR</h3>
-            <p class="cm-hint">ⓘ Simulation only — real hashrate is provisioned in the <strong style="color:#00ffcc;">Bradicoin App</strong></p>
+            <h3 class="cm-section-title" data-i18n="cloudMiningHashrateTitle">⚡ HASHRATE SIMULATOR</h3>
+            <p class="cm-hint" data-i18n="cloudMiningHashrateHint">ⓘ Simulation only — real hashrate is provisioned in the Bradicoin App</p>
 
-            <label class="cm-label">Mining Plan</label>
+            <label class="cm-label" data-i18n="cloudMiningPlanLabel">Mining Plan</label>
             <select id="cmPlanSelect" class="cm-input">
-                <option value="starter" selected>Starter — 10 TH/s</option>
+                <option value="starter" selected data-i18n="cloudMiningPlanStarter">Starter — 10 TH/s</option>
             </select>
 
-            <label class="cm-label">Number of Contracts</label>
+            <label class="cm-label" data-i18n="cloudMiningContractsLabel">Number of Contracts</label>
             <input type="number" id="cmContracts" class="cm-input" min="1" max="100" value="1" step="1">
 
             <label class="cm-label">
-                Hashrate: <span id="cmHashrateDisplay" style="color:#00ffcc;font-weight:bold;">10 TH/s</span>
+                <span data-i18n="cloudMiningHashrateLabel">Hashrate</span>: <span id="cmHashrateDisplay" style="color:#00ffcc;font-weight:bold;">10 TH/s</span>
             </label>
             <input type="range" id="cmHashrateSlider" min="1" max="100" value="10" step="1"
                 style="width:100%;accent-color:#00ffcc;margin-top:6px;">
 
             <div id="cmHashrateResult" class="cm-result-box">
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Hashrate</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningResultHashrate">Hashrate</div>
                     <div class="cm-result-value" id="cmResultHashrate" style="color:#00ffcc;">10 TH/s</div>
                 </div>
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Power</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningResultPower">Power</div>
                     <div class="cm-result-value" id="cmResultPower" style="color:#ffc800;">350 W</div>
                 </div>
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Daily Est.</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningResultDaily">Daily Est.</div>
                     <div class="cm-result-value" id="cmResultDaily" style="color:#00ff66;">1.25 BRD</div>
                 </div>
             </div>
@@ -4462,41 +4467,41 @@
 
         <!-- Calculadora -->
         <div class="cm-sim-card">
-            <h3 class="cm-section-title">🧮 YIELD CALCULATOR</h3>
-            <p class="cm-hint">ⓘ Estimates based on current network difficulty.</p>
+            <h3 class="cm-section-title" data-i18n="cloudMiningYieldTitle">🧮 YIELD CALCULATOR</h3>
+            <p class="cm-hint" data-i18n="cloudMiningYieldHint">ⓘ Estimates based on current network difficulty.</p>
 
-            <label class="cm-label">Investment (USD)</label>
+            <label class="cm-label" data-i18n="cloudMiningInvestLabel">Investment (USD)</label>
             <input type="number" id="cmInvest" class="cm-input" min="10" step="10" value="50">
 
-            <label class="cm-label">Contract Duration</label>
+            <label class="cm-label" data-i18n="cloudMiningDurationLabel">Contract Duration</label>
             <select id="cmDuration" class="cm-input">
-                <option value="30">30 days</option>
-                <option value="90" selected>90 days</option>
-                <option value="180">180 days</option>
-                <option value="365">1 year</option>
+                <option value="30" data-i18n="cloudMiningDuration30">30 days</option>
+                <option value="90" selected data-i18n="cloudMiningDuration90">90 days</option>
+                <option value="180" data-i18n="cloudMiningDuration180">180 days</option>
+                <option value="365" data-i18n="cloudMiningDuration365">1 year</option>
             </select>
 
-            <label class="cm-label">Reinvest Profits?</label>
+            <label class="cm-label" data-i18n="cloudMiningReinvestLabel">Reinvest Profits?</label>
             <select id="cmReinvest" class="cm-input">
-                <option value="0">No — cash out daily</option>
-                <option value="1" selected>Yes — compound daily</option>
+                <option value="0" data-i18n="cloudMiningReinvestNo">No — cash out daily</option>
+                <option value="1" selected data-i18n="cloudMiningReinvestYes">Yes — compound daily</option>
             </select>
 
             <div id="cmYieldResult" class="cm-result-box">
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Daily Profit</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningYieldDaily">Daily Profit</div>
                     <div class="cm-result-value" id="cmYieldDaily" style="color:#00ff66;">$0.02</div>
                 </div>
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Total Profit</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningYieldTotal">Total Profit</div>
                     <div class="cm-result-value" id="cmYieldTotal" style="color:#ffc800;">$2.28</div>
                 </div>
                 <div class="cm-result-item">
-                    <div class="cm-result-label">ROI</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningYieldRoi">ROI</div>
                     <div class="cm-result-value" id="cmYieldRoi" style="color:#c864ff;">+4.5%</div>
                 </div>
                 <div class="cm-result-item">
-                    <div class="cm-result-label">Break-even</div>
+                    <div class="cm-result-label" data-i18n="cloudMiningYieldBreakeven">Break-even</div>
                     <div class="cm-result-value" id="cmYieldBreakeven" style="color:#00ccff;">-- days</div>
                 </div>
             </div>
@@ -4505,7 +4510,7 @@
 
     <!-- GRÁFICO -->
     <div class="cm-chart-card">
-        <div class="cm-section-title">📈 PROFIT vs. INVESTMENT — PROJECTION</div>
+        <div class="cm-section-title" data-i18n="cloudMiningChartTitle">📈 PROFIT vs. INVESTMENT — PROJECTION</div>
         <div class="cm-chart-wrap"><canvas id="cmProfitChart"></canvas></div>
     </div>
 
@@ -4513,30 +4518,30 @@
     <div class="cm-plans-grid">
         <div class="cm-plan-card" data-plan="starter">
             <div class="cm-plan-icon">🥉</div>
-            <div class="cm-plan-name">Starter</div>
+            <div class="cm-plan-name" data-i18n="cloudMiningPlanName">Starter</div>
             <div class="cm-plan-hash">10 TH/s</div>
             <div class="cm-plan-price">$50</div>
             <div class="cm-plan-apy">+18% APY</div>
-            <button class="cm-plan-btn" onclick="cmSimulatePlan('starter')">📊 Simulate</button>
+            <button class="cm-plan-btn" data-i18n="cloudMiningSimulateBtn" onclick="cmSimulatePlan('starter')">📊 Simulate</button>
         </div>
     </div>
-    <p style="text-align:center;font-size:10px;color:#666;font-family:'Orbitron',monospace;margin-top:-8px;margin-bottom:20px;">
+    <p data-i18n="cloudMiningPlansHint" style="text-align:center;font-size:10px;color:#666;font-family:'Orbitron',monospace;margin-top:-8px;margin-bottom:20px;">
         💡 Prices and APY are illustrative. Contract activation happens exclusively in the Bradicoin App.
     </p>
 
     <!-- MEUS CONTRATOS (READ-ONLY) -->
     <div class="cm-contracts-card">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
-            <h3 class="cm-section-title" style="margin:0;">🔍 CHECK MY CONTRACTS</h3>
-            <button onclick="cmLoadMyContracts()" class="cm-refresh-btn">🔄 Refresh</button>
+            <h3 class="cm-section-title" data-i18n="cloudMiningContractsTitle" style="margin:0;">🔍 CHECK MY CONTRACTS</h3>
+            <button onclick="cmLoadMyContracts()" class="cm-refresh-btn" data-i18n="cloudMiningContractsRefresh">🔄 Refresh</button>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
-            <input type="text" id="cmWalletAddress" placeholder="Br... wallet address"
+            <input type="text" id="cmWalletAddress" data-i18n-placeholder="cloudMiningContractsPlaceholder" placeholder="Br... wallet address"
                 class="cm-input" style="flex:1;min-width:220px;">
-            <button onclick="cmLoadMyContracts()" class="cm-refresh-btn" style="padding:10px 20px;">🔍 Load</button>
+            <button onclick="cmLoadMyContracts()" class="cm-refresh-btn" data-i18n="cloudMiningContractsLoad" style="padding:10px 20px;">🔍 Load</button>
         </div>
         <div id="cmMyContracts">
-            <div style="text-align:center;padding:30px;color:#666;font-size:11px;">
+            <div data-i18n="cloudMiningContractsEmpty" style="text-align:center;padding:30px;color:#666;font-size:11px;">
                 💡 Enter a wallet address to view mining contracts (read-only)
             </div>
         </div>
@@ -4544,10 +4549,11 @@
 
     <!-- CTA -->
     <div style="text-align:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(0,255,204,0.15);">
-        <p style="color:#00ffcc;font-size:12px;font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:12px;">
+        <p data-i18n="cloudMiningCtaTitle" style="color:#00ffcc;font-size:12px;font-family:'Orbitron',monospace;letter-spacing:1px;margin-bottom:12px;">
             🚀 READY TO MINE? START IN THE APP
         </p>
         <a href="https://play.google.com/store/apps/details?id=com.bradicoin.wallet" target="_blank" rel="noopener"
+            data-i18n="cloudMiningCtaBtn"
             style="background:linear-gradient(135deg,#00ffcc,#00cc99);color:#000;padding:12px 28px;border-radius:8px;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;font-weight:bold;letter-spacing:1px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0 20px rgba(0,255,204,0.3);transition:all 0.3s ease;"
             onmouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 0 30px rgba(0,255,204,0.5)';"
             onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 20px rgba(0,255,204,0.3)';">
@@ -4556,6 +4562,30 @@
     </div>
 </div>
 
+                 <!-- ============================================ -->
+                 <!-- 🚨 FRAUD DETECTION — PAINEL FIXO             -->
+                 <!-- ============================================ -->
+<div class="network-panel" style="border-color: #ff6464; margin-top: 20px;">
+    <div class="panel-header">
+        <div class="panel-title">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ff6464" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v4M12 16h.01"/>
+            </svg>
+            <h2 style="color:#ff6464;" data-i18n="fraudTitle">🚨 Fraud Detection</h2>
+        </div>
+        <div class="status-badge" style="border-color:#ff6464;background:rgba(255,100,100,0.15);">
+            <span class="dot" style="width:8px;height:8px;border-radius:50%;background:#ff6464;display:inline-block;animation:pulse 1s infinite;"></span>
+            <span style="color:#ff6464;" data-i18n="fraudLiveMonitor">🔴 Live Monitor</span>
+        </div>
+    </div>
+
+    <!-- Container do dashboard fixo -->
+    <div id="fraudRootPage">
+        <div data-i18n="fraudLoading" style="text-align:center;padding:30px;color:#888;">⏳ Loading fraud detection...</div>
+    </div>
+</div>
+            
             <!-- SECURITY DASHBOARD -->
             <div class="network-panel" style="border-color: #ff6464; margin-top: 20px;">
                 <div class="panel-header">
@@ -5023,6 +5053,20 @@ console.log(balance);</pre>
         // ============================================
         const API_BASE = 'https://bradicoin-api.onrender.com';
 
+      // ✅ Cache declarado cedo para o Fraud/Analytics poderem usar
+      let txHistoryCache = {
+          data: [],
+          lastFetch: 0,
+          ttl: 10000,
+          filter: 'all',
+          search: '',
+          page: 0,
+          pageSize: 20,
+          hasMore: true,
+          loading: false,
+          total: 0
+      };  
+        
         // ============================================
         // 📡 HTTP CLIENT
         // ============================================
@@ -5588,6 +5632,61 @@ txhFee: 'Fee:',
 txhNoTransactions: 'No transactions found',
 txhTryDifferentSearch: 'Try a different search term',
 txhWillAppear: 'Transactions will appear here',
+                stakingCalcHint: 'ⓘ Simulation only — real staking happens in the Bradicoin App',
+                stakingAmountLabel: 'Amount (BRD)',
+                stakingDurationLabel: 'Duration',
+                stakingLockLabel: 'Lock Period',
+                stakingBaseApy: 'Base APY',
+                stakingEffApy: 'Effective APY',
+                stakingDailyReward: 'Daily Reward',
+                stakingTotalReward: 'Total Reward',
+                stakingFinalBalance: 'Final Balance',
+                stakingCtaTitle: '🚀 READY TO EARN? STAKE IN THE APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP STAKERS',
+                stakingCheckAddress: '🔍 CHECK ADDRESS STAKES',
+                stakingLoadBtn: '🔍 Load',
+                stakingEnterAddress: '💡 Enter a wallet address to view its stakes (read-only)',
+                stakingLoading: '⏳ Loading top stakers...',
+                stakingDays30: '30 days',
+                stakingDays60: '60 days',
+                stakingDays90: '90 days',
+                stakingDays180: '180 days',
+                stakingDays365: '1 year',
+                stakingLockFlexible: 'Flexible (no lock)',
+                stakingLock30: '30-day lock (+0.5%)',
+                stakingLock90: '90-day lock (+1.5%)',
+                stakingLock180: '180-day lock (+3%)',
+                stakingRefresh: '🔄 Refresh',
+                cloudMiningDuration30: '30 days',
+                cloudMiningDuration90: '90 days',
+                cloudMiningDuration180: '180 days',
+                cloudMiningDuration365: '1 year',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simulate',
+                fraudTitle: '🚨 Fraud Detection',
+                fraudLiveMonitor: '🔴 Live Monitor',
+                fraudLoading: '⏳ Loading fraud detection...',
+                fraudKpiActiveAlerts: '⚠️ Active Alerts',
+                fraudKpiAvgRisk: '🎯 Avg Risk Score',
+                fraudKpiSuspicious: '🔍 Suspicious 24h',
+                fraudKpiBlocked: '🛑 Blocked',
+                fraudKpiScanned: '🛰️ TX Scanned',
+                fraudRiskDistribution: '📊 RISK SCORE DISTRIBUTION — LAST 24H',
+                fraudTopWallets: '🎯 TOP 10 HIGH-RISK WALLETS',
+                fraudSuspiciousTx: '🔍 SUSPICIOUS TRANSACTIONS',
+                fraudHeatmap: '🌐 ANOMALY HEATMAP — 7 DAYS × 24 HOURS',
+                fraudLastScan: 'Last scan:',
+                fraudAutoScan: 'Auto-scan every 30s',
+                fraudScanNow: '🔄 Scan Now',
+                fraudNoSuspicious: 'No suspicious transactions detected',
+                fraudAllClean: 'All activity looks clean!',
+                fraudInvestigate: '🔍 Investigate',
+                fraudBlock: '🛑 Block',
+                fraudWhitelist: '✅ Whitelist',
+                fraudScanCompleted: '🚨 Fraud scan completed!',
+                fraudAddressCopied: '📋 Address copied!',
+                fraudHashCopied: '📋 Hash copied!',
             },
             pt: {
                 apiOnline: '✅ API Online - Conectado à Blockchain Bradicoin',
@@ -6114,6 +6213,61 @@ cloudMiningActivateInApp: 'ative no App para começar a minerar',
           txhNoTransactions: 'Nenhuma transação encontrada',
           txhTryDifferentSearch: 'Tente outro termo de busca',
           txhWillAppear: 'As transações aparecerão aqui',
+                stakingCalcHint: 'ⓘ Apenas simulação — o staking real acontece no App Bradicoin',
+                stakingAmountLabel: 'Quantidade (BRD)',
+                stakingDurationLabel: 'Duração',
+                stakingLockLabel: 'Período de Bloqueio',
+                stakingBaseApy: 'APY Base',
+                stakingEffApy: 'APY Efetivo',
+                stakingDailyReward: 'Recompensa Diária',
+                stakingTotalReward: 'Recompensa Total',
+                stakingFinalBalance: 'Saldo Final',
+                stakingCtaTitle: '🚀 PRONTO PARA GANHAR? FAÇA STAKING NO APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP STAKERS',
+                stakingCheckAddress: '🔍 VERIFICAR STAKES DO ENDEREÇO',
+                stakingLoadBtn: '🔍 Carregar',
+                stakingEnterAddress: '💡 Digite um endereço para ver seus stakes (somente leitura)',
+                stakingLoading: '⏳ Carregando top stakers...',
+                stakingDays30: '30 dias',
+                stakingDays60: '60 dias',
+                stakingDays90: '90 dias',
+                stakingDays180: '180 dias',
+                stakingDays365: '1 ano',
+                stakingLockFlexible: 'Flexível (sem bloqueio)',
+                stakingLock30: 'Bloqueio de 30 dias (+0,5%)',
+                stakingLock90: 'Bloqueio de 90 dias (+1,5%)',
+                stakingLock180: 'Bloqueio de 180 dias (+3%)',
+                stakingRefresh: '🔄 Atualizar',
+                cloudMiningDuration30: '30 dias',
+                cloudMiningDuration90: '90 dias',
+                cloudMiningDuration180: '180 dias',
+                cloudMiningDuration365: '1 ano',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simular',
+                fraudTitle: '🚨 Detecção de Fraude',
+                fraudLiveMonitor: '🔴 Monitor ao Vivo',
+                fraudLoading: '⏳ Carregando detecção de fraude...',
+                fraudKpiActiveAlerts: '⚠️ Alertas Ativos',
+                fraudKpiAvgRisk: '🎯 Pontuação Média de Risco',
+                fraudKpiSuspicious: '🔍 Suspeitas 24h',
+                fraudKpiBlocked: '🛑 Bloqueadas',
+                fraudKpiScanned: '🛰️ TX Verificadas',
+                fraudRiskDistribution: '📊 DISTRIBUIÇÃO DE RISCO — ÚLTIMAS 24H',
+                fraudTopWallets: '🎯 TOP 10 CARTEIRAS DE ALTO RISCO',
+                fraudSuspiciousTx: '🔍 TRANSAÇÕES SUSPEITAS',
+                fraudHeatmap: '🌐 MAPA DE ANOMALIAS — 7 DIAS × 24 HORAS',
+                fraudLastScan: 'Última verificação:',
+                fraudAutoScan: 'Verificação automática a cada 30s',
+                fraudScanNow: '🔄 Verificar Agora',
+                fraudNoSuspicious: 'Nenhuma transação suspeita detectada',
+                fraudAllClean: 'Toda a atividade parece limpa!',
+                fraudInvestigate: '🔍 Investigar',
+                fraudBlock: '🛑 Bloquear',
+                fraudWhitelist: '✅ Lista Branca',
+                fraudScanCompleted: '🚨 Verificação de fraude concluída!',
+                fraudAddressCopied: '📋 Endereço copiado!',
+                fraudHashCopied: '📋 Hash copiado!',
             },
             es: {
                 apiOnline: '✅ API En Línea - Conectado a la Blockchain Bradicoin',
@@ -6638,6 +6792,61 @@ cloudMiningActivateInApp: 'ative no App para começar a minerar',
                 txhNoTransactions: 'No se encontraron transacciones',
                 txhTryDifferentSearch: 'Prueba otro término',
                 txhWillAppear: 'Las transacciones aparecerán aquí',
+                stakingCalcHint: 'ⓘ Solo simulación — el staking real ocurre en la App Bradicoin',
+                stakingAmountLabel: 'Cantidad (BRD)',
+                stakingDurationLabel: 'Duración',
+                stakingLockLabel: 'Período de Bloqueo',
+                stakingBaseApy: 'APY Base',
+                stakingEffApy: 'APY Efectivo',
+                stakingDailyReward: 'Recompensa Diaria',
+                stakingTotalReward: 'Recompensa Total',
+                stakingFinalBalance: 'Saldo Final',
+                stakingCtaTitle: '🚀 ¿LISTO PARA GANAR? HAZ STAKING EN LA APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP STAKERS',
+                stakingCheckAddress: '🔍 VERIFICAR STAKES DE DIRECCIÓN',
+                stakingLoadBtn: '🔍 Cargar',
+                stakingEnterAddress: '💡 Ingresa una dirección para ver sus stakes (solo lectura)',
+                stakingLoading: '⏳ Cargando top stakers...',
+                stakingDays30: '30 días',
+                stakingDays60: '60 días',
+                stakingDays90: '90 días',
+                stakingDays180: '180 días',
+                stakingDays365: '1 año',
+                stakingLockFlexible: 'Flexible (sin bloqueo)',
+                stakingLock30: 'Bloqueo de 30 días (+0,5%)',
+                stakingLock90: 'Bloqueo de 90 días (+1,5%)',
+                stakingLock180: 'Bloqueo de 180 días (+3%)',
+                stakingRefresh: '🔄 Actualizar',
+                cloudMiningDuration30: '30 días',
+                cloudMiningDuration90: '90 días',
+                cloudMiningDuration180: '180 días',
+                cloudMiningDuration365: '1 año',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simular',
+                fraudTitle: '🚨 Detección de Fraude',
+                fraudLiveMonitor: '🔴 Monitor en Vivo',
+                fraudLoading: '⏳ Cargando detección de fraude...',
+                fraudKpiActiveAlerts: '⚠️ Alertas Activas',
+                fraudKpiAvgRisk: '🎯 Puntuación Media de Riesgo',
+                fraudKpiSuspicious: '🔍 Sospechosas 24h',
+                fraudKpiBlocked: '🛑 Bloqueadas',
+                fraudKpiScanned: '🛰️ TX Escaneadas',
+                fraudRiskDistribution: '📊 DISTRIBUCIÓN DE RIESGO — ÚLTIMAS 24H',
+                fraudTopWallets: '🎯 TOP 10 BILLETERAS DE ALTO RIESGO',
+                fraudSuspiciousTx: '🔍 TRANSACCIONES SOSPECHOSAS',
+                fraudHeatmap: '🌐 MAPA DE ANOMALÍAS — 7 DÍAS × 24 HORAS',
+                fraudLastScan: 'Último escaneo:',
+                fraudAutoScan: 'Escaneo automático cada 30s',
+                fraudScanNow: '🔄 Escanear Ahora',
+                fraudNoSuspicious: 'No se detectaron transacciones sospechosas',
+                fraudAllClean: '¡Toda la actividad parece limpia!',
+                fraudInvestigate: '🔍 Investigar',
+                fraudBlock: '🛑 Bloquear',
+                fraudWhitelist: '✅ Lista Blanca',
+                fraudScanCompleted: '🚨 ¡Escaneo de fraude completado!',
+                fraudAddressCopied: '📋 ¡Dirección copiada!',
+                fraudHashCopied: '📋 ¡Hash copiado!',
             },
             ar: {
                 apiOnline: '✅ API متصل - متصل ببلوكشين براديكوين',
@@ -6824,7 +7033,6 @@ cloudMiningActivateInApp: 'ative no App para começar a minerar',
                 inStaking: 'في التخزين',
                 topHolders: 'أكبر المالكين',
                 supply: 'العرض',
-                total: 'الإجمالي',
                 circulating: 'المتداول',
                 locked: 'مقفل',
                 staked: 'مخزّن',
@@ -7167,6 +7375,61 @@ txhFee: 'الرسوم:',
 txhNoTransactions: 'لم يتم العثور على معاملات',
 txhTryDifferentSearch: 'جرب مصطلح بحث آخر',
 txhWillAppear: 'ستظهر المعاملات هنا',
+                stakingCalcHint: 'ⓘ محاكاة فقط — التخزين الحقيقي يحدث في تطبيق براديكوين',
+                stakingAmountLabel: 'المبلغ (BRD)',
+                stakingDurationLabel: 'المدة',
+                stakingLockLabel: 'فترة القفل',
+                stakingBaseApy: 'العائد السنوي الأساسي',
+                stakingEffApy: 'العائد السنوي الفعلي',
+                stakingDailyReward: 'المكافأة اليومية',
+                stakingTotalReward: 'المكافأة الإجمالية',
+                stakingFinalBalance: 'الرصيد النهائي',
+                stakingCtaTitle: '🚀 جاهز للربح؟ قم بالتخزين في التطبيق',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 أفضل المخزّنين',
+                stakingCheckAddress: '🔍 التحقق من تخزينات العنوان',
+                stakingLoadBtn: '🔍 تحميل',
+                stakingEnterAddress: '💡 أدخل عنواناً لعرض تخزيناته (للقراءة فقط)',
+                stakingLoading: '⏳ جاري تحميل أفضل المخزّنين...',
+                stakingDays30: '30 يوماً',
+                stakingDays60: '60 يوماً',
+                stakingDays90: '90 يوماً',
+                stakingDays180: '180 يوماً',
+                stakingDays365: 'سنة واحدة',
+                stakingLockFlexible: 'مرن (بدون قفل)',
+                stakingLock30: 'قفل 30 يوماً (+0.5%)',
+                stakingLock90: 'قفل 90 يوماً (+1.5%)',
+                stakingLock180: 'قفل 180 يوماً (+3%)',
+                stakingRefresh: '🔄 تحديث',
+                cloudMiningDuration30: '30 يوماً',
+                cloudMiningDuration90: '90 يوماً',
+                cloudMiningDuration180: '180 يوماً',
+                cloudMiningDuration365: 'سنة واحدة',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 محاكاة',
+                fraudTitle: '🚨 كشف الاحتيال',
+                fraudLiveMonitor: '🔴 مراقبة مباشرة',
+                fraudLoading: '⏳ جاري تحميل كشف الاحتيال...',
+                fraudKpiActiveAlerts: '⚠️ التنبيهات النشطة',
+                fraudKpiAvgRisk: '🎯 متوسط درجة المخاطر',
+                fraudKpiSuspicious: '🔍 المشبوهة 24 ساعة',
+                fraudKpiBlocked: '🛑 المحظورة',
+                fraudKpiScanned: '🛰️ المعاملات المفحوصة',
+                fraudRiskDistribution: '📊 توزيع درجات المخاطر — آخر 24 ساعة',
+                fraudTopWallets: '🎯 أفضل 10 محافظ عالية المخاطر',
+                fraudSuspiciousTx: '🔍 المعاملات المشبوهة',
+                fraudHeatmap: '🌐 خريطة الشذوذ — 7 أيام × 24 ساعة',
+                fraudLastScan: 'آخر فحص:',
+                fraudAutoScan: 'فحص تلقائي كل 30 ثانية',
+                fraudScanNow: '🔄 افحص الآن',
+                fraudNoSuspicious: 'لم يتم اكتشاف معاملات مشبوهة',
+                fraudAllClean: 'كل النشاط يبدو نظيفاً!',
+                fraudInvestigate: '🔍 تحقيق',
+                fraudBlock: '🛑 حظر',
+                fraudWhitelist: '✅ القائمة البيضاء',
+                fraudScanCompleted: '🚨 اكتمل فحص الاحتيال!',
+                fraudAddressCopied: '📋 تم نسخ العنوان!',
+                fraudHashCopied: '📋 تم نسخ الهاش!',
             },
             de: {
                 apiOnline: '✅ API Online - Verbunden mit Bradicoin Blockchain',
@@ -7695,6 +7958,61 @@ txhFee: 'Gebühr:',
 txhNoTransactions: 'Keine Transaktionen gefunden',
 txhTryDifferentSearch: 'Anderen Suchbegriff versuchen',
 txhWillAppear: 'Transaktionen erscheinen hier',
+                stakingCalcHint: 'ⓘ Nur Simulation — echtes Staking findet in der Bradicoin-App statt',
+                stakingAmountLabel: 'Betrag (BRD)',
+                stakingDurationLabel: 'Dauer',
+                stakingLockLabel: 'Sperrzeit',
+                stakingBaseApy: 'Basis-APY',
+                stakingEffApy: 'Effektiver APY',
+                stakingDailyReward: 'Tägliche Belohnung',
+                stakingTotalReward: 'Gesamtbelohnung',
+                stakingFinalBalance: 'Endguthaben',
+                stakingCtaTitle: '🚀 BEREIT ZU VERDIENEN? STAKING IN DER APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP-STAKER',
+                stakingCheckAddress: '🔍 ADRESS-STAKES PRÜFEN',
+                stakingLoadBtn: '🔍 Laden',
+                stakingEnterAddress: '💡 Adresse eingeben, um Stakes anzuzeigen (schreibgeschützt)',
+                stakingLoading: '⏳ Lade Top-Staker...',
+                stakingDays30: '30 Tage',
+                stakingDays60: '60 Tage',
+                stakingDays90: '90 Tage',
+                stakingDays180: '180 Tage',
+                stakingDays365: '1 Jahr',
+                stakingLockFlexible: 'Flexibel (keine Sperre)',
+                stakingLock30: '30-Tage-Sperre (+0,5%)',
+                stakingLock90: '90-Tage-Sperre (+1,5%)',
+                stakingLock180: '180-Tage-Sperre (+3%)',
+                stakingRefresh: '🔄 Aktualisieren',
+                cloudMiningDuration30: '30 Tage',
+                cloudMiningDuration90: '90 Tage',
+                cloudMiningDuration180: '180 Tage',
+                cloudMiningDuration365: '1 Jahr',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simulieren',
+                fraudTitle: '🚨 Betrugserkennung',
+                fraudLiveMonitor: '🔴 Live-Überwachung',
+                fraudLoading: '⏳ Lade Betrugserkennung...',
+                fraudKpiActiveAlerts: '⚠️ Aktive Warnungen',
+                fraudKpiAvgRisk: '🎯 Durchschn. Risikobewertung',
+                fraudKpiSuspicious: '🔍 Verdächtige 24h',
+                fraudKpiBlocked: '🛑 Blockiert',
+                fraudKpiScanned: '🛰️ TX Gescannt',
+                fraudRiskDistribution: '📊 RISIKOVERTEILUNG — LETZTE 24H',
+                fraudTopWallets: '🎯 TOP 10 RISIKOREICHE WALLETS',
+                fraudSuspiciousTx: '🔍 VERDÄCHTIGE TRANSAKTIONEN',
+                fraudHeatmap: '🌐 ANOMALIE-HEATMAP — 7 TAGE × 24 STUNDEN',
+                fraudLastScan: 'Letzter Scan:',
+                fraudAutoScan: 'Auto-Scan alle 30s',
+                fraudScanNow: '🔄 Jetzt scannen',
+                fraudNoSuspicious: 'Keine verdächtigen Transaktionen erkannt',
+                fraudAllClean: 'Alle Aktivitäten sehen sauber aus!',
+                fraudInvestigate: '🔍 Untersuchen',
+                fraudBlock: '🛑 Blockieren',
+                fraudWhitelist: '✅ Whitelist',
+                fraudScanCompleted: '🚨 Betrugsscan abgeschlossen!',
+                fraudAddressCopied: '📋 Adresse kopiert!',
+                fraudHashCopied: '📋 Hash kopiert!',
             },
             it: {
                 apiOnline: '✅ API Online - Connesso alla Blockchain Bradicoin',
@@ -8195,7 +8513,86 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
               secAES256: '✅ AES-256',
               secActive: '🕵️ Attivo',
               secZKVerifier: '🔐 VERIFICATORE ZK-SNARK',
-               secProofType: 'Tipo di Prova 
+              secProofType: 'Tipo di Prova:',
+              secCurve: 'Curva:',
+              secVerification: 'Verifica:',
+              secZKtx: 'ZK TX:',
+              secCircuitSize: 'Dimensione Circuito:',
+              secProverTime: 'Tempo di Prova:',
+              secPassed: '✅ Superato',
+              txhAll: '📋 Tutti',
+              txhSent: '📤 Inviati',
+              txhReceived: '📥 Ricevuti',
+              txhMining: '⛏️ Mining',
+              txhSearchPlaceholder: '🔍 Cerca per hash o indirizzo...',
+              txhLoadMore: '⬇️ Carica altri',
+              txhLoading: '⏳ Caricamento transazioni...',
+              txhCouldNotLoad: '⚠️ Impossibile caricare le transazioni',
+              txhTryAgain: '🔄 Riprova',
+              txhConfirmed: '✅ Confermata',
+              txhPending: '⏳ In Sospeso',
+              txhBlockReward: '🎁 Ricompensa blocco',
+              txhFrom: 'Da',
+              txhTo: 'A',
+              txhFee: 'Commissione:',
+              txhNoTransactions: 'Nessuna transazione trovata',
+              txhTryDifferentSearch: 'Prova un altro termine',
+              txhWillAppear: 'Le transazioni appariranno qui',
+                stakingCalcHint: 'ⓘ Solo simulazione — lo staking reale avviene nell\'App Bradicoin',
+                stakingAmountLabel: 'Importo (BRD)',
+                stakingDurationLabel: 'Durata',
+                stakingLockLabel: 'Periodo di Blocco',
+                stakingBaseApy: 'APY Base',
+                stakingEffApy: 'APY Effettivo',
+                stakingDailyReward: 'Ricompensa Giornaliera',
+                stakingTotalReward: 'Ricompensa Totale',
+                stakingFinalBalance: 'Saldo Finale',
+                stakingCtaTitle: '🚀 PRONTO A GUADAGNARE? FAI STAKING NELL\'APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP STAKER',
+                stakingCheckAddress: '🔍 VERIFICA STAKES INDIRIZZO',
+                stakingLoadBtn: '🔍 Carica',
+                stakingEnterAddress: '💡 Inserisci un indirizzo per vedere i suoi stakes (sola lettura)',
+                stakingLoading: '⏳ Caricamento top staker...',
+                stakingDays30: '30 giorni',
+                stakingDays60: '60 giorni',
+                stakingDays90: '90 giorni',
+                stakingDays180: '180 giorni',
+                stakingDays365: '1 anno',
+                stakingLockFlexible: 'Flessibile (nessun blocco)',
+                stakingLock30: 'Blocco 30 giorni (+0,5%)',
+                stakingLock90: 'Blocco 90 giorni (+1,5%)',
+                stakingLock180: 'Blocco 180 giorni (+3%)',
+                stakingRefresh: '🔄 Aggiorna',
+                cloudMiningDuration30: '30 giorni',
+                cloudMiningDuration90: '90 giorni',
+                cloudMiningDuration180: '180 giorni',
+                cloudMiningDuration365: '1 anno',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simula',
+                fraudTitle: '🚨 Rilevamento Frodi',
+                fraudLiveMonitor: '🔴 Monitor Live',
+                fraudLoading: '⏳ Caricamento rilevamento frodi...',
+                fraudKpiActiveAlerts: '⚠️ Avvisi Attivi',
+                fraudKpiAvgRisk: '🎯 Punteggio Medio di Rischio',
+                fraudKpiSuspicious: '🔍 Sospette 24h',
+                fraudKpiBlocked: '🛑 Bloccate',
+                fraudKpiScanned: '🛰️ TX Analizzate',
+                fraudRiskDistribution: '📊 DISTRIBUZIONE RISCHIO — ULTIME 24H',
+                fraudTopWallets: '🎯 TOP 10 WALLET AD ALTO RISCHIO',
+                fraudSuspiciousTx: '🔍 TRANSAZIONI SOSPETTE',
+                fraudHeatmap: '🌐 HEATMAP ANOMALIE — 7 GIORNI × 24 ORE',
+                fraudLastScan: 'Ultima scansione:',
+                fraudAutoScan: 'Scansione automatica ogni 30s',
+                fraudScanNow: '🔄 Scansiona Ora',
+                fraudNoSuspicious: 'Nessuna transazione sospetta rilevata',
+                fraudAllClean: 'Tutta l\'attività sembra pulita!',
+                fraudInvestigate: '🔍 Indaga',
+                fraudBlock: '🛑 Blocca',
+                fraudWhitelist: '✅ Whitelist',
+                fraudScanCompleted: '🚨 Scansione frodi completata!',
+                fraudAddressCopied: '📋 Indirizzo copiato!',
+                fraudHashCopied: '📋 Hash copiato!',
             },
             fr: {
                 apiOnline: '✅ API Online - Connecté à la Blockchain Bradicoin',
@@ -8720,6 +9117,61 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 txhNoTransactions: 'Aucune transaction trouvée',
                 txhTryDifferentSearch: 'Essayez un autre terme',
                 txhWillAppear: 'Les transactions apparaîtront ici',
+                stakingCalcHint: 'ⓘ Simulation uniquement — le staking réel se fait dans l\'App Bradicoin',
+                stakingAmountLabel: 'Montant (BRD)',
+                stakingDurationLabel: 'Durée',
+                stakingLockLabel: 'Période de Verrouillage',
+                stakingBaseApy: 'APY de Base',
+                stakingEffApy: 'APY Effectif',
+                stakingDailyReward: 'Récompense Quotidienne',
+                stakingTotalReward: 'Récompense Totale',
+                stakingFinalBalance: 'Solde Final',
+                stakingCtaTitle: '🚀 PRÊT À GAGNER? FAITES DU STAKING DANS L\'APP',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 TOP STAKERS',
+                stakingCheckAddress: '🔍 VÉRIFIER LES STAKES DE L\'ADRESSE',
+                stakingLoadBtn: '🔍 Charger',
+                stakingEnterAddress: '💡 Entrez une adresse pour voir ses stakes (lecture seule)',
+                stakingLoading: '⏳ Chargement des top stakers...',
+                stakingDays30: '30 jours',
+                stakingDays60: '60 jours',
+                stakingDays90: '90 jours',
+                stakingDays180: '180 jours',
+                stakingDays365: '1 an',
+                stakingLockFlexible: 'Flexible (sans verrouillage)',
+                stakingLock30: 'Verrouillage 30 jours (+0,5%)',
+                stakingLock90: 'Verrouillage 90 jours (+1,5%)',
+                stakingLock180: 'Verrouillage 180 jours (+3%)',
+                stakingRefresh: '🔄 Actualiser',
+                cloudMiningDuration30: '30 jours',
+                cloudMiningDuration90: '90 jours',
+                cloudMiningDuration180: '180 jours',
+                cloudMiningDuration365: '1 an',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Simuler',
+                fraudTitle: '🚨 Détection de Fraude',
+                fraudLiveMonitor: '🔴 Surveillance en Direct',
+                fraudLoading: '⏳ Chargement de la détection de fraude...',
+                fraudKpiActiveAlerts: '⚠️ Alertes Actives',
+                fraudKpiAvgRisk: '🎯 Score Moyen de Risque',
+                fraudKpiSuspicious: '🔍 Suspectes 24h',
+                fraudKpiBlocked: '🛑 Bloquées',
+                fraudKpiScanned: '🛰️ TX Analysées',
+                fraudRiskDistribution: '📊 DISTRIBUTION DES RISQUES — DERNIÈRES 24H',
+                fraudTopWallets: '🎯 TOP 10 PORTEFEUILLES À RISQUE ÉLEVÉ',
+                fraudSuspiciousTx: '🔍 TRANSACTIONS SUSPECTES',
+                fraudHeatmap: '🌐 CARTE DES ANOMALIES — 7 JOURS × 24 HEURES',
+                fraudLastScan: 'Dernière analyse:',
+                fraudAutoScan: 'Analyse auto toutes les 30s',
+                fraudScanNow: '🔄 Analyser Maintenant',
+                fraudNoSuspicious: 'Aucune transaction suspecte détectée',
+                fraudAllClean: 'Toute l\'activité semble propre!',
+                fraudInvestigate: '🔍 Enquêter',
+                fraudBlock: '🛑 Bloquer',
+                fraudWhitelist: '✅ Liste Blanche',
+                fraudScanCompleted: '🚨 Analyse de fraude terminée!',
+                fraudAddressCopied: '📋 Adresse copiée!',
+                fraudHashCopied: '📋 Hash copié!',
             },
             ru: {
                 apiOnline: '✅ API Online - Подключено к блокчейну Bradicoin',
@@ -9244,6 +9696,61 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 txhNoTransactions: 'Транзакции не найдены',
                 txhTryDifferentSearch: 'Попробуйте другой запрос',
                 txhWillAppear: 'Транзакции появятся здесь',
+                stakingCalcHint: 'ⓘ Только симуляция — реальный стейкинг происходит в приложении Bradicoin',
+                stakingAmountLabel: 'Сумма (BRD)',
+                stakingDurationLabel: 'Продолжительность',
+                stakingLockLabel: 'Период блокировки',
+                stakingBaseApy: 'Базовый APY',
+                stakingEffApy: 'Эффективный APY',
+                stakingDailyReward: 'Ежедневная награда',
+                stakingTotalReward: 'Общая награда',
+                stakingFinalBalance: 'Итоговый баланс',
+                stakingCtaTitle: '🚀 ГОТОВЫ ЗАРАБОТАТЬ? СТЕЙКИНГ В ПРИЛОЖЕНИИ',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 ТОП СТЕЙКЕРЫ',
+                stakingCheckAddress: '🔍 ПРОВЕРИТЬ СТЕЙКИ АДРЕСА',
+                stakingLoadBtn: '🔍 Загрузить',
+                stakingEnterAddress: '💡 Введите адрес, чтобы увидеть стейки (только чтение)',
+                stakingLoading: '⏳ Загрузка топ стейкеров...',
+                stakingDays30: '30 дней',
+                stakingDays60: '60 дней',
+                stakingDays90: '90 дней',
+                stakingDays180: '180 дней',
+                stakingDays365: '1 год',
+                stakingLockFlexible: 'Гибкий (без блокировки)',
+                stakingLock30: 'Блокировка 30 дней (+0,5%)',
+                stakingLock90: 'Блокировка 90 дней (+1,5%)',
+                stakingLock180: 'Блокировка 180 дней (+3%)',
+                stakingRefresh: '🔄 Обновить',
+                cloudMiningDuration30: '30 дней',
+                cloudMiningDuration90: '90 дней',
+                cloudMiningDuration180: '180 дней',
+                cloudMiningDuration365: '1 год',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 Симулировать',
+                fraudTitle: '🚨 Обнаружение мошенничества',
+                fraudLiveMonitor: '🔴 Мониторинг в реальном времени',
+                fraudLoading: '⏳ Загрузка обнаружения мошенничества...',
+                fraudKpiActiveAlerts: '⚠️ Активные оповещения',
+                fraudKpiAvgRisk: '🎯 Средняя оценка риска',
+                fraudKpiSuspicious: '🔍 Подозрительные 24ч',
+                fraudKpiBlocked: '🛑 Заблокировано',
+                fraudKpiScanned: '🛰️ TX проверено',
+                fraudRiskDistribution: '📊 РАСПРЕДЕЛЕНИЕ РИСКОВ — ПОСЛЕДНИЕ 24Ч',
+                fraudTopWallets: '🎯 ТОП 10 КОШЕЛЬКОВ ВЫСОКОГО РИСКА',
+                fraudSuspiciousTx: '🔍 ПОДОЗРИТЕЛЬНЫЕ ТРАНЗАКЦИИ',
+                fraudHeatmap: '🌐 КАРТА АНОМАЛИЙ — 7 ДНЕЙ × 24 ЧАСА',
+                fraudLastScan: 'Последняя проверка:',
+                fraudAutoScan: 'Авто-сканирование каждые 30с',
+                fraudScanNow: '🔄 Сканировать сейчас',
+                fraudNoSuspicious: 'Подозрительных транзакций не обнаружено',
+                fraudAllClean: 'Вся активность выглядит чистой!',
+                fraudInvestigate: '🔍 Расследовать',
+                fraudBlock: '🛑 Заблокировать',
+                fraudWhitelist: '✅ Белый список',
+                fraudScanCompleted: '🚨 Сканирование мошенничества завершено!',
+                fraudAddressCopied: '📋 Адрес скопирован!',
+                fraudHashCopied: '📋 Хэш скопирован!',
             },
             ko: {
                 apiOnline: '✅ API Online - Bradicoin 블록체인에 연결됨',
@@ -9670,7 +10177,7 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 loadingNFTs: 'NFT 로딩 중...',
                 noTokens: '아직 토큰이 없습니다',
                 noNFTs: '아직 NFT가 없습니다',
-                tokensCount: '토큰'
+                tokensCount: '토큰',
                 cloudMiningSimulation: '시뮬레이션 패널입니다. 실제 클라우드 마이닝 계약은 Bradicoin 앱에서만 생성 및 실행됩니다. 여기의 수치는 교육용 추정치입니다.',
                 cloudMiningHashrateTitle: '⚡ 해시레이트 시뮬레이터',
                 cloudMiningHashrateHint: 'ⓘ 시뮬레이션 전용 — 실제 해시레이트는 Bradicoin 앱에서 제공됩니다',
@@ -9729,7 +10236,6 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 vNoValidators: '검증자를 찾을 수 없음',
                 vTryDifferentSearch: '다른 검색 시도',
                 vTryDifferentFilter: '다른 필터 시도',
-                vActiveCount: '⭐ 내 노드',
                 vActiveCount: '활성',
                 vStatusLive: '🟢 라이브',
                 vStatusOffline: '🔴 오프라인',
@@ -9768,6 +10274,61 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 txhNoTransactions: '거래를 찾을 수 없음',
                 txhTryDifferentSearch: '다른 검색어 시도',
                 txhWillAppear: '거래가 여기에 표시됩니다',
+                stakingCalcHint: 'ⓘ 시뮬레이션 전용 — 실제 스테이킹은 Bradicoin 앱에서 이루어집니다',
+                stakingAmountLabel: '금액 (BRD)',
+                stakingDurationLabel: '기간',
+                stakingLockLabel: '잠금 기간',
+                stakingBaseApy: '기본 APY',
+                stakingEffApy: '실효 APY',
+                stakingDailyReward: '일일 보상',
+                stakingTotalReward: '총 보상',
+                stakingFinalBalance: '최종 잔액',
+                stakingCtaTitle: '🚀 수익을 얻을 준비가 되셨나요? 앱에서 스테이킹하세요',
+                stakingCtaBtn: '🤖 Google Play',
+                stakingTopStakers: '🏆 상위 스테이커',
+                stakingCheckAddress: '🔍 주소 스테이크 확인',
+                stakingLoadBtn: '🔍 불러오기',
+                stakingEnterAddress: '💡 주소를 입력하여 스테이크 보기 (읽기 전용)',
+                stakingLoading: '⏳ 상위 스테이커 로딩 중...',
+                stakingDays30: '30일',
+                stakingDays60: '60일',
+                stakingDays90: '90일',
+                stakingDays180: '180일',
+                stakingDays365: '1년',
+                stakingLockFlexible: '유연함 (잠금 없음)',
+                stakingLock30: '30일 잠금 (+0.5%)',
+                stakingLock90: '90일 잠금 (+1.5%)',
+                stakingLock180: '180일 잠금 (+3%)',
+                stakingRefresh: '🔄 새로고침',
+                cloudMiningDuration30: '30일',
+                cloudMiningDuration90: '90일',
+                cloudMiningDuration180: '180일',
+                cloudMiningDuration365: '1년',
+                cloudMiningPlanName: 'Starter',
+                cloudMiningSimulateBtn: '📊 시뮬레이션',
+                fraudTitle: '🚨 사기 탐지',
+                fraudLiveMonitor: '🔴 실시간 모니터',
+                fraudLoading: '⏳ 사기 탐지 로딩 중...',
+                fraudKpiActiveAlerts: '⚠️ 활성 경고',
+                fraudKpiAvgRisk: '🎯 평균 위험 점수',
+                fraudKpiSuspicious: '🔍 의심 24시간',
+                fraudKpiBlocked: '🛑 차단됨',
+                fraudKpiScanned: '🛰️ TX 스캔됨',
+                fraudRiskDistribution: '📊 위험 분포 — 지난 24시간',
+                fraudTopWallets: '🎯 상위 10 고위험 지갑',
+                fraudSuspiciousTx: '🔍 의심스러운 거래',
+                fraudHeatmap: '🌐 이상 징후 히트맵 — 7일 × 24시간',
+                fraudLastScan: '마지막 스캔:',
+                fraudAutoScan: '30초마다 자동 스캔',
+                fraudScanNow: '🔄 지금 스캔',
+                fraudNoSuspicious: '의심스러운 거래가 감지되지 않았습니다',
+                fraudAllClean: '모든 활동이 깨끗해 보입니다!',
+                fraudInvestigate: '🔍 조사',
+                fraudBlock: '🛑 차단',
+                fraudWhitelist: '✅ 화이트리스트',
+                fraudScanCompleted: '🚨 사기 스캔 완료!',
+                fraudAddressCopied: '📋 주소 복사됨!',
+                fraudHashCopied: '📋 해시 복사됨!',
             }
         };
 
@@ -9797,17 +10358,12 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
             const pageTitle = document.getElementById('pageTitle');
             if (pageTitle) pageTitle.textContent = t.pageTitle || 'Bradicoin Blockchain';
 
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key] !== undefined && t[key] !== null) {
-                    const emojiMatch = el.textContent.match(/^([\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{1F300}-\u{1F5FF}]|[\u{1F600}-\u{1F64F}]|[\u{1F680}-\u{1F6FF}]|[\u{1F900}-\u{1F9FF}]|[🔗🛡️💰📜📦🪙🌐📊⛽📈🚨🎖️🔒💀⚡🔍🏛️📝🔬🌀🚀🏭🌾🎬⚽🏗️🏥🧬⚡📈🎨⛏️🤖💎🌌❤️⚙️🔄⚖️🏪🔐✅❌⚠️💡🔍🌐📚🩺🔑🔄⏱️])/u);
-                    if (emojiMatch) {
-                        el.textContent = emojiMatch[0] + ' ' + t[key];
-                    } else {
-                        el.textContent = t[key];
-                    }
-                }
-            });
+          document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined && t[key] !== null) {
+        el.textContent = t[key];
+    }
+});
 
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder');
@@ -10785,7 +11341,16 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
         function closeModalAndGoHome() {
             const modal = document.getElementById('featureModal');
             if (modal) modal.style.display = 'none';
-        }
+
+            // Se estava mostrando Fraud Detection, restaura o painel fixo
+            destroyFraudDashboard();
+            setTimeout(() => {
+                const root = document.getElementById('fraudRootPage');
+                if (root) {
+                    initFraudDashboard('fraudRootPage');
+                }
+           }, 150);
+  }    
 
         function openFeature(feature) {
             const t = translations[currentLang] || translations.en;
@@ -10854,28 +11419,33 @@ cloudMiningReinvestLabel: 'Reinvestire i Profitti?',
                 }
             };
 
-                                // ───── Fraud Detection ─────
-            if (feature === 'fraudDetection' || feature === 'fraudDetection2') {
-                title.textContent = '🚨 Fraud Detection';
-                body.innerHTML = '<div id="fraudRoot">⏳ Loading fraud detection...</div>';
-                modal.style.display = 'block';
-                setTimeout(() => initFraudDashboard(), 60);
-                return;
-            } else {
-                destroyFraudDashboard();
-            }
+                             // ───── Fraud Detection ─────
+if (feature === 'fraudDetection' || feature === 'fraudDetection2') {
+    const fixed = document.getElementById('fraudRootPage');
+    if (fixed) {
+        fixed.innerHTML = '<div style="text-align:center;padding:20px;color:#666;">⏸️ Paused — viewing in modal</div>';
+    }
 
-                        // ───── Analytics Dashboard ─────
-            if (feature === 'analytics' || feature === 'analytics2') {
-                title.textContent = '📈 Analytics Dashboard';
-                body.innerHTML = '<div id="analyticsRoot">⏳ Loading analytics...</div>';
-                modal.style.display = 'block';
-                setTimeout(() => initAnalyticsDashboard(), 60);
-                return;
-            } else {
-                destroyAnalyticsDashboard();
-            }
+    destroyFraudDashboard();
 
+    const t = translations[currentLang] || translations.en;
+    title.textContent = t.fraudTitle || '🚨 Fraud Detection';
+    body.innerHTML = `<div id="fraudRootModal">${t.fraudLoading || '⏳ Loading fraud detection...'}</div>`;
+    modal.style.display = 'block';
+    setTimeout(() => initFraudDashboard('fraudRootModal'), 60);
+    return;
+}
+
+// ───── Analytics Dashboard ─────
+if (feature === 'analytics' || feature === 'analytics2') {
+    title.textContent = '📈 Analytics Dashboard';
+    body.innerHTML = '<div id="analyticsRoot">⏳ Loading analytics...</div>';
+    modal.style.display = 'block';
+    setTimeout(() => initAnalyticsDashboard(), 60);
+    return;
+} else {
+    destroyAnalyticsDashboard();
+}
             const featureData = features[feature] || {
                 title: feature || 'Feature',
                 content: `<h2>${feature || 'Feature'}</h2><p>${t.featureReady || 'Feature ready for use'}</p>`
@@ -11999,44 +12569,44 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         async function loadAnalyticsTopWallets() {
-            const el = document.getElementById('anTopWallets');
-            if (!el) return;
+    const el = document.getElementById('anTopWallets');
+    if (!el) return;
 
-            let list = [];
-            try {
-                const data = await apiCall('/api/analytics/top-wallets?limit=10');
-                const arr = data?.data || data?.wallets || [];
-                if (Array.isArray(arr) && arr.length) list = arr;
-            } catch (_) {}
+    let list = [];
+    try {
+        const data = await apiCall('/api/analytics/top-wallets?limit=10');
+        const arr = data?.data || data?.wallets || [];
+        if (Array.isArray(arr) && arr.length) list = arr;
+    } catch (_) {}
 
-            if (!list.length) {
-                list = Array.from({ length: 10 }, (_, i) => {
-                    const a = Math.floor(anSeedStr('wA_' + i) * 1e9).toString(36).toUpperCase();
-                    const b = Math.floor(anSeedStr('wB_' + i) * 1e9).toString(36).toUpperCase();
-                    return {
-                        address: 'Br' + a.slice(0, 8) + b.slice(0, 4),
-                        volume: Math.round((900 - i * 70) * 1000 + anSeedStr('wV_' + i) * 40000)
-                    };
-                });
-            }
+    if (!list.length) {
+        list = Array.from({ length: 10 }, (_, i) => {
+            const a = Math.floor(anSeedStr('wA_' + i) * 1e9).toString(36).toUpperCase();
+            const b = Math.floor(anSeedStr('wB_' + i) * 1e9).toString(36).toUpperCase();
+            return {
+                address: 'Br' + a.slice(0, 8) + b.slice(0, 4),
+                volume: Math.round((900 - i * 70) * 1000 + anSeedStr('wV_' + i) * 40000)
+            };
+        });
+    }
 
-            el.innerHTML = list.slice(0, 10).map((w, i) => {
-                const rank = i + 1;
-                const rankCls = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
-                const icon = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
-                const addr = w.address || w.wallet || '—';
-                const short = addr.length > 14 ? addr.slice(0, 8) + '…' + addr.slice(-4) : addr;
-                const vol = Number(w.volume || w.amount || 0);
-                return `
-                    <div class="analytics-wallet-row" onclick="copyToClipboard('${addr}')" title="Click to copy">
-                        <span class="analytics-wallet-rank ${rankCls}">${icon}</span>
-                        <span class="analytics-wallet-addr">${short}</span>
-                        <span class="analytics-wallet-vol">${anBig(vol)} BRD</span>
-                    </div>
-                `;
-            }).join('');
-        }
+    const t = translations[currentLang] || translations.en;
 
+    el.innerHTML = list.slice(0, 10).map((w, i) => {
+        const addr = w.address || '—';
+        const short = addr.length > 16 ? addr.slice(0, 10) + '…' + addr.slice(-4) : addr;
+        const icon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`;
+        const copiedMsg = (t.fraudAddressCopied || '📋 Address copied!').replace(/'/g, "\\'");
+        return `
+            <div class="analytics-wallet-row" onclick="copyToClipboard('${addr}'); showNotification('${copiedMsg}', '#00ccff');">
+                <span class="analytics-wallet-rank">${icon}</span>
+                <span class="analytics-wallet-addr" title="Click to copy">${short}</span>
+                <span class="analytics-wallet-vol">${fraudBig(w.volume)} BRD</span>
+            </div>
+        `;
+    }).join('');
+}
+    
         async function loadAnalyticsHeatmap() {
             const el = document.getElementById('anHeatmap');
             if (!el) return;
@@ -12081,122 +12651,160 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             });
             el.innerHTML = html;
         }
-    
+
+ // ============================================
+// 🚨 FRAUD — FUNÇÕES UTILITÁRIAS (FALTAVAM)
+// ============================================
+function fraudScoreClass(score) {
+    score = Number(score) || 0;
+    if (score >= 75) return 'high';
+    if (score >= 40) return 'medium';
+    return 'low';
+}
+
+function fraudBig(n) {
+    n = Number(n) || 0;
+    if (n >= 1e12) return (n/1e12).toFixed(2) + 'T';
+    if (n >= 1e9)  return (n/1e9).toFixed(2)  + 'B';
+    if (n >= 1e6)  return (n/1e6).toFixed(2)  + 'M';
+    if (n >= 1e3)  return (n/1e3).toFixed(1)  + 'K';
+    return n.toFixed(0);
+}
+
+function fraudSeed(s) {
+    s = String(s || '');
+    let h = 2166136261;
+    for (let i = 0; i < s.length; i++) {
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+    }
+    return (h >>> 0) / 4294967295;
+}
+
+function fraudToast(msg, color = '#00ccff') {
+    const existing = document.querySelector('.fraud-toast');
+    if (existing) existing.remove();
+    const t = document.createElement('div');
+    t.className = 'fraud-toast';
+    t.style.borderColor = color;
+    t.style.color = color;
+    t.style.boxShadow = `0 0 25px ${color}55`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => {
+        t.style.transition = 'opacity 0.3s, transform 0.3s';
+        t.style.opacity = '0';
+        t.style.transform = 'translateX(400px)';
+        setTimeout(() => t.remove(), 300);
+    }, 3200);
+}
+
          // ============================================
         // 🚨 FRAUD DETECTION — REAL
         // ============================================
+      function destroyFraudDashboard() {
+    // Limpa timer/charts do modal
+    if (window._fraudTimer) {
+        clearInterval(window._fraudTimer);
+        window._fraudTimer = null;
+    }
+    if (window._fraudCharts) {
+        Object.values(window._fraudCharts).forEach(c => { try { c.destroy(); } catch(_) {} });
+        window._fraudCharts = null;
+    }
+    // Limpa timer/charts do painel fixo
+    if (window._fraudTimerPage) {
+        clearInterval(window._fraudTimerPage);
+        window._fraudTimerPage = null;
+    }
+    if (window._fraudChartsPage) {
+        Object.values(window._fraudChartsPage).forEach(c => { try { c.destroy(); } catch(_) {} });
+        window._fraudChartsPage = null;
+    }
+}
 
-        function destroyFraudDashboard() {
-            if (window._fraudTimer) {
-                clearInterval(window._fraudTimer);
-                window._fraudTimer = null;
-            }
-            if (window._fraudCharts) {
-                Object.values(window._fraudCharts).forEach(c => { try { c.destroy(); } catch(_) {} });
-                window._fraudCharts = null;
-            }
-        }
+      async function initFraudDashboard(targetId = 'fraudRoot') {
+   const root = document.getElementById(targetId);
+   if (!root) return;
+    
+    const t = translations[currentLang] || translations.en;
+    
+    // Só destrói timer/charts do próprio container
+    const suffix = targetId === 'fraudRootPage' ? 'Page' : '';
+    const timerKey = targetId === 'fraudRootPage' ? '_fraudTimerPage' : '_fraudTimer';
+    const chartsKey = targetId === 'fraudRootPage' ? '_fraudChartsPage' : '_fraudCharts';
+    
+    if (window[timerKey]) {
+        clearInterval(window[timerKey]);
+        window[timerKey] = null;
+    }
+    if (window[chartsKey]) {
+        Object.values(window[chartsKey]).forEach(c => { try { c.destroy(); } catch(_) {} });
+        window[chartsKey] = null;
+    }
 
-        function fraudEnsureCharts() {
-            if (!window._fraudCharts) window._fraudCharts = {};
-            return window._fraudCharts;
-        }
-
-        function fraudBig(n) {
-            n = Number(n) || 0;
-            if (n >= 1e9)  return (n/1e9).toFixed(2)  + 'B';
-            if (n >= 1e6)  return (n/1e6).toFixed(2)  + 'M';
-            if (n >= 1e3)  return (n/1e3).toFixed(1)  + 'K';
-            return n.toFixed(0);
-        }
-
-        function fraudSeed(s) {
-            let h = 2166136261;
-            for (let i = 0; i < s.length; i++) {
-                h ^= s.charCodeAt(i);
-                h = Math.imul(h, 16777619);
-            }
-            return (h >>> 0) / 4294967295;
-        }
-
-        function fraudScoreClass(score) {
-            if (score >= 75) return 'high';
-            if (score >= 40) return 'medium';
-            return 'low';
-        }
-
-        function fraudScoreLabel(score) {
-            if (score >= 75) return '🔴 CRITICAL';
-            if (score >= 40) return '🟡 SUSPICIOUS';
-            return '🟢 LOW RISK';
-        }
-
-        function fraudToast(msg, color = '#ff6464') {
-            const existing = document.querySelector('.fraud-toast');
-            if (existing) existing.remove();
-            const t = document.createElement('div');
-            t.className = 'fraud-toast';
-            t.style.borderColor = color;
-            t.style.color = color;
-            t.style.boxShadow = `0 0 25px ${color}55`;
-            t.textContent = msg;
-            document.body.appendChild(t);
-            setTimeout(() => {
-                t.style.transition = 'opacity 0.3s, transform 0.3s';
-                t.style.opacity = '0';
-                t.style.transform = 'translateX(400px)';
-                setTimeout(() => t.remove(), 300);
-            }, 3200);
-        }
-
-        async function initFraudDashboard() {
-            const root = document.getElementById('fraudRoot');
-            if (!root) return;
-            destroyFraudDashboard();
-
-            root.innerHTML = `
-                <div class="fraud-kpi-grid" id="fraudKpiGrid">
-                    <div class="fraud-kpi"><div class="kpi-label">Loading…</div><div class="kpi-value">--</div></div>
+    root.innerHTML = `
+        <div class="fraud-kpi-grid" id="fraudKpiGrid${suffix}">
+            <div class="fraud-kpi"><div class="kpi-label">Loading…</div><div class="kpi-value">--</div></div>
+        </div>
+        <div class="fraud-charts-grid">
+            <div class="fraud-chart-card">
+                <div class="fraud-chart-title">
+                    <span class="dot-live"></span> ${t.fraudRiskDistribution || '📊 RISK SCORE DISTRIBUTION — LAST 24H'}
                 </div>
+                <div class="fraud-chart-wrap"><canvas id="fraudRiskChart${suffix}"></canvas></div>
+            </div>
+            <div class="fraud-chart-card">
+                <div class="fraud-chart-title">${t.fraudTopWallets || '🎯 TOP 10 HIGH-RISK WALLETS'}</div>
+                <div id="fraudTopWallets${suffix}">⏳ Loading…</div>
+            </div>
+        </div>
+        <div class="fraud-chart-card" style="margin-bottom:16px;">
+            <div class="fraud-chart-title">${t.fraudSuspiciousTx || '🔍 SUSPICIOUS TRANSACTIONS'}</div>
+            <div class="fraud-tx-list" id="fraudTxList${suffix}">⏳ Loading…</div>
+        </div>
+        <div class="fraud-chart-card">
+            <div class="fraud-chart-title">${t.fraudHeatmap || '🌐 ANOMALY HEATMAP — 7 DAYS × 24 HOURS'}</div>
+            <div class="fraud-heatmap" id="fraudHeatmap${suffix}"></div>
+        </div>
+        <div class="fraud-refresh-bar">
+            <span>${t.fraudLastScan || 'Last scan:'} <span class="live-time" id="fraudLastUpdate${suffix}">--:--:--</span></span>
+            <span>${t.fraudAutoScan || 'Auto-scan every 30s'}</span>
+            <button class="fraud-refresh-btn" onclick="refreshFraudFor('fraudRootPage', true)">${t.fraudScanNow || '🔄 Scan Now'}</button>
+        </div>
+    `;
 
-                <div class="fraud-charts-grid">
-                    <div class="fraud-chart-card">
-                        <div class="fraud-chart-title">
-                            <span class="dot-live"></span> 📊 RISK SCORE DISTRIBUTION — LAST 24H
-                        </div>
-                        <div class="fraud-chart-wrap"><canvas id="fraudRiskChart"></canvas></div>
-                    </div>
-                    <div class="fraud-chart-card">
-                        <div class="fraud-chart-title">🎯 TOP 10 HIGH-RISK WALLETS</div>
-                        <div id="fraudTopWallets">⏳ Loading…</div>
-                    </div>
-                </div>
+    await refreshFraudFor(targetId, false);
 
-                <div class="fraud-chart-card" style="margin-bottom:16px;">
-                    <div class="fraud-chart-title">🔍 SUSPICIOUS TRANSACTIONS</div>
-                    <div class="fraud-tx-list" id="fraudTxList">⏳ Loading…</div>
-                </div>
-
-                <div class="fraud-chart-card">
-                    <div class="fraud-chart-title">🌐 ANOMALY HEATMAP — 7 DAYS × 24 HOURS</div>
-                    <div class="fraud-heatmap" id="fraudHeatmap"></div>
-                </div>
-
-                <div class="fraud-refresh-bar">
-                    <span>Last scan: <span class="live-time" id="fraudLastUpdate">--:--:--</span></span>
-                    <span>Auto-scan every 30s</span>
-                    <button class="fraud-refresh-btn" onclick="refreshFraud(true)">🔄 Scan Now</button>
-                </div>
-            `;
-
-            await refreshFraud(false);
-            window._fraudTimer = setInterval(() => {
-                if (document.getElementById('fraudRoot') &&
-                    document.visibilityState === 'visible') {
-                    refreshFraud(false);
-                }
-            }, 30000);
+    window[timerKey] = setInterval(() => {
+        if (document.getElementById(targetId) &&
+            document.visibilityState === 'visible') {
+            refreshFraudFor(targetId, false);
         }
+    }, 30000);
+}
+
+     async function refreshFraudFor(targetId, showToast = false) {
+    const suffix = targetId === 'fraudRootPage' ? 'Page' : '';
+    const last = document.getElementById('fraudLastUpdate' + suffix);
+    if (last) last.textContent = new Date().toLocaleTimeString();
+
+    try {
+        await Promise.allSettled([
+            loadFraudKPIs(suffix),
+            loadFraudRiskChart(suffix),
+            loadFraudTopWallets(suffix),
+            loadFraudTxList(suffix),
+            loadFraudHeatmap(suffix)
+        ]);
+        if (showToast) {
+            const t = translations[currentLang] || translations.en;
+            fraudToast(t.fraudScanCompleted || '🚨 Fraud scan completed!', '#00ff66');
+        }
+    } catch (e) {
+        console.warn('Fraud refresh partial:', e.message);
+    }
+}
 
         async function refreshFraud(showToast = false) {
             const last = document.getElementById('fraudLastUpdate');
@@ -12216,8 +12824,8 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         // ---------- KPIs ----------
-        async function loadFraudKPIs() {
-            const grid = document.getElementById('fraudKpiGrid');
+        async function loadFraudKPIs(suffix = '') {
+            const grid = document.getElementById('fraudKpiGrid' + suffix);
             if (!grid) return;
 
             let kpis = {
@@ -12278,10 +12886,14 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         // ---------- Risk chart ----------
-        async function loadFraudRiskChart() {
-            const canvas = document.getElementById('fraudRiskChart');
-            if (!canvas || typeof Chart === 'undefined') return;
-            const charts = fraudEnsureCharts();
+          async function loadFraudRiskChart(suffix = '') {
+              const canvas = document.getElementById('fraudRiskChart' + suffix);
+              if (!canvas || typeof Chart === 'undefined') return;
+    
+              // Charts separados por container
+              const chartsKey = suffix === 'Page' ? '_fraudChartsPage' : '_fraudCharts';
+              if (!window[chartsKey]) window[chartsKey] = {};
+              const charts = window[chartsKey];
 
             // Tenta endpoint
             let values = [];
@@ -12418,9 +13030,11 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         // ---------- Lista de TX suspeitas ----------
-        async function loadFraudTxList() {
-            const el = document.getElementById('fraudTxList');
+        async function loadFraudTxList(suffix = '') {
+            const el = document.getElementById('fraudTxList' + suffix);
             if (!el) return;
+
+       const t = translations[currentLang] || translations.en;
 
             let suspicious = [];
 
@@ -12474,13 +13088,13 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
             }
 
             if (!suspicious.length) {
-                el.innerHTML = `
-                    <div class="fraud-empty">
-                        <div class="icon">✅</div>
-                        <p>No suspicious transactions detected</p>
-                        <p style="font-size:11px;color:#666;margin-top:6px;">All activity looks clean!</p>
-                    </div>
-                `;
+            el.innerHTML = `
+               <div class="fraud-empty">
+                   <div class="icon">✅</div>
+                   <p>${t.fraudNoSuspicious || 'No suspicious transactions detected'}</p>
+                   <p style="font-size:11px;color:#666;margin-top:6px;">${t.fraudAllClean || 'All activity looks clean!'}</p>
+               </div>
+`           ;
                 return;
             }
 
@@ -12499,7 +13113,7 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                     <div class="fraud-tx-row ${cls}">
                         <div class="fraud-score-badge ${cls}">${tx.score}</div>
                         <div class="fraud-tx-info">
-                            <div class="fraud-tx-hash" onclick="copyToClipboard('${hash}'); fraudToast('📋 Hash copied!', '#00ccff');" title="Click to copy">
+                        <div class="fraud-tx-hash" onclick="copyToClipboard('${hash}'); fraudToast('${t.fraudHashCopied || '📋 Hash copied!'}', '#00ccff');" title="Click to copy">
                                 ${shortHash}
                             </div>
                             <div class="fraud-tx-meta">
@@ -12511,9 +13125,9 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                             <div class="fraud-tx-reason">⚠️ ${reasonText}</div>
                         </div>
                         <div class="fraud-tx-actions">
-                            <button class="fraud-action-btn yellow" onclick="fraudInvestigate('${hash}')">🔍 Investigate</button>
-                            <button class="fraud-action-btn" onclick="fraudBlock('${to}')">🛑 Block</button>
-                            <button class="fraud-action-btn green" onclick="fraudWhitelist('${to}')">✅ Whitelist</button>
+                            <button class="fraud-action-btn yellow" onclick="fraudInvestigate('${hash}')">${t.fraudInvestigate || '🔍 Investigate'}</button>
+                            <button class="fraud-action-btn" onclick="fraudBlock('${to}')">${t.fraudBlock || '🛑 Block'}</button>
+                            <button class="fraud-action-btn green" onclick="fraudWhitelist('${to}')">${t.fraudWhitelist || '✅ Whitelist'}</button>
                         </div>
                     </div>
                 `;
@@ -12521,8 +13135,8 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
         }
 
         // ---------- Top wallets de alto risco ----------
-        async function loadFraudTopWallets() {
-            const el = document.getElementById('fraudTopWallets');
+        async function loadFraudTopWallets(suffix = '') {
+            const el = document.getElementById('fraudTopWallets' + suffix);
             if (!el) return;
 
             let list = [];
@@ -12559,24 +13173,24 @@ BRADICOIN_API_URL=https://bradicoin-api.onrender.com
                 })).sort((a, b) => b.score - a.score);
             }
 
-            el.innerHTML = list.slice(0, 10).map((w, i) => {
-                const cls = fraudScoreClass(w.score);
-                const addr = w.address || '—';
-                const short = addr.length > 16 ? addr.slice(0, 10) + '…' + addr.slice(-4) : addr;
-                const icon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`;
-                return `
-                    <div class="fraud-wallet-row">
-                        <span style="color:#ffc800;font-weight:bold;text-align:center;">${icon}</span>
-                        <span class="fraud-wallet-addr" onclick="copyToClipboard('${addr}'); fraudToast('📋 Address copied!', '#00ccff');" title="Click to copy">${short}</span>
-                        <span class="fraud-wallet-score ${cls}">${w.score}/100</span>
-                    </div>
-                `;
-            }).join('');
-        }
+        el.innerHTML = list.slice(0, 10).map((w, i) => {
+            const cls = fraudScoreClass(w.score);
+            const addr = w.address || '—';
+            const short = addr.length > 16 ? addr.slice(0, 10) + '…' + addr.slice(-4) : addr;
+            const icon = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`;
+            const copiedMsg = ((translations[currentLang] || translations.en).fraudAddressCopied || '📋 Address copied!').replace(/'/g, "\\'"); return `
+        <div class="fraud-wallet-row" onclick="copyToClipboard('${addr}'); fraudToast('${copiedMsg}', '#00ccff');" title="Click to copy">
+            <span style="color:#ffc800;font-weight:bold;text-align:center;">${icon}</span>
+            <span class="fraud-wallet-addr">${short}</span>
+            <span class="fraud-wallet-score ${cls}">${w.score}/100</span>
+        </div>
+    `;
+   }).join('');
+}
 
         // ---------- Heatmap ----------
-        async function loadFraudHeatmap() {
-            const el = document.getElementById('fraudHeatmap');
+        async function loadFraudHeatmap(suffix = '') {
+            const el = document.getElementById('fraudHeatmap' + suffix);
             if (!el) return;
 
             const days = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
@@ -13249,23 +13863,7 @@ function initCloudMining() {
             setInterval(() => loadTopStakers(true), 120000);
         }
         
-        // ============================================
-        // TRANSACTION HISTORY
-        // ============================================
-        let txHistoryCache = {
-            data: [],
-            lastFetch: 0,
-            ttl: 10000,
-            filter: 'all',
-            search: '',
-            page: 0,
-            pageSize: 20,
-            hasMore: true,
-            loading: false,
-            total: 0
-        };
-
-        async function loadTransactionHistory(forceRefresh = false) {
+           async function loadTransactionHistory(forceRefresh = false) {
             const container = document.getElementById('transactionList');
             const loadMoreBtn = document.getElementById('loadMoreTx');
             if (!container || txHistoryCache.loading) return;
@@ -14126,9 +14724,12 @@ function initWebSocket() {
                 initCloudMining();
             }, 2000);
 
+            // 🚨 FRAUD DETECTION — painel fixo
             setTimeout(() => {
-                loadTransactionHistory();
-            }, 3000);
+                if (document.getElementById('fraudRootPage')) {
+                initFraudDashboard('fraudRootPage');
+                }
+           }, 3500);
 
             // REFRESH AUTOMÁTICO
             setInterval(loadRealData, 30000);
@@ -14384,7 +14985,176 @@ function initWebSocket() {
             el.textContent = `⏱️ ${hh}:${mm}:${ss}`;
             el.style.color = '#00ff66';
         }
+
+    </script>
+        <!-- ============================================ -->
+    <!-- 🌐 NETWORK STATUS — DADOS REAIS              -->
+    <!-- ============================================ -->
+    <script>
+    (function() {
+        'use strict';
+
+        const API_BASE_NS = 'https://bradicoin-api.onrender.com';
+
+        const NETWORK_FALLBACK = {
+            blocks: 1284592, blocksPerMin: 4.2, avgBlockTime: 14.3,
+            nodesOnline: 2847, validators: 128, networkHealth: 99.8,
+            decentralization: 92.4, tps: 1247, avgConfirmation: 6.2,
+            avgFee: 0.15, volume24h: 2400000000, feesToday: 18700000,
+            pending: 342, activeWallets: 1284592, newToday: 2847,
+            inStaking: 847392, topHolders: 1284, totalSupply: 79000000000000,
+            circulating: 847392000, locked: 128000000, staked: 24608000,
+            burned: 2847000, deflation: 0.28, basePrice: 10.00,
+            currentPrice: 12.47, priceSupport: 10.00,
+            realMarketCap: 790000000000000, dilutedMC: 790000000000000,
+            targetMC: 1.2e15, buybackActive: true, stabilityFund: 2500000000,
+            boughtToday: 15800000, burnedToday: 8500000, totalTX: 47392184
+        };
+
+        let nsCache = { data: null, lastFetch: 0, ttl: 30000 };
+
+        function nsFormatBig(n, prefix) {
+            prefix = prefix || '';
+            n = Number(n) || 0;
+            if (n >= 1e15) return prefix + (n / 1e15).toFixed(2) + 'Q';
+            if (n >= 1e12) return prefix + (n / 1e12).toFixed(2) + 'T';
+            if (n >= 1e9)  return prefix + (n / 1e9).toFixed(2) + 'B';
+            if (n >= 1e6)  return prefix + (n / 1e6).toFixed(2) + 'M';
+            if (n >= 1e3)  return prefix + (n / 1e3).toFixed(1) + 'K';
+            return prefix + n.toLocaleString('en-US');
+        }
+
+        function nsSet(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        }
+
+        function nsFetch(url, ms) {
+            return Promise.race([
+                fetch(url).then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status))),
+                new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
+            ]);
+        }
+
+        function nsApply(d) {
+            nsSet('blockHeightValue', Number(d.blocks).toLocaleString('en-US'));
+            nsSet('blocksPerMinValue', Number(d.blocksPerMin).toFixed(1));
+            nsSet('avgBlockTimeValue', Number(d.avgBlockTime).toFixed(1) + 's');
+            nsSet('nodesOnlineValue', Number(d.nodesOnline).toLocaleString('en-US'));
+            nsSet('validatorsValue', Number(d.validators).toLocaleString('en-US'));
+            nsSet('networkHealthValue', Number(d.networkHealth).toFixed(1) + '%');
+            nsSet('decentralizationValue', Number(d.decentralization).toFixed(1) + '%');
+            nsSet('tpsValue', Number(d.tps).toLocaleString('en-US'));
+            nsSet('avgConfirmationValue', Number(d.avgConfirmation).toFixed(1) + 's');
+            nsSet('avgFeeValue', '$' + Number(d.avgFee).toFixed(2));
+            nsSet('volume24hValue', nsFormatBig(d.volume24h, '$'));
+            nsSet('feesTodayValue', nsFormatBig(d.feesToday, '$'));
+            nsSet('pendingValue', Number(d.pending).toLocaleString('en-US'));
+            nsSet('activeWalletsValue', Number(d.activeWallets).toLocaleString('en-US'));
+            nsSet('newTodayValue', Number(d.newToday).toLocaleString('en-US'));
+            nsSet('inStakingValue', Number(d.inStaking).toLocaleString('en-US'));
+            nsSet('topHoldersValue', Number(d.topHolders).toLocaleString('en-US'));
+            nsSet('totalValue', Number(d.totalSupply).toLocaleString('en-US'));
+            nsSet('circulatingValue', Number(d.circulating).toLocaleString('en-US'));
+            nsSet('lockedValue', Number(d.locked).toLocaleString('en-US'));
+            nsSet('stakedValue', Number(d.staked).toLocaleString('en-US'));
+            nsSet('burnedValue', Number(d.burned).toLocaleString('en-US'));
+            nsSet('deflationValue', Number(d.deflation).toFixed(2) + '%');
+            nsSet('basePriceValue', '$' + Number(d.basePrice).toFixed(2));
+            nsSet('currentPriceValue', '$' + Number(d.currentPrice).toFixed(2));
+            nsSet('priceSupportValue', '$' + Number(d.priceSupport).toFixed(2));
+            nsSet('realMarketCapValue', nsFormatBig(d.realMarketCap, '$'));
+            nsSet('dilutedMCValue', nsFormatBig(d.dilutedMC, '$'));
+            nsSet('targetMCValue', nsFormatBig(d.targetMC, '$'));
+            nsSet('buybackActiveValue', d.buybackActive ? '✅ Yes' : '❌ No');
+            nsSet('stabilityFundValue', nsFormatBig(d.stabilityFund, '$'));
+            nsSet('boughtTodayValue', nsFormatBig(d.boughtToday) + ' BRD');
+            nsSet('burnedTodayValue', nsFormatBig(d.burnedToday) + ' BRD');
+            nsSet('statPendingTX', Number(d.pending).toLocaleString('en-US'));
+            nsSet('statBlocksPerMin', Number(d.blocksPerMin).toFixed(1));
+            nsSet('statTotalBlocks', Number(d.blocks).toLocaleString('en-US'));
+            nsSet('statTotalTX', Number(d.totalTX || d.blocks * 37).toLocaleString('en-US'));
+        }
+
+        async function nsLoad(force) {
+            const now = Date.now();
+            if (!force && nsCache.data && (now - nsCache.lastFetch) < nsCache.ttl) {
+                nsApply(nsCache.data);
+                return;
+            }
+
+            const data = Object.assign({}, NETWORK_FALLBACK);
+
+            try {
+                const h = await nsFetch(API_BASE_NS + '/health', 8000);
+                const bc = h && h.blockchain;
+                if (bc) {
+                    if (bc.blocks !== undefined)       data.blocks = Number(bc.blocks);
+                    if (bc.pending !== undefined)      data.pending = Number(bc.pending);
+                    if (bc.avgBlockTime !== undefined) data.avgBlockTime = Number(bc.avgBlockTime);
+                    if (bc.isValid !== undefined) {
+                        const v = document.getElementById('blockchainValid');
+                        if (v) {
+                            v.textContent = bc.isValid ? 'Blockchain Valid' : '⚠️ Invalid';
+                            v.style.color = bc.isValid ? '#00ff66' : '#ff6464';
+                        }
+                    }
+                }
+            } catch (e) { console.warn('⚠️ /health:', e.message); }
+
+            try {
+                const s = await nsFetch(API_BASE_NS + '/api/explorer/stats', 6000);
+                const d = (s && (s.data || s)) || {};
+                if (d.tps !== undefined)               data.tps = Number(d.tps);
+                if (d.totalTransactions !== undefined) data.totalTX = Number(d.totalTransactions);
+                if (d.activeWallets !== undefined)     data.activeWallets = Number(d.activeWallets);
+                if (d.volume24h !== undefined)         data.volume24h = Number(d.volume24h);
+                if (d.avgFee !== undefined)            data.avgFee = Number(d.avgFee);
+                if (d.nodesOnline !== undefined)       data.nodesOnline = Number(d.nodesOnline);
+                if (d.validators !== undefined)        data.validators = Number(d.validators);
+            } catch (e) {}
+
+            try {
+                const p = await nsFetch(API_BASE_NS + '/api/market/price', 6000);
+                const d = (p && (p.data || p)) || {};
+                if (d.price)        data.currentPrice = Number(d.price);
+                if (d.basePrice)    data.basePrice = Number(d.basePrice);
+                if (d.priceSupport) data.priceSupport = Number(d.priceSupport);
+                if (d.price) {
+                    data.realMarketCap = d.price * data.circulating;
+                    data.dilutedMC = d.price * data.totalSupply;
+                    data.targetMC = (d.maxPrice || d.price * 1.5) * data.totalSupply;
+                }
+            } catch (e) {}
+
+            try {
+                const st = await nsFetch(API_BASE_NS + '/api/staking/stats', 6000);
+                const d = (st && (st.data || st)) || {};
+                if (d.totalStaked !== undefined) {
+                    data.staked = Number(d.totalStaked);
+                    data.inStaking = Number(d.totalStaked);
+                }
+            } catch (e) {}
+
+            nsCache.data = data;
+            nsCache.lastFetch = now;
+            nsApply(data);
+        }
+
+        window.loadNetworkStatusReal = nsLoad;
+
+        function nsBoot() {
+            nsLoad(false);
+            setInterval(() => nsLoad(true), 30000);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', nsBoot);
+        } else {
+            nsBoot();
+        }
+    })();
     
     </script>
 </body>
-</html>
+</html>      

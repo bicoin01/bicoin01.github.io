@@ -7,8 +7,6 @@
     <meta name="description" content="Complete Bradicoin blockchain platform with 50+ integrated features" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://bradicoin-api.onrender.com/socket.io/socket.io.js" defer></script>
     <style>
         /* ===== RESET E BASE ===== */
@@ -5053,6 +5051,24 @@ console.log(balance);</pre>
         // ============================================
         const API_BASE = 'https://bradicoin-api.onrender.com';
 
+        // ============================================
+        // 🔄 HELPERS — intervalos e visibilidade
+      // ============================================
+       function safeInterval(fn, ms) {
+          return setInterval(() => {
+              if (document.visibilityState === 'visible') {
+            try { fn(); } catch (e) { console.warn('Interval error:', e.message); }
+          }
+       }, ms);
+    }
+
+   function panelVisible(id) {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      const rect = el.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+   }
+
       // ✅ Cache declarado cedo para o Fraud/Analytics poderem usar
       let txHistoryCache = {
           data: [],
@@ -5074,7 +5090,7 @@ console.log(balance);</pre>
     const controller = new AbortController();
     // Timeout adaptativo: primeira chamada pode demorar (cold start do Render)
     const isHealthCheck = path === '/health' || path.startsWith('/health');
-    const TIMEOUT = isHealthCheck ? 45000 : 15000;
+    const TIMEOUT = isHealthCheck ? 15000 : 10000;
     const timeout = setTimeout(() => controller.abort(), TIMEOUT);
     try {
         const res = await fetch(API_BASE + path, {
@@ -12878,23 +12894,6 @@ function fraudToast(msg, color = '#00ccff') {
     }
 }
 
-        async function refreshFraud(showToast = false) {
-            const last = document.getElementById('fraudLastUpdate');
-            if (last) last.textContent = new Date().toLocaleTimeString();
-            try {
-                await Promise.allSettled([
-                    loadFraudKPIs(),
-                    loadFraudRiskChart(),
-                    loadFraudTopWallets(),
-                    loadFraudTxList(),
-                    loadFraudHeatmap()
-                ]);
-                if (showToast) fraudToast('🚨 Fraud scan completed!', '#00ff66');
-            } catch (e) {
-                console.warn('Fraud refresh partial:', e.message);
-            }
-        }
-
         // ---------- KPIs ----------
         async function loadFraudKPIs(suffix = '') {
             const grid = document.getElementById('fraudKpiGrid' + suffix);
@@ -13919,8 +13918,14 @@ function initCloudMining() {
     cmLoadStats();
     cmCheckStatus();
 
-    setInterval(() => { cmLoadStats(); cmCheckStatus(); }, 60000);
-}
+    // ✅ Só roda quando o painel de mineração estiver visível
+            safeInterval(() => {
+                if (panelVisible('cmKpiGrid')) {
+                    cmLoadStats();
+                    cmCheckStatus();
+                }
+            }, 120000);
+        }
 
         // ---------- Init ----------
         function initStakingPanel() {
@@ -13931,8 +13936,12 @@ function initCloudMining() {
             updateCalculator();
             loadStakingStats();
             loadTopStakers();
-            setInterval(() => loadStakingStats(true), 60000);
-            setInterval(() => loadTopStakers(true), 120000);
+
+            // ✅ Só roda quando o painel de staking estiver visível
+            safeInterval(() => {
+                if (panelVisible('stakingStats'))   loadStakingStats(true);
+                if (panelVisible('topStakersList')) loadTopStakers(true);
+            }, 120000);
         }
         
            async function loadTransactionHistory(forceRefresh = false) {
@@ -14825,13 +14834,21 @@ function initWebSocket() {
 }
 
 
-        // ============================================
-        // LOAD REAL DATA
+                // ============================================
+        // LOAD REAL DATA (PARALELO — 3 chamadas simultâneas)
         // ============================================
         async function loadRealData() {
             updateApiStatus('checking', '⏳ Conectando à API...');
-            try {
-                const health = await apiCall('/health');
+
+            const [healthRes, priceRes, validatorsRes] = await Promise.allSettled([
+                apiCall('/health'),
+                apiCall('/api/market/price'),
+                apiCall('/api/validator/list')
+            ]);
+
+            // ---------- HEALTH ----------
+            if (healthRes.status === 'fulfilled') {
+                const health = healthRes.value;
                 console.log('✅ Health:', health);
 
                 const blockHeightEl = document.getElementById('blockHeightValue');
@@ -14854,11 +14871,14 @@ function initWebSocket() {
                 if (validEl) {
                     validEl.textContent = health.blockchain?.isValid ? 'Blockchain Valid' : '⚠️ Inválida';
                 }
+            } else {
+                console.warn('⚠️ Health falhou:', healthRes.reason?.message);
+            }
 
-                // PREÇO
+            // ---------- PREÇO ----------
+            if (priceRes.status === 'fulfilled') {
                 try {
-                    const priceData = await apiCall('/api/market/price');
-                    const p = priceData.data;
+                    const p = priceRes.value.data;
 
                     const currentPriceEl = document.getElementById('currentPriceValue');
                     const basePriceEl = document.getElementById('basePriceValue');
@@ -14897,23 +14917,31 @@ function initWebSocket() {
 
                     console.log(`💰 Preço: $${p.price.toFixed(2)} | Base: $${p.basePrice.toFixed(2)} | Var24h: ${variation}%`);
                 } catch (priceErr) {
-                    console.warn('⚠️ Preço não carregado:', priceErr.message);
+                    console.warn('⚠️ Preço não processado:', priceErr.message);
                 }
+            } else {
+                console.warn('⚠️ Preço falhou:', priceRes.reason?.message);
+            }
 
-                // VALIDADORES
+            // ---------- VALIDADORES ----------
+            if (validatorsRes.status === 'fulfilled') {
                 try {
-                    const validators = await apiCall('/api/validator/list');
+                    const validators = validatorsRes.value;
                     const count = Array.isArray(validators.data) ? validators.data.length : 0;
                     const validatorsEl = document.getElementById('validatorsValue');
                     if (validatorsEl) validatorsEl.textContent = count;
                     const countEl = document.getElementById('validatorCount');
                     if (countEl) countEl.textContent = count + ' Active';
                 } catch (_) {}
+            } else {
+                console.warn('⚠️ Validators falhou:', validatorsRes.reason?.message);
+            }
 
+            // ---------- STATUS FINAL ----------
+            if (healthRes.status === 'fulfilled') {
                 updateApiStatus('online', '✅ API Online - Conectado à Bradicoin Blockchain');
                 console.log('✅ Dados reais carregados com sucesso!');
-            } catch (err) {
-                console.error('❌ Erro ao carregar dados:', err.message);
+            } else {
                 updateApiStatus('offline', '⚠️ API Offline - Usando dados de demonstração');
             }
         }
@@ -14968,41 +14996,57 @@ document.getElementById('refreshBalanceBtn')?.addEventListener('click', () => {
                 renderTransactionHistory();
             });
 
-            // RELÓGIO ZK
-            setInterval(() => {
-                const el = document.getElementById('zkTimeDisplay');
-                if (el) el.textContent = new Date().toLocaleTimeString();
-            }, 1000);
-
-            // CARGA ESCALONADA
-            setTimeout(() => {
-                loadRealData().catch(() => {});
+                                    // ============================================
+            // 🚀 BOOT SERIALIZADO — evita 15 requisições simultâneas
+            // ============================================
+            (async () => {
+                // 1. Essencial: health + price + validators (em paralelo)
+                await loadRealData().catch(() => {});
                 initWebSocket();
-            }, 100);
 
-            setTimeout(() => {
-                loadTokenList();
-                loadNFTList();
-            }, 1000);
+                await new Promise(r => setTimeout(r, 500));
 
-            setTimeout(() => {
-                loadValidators();
-                initStakingPanel();
-                initCloudMining();
-            }, 2000);
+                // 2. Tokens e NFTs (paralelo, não bloqueia)
+                await Promise.allSettled([loadTokenList(), loadNFTList()]);
 
-            // 🚨 FRAUD DETECTION — painel fixo
-            setTimeout(() => {
-                if (document.getElementById('fraudRootPage')) {
-                initFraudDashboard('fraudRootPage');
+                await new Promise(r => setTimeout(r, 500));
+
+                // 3. Validators
+                await loadValidators().catch(() => {});
+
+                // 4. Adia o resto — não é essencial na primeira tela
+                setTimeout(() => { initStakingPanel(); initCloudMining(); }, 2000);
+                setTimeout(() => { checkDevApiStatus(); restoreActiveApp(); }, 3000);
+                setTimeout(() => { qgInit(); }, 3500);
+
+                // 5. Fraud Detection só quando o usuário rolar até ele
+                const fraudRoot = document.getElementById('fraudRootPage');
+                if (fraudRoot && 'IntersectionObserver' in window) {
+                    const obs = new IntersectionObserver((entries) => {
+                        entries.forEach(e => {
+                            if (e.isIntersecting) {
+                                obs.disconnect();
+                                initFraudDashboard('fraudRootPage');
+                            }
+                        });
+                    }, { rootMargin: '200px' });
+                    obs.observe(fraudRoot);
+                } else {
+                    setTimeout(() => initFraudDashboard('fraudRootPage'), 5000);
                 }
-           }, 3500);
+            })();
 
-            // REFRESH AUTOMÁTICO
-            setInterval(loadRealData, 30000);
-            setInterval(() => loadValidators(true), 60000);
-            setInterval(() => loadTransactionHistory(true), 15000);
-            setInterval(() => { loadTokenList(true); loadNFTList(true); }, 60000);
+            // REFRESH AUTOMÁTICO (mais espaçado = menos requisições)
+            safeInterval(loadRealData, 90000);
+            safeInterval(() => loadValidators(true), 180000);
+            safeInterval(checkDevApiStatus, 300000);
+            safeInterval(() => loadTransactionHistory(true), 180000);
+
+            // Só quando painel visível
+            safeInterval(() => {
+                if (panelVisible('tokenListPanel')) loadTokenList(true);
+                if (panelVisible('nftListPanel'))   loadNFTList(true);
+            }, 180000);
 
             // CARTEIRA SALVA
             const saved = localStorage.getItem('bradicoin_last_wallet');
@@ -15016,21 +15060,7 @@ document.getElementById('refreshBalanceBtn')?.addEventListener('click', () => {
                     }, 1500);
                 } catch (_) {}
             }
-
-                        // DEVELOPER API — status real + restaurar app salvo
-            setTimeout(() => {
-                checkDevApiStatus();
-                restoreActiveApp();
-            }, 1500);
-
-            // Re-checar status da API a cada 60s
-            setInterval(checkDevApiStatus, 60000);
-
-             // ⚛️ QUANTUM GOVERNANCE — init
-            setTimeout(() => {
-                qgInit();
-            }, 1800);
-
+    
                         // Validators — busca
             const validatorSearchInput = document.getElementById('validatorSearchInput');
             if (validatorSearchInput) {
@@ -15108,11 +15138,6 @@ document.getElementById('refreshBalanceBtn')?.addEventListener('click', () => {
                         pointBackgroundColor: '#00ffff',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 1,
-                        // Efeito de glow na linha
-                        shadowOffsetX: 0,
-                        shadowOffsetY: 0,
-                        shadowBlur: 15,
-                        shadowColor: 'rgba(0, 255, 255, 0.8)'
                     }]
                 },
                 options: {
@@ -15191,9 +15216,14 @@ document.getElementById('refreshBalanceBtn')?.addEventListener('click', () => {
             });
 
             // Loop de atualização
-            setInterval(pushChartPoint, 3000);
+            setInterval(() => {
+                if (document.visibilityState === 'visible') pushChartPoint();
+            }, 10000);
+
             updateChartTimestamp();
-            setInterval(updateChartTimestamp, 1000);
+            setInterval(() => {
+                if (document.visibilityState === 'visible') updateChartTimestamp();
+            }, 5000);    
 
             // Ajusta ao redimensionar
             window.addEventListener('resize', () => {
